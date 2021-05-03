@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 {
-    public sealed class ContactReader: BaseReader, IEquatable<ContactReader>
+    public class ContactReader: BaseReader, IEquatable<ContactReader>
     {
     public string Email { get; set; }
 
@@ -23,6 +23,8 @@ namespace YoumaconSecurityOps.Core.Shared.Models.Readers
     public long PhoneNumber { get; set; }
 
     public Guid StaffId { get; set; }
+
+    public virtual StaffReader StaffInformation { get; set; }
 
 
     public override bool Equals(object obj)

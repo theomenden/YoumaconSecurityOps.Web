@@ -15,8 +15,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
         {
             entity.ToTable("Events");
 
-            entity.HasKey(e => new {e.MinorVersion, e.AggregateId})
-                .HasName("PK_Events_Id");
+            entity.HasKey(e => new {e.MinorVersion, e.AggregateId});
 
             entity.Property(e => e.Id)
                 .IsRequired();

@@ -35,6 +35,10 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
             entity.Property(e => e.StaffId)
                 .HasColumnName("Staff_Id")
                 .IsRequired();
+
+            entity.HasOne(e => e.StaffInformation)
+                .WithOne(s => s.ContactInformation)
+                .HasForeignKey(nameof(StaffReader));
         }
     }
 }

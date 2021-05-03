@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using YoumaconSecurityOps.Core.EventStore.Events;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Core.Shared.Models.Writers;
 
@@ -18,6 +19,8 @@ namespace YoumaconSecurityOps.Core.AutoMapper.Profiles
             CreateMap<ContactWriter, ContactReader>();
 
             CreateMap<StaffWriter, StaffReader>();
+
+            CreateMap<EventBase, EventReader>();
         }
     }
 }

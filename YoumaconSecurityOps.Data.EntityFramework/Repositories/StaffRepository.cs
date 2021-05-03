@@ -25,17 +25,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 
         public IAsyncEnumerable<StaffReader> GetAll(CancellationToken cancellationToken = new())
         {
-            var staff =
-                from member in _dbContext.StaffMembers.AsAsyncEnumerable()
-                join contact in _dbContext.Contacts.AsAsyncEnumerable() on member.ContactId equals contact.Id
-                join role in _dbContext.StaffRoles.AsAsyncEnumerable() on member.RoleId equals role.Id
-                join type in _dbContext.StaffTypes.AsAsyncEnumerable() on member.StaffTypeId equals type.Id
-                select new StaffReader
-                {
-                    ContactInformation = contact,
-                    Role = role,
-                    StaffType = type
-                };
+            var staff = _dbContext.StaffMembers.AsAsyncEnumerable();
 
             return staff;
         }

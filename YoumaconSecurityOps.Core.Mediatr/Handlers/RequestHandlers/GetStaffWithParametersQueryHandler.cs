@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using YoumaconSecurityOps.Core.EventStore.Events.Queried;
+using YoumaconSecurityOps.Core.EventStore.Storage;
 using YoumaconSecurityOps.Core.Mediatr.Queries;
 using YoumaconSecurityOps.Core.Shared.Accessors;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
@@ -14,10 +15,10 @@ using YoumaconSecurityOps.Core.Shared.Parameters;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 {
-    internal sealed class GetStaffWithParametersQueryHandler: IRequestHandler<GetStaffWithParametersQuery, IAsyncEnumerable<StaffReader>>
+    internal sealed class GetStaffWithParametersQueryHandler: RequestHandler<GetStaffWithParametersQuery, IAsyncEnumerable<StaffReader>>
     {
         private readonly IStaffAccessor _staff;
-
+        
         private readonly IMediator _mediator;
 
         private readonly ILogger<GetStaffWithParametersQueryHandler> _logger;
@@ -28,12 +29,13 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             _mediator = mediator;
             _logger = logger;
         }
+        
 
-        public async Task<IAsyncEnumerable<StaffReader>> Handle(GetStaffWithParametersQuery request, CancellationToken cancellationToken)
+        protected override IAsyncEnumerable<StaffReader> Handle(GetStaffWithParametersQuery request)
         {
-            await RaiseStaffListQueriedEvent(request.Parameters, cancellationToken);
+            RaiseStaffListQueriedEvent(request.Parameters);
 
-            var staff = Filter(request.Parameters,_staff.GetAll(cancellationToken));
+            var staff = Filter(request.Parameters, _staff.GetAll());
 
             return staff;
         }
@@ -50,12 +52,18 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 
         }
 
-        private async Task RaiseStaffListQueriedEvent(StaffQueryStringParameters parameters,
-            CancellationToken cancellationToken)
+        private void RaiseStaffListQueriedEvent(StaffQueryStringParameters parameters)
         {
-            var e = new StaffListQueriedEvent(parameters);
+            var e = new StaffListQueriedEvent(parameters)
+            {
+                AggregateId = parameters.Id.ToString(),
+                Aggregate = nameof(StaffQueryStringParameters),
+                MajorVersion = 1,
+                MinorVersion = 1,
+                Name = nameof(StaffListQueriedEvent)
+            };
 
-            await _mediator.Publish(e, cancellationToken);
+            _mediator.Publish(e);
         }
     }
 }

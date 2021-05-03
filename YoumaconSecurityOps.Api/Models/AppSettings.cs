@@ -8,5 +8,7 @@ namespace YoumaconSecurityOps.Api.Models
     public class AppSettings
     {
         public string YoumaDbConnectionString { get; set; }
+
+        public string EventStoreConnectionString { get; set;}
     }
 }

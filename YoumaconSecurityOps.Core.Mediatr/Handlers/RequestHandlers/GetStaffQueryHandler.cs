@@ -13,7 +13,7 @@ using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 {
-    internal sealed class GetStaffQueryHandler: IRequestHandler<GetStaffQuery, IAsyncEnumerable<StaffReader>>
+    internal sealed class GetStaffQueryHandler: RequestHandler<GetStaffQuery, IAsyncEnumerable<StaffReader>>
     {
         private readonly IStaffAccessor _staff;
 
@@ -28,20 +28,26 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             _logger = logger;
         }
 
-        public async Task<IAsyncEnumerable<StaffReader>> Handle(GetStaffQuery request, CancellationToken cancellationToken)
+        protected override IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request)
         {
-            var staff = _staff.GetAll(cancellationToken);
+            var staff = _staff.GetAll();
 
-            await RaiseStaffListQueriedEvent(cancellationToken);
+            RaiseStaffListQueriedEvent(request);
 
             return staff;
         }
 
-        private async Task RaiseStaffListQueriedEvent(CancellationToken cancellationToken)
+        private void RaiseStaffListQueriedEvent(GetStaffQuery query)
         {
-            var e = new StaffListQueriedEvent();
-
-            await _mediator.Publish(e, cancellationToken);
+            var e = new StaffListQueriedEvent
+            {
+                AggregateId = query.Id.ToString(),
+                Aggregate = nameof(GetStaffQuery),
+                MajorVersion = 1,
+                MinorVersion = 1,
+                Name = nameof(StaffListQueriedEvent)
+            };
+            _mediator.Publish(e);
         }
     }
 }

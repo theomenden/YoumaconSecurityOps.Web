@@ -34,6 +34,10 @@ namespace YoumaconSecurityOps.Data.EntityFramework
             LocationModelBuilder.BuildModel(modelBuilder.Entity<LocationReader>());
 
             StaffModelBuilder.BuildModel(modelBuilder.Entity<StaffReader>());
+
+            StaffRoleModelBuilder.BuildModel(modelBuilder.Entity<StaffRole>());
+
+            StaffTypeModelBuilder.BuildModel(modelBuilder.Entity<StaffType>());
         }
     }
 }

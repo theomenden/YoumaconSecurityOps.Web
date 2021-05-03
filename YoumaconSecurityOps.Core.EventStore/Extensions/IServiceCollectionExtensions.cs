@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 using YoumaconSecurityOps.Core.EventStore.Storage;
 
 namespace YoumaconSecurityOps.Core.EventStore.Extensions
@@ -15,7 +16,9 @@ namespace YoumaconSecurityOps.Core.EventStore.Extensions
         {
             services.AddDbContext<EventStoreDbContext>(options => options.UseSqlServer(eventStoreConnectionString));
 
-            services.AddScoped<IEventStoreRepository, EventStoreRepository>();
+            services.AddMediatR(typeof(IServiceCollectionExtensions).Assembly);
+
+            services.AddTransient<IEventStoreRepository, EventStoreRepository>();
 
             return services;
         }

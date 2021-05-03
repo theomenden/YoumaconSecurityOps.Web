@@ -329,6 +329,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "YoumaconSecurityOps.Core.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/YoumaconSecurityOps.Core.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/YoumaconSecurityOps.Core.Shared.dll": {}
+        }
       }
     }
   },
@@ -1001,6 +1011,11 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "YoumaconSecurityOps.Core.Shared/1.0.0": {
+      "type": "project",
+      "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
+      "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1008,7 +1023,8 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.5",
       "Microsoft.AspNetCore.Authentication.OpenIdConnect >= 5.0.5",
       "Microsoft.Identity.Web >= 1.1.0",
-      "Microsoft.Identity.Web.UI >= 1.1.0"
+      "Microsoft.Identity.Web.UI >= 1.1.0",
+      "YoumaconSecurityOps.Core.Shared >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1045,7 +1061,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
+              "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

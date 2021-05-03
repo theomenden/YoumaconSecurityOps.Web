@@ -13,8 +13,14 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.ResponseCompression;
 using YoumaconSecurityOps.Api.Models;
+using YoumaconSecurityOps.Core.AutoMapper.Extensions;
+using YoumaconSecurityOps.Core.EventStore.Extensions;
+using YoumaconSecurityOps.Core.Mediatr.Extensions;
 using YoumaconSecurityOps.Data.EntityFramework.Extensions;
 
 namespace YoumaconSecurityOps.Api
@@ -34,14 +40,29 @@ namespace YoumaconSecurityOps.Api
 
             var appSettings = new AppSettings
             {
-                YoumaDbConnectionString = Configuration.GetConnectionString(nameof(YoumaconSecurityOps))
+                YoumaDbConnectionString = Configuration.GetConnectionString("YoumaDbConnectionString"),
+                EventStoreConnectionString = Configuration.GetConnectionString("YoumaEventStore")
             };
 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
+            services.AddMediatR(typeof(Program));
+
             services.AddDataAccessServices(appSettings.YoumaDbConnectionString);
+
+            services.AddAutoMappingServices();
+
+            services.AddMediatrServices();
+
+            services.AddEventStoreServices(appSettings.EventStoreConnectionString);
+
+            services.AddResponseCompression(options =>
+            {
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { MediaTypeNames.Application.Octet });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

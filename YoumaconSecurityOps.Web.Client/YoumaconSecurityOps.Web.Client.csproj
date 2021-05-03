@@ -15,7 +15,10 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

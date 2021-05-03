@@ -10,7 +10,6 @@ namespace YoumaconSecurityOps.Core.Shared.Models.Readers
     {
         public Guid ContactId { get; set; }
 
-
         public virtual ContactReader ContactInformation { get; set; }
 
         public int RoleId { get; set; }
@@ -27,11 +26,11 @@ namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 
         public bool IsOnBreak { get; set; } = false;
 
-        public DateTime BreakStartTime { get; set; }
+        public DateTime? BreakStartAt { get; set; }
 
-        public DateTime BreakEndTime { get; set; }
+        public DateTime? BreakEndAt { get; set; }
 
-        public TimeSpan Duration => BreakEndTime - BreakStartTime;
+        public TimeSpan Duration => BreakEndAt.GetValueOrDefault(DateTime.Now)  - BreakStartAt.GetValueOrDefault(DateTime.Now);
 
         public bool IsRaveApproved { get; set; }
 

@@ -25,6 +25,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
         public String Data { get; set; }
 
         public String Name { get; set; }
+
         public bool Equals(EventReader other)
         {
             if (other is null)
@@ -32,7 +33,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
                 return false;
             }
 
-            return AggregateId.Equals(other.AggregateId) &&
+            return  AggregateId.Equals(other.AggregateId) &&
                     MajorVersion == other.MajorVersion &&
                     MinorVersion == other.MinorVersion;
         }

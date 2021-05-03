@@ -17,6 +17,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
         public AddLocationCommandHandler(IMediator mediator, ILogger<AddLocationCommandHandler> logger)
         {
             _mediator = mediator;
+
             _logger = logger;
         }
 
@@ -31,7 +32,14 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 
         private async Task RaiseLocationCreatedEvent(LocationWriter locationWriter, CancellationToken cancellationToken)
         {
-            var e = new LocationCreatedEvent(locationWriter);
+            var e = new LocationCreatedEvent(locationWriter)
+            {
+                AggregateId = locationWriter.Id.ToString(),
+                Aggregate = nameof(LocationWriter),
+                MajorVersion = 1,
+                MinorVersion = 1,
+                Name = locationWriter.Name
+            };
 
             await _mediator.Publish(e, cancellationToken);
         }

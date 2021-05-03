@@ -32,7 +32,8 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
 
         public IAsyncEnumerable<EventReader> GetAll(CancellationToken cancellationToken = default)
         {
-            var events = _dbContext.Events.AsAsyncEnumerable()
+            var events = _dbContext.Events
+                .AsAsyncEnumerable()
                 .OrderBy(e => e.Name)
                 .ThenBy(e => e.MajorVersion)
                 .ThenBy(e => e.MinorVersion);
@@ -40,16 +41,32 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
             return events;
         }
 
+        public async Task<IEnumerable<EventReader>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            var eventsAsIEnumerable = await _dbContext.Events.ToListAsync(cancellationToken);
+
+            return eventsAsIEnumerable;
+        }
+
         public IAsyncEnumerable<EventReader> GetAllByAggregateId(String aggregateId, CancellationToken cancellationToken = default)
         {
-            var events = GetAll(cancellationToken)
+            var events = _dbContext.Events
                 .AsAsyncEnumerable()
                 .Where(e => e.AggregateId.Equals(aggregateId));
 
             return events;
         }
-        
-        public async Task SaveAsync(Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventBase> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
+
+        public async Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(string aggregateId, CancellationToken cancellationToken = default)
+        {
+            var eventsWithMatchedAggregateId = (await GetAllAsync(cancellationToken))
+                .Where(e => e.AggregateId.Equals(aggregateId));
+
+            return eventsWithMatchedAggregateId;
+        }
+
+
+        public async Task SaveAsync(String aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
         {
             if (events.Count == 0)
             {
@@ -64,8 +81,9 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
                 Data = JsonSerializer.Serialize(ev),
                 Id = Guid.NewGuid(),
                 Name = ev.GetType().Name,
-                AggregateId = aggregateId.ToString(),
-                MinorVersion = ++originatingVersion
+                AggregateId = aggregateId,
+                MinorVersion = ++originatingVersion,
+                MajorVersion = ev.MajorVersion
             });
 
             await _dbContext.Events.AddRangeAsync(listOfEvents, cancellationToken);

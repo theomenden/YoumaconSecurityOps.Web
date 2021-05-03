@@ -36,10 +36,10 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
             entity.Property(e => e.ShirtSize)
                 .IsRequired();
 
-            entity.Property(e => e.BreakEndTime)
+            entity.Property(e => e.BreakEndAt)
                 .IsRequired(false);
 
-            entity.Property(e => e.BreakStartTime)
+            entity.Property(e => e.BreakStartAt)
                 .IsRequired(false);
 
             entity.Property(e => e.IsRaveApproved)
@@ -49,7 +49,8 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
                 .IsRequired();
 
             entity.HasOne(e => e.ContactInformation)
-                .WithOne();
+                .WithOne(c => c.StaffInformation)
+                .HasForeignKey(nameof(ContactReader));
 
             entity.HasOne(e => e.Role)
                 .WithOne();
