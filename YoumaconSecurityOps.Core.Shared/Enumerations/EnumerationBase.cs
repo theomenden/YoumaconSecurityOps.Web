@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace YoumaconSecurityOps.Core.Shared.Enumerations
 {
+    /// <summary>
+    /// <para>A replacement implementation for the standard Enumeration</para>
+    /// </summary>
+    /// <remarks>Implements <see cref="IEquatable{T}"/> | <seealso cref="IComparable"/></remarks>
     public abstract class EnumerationBase: IEquatable<EnumerationBase>, IComparable
     {
         protected EnumerationBase(string name, int id)

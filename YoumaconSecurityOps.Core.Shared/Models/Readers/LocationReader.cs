@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 {
-    public sealed class LocationReader: BaseReader
+    public class LocationReader: BaseReader
     {
         public string Name { get; set; }
 

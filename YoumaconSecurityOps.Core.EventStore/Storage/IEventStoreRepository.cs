@@ -9,10 +9,11 @@ using YoumaconSecurityOps.Core.EventStore.Events;
 
 namespace YoumaconSecurityOps.Core.EventStore.Storage
 {
+
     public interface IEventStoreRepository: IAsyncEnumerable<EventReader>
     {
         IAsyncEnumerable<EventReader> GetAll(CancellationToken cancellationToken = default);
-
+        
         Task<IEnumerable<EventReader>> GetAllAsync(CancellationToken cancellationToken = default);
 
         IAsyncEnumerable<EventReader> GetAllByAggregateId(String aggregateId, CancellationToken cancellationToken = default);

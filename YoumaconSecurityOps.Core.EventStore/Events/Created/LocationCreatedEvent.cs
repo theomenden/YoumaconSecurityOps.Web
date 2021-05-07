@@ -8,5 +8,5 @@ using YoumaconSecurityOps.Core.Shared.Models.Writers;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Created
 {
-    public record LocationCreatedEvent(LocationWriter LocationAdded) : EventBase(LocationAdded.ToJson());
+    public record LocationCreatedEvent(LocationWriter LocationAdded) : EventBase;
 }

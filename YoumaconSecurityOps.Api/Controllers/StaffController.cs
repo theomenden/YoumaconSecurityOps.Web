@@ -35,6 +35,8 @@ namespace YoumaconSecurityOps.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public ActionResult<IAsyncEnumerable<StaffReader>> GetStaffList([FromQuery] GetStaffQuery staffQuery)
         {
+            _logger.LogInformation("{GetStaffList}([FromQuery] GetStaffQuery staffQuery): {@staffQuery}", nameof(GetStaffList), staffQuery);
+            
             return Ok(_mediator.Send(staffQuery));
         }
 

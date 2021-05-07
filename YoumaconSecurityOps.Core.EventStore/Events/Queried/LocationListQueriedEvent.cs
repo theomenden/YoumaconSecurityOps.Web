@@ -8,6 +8,5 @@ using YoumaconSecurityOps.Core.Shared.Parameters;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Queried
 {
-    public record LocationListQueriedEvent(LocationQueryStringParameters Parameters = null) : EventBase(
-        Parameters.ToJson());
+    public record LocationListQueriedEvent(LocationQueryStringParameters Parameters = null) : EventBase;
 }

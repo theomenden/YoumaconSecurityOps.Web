@@ -7,8 +7,13 @@ using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Queries
 {
-    public record GetLocationsQuery : IQuery<IAsyncEnumerable<LocationReader>>
+    public class GetLocationsQuery : IQuery<IAsyncEnumerable<LocationReader>>
     {
-        public Guid Id => Guid.NewGuid();
+        public GetLocationsQuery()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; }
     }
 }

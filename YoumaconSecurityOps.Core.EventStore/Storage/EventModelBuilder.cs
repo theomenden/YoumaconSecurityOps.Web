@@ -9,7 +9,7 @@ using YoumaconSecurityOps.Core.EventStore.Events;
 
 namespace YoumaconSecurityOps.Core.EventStore.Storage
 {
-    class EventModelBuilder
+    internal class EventModelBuilder
     {
         public static void BuildModel(EntityTypeBuilder<EventReader> entity)
         {

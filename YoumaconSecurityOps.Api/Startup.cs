@@ -12,11 +12,14 @@ using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.ResponseCompression;
+using Serilog;
+using YoumaconSecurityOps.Api.Middleware;
 using YoumaconSecurityOps.Api.Models;
 using YoumaconSecurityOps.Core.AutoMapper.Extensions;
 using YoumaconSecurityOps.Core.EventStore.Extensions;
@@ -27,12 +30,19 @@ namespace YoumaconSecurityOps.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment webHost)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{webHost.EnvironmentName}.json", true);
+
+            builder.AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,7 +53,11 @@ namespace YoumaconSecurityOps.Api
                 YoumaDbConnectionString = Configuration.GetConnectionString("YoumaDbConnectionString"),
                 EventStoreConnectionString = Configuration.GetConnectionString("YoumaEventStore")
             };
-
+            
+            services.AddLogging(builder =>
+            {
+                builder.AddSerilog(dispose: true);
+            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
@@ -83,7 +97,13 @@ namespace YoumaconSecurityOps.Api
 
             app.UseHttpsRedirection();
 
+            app.UseSerilogRequestLogging();
+
             app.UseRouting();
+
+            app.UseMiddleware(typeof(ExceptionLogger));
+
+            app.UseMiddleware(typeof(ExceptionHandler));
 
             app.UseAuthentication();
             app.UseAuthorization();

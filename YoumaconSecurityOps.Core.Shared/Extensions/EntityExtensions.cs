@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using YoumaconSecurityOps.Core.Shared.Models;
 
@@ -11,7 +12,7 @@ namespace YoumaconSecurityOps.Core.Shared.Extensions
     public static class EntityExtensions
     {
         private static readonly JsonSerializerOptions DefaultSerializerOptions = new()
-            {WriteIndented = true, IgnoreNullValues = true, PropertyNameCaseInsensitive = true};
+            {WriteIndented = true, ReferenceHandler = ReferenceHandler.Preserve, IgnoreNullValues = true, PropertyNameCaseInsensitive = true};
 
         public static string ToJson<T>(this T entity) where T : IEntity
         {

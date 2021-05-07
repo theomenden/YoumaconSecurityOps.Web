@@ -35,6 +35,9 @@ namespace YoumaconSecurityOps.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public ActionResult<IAsyncEnumerable<LocationReader>> GetLocations([FromQuery]GetLocationsQuery query)
         {
+           
+
+            _logger.LogInformation("{GetLocations}([FromQuery]GetLocationsQuery query) \n GetLocationsQuery:{@query}", nameof(GetLocations), query);
             return Ok(_mediator.Send(query));
         }
 
@@ -44,6 +47,7 @@ namespace YoumaconSecurityOps.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public ActionResult<IAsyncEnumerable<LocationReader>> GetHotels([FromQuery]GetLocationsWithParametersQuery parameters)
         {
+            _logger.LogInformation("{GetHotels}GetHotels([FromQuery]GetLocationsWithParametersQuery parameters) \n GetLocationsWithParametersQuery:{@parameters}", nameof(GetHotels), parameters);
             return Ok(_mediator.Send(parameters));
         }
 

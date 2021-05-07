@@ -8,5 +8,5 @@ using YoumaconSecurityOps.Core.Shared.Models.Writers;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Created
 {
-    public record ContactCreatedEvent(ContactWriter ContactWriter): EventBase(ContactWriter.ToJson());
+    public record ContactCreatedEvent(ContactWriter ContactWriter): EventBase;
 }

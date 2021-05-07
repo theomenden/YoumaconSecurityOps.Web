@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -25,19 +26,29 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             _logger = logger;
         }
 
-        public Task<IAsyncEnumerable<LocationReader>> Handle(GetLocationsQuery request, CancellationToken cancellationToken)
+        public async Task<IAsyncEnumerable<LocationReader>> Handle(GetLocationsQuery request, CancellationToken cancellationToken)
         {
-            RaiseLocationsQueriedEvent(cancellationToken);
+            await RaiseLocationsQueriedEvent(request,cancellationToken);
 
-            return Task.FromResult(_locations.GetAll(cancellationToken));
+            return _locations.GetAll(cancellationToken);
         }
 
-        private void RaiseLocationsQueriedEvent(CancellationToken cancellationToken)
+        private async Task RaiseLocationsQueriedEvent(GetLocationsQuery request,CancellationToken cancellationToken)
         {
 
-            var e = new LocationListQueriedEvent();
+            var e = new LocationListQueriedEvent
+            {
+                Aggregate = nameof(GetLocationsQuery),
+                DataAsJson = String.Empty,
+                AggregateId = request.Id.ToString(),
+                MajorVersion = 1,
+                MinorVersion = 1,
+                Name = nameof(request)
+            };
 
-            _mediator.Publish(e, cancellationToken);
+            _logger.LogInformation("Logged event of type {LocationListQueriedEvent} {e}, {request}, {RaiseLocationsQueriedEvent}", typeof(LocationListQueriedEvent), e, request, nameof(RaiseLocationsQueriedEvent));
+
+            await _mediator.Publish(e, cancellationToken);
         }
     }
 }

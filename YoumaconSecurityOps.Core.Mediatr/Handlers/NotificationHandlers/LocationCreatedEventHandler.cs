@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using YoumaconSecurityOps.Core.EventStore.Events.Added;
 using YoumaconSecurityOps.Core.EventStore.Events.Created;
 using YoumaconSecurityOps.Core.EventStore.Storage;
+using YoumaconSecurityOps.Core.Shared.Extensions;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Core.Shared.Repositories;
 
@@ -51,6 +52,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
             {
                 AggregateId = createdLocation.AggregateId,
                 Aggregate = createdLocation.Aggregate,
+                DataAsJson = locationAdded.ToJson(),
                 MajorVersion = createdLocation.MajorVersion,
                 MinorVersion = ++createdLocation.MinorVersion,
                 Name = createdLocation.Name

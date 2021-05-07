@@ -8,7 +8,5 @@ using YoumaconSecurityOps.Core.Shared.Parameters;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Queried
 {
-    public record StaffListQueriedEvent(StaffQueryStringParameters QueryParameters = null): EventBase(QueryParameters.ToJson())
-    {
-    }
+    public record StaffListQueriedEvent(StaffQueryStringParameters QueryParameters = null) : EventBase;
 }
