@@ -8,5 +8,13 @@ using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Updated
 {
-    public record ContactListUpdatedEvent(ContactReader ContactReader) : EventBase;
+    public class ContactListUpdatedEvent : EventBase
+    {
+        public ContactListUpdatedEvent(ContactReader contactReader)
+        {
+            ContactReader = contactReader;
+        }
+
+        public ContactReader ContactReader { get; }
+    }
 }

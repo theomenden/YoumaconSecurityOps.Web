@@ -34,7 +34,6 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
         {
             var e = new LocationCreatedEvent(locationWriter)
             {
-                AggregateId = locationWriter.Id.ToString(),
                 Aggregate = nameof(LocationWriter),
                 MajorVersion = 1,
                 MinorVersion = 1,

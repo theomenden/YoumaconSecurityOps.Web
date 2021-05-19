@@ -11,19 +11,19 @@ using YoumaconSecurityOps.Core.EventStore.Events;
 
 namespace YoumaconSecurityOps.Core.EventStore.Storage
 {
-    internal sealed class EventStoreRepository: IEventStoreRepository
+    internal sealed class EventStoreRepository : IEventStoreRepository
     {
         private readonly EventStoreDbContext _dbContext;
 
-        //private readonly ILogger<EventStoreRepository> _logger;
+        private readonly ILogger<EventStoreRepository> _logger;
 
-        public EventStoreRepository(EventStoreDbContext dbContext)//,ILogger<EventStoreRepository> logger)
+        public EventStoreRepository(EventStoreDbContext dbContext,ILogger<EventStoreRepository> logger)
         {
             _dbContext = dbContext;
-            //_logger = logger;
+            _logger = logger;
         }
 
-        public IAsyncEnumerator<EventReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
+        public IAsyncEnumerator<EventReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
         {
             var eventStoreAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
 
@@ -48,40 +48,36 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
             return eventsAsIEnumerable;
         }
 
-        public IAsyncEnumerable<EventReader> GetAllByAggregateId(String aggregateId, CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<EventReader> GetAllByAggregateId(Guid aggregateId, CancellationToken cancellationToken = default)
         {
             var events = _dbContext.Events
                 .AsAsyncEnumerable()
-                .Where(e => e.AggregateId.Equals(aggregateId));
+                .Where(e => e.Id == aggregateId);
 
             return events;
         }
 
-        public async Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(string aggregateId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(Guid aggregateId, CancellationToken cancellationToken = default)
         {
             var eventsWithMatchedAggregateId = (await GetAllAsync(cancellationToken))
-                .Where(e => e.AggregateId.Equals(aggregateId));
+                .Where(e => e.Id.Equals(aggregateId));
 
             return eventsWithMatchedAggregateId;
         }
 
 
-        public async Task SaveAsync(String aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
+        public async Task SaveAsync(Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
         {
             if (events.Count == 0)
             {
                 return;
             }
             
-
-            var listOfEvents = events.Select(ev => new EventReader 
+            var listOfEvents = events.Select(ev => new EventReader
             {
                 Aggregate = aggregateName,
-                CreatedAt = ev.CreatedAt,
                 Data = JsonSerializer.Serialize(ev),
-                Id = Guid.NewGuid(),
                 Name = ev.GetType().Name,
-                AggregateId = aggregateId,
                 MinorVersion = ++originatingVersion,
                 MajorVersion = ev.MajorVersion
             });
@@ -89,6 +85,16 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
             await _dbContext.Events.AddRangeAsync(listOfEvents, cancellationToken);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default)
+        {
+            _logger.LogInformation("SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default): Attempting to add: {@initialEvent}", initialEvent);
+            await _dbContext.Events.AddAsync(initialEvent, cancellationToken);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            _logger.LogInformation($"Aggregate for {initialEvent.Id} added", initialEvent);
         }
     }
 }

@@ -7,5 +7,5 @@ using YoumaconSecurityOps.Core.EventStore.Events;
 
 namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
 {
-    public record DummyEvent() : EventBase;
+   // public record DummyEvent() : EventRecordBase;
 }

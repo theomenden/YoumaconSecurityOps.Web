@@ -8,5 +8,13 @@ using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Updated
 {
-    public record StaffListUpdatedEvent(StaffReader StaffReader) : EventBase;
+    public class StaffListUpdatedEvent : EventBase
+    {
+        public StaffListUpdatedEvent(StaffReader staffReader)
+        {
+            StaffReader = staffReader;
+        }
+
+        public StaffReader StaffReader { get; }
+    }
 }

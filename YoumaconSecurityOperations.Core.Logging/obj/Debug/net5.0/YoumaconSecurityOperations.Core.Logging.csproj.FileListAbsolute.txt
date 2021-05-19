@@ -5,7 +5,6 @@ C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurit
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\bin\Debug\net5.0\YoumaconSecurityOperations.Core.Logging.dll
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\bin\Debug\net5.0\ref\YoumaconSecurityOperations.Core.Logging.dll
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\bin\Debug\net5.0\YoumaconSecurityOperations.Core.Logging.pdb
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\obj\Debug\net5.0\YoumaconSecurityOperations.Core.Logging.csprojAssemblyReference.cache
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\obj\Debug\net5.0\YoumaconSecurityOperations.Core.Logging.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\obj\Debug\net5.0\YoumaconSecurityOperations.Core.Logging.AssemblyInfoInputs.cache
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOperations.Core.Logging\obj\Debug\net5.0\YoumaconSecurityOperations.Core.Logging.AssemblyInfo.cs

@@ -33,29 +33,29 @@ namespace YoumaconSecurityOps.Api.Controllers
         [HttpGet(nameof(GetStaffList))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<StaffReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public ActionResult<IAsyncEnumerable<StaffReader>> GetStaffList([FromQuery] GetStaffQuery staffQuery)
+        public async Task<ActionResult<IAsyncEnumerable<StaffReader>>> GetStaffList([FromQuery] GetStaffQuery staffQuery)
         {
             _logger.LogInformation("{GetStaffList}([FromQuery] GetStaffQuery staffQuery): {@staffQuery}", nameof(GetStaffList), staffQuery);
             
-            return Ok(_mediator.Send(staffQuery));
+            return Ok(await _mediator.Send(staffQuery));
         }
 
         // GET api/<StaffController>/5
         [HttpGet(nameof(GetStaffListWithParameters))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<StaffReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public ActionResult<IAsyncEnumerable<StaffReader>> GetStaffListWithParameters([FromQuery] GetStaffWithParametersQuery staffWithParametersQuery)
+        public async Task<ActionResult<IAsyncEnumerable<StaffReader>>> GetStaffListWithParameters([FromQuery] GetStaffWithParametersQuery staffWithParametersQuery)
         {
-            return Ok(_mediator.Send(staffWithParametersQuery));
+            return Ok(await _mediator.Send(staffWithParametersQuery));
         }
 
         // POST api/<StaffController>
         [HttpPost(nameof(AddStaffMember))]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public IActionResult AddStaffMember([FromBody] AddFullStaffEntryCommand addFullStaffEntryCommand)
+        public async Task<IActionResult> AddStaffMember([FromBody] AddFullStaffEntryCommand addFullStaffEntryCommand)
         {
-            return Created(Request.Path.Value, _mediator.Send(addFullStaffEntryCommand));
+            return Created(Request.Path.Value, await _mediator.Send(addFullStaffEntryCommand));
         }
     }
 }

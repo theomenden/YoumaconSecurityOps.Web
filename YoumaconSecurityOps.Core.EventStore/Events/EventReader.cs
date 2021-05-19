@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using YoumaconSecurityOps.Core.Shared.Models;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events
 {
-    public class EventReader : IEquatable<EventReader>, IComparable<EventReader>
+    public class EventReader: IEntity
     {
         public Guid Id { get; set; }
 
@@ -19,9 +20,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
         public Int32 MinorVersion { get; set; }
 
         public String Aggregate { get; set; }
-
-        public String AggregateId { get; set; }
-
+        
         public String Data { get; set; }
 
         public String Name { get; set; }
@@ -33,7 +32,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
                 return false;
             }
 
-            return  AggregateId.Equals(other.AggregateId) &&
+            return  Id.Equals(other.Id) &&
                     MajorVersion == other.MajorVersion &&
                     MinorVersion == other.MinorVersion;
         }
@@ -75,7 +74,8 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
 
         public override int GetHashCode()
         {
-            return 53 * HashCode.Combine(Id, AggregateId, MinorVersion);
+            return 53 * HashCode.Combine(Id, CreatedAt);
         }
+        
     }
 }

@@ -7,8 +7,7 @@ using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Queries
 {
-    public record GetContactsQuery: IQuery<ContactReader>
+    public class GetContactsQuery: QueryBase<IAsyncEnumerable<ContactReader>>
     {
-        public Guid Id => Guid.NewGuid();
     }
 }

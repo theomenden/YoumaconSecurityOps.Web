@@ -13,8 +13,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Extensions
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection services,
-            string youmaDbConnectionString)
+        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, string youmaDbConnectionString)
         {
 
             services.AddDbContext<YoumaconSecurityDbContext>(options => options.UseSqlServer(youmaDbConnectionString));
@@ -22,6 +21,8 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Extensions
             services
                 .AddScoped<IContactAccessor, ContactRepository>()
                 .AddScoped<IContactRepository, ContactRepository>()
+                .AddScoped<IShiftAccessor, ShiftRepository>()
+                .AddScoped<IShiftRepository, ShiftRepository>()
                 .AddScoped<IStaffAccessor, StaffRepository>()
                 .AddScoped<IStaffRepository, StaffRepository>()
                 .AddScoped<ILocationAccessor, LocationRepository>()

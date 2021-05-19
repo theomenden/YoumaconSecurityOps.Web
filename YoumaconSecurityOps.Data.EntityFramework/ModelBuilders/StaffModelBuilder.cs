@@ -18,45 +18,42 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
 
             entity.HasKey(e => e.Id);
 
-            entity.Property(e => e.ContactId)
-                .HasColumnName("Contact_Id")
-                .IsRequired();
+            entity.HasIndex(e => e.ContactId, "IX_Staff_Contact_Id");
 
-            entity.Property(e => e.IsBlackShirt)
-                .IsRequired();
+            entity.HasIndex(e => e.RoleId, "IX_Staff_RoleId");
 
-            entity.Property(e => e.RoleId)
-                .HasColumnName("Role_Id")
-                .IsRequired();
+            entity.HasIndex(e => e.StaffTypeId, "IX_Staff_StaffType_Id");
 
-            entity.Property(e => e.StaffTypeId)
-                .HasColumnName("StaffType_Id")
-                .IsRequired();
+            entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
 
-            entity.Property(e => e.ShirtSize)
-                .IsRequired();
+            entity.Property(e => e.ContactId).HasColumnName("Contact_Id");
 
-            entity.Property(e => e.BreakEndAt)
-                .IsRequired(false);
+            entity.Property(e => e.NeedsCrashSpace)
+                .IsRequired()
+                .HasDefaultValueSql("((1))");
 
-            entity.Property(e => e.BreakStartAt)
-                .IsRequired(false);
+            entity.Property(e => e.RoleId).HasColumnName("Role_Id");
 
-            entity.Property(e => e.IsRaveApproved)
-                .IsRequired();
+            entity.Property(e => e.ShirtSize).HasMaxLength(6);
 
-            entity.Property(e => e.IsOnBreak)
-                .IsRequired();
+            entity.Property(e => e.StaffTypeId).HasColumnName("StaffType_Id");
 
-            entity.HasOne(e => e.ContactInformation)
-                .WithOne(c => c.StaffInformation)
-                .HasForeignKey(nameof(ContactReader));
+            entity.HasOne(d => d.ContactInformation)
+                .WithOne(p => p.StaffInformation)
+                .HasForeignKey<StaffReader>(s => s.ContactId)
+                .HasConstraintName("FK_Staff_Contacts_ContactId");
 
-            entity.HasOne(e => e.Role)
-                .WithOne();
+            entity.HasOne(d => d.Role)
+                .WithMany(p => p.Staff)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Staff_Roles");
 
-            entity.HasOne(e => e.StaffType)
-                .WithOne();
+            entity.HasOne(d => d.StaffType)
+                .WithMany(p => p.Staff)
+                .HasForeignKey(d => d.StaffTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Staff_StaffTypes");
         }
     }
 }

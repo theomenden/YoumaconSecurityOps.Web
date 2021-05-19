@@ -31,11 +31,11 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
         public async Task Handle(LocationAddedEvent notification, CancellationToken cancellationToken)
         {
             var eventsOnThisAggregate = (await _eventStore
-                .GetAllByAggregateId(notification.AggregateId, cancellationToken)
+                .GetAllByAggregateId(notification.Id, cancellationToken)
                 .ToListAsync(cancellationToken))
                 .AsReadOnly();
 
-            await _eventStore.SaveAsync(notification.AggregateId,notification.MinorVersion,eventsOnThisAggregate, notification.Name, cancellationToken);
+            await _eventStore.SaveAsync(notification.Id,notification.MinorVersion,eventsOnThisAggregate, notification.Name, cancellationToken);
 
             await RaiseLocationListUpdatedEvent(notification, cancellationToken);
         }
@@ -46,7 +46,6 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
             var e = new LocationListUpdatedEvent
             {
                 Aggregate = locationAdded.Aggregate,
-                AggregateId = locationAdded.AggregateId,
                 DataAsJson = locationAdded.LocationAdded.ToJson(),
                 MajorVersion = locationAdded.MajorVersion,
                 MinorVersion = locationAdded.MinorVersion,

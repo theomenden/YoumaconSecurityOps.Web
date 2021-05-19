@@ -10,7 +10,5 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
     public interface IEvent: INotification
     {
         Guid Id { get; }
-
-        DateTime CreatedAt { get; }
     }
 }

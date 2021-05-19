@@ -12,7 +12,7 @@ namespace YoumaconSecurityOps.Core.Shared.Extensions
     public static class EntityExtensions
     {
         private static readonly JsonSerializerOptions DefaultSerializerOptions = new()
-            {WriteIndented = true, ReferenceHandler = ReferenceHandler.Preserve, IgnoreNullValues = true, PropertyNameCaseInsensitive = true};
+            {WriteIndented = true,  IgnoreNullValues = true, PropertyNameCaseInsensitive = true};
 
         public static string ToJson<T>(this T entity) where T : IEntity
         {

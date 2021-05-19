@@ -8,8 +8,13 @@ using YoumaconSecurityOps.Core.Shared.Parameters;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Queries
 {
-    public record GetStaffWithParametersQuery(StaffQueryStringParameters Parameters): IQuery<IAsyncEnumerable<StaffReader>>
+    public class GetStaffWithParametersQuery:QueryBase<IAsyncEnumerable<StaffReader>>
     {
-        public Guid Id => Guid.NewGuid();
+        public GetStaffWithParametersQuery(StaffQueryStringParameters parameters)
+        {
+            Parameters = parameters;
+        }
+
+        public StaffQueryStringParameters Parameters { get;}
     }
 }

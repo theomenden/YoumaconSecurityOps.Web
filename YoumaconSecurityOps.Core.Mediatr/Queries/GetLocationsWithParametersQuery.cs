@@ -8,8 +8,13 @@ using YoumaconSecurityOps.Core.Shared.Parameters;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Queries
 {
-    public record GetLocationsWithParametersQuery(LocationQueryStringParameters Parameters): IQuery<IAsyncEnumerable<LocationReader>>
+    public class GetLocationsWithParametersQuery: QueryBase<IAsyncEnumerable<LocationReader>>
     {
-        public Guid Id => Guid.NewGuid();
+        public GetLocationsWithParametersQuery(LocationQueryStringParameters parameters)
+        {
+            Parameters = parameters;
+        }
+
+        public LocationQueryStringParameters Parameters { get; }
     }
 }

@@ -34,7 +34,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
 
             _testDbContext.SaveChanges();
 
-            _eventStoreRepository = new EventStoreRepository(_testDbContext);
+            //_eventStoreRepository = new EventStoreRepository(_testDbContext);
         }
 
         [Fact]
@@ -58,9 +58,9 @@ namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
         public async Task GetAllByAggregateId_ShouldReturnAllEventsInTheStore()
         {
             //ARRANGE
-            var aggregateId = _events.Random().AggregateId;
+            var aggregateId = _events.Random().Id;
 
-            var eventsCount = _events.Count(a => a.AggregateId.Equals(aggregateId));
+            var eventsCount = _events.Count(a => a.Id == aggregateId);
 
             //ACT
             var results = await _eventStoreRepository.GetAllByAggregateId(aggregateId).ToListAsync();
@@ -69,7 +69,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
             results.ShouldSatisfyAllConditions(
                 () => results.Count.ShouldBe(eventsCount),
                 () => results.ShouldNotBeEmpty(),
-                () => results.ShouldAllBe(e => e.AggregateId.Equals(aggregateId))
+                () => results.ShouldAllBe(e => e.Id.Equals(aggregateId))
             );
         }
 
@@ -77,7 +77,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
         {
             A.Configure<EventReader>()
                 .Fill(a => a.Name).AsLoremIpsumSentences()
-                .Fill(b => b.AggregateId).AsPhoneNumber()
+                .Fill(b => b.Id, Guid.NewGuid())
                 .Fill(c => c.Aggregate).AsMusicGenreName()
                 .Fill(d => d.Data).AsLoremIpsumSentences(4)
                 .Fill(e => e.MinorVersion).WithinRange(1,10000);

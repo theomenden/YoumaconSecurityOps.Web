@@ -167,5 +167,43 @@ namespace YoumaconSecurityOps.Core.Shared.Tests.Extensions
             result1.ShouldBeFalse();
             result2.ShouldBeFalse();
         }
+
+        [Fact]
+        public void IsNotBetween_ShouldReturnFalseWhenValueFallsBetweenRange()
+        {
+            //ARRANGE
+            var lowerBound = -100;
+
+            var upperBound = 100;
+
+            var testValue = RandomData.GetInt(-99, 99);
+
+            //ACT
+            var result = testValue.IsBetween(lowerBound, upperBound);
+
+
+            //ASSERT
+            result.ShouldBeTrue();
+
+        }
+
+        [Fact]
+        public void IsNotBetween_ShouldReturnTrueWhenValueFallsOutsideRange()
+        {
+            //ARRANGE
+            var lowerBound = -100;
+
+            var upperBound = 100;
+
+            var testValue = 101;
+
+            //ACT
+            var result = testValue.IsBetween(lowerBound, upperBound);
+
+
+            //ASSERT
+            result.ShouldBeFalse();
+
+        }
     }
 }

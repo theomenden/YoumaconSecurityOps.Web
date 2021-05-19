@@ -33,9 +33,9 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
         {
             var eventToAdd = _mapper.Map<EventReader>(notification);
 
-            var previousEvents = await _eventStore.GetAllByAggregateId(eventToAdd.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+            var previousEvents = await _eventStore.GetAllByAggregateId(eventToAdd.Id, cancellationToken).ToListAsync(cancellationToken);
             
-            await _eventStore.SaveAsync(eventToAdd.AggregateId, eventToAdd.MinorVersion, previousEvents.AsReadOnly(), eventToAdd.Aggregate,
+            await _eventStore.SaveAsync(eventToAdd.Id, eventToAdd.MinorVersion, previousEvents.AsReadOnly(), eventToAdd.Aggregate,
                 cancellationToken);
         }
     }

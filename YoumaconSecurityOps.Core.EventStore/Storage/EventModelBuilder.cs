@@ -15,28 +15,32 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
         {
             entity.ToTable("Events");
 
-            entity.HasKey(e => new {e.MinorVersion, e.AggregateId});
+            entity.HasKey(e => new {e.MinorVersion, e.Id})
+                .HasName("PK_Events_Id");
 
             entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
                 .IsRequired();
 
             entity.Property(e => e.CreatedAt)
+                .ValueGeneratedOnAdd()
                 .IsRequired();
 
             entity.Property(e => e.Data)
                 .IsRequired();
 
-            entity.Property(e => e.AggregateId)
-                .IsRequired();
-
             entity.Property(e => e.MinorVersion)
+                .HasColumnName("Minor_Version")
                 .IsRequired();
 
             entity.Property(e => e.MajorVersion)
+                .HasColumnName("Major_Version")
                 .IsRequired();
 
             entity.Property(e => e.Name)
                 .IsRequired();
+
+            entity.HasIndex(e => new { e.MajorVersion, e.MinorVersion }, "IX_Events_MajorMinor");
         }
     }
 }

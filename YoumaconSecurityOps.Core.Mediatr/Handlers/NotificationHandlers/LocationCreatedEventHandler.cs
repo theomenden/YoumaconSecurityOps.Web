@@ -50,7 +50,6 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
         {
             var e = new LocationAddedEvent(locationAdded)
             {
-                AggregateId = createdLocation.AggregateId,
                 Aggregate = createdLocation.Aggregate,
                 DataAsJson = locationAdded.ToJson(),
                 MajorVersion = createdLocation.MajorVersion,

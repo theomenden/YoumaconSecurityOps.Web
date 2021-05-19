@@ -56,7 +56,6 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
         {
             var e = new StaffListQueriedEvent(parameters)
             {
-                AggregateId = parameters.Id.ToString(),
                 Aggregate = nameof(StaffQueryStringParameters),
                 MajorVersion = 1,
                 MinorVersion = 1,

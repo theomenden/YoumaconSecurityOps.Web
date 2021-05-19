@@ -9,5 +9,13 @@ using YoumaconSecurityOps.Core.Shared.Models.Writers;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Created
 {
-    public record StaffCreatedEvent(StaffWriter StaffWriter) : EventBase;
+    public class StaffCreatedEvent : EventBase
+    {
+        public StaffCreatedEvent(StaffWriter staffWriter)
+        {
+            StaffWriter = staffWriter;
+        }
+
+        public StaffWriter StaffWriter { get; }
+    }
 }

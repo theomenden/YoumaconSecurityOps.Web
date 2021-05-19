@@ -12,9 +12,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
     {
         public EventStoreDbContext(DbContextOptions<EventStoreDbContext> options)
             :base(options)
-        {
-
-        }
+        {}
 
         public DbSet<EventReader> Events { get; set; }
 

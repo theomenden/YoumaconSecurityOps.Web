@@ -34,10 +34,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
             var @event = new EventReader
             {
                 Aggregate = notification.Aggregate,
-                AggregateId = notification.AggregateId,
-                CreatedAt = notification.CreatedAt,
                 Data = notification.DataAsJson,
-                Id = notification.Id,
                 MajorVersion = notification.MajorVersion,
                 MinorVersion = notification.MinorVersion,
                 Name = notification.Name
@@ -45,7 +42,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
             
             var previousEventsOnAggregate = new List<EventReader> {@event};
 
-            await _eventStore.SaveAsync(notification.Id.ToString(), notification.MinorVersion, previousEventsOnAggregate.ToList().AsReadOnly(),
+            await _eventStore.SaveAsync(notification.Id, notification.MinorVersion, previousEventsOnAggregate.ToList().AsReadOnly(),
                 notification.Aggregate, cancellationToken);
         }
     }

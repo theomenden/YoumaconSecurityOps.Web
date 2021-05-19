@@ -16,11 +16,13 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
         
         Task<IEnumerable<EventReader>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        IAsyncEnumerable<EventReader> GetAllByAggregateId(String aggregateId, CancellationToken cancellationToken = default);
+        IAsyncEnumerable<EventReader> GetAllByAggregateId(Guid aggregateId, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(String aggregateId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(Guid aggregateId, CancellationToken cancellationToken = default);
 
-        Task SaveAsync(String aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events,
+        Task SaveAsync(Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events,
             string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default);
+
+        Task SaveAsync(EventReader initalEvent, CancellationToken cancellationToken = default);
     }
 }

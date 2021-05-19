@@ -17,28 +17,35 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
 
             entity.HasKey(e => e.Id);
 
+            entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
+
+            entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
+
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.FacebookName).HasMaxLength(100);
+
             entity.Property(e => e.FirstName)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(100);
 
             entity.Property(e => e.LastName)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(100);
 
-            entity.Property(e => e.PreferredName)
-                .IsRequired();
+            entity.Property(e => e.PreferredName).HasMaxLength(100);
 
-            entity.Property(e => e.FacebookName)
-                .IsRequired();
+            entity.Property(e => e.StaffId).HasColumnName("Staff_Id");
 
-            entity.Property(e => e.CreatedOn)
-                .IsRequired();
-
-            entity.Property(e => e.StaffId)
-                .HasColumnName("Staff_Id")
-                .IsRequired();
-
-            entity.HasOne(e => e.StaffInformation)
+            entity.HasOne(c => c.StaffInformation)
                 .WithOne(s => s.ContactInformation)
-                .HasForeignKey(nameof(StaffReader));
+                .HasForeignKey<ContactReader>(c => c.StaffId);
+
+            entity.HasIndex(e => new { e.LastName, e.FirstName }, "IX_Contacts_LastName_FirstName");
+
+            entity.HasIndex(e => e.StaffId, "IX_Contacts_StaffId");
         }
     }
 }

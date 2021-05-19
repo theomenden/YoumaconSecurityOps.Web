@@ -1,0 +1,52 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using YoumaconSecurityOps.Core.EventStore.Events;
+using YoumaconSecurityOps.Core.EventStore.Events.Created;
+using YoumaconSecurityOps.Core.EventStore.Storage;
+using YoumaconSecurityOps.Core.Mediatr.Commands;
+using YoumaconSecurityOps.Core.Shared.Models.Writers;
+
+namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+{
+    internal sealed class AddShiftCommandHandler: AsyncRequestHandler<AddShiftCommand>
+    {
+        private readonly IEventStoreRepository _eventStore;
+
+        private readonly ILogger<AddShiftCommandHandler> _logger;
+        
+        private readonly IMapper _mapper;
+
+        private readonly IMediator _mediator;
+        
+        public AddShiftCommandHandler(IEventStoreRepository eventStore, ILogger<AddShiftCommandHandler> logger, IMapper mapper,IMediator mediator)
+        {
+            _eventStore = eventStore;
+
+            _logger = logger;
+
+            _mapper = mapper;
+
+            _mediator = mediator;
+        }
+
+        protected override async Task Handle(AddShiftCommand request, CancellationToken cancellationToken)
+        {
+            var shiftWriter = new ShiftWriter(request.StartAt, request.EndAt, request.StaffMember,
+                request.StartingLocation);
+
+            await RaiseShiftCreatedEvent(shiftWriter, cancellationToken);
+        }
+
+        private async Task RaiseShiftCreatedEvent(ShiftWriter shiftWriter, CancellationToken cancellationToken)
+        {
+            var e = new ShiftCreatedEvent(shiftWriter);
+            
+            await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
+
+            await _mediator.Publish(e, cancellationToken);
+        }
+    }
+}

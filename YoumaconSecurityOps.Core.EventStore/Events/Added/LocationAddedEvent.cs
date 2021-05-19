@@ -8,5 +8,15 @@ using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events.Added
 {
-    public record LocationAddedEvent(LocationReader LocationAdded) : EventBase;
+    public class LocationAddedEvent : EventBase
+    {
+        public LocationAddedEvent(LocationReader locationAdded)
+        {
+            LocationAdded = locationAdded;
+
+            DataAsJson = locationAdded.ToJson();
+        }
+
+        public LocationReader LocationAdded { get; }
+    }
 }

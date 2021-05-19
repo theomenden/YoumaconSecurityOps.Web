@@ -33,31 +33,30 @@ namespace YoumaconSecurityOps.Api.Controllers
         [HttpGet(nameof(GetLocations))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<LocationReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public ActionResult<IAsyncEnumerable<LocationReader>> GetLocations([FromQuery]GetLocationsQuery query)
+        public async Task<ActionResult<IAsyncEnumerable<LocationReader>>> GetLocations([FromQuery]GetLocationsQuery query)
         {
-           
-
             _logger.LogInformation("{GetLocations}([FromQuery]GetLocationsQuery query) \n GetLocationsQuery:{@query}", nameof(GetLocations), query);
-            return Ok(_mediator.Send(query));
+
+            return Ok(await _mediator.Send(query));
         }
 
         // GET api/<LocationController>/5
         [HttpGet(nameof(GetHotels))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<LocationReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public ActionResult<IAsyncEnumerable<LocationReader>> GetHotels([FromQuery]GetLocationsWithParametersQuery parameters)
+        public async Task<ActionResult<IAsyncEnumerable<LocationReader>>> GetHotels([FromQuery]GetLocationsWithParametersQuery parameters)
         {
             _logger.LogInformation("{GetHotels}GetHotels([FromQuery]GetLocationsWithParametersQuery parameters) \n GetLocationsWithParametersQuery:{@parameters}", nameof(GetHotels), parameters);
-            return Ok(_mediator.Send(parameters));
+            return Ok(await _mediator.Send(parameters));
         }
 
         // POST api/<LocationController>
         [HttpPost(nameof(AddLocation))]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public IActionResult AddLocation([FromBody]AddLocationCommand command)
+        public async Task<IActionResult> AddLocation([FromBody]AddLocationCommand command)
         {
-            return Created(Request.Path.Value,_mediator.Send(command));
+            return Created(Request.Path.Value,await _mediator.Send(command));
         }
     }
 }

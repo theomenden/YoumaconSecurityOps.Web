@@ -39,12 +39,10 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 
         private void RaiseStaffListQueriedEvent(GetStaffQuery query)
         {
-            var e = new StaffListQueriedEvent
+            var e = new StaffListQueriedEvent(null)
             {
-                AggregateId = query.Id.ToString(),
                 Aggregate = nameof(GetStaffQuery),
                 MajorVersion = 1,
-                MinorVersion = 1,
                 Name = nameof(StaffListQueriedEvent)
             };
             _mediator.Publish(e);
