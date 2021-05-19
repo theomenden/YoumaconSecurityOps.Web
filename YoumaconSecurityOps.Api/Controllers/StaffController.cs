@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -26,6 +27,7 @@ namespace YoumaconSecurityOps.Api.Controllers
         public StaffController(IMediator mediator, ILogger<StaffController> logger)
         {
             _mediator = mediator;
+
             _logger = logger;
         }
 
@@ -33,20 +35,34 @@ namespace YoumaconSecurityOps.Api.Controllers
         [HttpGet(nameof(GetStaffList))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<StaffReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult<IAsyncEnumerable<StaffReader>>> GetStaffList([FromQuery] GetStaffQuery staffQuery)
+        public async Task<ActionResult<IAsyncEnumerable<StaffReader>>> GetStaffList([FromQuery] GetStaffQuery staffQuery, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("{GetStaffList}([FromQuery] GetStaffQuery staffQuery): {@staffQuery}", nameof(GetStaffList), staffQuery);
-            
-            return Ok(await _mediator.Send(staffQuery));
+           
+            var staffList = await _mediator.Send(staffQuery, cancellationToken);
+
+            if (staffList?.GetAsyncEnumerator(cancellationToken).Current is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(staffList);
         }
 
         // GET api/<StaffController>/5
         [HttpGet(nameof(GetStaffListWithParameters))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<StaffReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult<IAsyncEnumerable<StaffReader>>> GetStaffListWithParameters([FromQuery] GetStaffWithParametersQuery staffWithParametersQuery)
+        public async Task<ActionResult<IAsyncEnumerable<StaffReader>>> GetStaffListWithParameters([FromQuery] GetStaffWithParametersQuery staffWithParametersQuery, CancellationToken cancellationToken = default)
         {
-            return Ok(await _mediator.Send(staffWithParametersQuery));
+            var staffList = await _mediator.Send(staffWithParametersQuery, cancellationToken);
+
+            if (staffList?.GetAsyncEnumerator(cancellationToken).Current is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(staffList);
         }
 
         // POST api/<StaffController>

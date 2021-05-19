@@ -18,11 +18,11 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
 
             entity.HasKey(e => e.Id);
 
-            entity.HasIndex(e => e.ContactId, "IX_Staff_Contact_Id");
+            entity.Property(e => e.BreakEndAt)
+                .IsRequired(false);
 
-            entity.HasIndex(e => e.RoleId, "IX_Staff_RoleId");
-
-            entity.HasIndex(e => e.StaffTypeId, "IX_Staff_StaffType_Id");
+            entity.Property(e => e.BreakStartAt)
+                .IsRequired(false);
 
             entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
 
@@ -54,6 +54,13 @@ namespace YoumaconSecurityOps.Data.EntityFramework.ModelBuilders
                 .HasForeignKey(d => d.StaffTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Staff_StaffTypes");
+
+
+            entity.HasIndex(e => e.ContactId, "IX_Staff_Contact_Id");
+
+            entity.HasIndex(e => e.RoleId, "IX_Staff_RoleId");
+
+            entity.HasIndex(e => e.StaffTypeId, "IX_Staff_StaffType_Id");
         }
     }
 }

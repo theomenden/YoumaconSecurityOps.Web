@@ -45,6 +45,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
                 MajorVersion = 1,
                 Name = nameof(StaffListQueriedEvent)
             };
+
             _mediator.Publish(e);
         }
     }
