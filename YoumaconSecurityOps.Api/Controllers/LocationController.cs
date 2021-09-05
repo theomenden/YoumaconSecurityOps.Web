@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MediatR;
@@ -33,30 +34,46 @@ namespace YoumaconSecurityOps.Api.Controllers
         [HttpGet(nameof(GetLocations))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<LocationReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult<IAsyncEnumerable<LocationReader>>> GetLocations([FromQuery]GetLocationsQuery query)
+        public async Task<ActionResult<IAsyncEnumerable<LocationReader>>> GetLocations([FromQuery]GetLocationsQuery query, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("{GetLocations}([FromQuery]GetLocationsQuery query) \n GetLocationsQuery:{@query}", nameof(GetLocations), query);
 
-            return Ok(await _mediator.Send(query));
+            var locations = await _mediator.Send(query, cancellationToken);
+
+            if (locations?.GetAsyncEnumerator(cancellationToken).Current is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(locations);
         }
 
         // GET api/<LocationController>/5
         [HttpGet(nameof(GetHotels))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(IAsyncEnumerable<LocationReader>))]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult<IAsyncEnumerable<LocationReader>>> GetHotels([FromQuery]GetLocationsWithParametersQuery parameters)
+        public async Task<ActionResult<IAsyncEnumerable<LocationReader>>> GetHotels([FromQuery]GetLocationsWithParametersQuery parameters, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("{GetHotels}GetHotels([FromQuery]GetLocationsWithParametersQuery parameters) \n GetLocationsWithParametersQuery:{@parameters}", nameof(GetHotels), parameters);
-            return Ok(await _mediator.Send(parameters));
+            var hotels = await _mediator.Send(parameters, cancellationToken);
+
+            if (hotels?.GetAsyncEnumerator(cancellationToken).Current is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(hotels);
         }
 
         // POST api/<LocationController>
         [HttpPost(nameof(AddLocation))]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<IActionResult> AddLocation([FromBody]AddLocationCommand command)
+        public async Task<IActionResult> AddLocation([FromBody]AddLocationCommand command, CancellationToken cancellationToken = default)
         {
-            return Created(Request.Path.Value,await _mediator.Send(command));
+            await _mediator.Send(command, cancellationToken);
+
+            return Created(Request.Path.Value,null);
         }
     }
 }

@@ -40,16 +40,15 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             return staff;
         }
 
-        private IAsyncEnumerable<StaffReader> Filter(StaffQueryStringParameters parameters, IAsyncEnumerable<StaffReader> staffList)
+        private static IAsyncEnumerable<StaffReader> Filter(StaffQueryStringParameters parameters, IAsyncEnumerable<StaffReader> staffList)
         {
             return staffList
                 .Where(s => s.IsBlackShirt == parameters.IsBlackShirt)
                 .Where(s => s.IsRaveApproved == parameters.IsRaveApproved)
                 .Where(s => s.NeedsCrashSpace == parameters.NeedsCrashSpace)
                 .Where(s => s.IsOnBreak == parameters.IsOnBreak)
-                .Where(s => s.RoleId == parameters.RoleId)
-                .Where(s => s.StaffTypeId == parameters.TypeId);
-
+                .Where(s => s.Role?.Id == parameters.RoleId)
+                .Where(s => s.StaffType?.Id == parameters.TypeId);
         }
 
         private void RaiseStaffListQueriedEvent(StaffQueryStringParameters parameters)

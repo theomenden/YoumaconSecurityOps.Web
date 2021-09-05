@@ -1,37 +1,85 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">YoumaconSecurityOps.Web.Client</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿@using Icon = Blazorise.Icons.FontAwesome.Icon
+<Bar Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
+     Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small">
+    <Blazorise.Bootstrap.BarToggler />
+    <BarBrand>
+        <BarItem>
+            <BarLink To="">
+                <BarIcon IconName="@_ysecIcon" />
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <Divider />
+                <BarLink To="">
+                    <BarIcon IconName="IconName.Dashboard"/>
+                    Home
+                </BarLink>
+            </BarItem>
+            <Divider />
+            <BarItem>
+                <BarLink To="/staff">
+                    <BarIcon IconName="IconName.Users" />
+                    Staff
+                </BarLink>
+            </BarItem>
+            <Divider />
+            <BarItem>
+                <BarLink To="/admin">
+                    <BarIcon IconName="IconName.UserPlus" />
+                    Admin Actions
+                </BarLink>
+                <Divider />
+            </BarItem>
+            <BarItem>
+                <BarLink To="/shiftlog">
+                    <BarIcon IconName="IconName.CalendarWeek" />
+                    Shifts
+                </BarLink>
+                <Divider />
+            </BarItem>
+            <BarItem>
+                <BarLink To="/incidents">
+                    <BarIcon IconName="IconName.Rss" />
+                    Incidents
+                </BarLink>
+                <Divider />
+            </BarItem>
+            <BarItem>
+                <BarLink To="/radio-schedule">
+                    <BarIcon IconName="IconName.Headset" />
+                    Radio Assignments
+                </BarLink>
+                <Divider />
+            </BarItem>
+            <BarItem>
+                <BarLink To="/room-schedule">
+                    <BarIcon IconName="IconName.Hotel" />
+                    Room Schedule
+                </BarLink>
+                <Divider />
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            <BarItem Flex="Flex.InlineFlex.AlignItems.Center.AlignContent.Start.JustifyContent.Center">
+                <Blazorise.Link To="">
+                    <BarIcon IconName="_faceBookIcon"></BarIcon>
+                </Blazorise.Link>
+                <Blazorise.Link To="">
+                    <BarIcon IconName="_discordIcon"></BarIcon>
+                </Blazorise.Link>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
+@code
+{
+    private RenderFragment _ysecIcon =@<img src="/ysecShield.svg" width="64" height="64" data-sizes="auto" alt="Ysec Shield Emblem" class="img-fluid lazyload" />;
 
-@code {
-    private bool collapseNavMenu = true;
+private RenderFragment _discordIcon =@<i class="fab fa-discord"></i>;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+private RenderFragment _faceBookIcon =@<i class="fab fa-facebook-square"></i>;
 }

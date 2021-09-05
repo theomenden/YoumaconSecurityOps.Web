@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using YoumaconSecurityOps.Core.EventStore.Events.Added;
 using YoumaconSecurityOps.Core.EventStore.Events.Created;
+using YoumaconSecurityOps.Core.EventStore.Events.Failed;
 using YoumaconSecurityOps.Core.EventStore.Storage;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Core.Shared.Repositories;
@@ -41,7 +43,13 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
         {
             var shiftToAdd = _mapper.Map<ShiftReader>(notification.ShiftWriter);
 
-            var result = await _shifts.AddAsync(shiftToAdd, cancellationToken);
+            var shiftWasAddedSuccessfully = await _shifts.AddAsync(shiftToAdd, cancellationToken);
+
+            if (!shiftWasAddedSuccessfully)
+            {
+                await RaiseFailedToAddEntityEvent(shiftToAdd.Id, shiftToAdd.GetType(),cancellationToken);
+                return;
+            }
 
             await RaiseShiftAddedEvent(shiftToAdd, cancellationToken);
         }
@@ -49,6 +57,17 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
         private async Task RaiseShiftAddedEvent(ShiftReader shiftAdded, CancellationToken cancellationToken)
         {
             var e = new ShiftAddedEvent(shiftAdded);
+
+            var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+
+            await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+
+            await _mediator.Publish(e, cancellationToken);
+        }
+
+        private async Task RaiseFailedToAddEntityEvent(Guid aggregateId, Type aggregateType, CancellationToken cancellationToken)
+        {
+            var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
 
             var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
 

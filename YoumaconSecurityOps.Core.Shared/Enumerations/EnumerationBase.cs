@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace YoumaconSecurityOps.Core.Shared.Enumerations
-{
+{ 
     /// <summary>
     /// <para>A replacement implementation for the standard Enumeration</para>
     /// </summary>

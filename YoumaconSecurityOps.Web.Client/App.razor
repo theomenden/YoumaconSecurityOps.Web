@@ -1,12 +1,22 @@
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
-        <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        </Found>
-        <NotFound>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p>Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </NotFound>
-    </Router>
+    <Blazorise.ThemeProvider Theme="@_theme">
+        <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            </Found>
+            <NotFound>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <Text TextColor="TextColor.Dark">Sorry, there's nothing at this address.</Text>
+                </LayoutView>
+            </NotFound>
+        </Router>
+        <MessageAlert />
+        <NotificationAlert />
+        <PageProgressAlert />
+    </Blazorise.ThemeProvider>
 </CascadingAuthenticationState>
+
+@code
+{
+    private readonly Theme _theme = new() { IsGradient = true };
+}

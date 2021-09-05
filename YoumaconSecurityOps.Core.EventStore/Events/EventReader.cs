@@ -1,30 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using YoumaconSecurityOps.Core.Shared.Models;
 
 namespace YoumaconSecurityOps.Core.EventStore.Events
 {
-    public class EventReader: IEntity
+    /// <summary>
+    /// <para>Class intended to be used to read events from the database</para>
+    /// <inheritdoc cref="IEntity"/>
+    /// <inheritdoc cref="IEquatable{T}"/>
+    /// <inheritdoc cref="IComparable{T}"/>
+    /// </summary>
+    public class EventReader : IEntity, IEquatable<EventReader>, IComparable<EventReader>
     {
+        /// <value>
+        /// The ID of the event, Primary Key
+        /// </value>
         public Guid Id { get; set; }
 
+        /// <value>
+        /// The Date and time the event was created
+        /// </value>
         public DateTime CreatedAt { get; set; }
 
+        /// <value>
+        /// The Major version of the event
+        /// </value>
         public Int32 MajorVersion { get; set; }
 
+        /// <value>
+        /// The minor version of the event
+        /// </value>
         public Int32 MinorVersion { get; set; }
 
+        /// <value>
+        /// The aggregate that the event takes place under
+        /// </value>
         public String Aggregate { get; set; }
-        
+
+        /// <value>
+        /// The data that event carries through processing
+        /// </value>
         public String Data { get; set; }
 
+        /// <value>
+        /// The name of the event
+        /// </value>
         public String Name { get; set; }
 
+        #region Implementations & Overrides
         public bool Equals(EventReader other)
         {
             if (other is null)
@@ -32,7 +54,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
                 return false;
             }
 
-            return  Id.Equals(other.Id) &&
+            return Id.Equals(other.Id) &&
                     MajorVersion == other.MajorVersion &&
                     MinorVersion == other.MinorVersion;
         }
@@ -49,12 +71,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
                 return 0;
             }
 
-            if (MajorVersion == other.MajorVersion)
-            {
-                return MinorVersion.CompareTo(other.MinorVersion);
-            }
-
-            return MajorVersion.CompareTo(other.MajorVersion);
+            return MajorVersion == other.MajorVersion ? MinorVersion.CompareTo(other.MinorVersion) : MajorVersion.CompareTo(other.MajorVersion);
         }
 
         public override bool Equals(object obj)
@@ -76,6 +93,16 @@ namespace YoumaconSecurityOps.Core.EventStore.Events
         {
             return 53 * HashCode.Combine(Id, CreatedAt);
         }
-        
+
+        public static bool operator ==(EventReader lhs, EventReader rhs)
+        {
+            return lhs?.Equals(rhs) ?? rhs is null;
+        }
+
+        public static bool operator !=(EventReader lhs, EventReader rhs)
+        {
+            return !(lhs == rhs);
+        }
+        #endregion
     }
 }

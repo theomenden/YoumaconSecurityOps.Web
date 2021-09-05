@@ -28,7 +28,6 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
 
         public async Task Handle(LocationListQueriedEvent notification, CancellationToken cancellationToken)
         {
-
             var previousEvents = (await _eventStore.GetAllByAggregateId(notification.Id, cancellationToken)
                 .ToListAsync(cancellationToken)).AsReadOnly();
 

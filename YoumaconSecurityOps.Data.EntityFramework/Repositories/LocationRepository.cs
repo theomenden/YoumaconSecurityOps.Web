@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using YoumaconSecurityOps.Core.Shared.Accessors;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Core.Shared.Repositories;
+using YoumaconSecurityOps.Data.EntityFramework.Context;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 {

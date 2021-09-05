@@ -1,0 +1,116 @@
+﻿@page "/incidents"
+
+<Jumbotron Background="Background.Dark" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default">
+    <JumbotronTitle TextColor="TextColor.Light">List of Incidents</JumbotronTitle>
+    <Divider />
+    <JumbotronSubtitle TextColor="TextColor.Info">Incidents in Teal are resolved</JumbotronSubtitle>
+</Jumbotron>
+<Divider />
+<DataGrid @ref="@_dataGrid"
+          TItem="IncidentReader"
+          ReadData="@OnReadData"
+          Data="@_gridDisplay"
+          TotalItems="@_totalIncidents"
+          Editable="true"
+          CommandMode="DataGridCommandMode.Commands"
+          Responsive="true"
+          Sortable="true"
+          Hoverable="true"
+          Striped="true"
+          EditMode="DataGridEditMode.Popup"
+          FixedHeader="true"
+          FixedHeaderDataGridHeight="400px"
+          @bind-SelectedRow="@_selectedIncident"
+          RowStyling="@OnRowStyling"
+          RowInserting="@OnRowInserting"
+          Virtualize="true"
+          DetailRowTrigger="@(item => item.Id == _selectedIncident?.Id)">
+    <PopupTitleTemplate>
+        @if (context.EditState == DataGridEditState.Edit)
+        {
+            @($"{context.LocalizationString} Incident: {context.Item.Title}")
+        }
+        else
+        {
+            @($"{context.LocalizationString} Incident")
+        }
+    </PopupTitleTemplate>
+    <EmptyTemplate>
+        No Incidents Recorded...
+    </EmptyTemplate>
+    <LoadingTemplate>
+        <Span>
+            <SpinKit Type="SpinKitType.Grid"></SpinKit>
+        </Span>
+    </LoadingTemplate>
+    <DataGridAggregates>
+        <DataGridAggregate TItem="IncidentReader" Field="@nameof(IncidentReader.Id)" Aggregate="DataGridAggregateType.Count">
+            <DisplayTemplate>
+                @($"Total Incidents: {context.Value}")
+            </DisplayTemplate>
+        </DataGridAggregate>
+        <DataGridAggregate TItem="IncidentReader" Field="@nameof(IncidentReader.ResolvedAt)" AggregationFunction="DataGridAggregate<IncidentReader>.Count">
+            <DisplayTemplate>
+                @($"Total Resolved Incidents: {context.Value}")
+            </DisplayTemplate>
+        </DataGridAggregate>
+    </DataGridAggregates>
+    <DataGridColumns>
+        <DataGridCommandColumn TItem="IncidentReader">
+            <NewCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </NewCommandTemplate>
+            <SaveCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </SaveCommandTemplate>
+            <CancelCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </CancelCommandTemplate>
+            <EditCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </EditCommandTemplate>
+        </DataGridCommandColumn>
+        <DataGridColumn TItem="IncidentReader" Field="@nameof(IncidentReader.Title)" Caption="Title" Editable="true" />
+        <DataGridColumn TItem="IncidentReader" Field="Location.Name" Caption="Location Occurred At" Sortable="true" Editable="true">
+            <DisplayTemplate>
+                @(_locations.FirstOrDefault(l => l.Id == context.Location?.Id)?.Name ?? String.Empty)
+            </DisplayTemplate>
+            <EditTemplate>
+                <SelectList TItem="@LocationReader"
+                            TValue="Guid"
+                            Data="@_locations"
+                            TextField="@((item)=>item.Name)"
+                            ValueField="@((item)=>item.Id)"
+                            SelectedValue="@_selectedOccurranceLocation"
+                            SelectedValueChanged="@OnSelectedLocationChanged"
+                            DefaultItemText="Choose where the incident took place" />
+            </EditTemplate>
+        </DataGridColumn>
+        <DataGridColumn TItem="IncidentReader" Field="@nameof(IncidentReader.Description)" Caption="Description" Editable="true" />
+        <DataGridDateColumn TItem="IncidentReader" Field="@nameof(IncidentReader.RecordedOn)" Caption="Date Recorded" Editable="true">
+            <DisplayTemplate>
+                @context.RecordedOn
+            </DisplayTemplate>
+            <EditTemplate>
+                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedRecordedDate" DateChanged="@OnRecordedDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DateEdit>
+            </EditTemplate>
+        </DataGridDateColumn>
+        <DataGridColumn TItem="IncidentReader" Field="ReportedBy.Contact.PreferredName" Caption="Reporting Staff Member" Editable="true">
+            <DisplayTemplate>
+                @(_staffMembers.FirstOrDefault(st => st.Id == context.ReportedBy?.Id)?.Contact.PreferredName ?? String.Empty)
+            </DisplayTemplate>
+            <EditTemplate>
+                <SelectList TItem="@StaffReader"
+                            TValue="Guid"
+                            Data="@_staffMembers"
+                            TextField="@((item)=>$"{item.Contact.LastName}, {item.Contact.PreferredName}")"
+                            ValueField="@((item)=>item.Id)"
+                            SelectedValue="@_selectedReportingStaffMember"
+                            SelectedValueChanged="@OnReportingStaffMemberChanged"
+                            DefaultItemText="Choose a Staff Member" />
+            </EditTemplate>
+        </DataGridColumn>
+    </DataGridColumns>
+</DataGrid>
+

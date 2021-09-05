@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MediatR;
 using YoumaconSecurityOps.Core.EventStore.Storage;
 
@@ -18,7 +13,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Extensions
 
             services.AddMediatR(typeof(IServiceCollectionExtensions).Assembly);
 
-            services.AddTransient<IEventStoreRepository, EventStoreRepository>();
+            services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
             return services;
         }

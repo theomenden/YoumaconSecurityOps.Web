@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 {
+    [Table("RoomSchedule")]
+    [Index(nameof(LocationId), Name = "IX_RoomSchedule_Location")]
     public class RoomScheduleReader: BaseReader
     {
         public DateTime SysStart { get; set; }
@@ -22,7 +22,8 @@ namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 
         public Guid LocationId { get; set; }
 
-
-        public virtual StaffReader LastStaffInRoom { get; set; }
+        [ForeignKey(nameof(LastStaffInRoomId))]
+        [InverseProperty(nameof(StaffReader.RoomSchedules))]
+        public virtual StaffReader LastStaffInRoom { get; set; } = default!;
     }
 }

@@ -26,9 +26,9 @@ namespace YoumaconSecurityOps.Api.Controllers
 
         public StaffController(IMediator mediator, ILogger<StaffController> logger)
         {
-            _mediator = mediator;
+            _mediator ??= mediator;
 
-            _logger = logger;
+            _logger ??= logger;
         }
 
         // GET: api/<StaffController>
@@ -71,7 +71,9 @@ namespace YoumaconSecurityOps.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> AddStaffMember([FromBody] AddFullStaffEntryCommand addFullStaffEntryCommand)
         {
-            return Created(Request.Path.Value, await _mediator.Send(addFullStaffEntryCommand));
+            await _mediator.Send(addFullStaffEntryCommand);
+
+            return Created(Request.Path.Value, null );
         }
     }
 }

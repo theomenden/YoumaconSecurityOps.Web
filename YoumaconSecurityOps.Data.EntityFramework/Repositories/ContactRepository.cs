@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using YoumaconSecurityOps.Core.Shared.Accessors;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Core.Shared.Repositories;
+using YoumaconSecurityOps.Data.EntityFramework.Context;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 {
     internal sealed class ContactRepository: IContactAccessor, IContactRepository
     {
+        private readonly ILogger<ContactRepository> _logger;
+
         private readonly YoumaconSecurityDbContext _dbContext;
         
-        public ContactRepository(YoumaconSecurityDbContext dbContext)
+        public ContactRepository(YoumaconSecurityDbContext dbContext, ILogger<ContactRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public IAsyncEnumerable<ContactReader> GetAll(CancellationToken cancellationToken = new ())
@@ -56,8 +59,9 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError("Unable to store entity {@entity}. Exception : {@ex}", entity, ex);
                 return false;
             }
         }

@@ -1,0 +1,25 @@
+﻿<style>
+    .theme-color-table-cell{
+    display: table-cell;
+    width: 36px;
+    height: 36px;
+    vertical-align: top;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    }
+</style>
+
+<Div>
+    <Repeater Items="@ThemeColors.Items.Values" Skip="0" Take="@ThemeColors.Items.Count">
+        <Div>
+            <Repeater Items="@context.Shades.Values" Context="shaderContext">
+                @{
+                    var tempShade = shaderContext.Value;
+
+                    <Div Class="@(ClassNames(tempShade))" Style="@($"background: {tempShade}")" @onclick="@(()=>OnClick(tempShade))"></Div>
+                }
+            </Repeater>
+        </Div>
+    </Repeater>
+</Div>

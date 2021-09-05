@@ -1,26 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 {
-    public class StaffRole
+    /// <summary>
+    /// Role of the staff member.
+    /// <inheritdoc cref="IEquatable{T}"/>
+    /// <inheritdoc cref="IComparable{T}"/>
+    /// </summary>
+    public partial class StaffRole: IEquatable<StaffRole>, IComparable<StaffRole>
     {
+        /// <summary>
+        /// Defines the rank of the staff member
+        /// </summary>
         public StaffRole()
         {
-            Staff = new HashSet<StaffReader>(30);
-
-            StaffTypesRoles = new HashSet<StaffTypesRoles>(30);
         }
 
+        [Key]
         public int Id { get; set; }
 
-        public string Role { get; }
+        [Column("Role")]
+        [StringLength(50)]
+        public string Name { get; set; }
+        
+        [InverseProperty(nameof(StaffTypesRoles.Role))]
+        public virtual ICollection<StaffTypesRoles> StaffTypeRoleMap { get; set; } = new HashSet<StaffTypesRoles>();
 
+        #region Overrides
+        public bool Equals(StaffRole other)
+        {
+            return other is not null
+                   && other.Id == Id
+                   || (
+                       !String.IsNullOrWhiteSpace(other?.Name)
+                       && other.Name.Equals(Name)
+                   );
+        }
 
-        public virtual IEnumerable<StaffReader> Staff { get; set; }
-        public virtual IEnumerable<StaffTypesRoles> StaffTypesRoles { get; set; }
+        public int CompareTo(StaffRole other)
+        {
+            return Id.CompareTo(other?.Id);
+        }
+
+        public override bool Equals(object obj)
+        {
+
+            if (obj is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            return obj is StaffRole other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return 47 * Id.GetHashCode();
+        }
+
+        public static bool operator ==(StaffRole left, StaffRole right)
+        {
+            return left?.Equals(right) ?? right is null;
+        }
+
+        public static bool operator !=(StaffRole left, StaffRole right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator <(StaffRole left, StaffRole right)
+        {
+            return left is not null && left.CompareTo(right) < 0;
+        }
+
+        public static bool operator <=(StaffRole left, StaffRole right)
+        {
+            return left is null || left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >(StaffRole left, StaffRole right)
+        {
+            return left?.CompareTo(right) > 0;
+        }
+
+        public static bool operator >=(StaffRole left, StaffRole right)
+        {
+            return left is null ? right is null : left.CompareTo(right) >= 0;
+        }
+        #endregion
     }
 }

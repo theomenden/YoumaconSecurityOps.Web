@@ -12,7 +12,7 @@ namespace YoumaconSecurityOps.Api.Middleware
     {
         private readonly RequestDelegate _next;
 
-        private readonly ILogger _logger;
+        private readonly ILogger<Program> _logger;
 
         public ExceptionLogger(RequestDelegate next, ILogger<Program> logger)
         {

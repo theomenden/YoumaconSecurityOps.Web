@@ -5,6 +5,18 @@
     {
       "library": "twitter-bootstrap@4.6.0",
       "destination": "wwwroot/css/bootstrap/"
+    },
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/css/jquery/"
+    },
+    {
+      "library": "popper.js@2.9.3",
+      "destination": "wwwroot/css/popper.js/"
+    },
+    {
+      "library": "lazysizes@5.3.2",
+      "destination": "wwwroot/js/lazysizes/"
     }
   ]
 }

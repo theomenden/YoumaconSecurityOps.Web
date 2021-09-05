@@ -3,31 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Web.Client", "YoumaconSecurityOps.Web.Client\YoumaconSecurityOps.Web.Client.csproj", "{06170727-2CB2-4F72-AAC3-2BFD06379F9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Web.Client", "YoumaconSecurityOps.Web.Client\YoumaconSecurityOps.Web.Client.csproj", "{06170727-2CB2-4F72-AAC3-2BFD06379F9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Data.EntityFramework", "YoumaconSecurityOps.Data.EntityFramework\YoumaconSecurityOps.Data.EntityFramework.csproj", "{B8C3ACE8-0504-48B8-BBA7-AEFC4BC2F6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Data.EntityFramework", "YoumaconSecurityOps.Data.EntityFramework\YoumaconSecurityOps.Data.EntityFramework.csproj", "{B8C3ACE8-0504-48B8-BBA7-AEFC4BC2F6EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.Shared", "YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj", "{446C16F9-6259-4319-84BC-F7F944434687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.Shared", "YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj", "{446C16F9-6259-4319-84BC-F7F944434687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.Mediatr", "YoumaconSecurityOps.Core.Mediatr\YoumaconSecurityOps.Core.Mediatr.csproj", "{38EEC35A-C4B8-48AB-B8C0-4688D2219B76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.Mediatr", "YoumaconSecurityOps.Core.Mediatr\YoumaconSecurityOps.Core.Mediatr.csproj", "{38EEC35A-C4B8-48AB-B8C0-4688D2219B76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOperations.Core.Logging", "YoumaconSecurityOperations.Core.Logging\YoumaconSecurityOperations.Core.Logging.csproj", "{57884BA7-F6E4-4FA3-ABCE-9CDF946822CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Data.EntityFramework.Tests", "YoumaconSecurityOps.Data.EntityFramework.Tests\YoumaconSecurityOps.Data.EntityFramework.Tests.csproj", "{9911D8E9-369C-44AC-AE76-C5A9258D91F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Api", "YoumaconSecurityOps.Api\YoumaconSecurityOps.Api.csproj", "{DFC64240-E167-4C5E-B65B-6E1FE7BC5CDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.Shared.Tests", "YoumaconSecurityOps.Core.Shared.Tests\YoumaconSecurityOps.Core.Shared.Tests.csproj", "{D0A82F74-4153-4C78-9A1C-E92705054C1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Data.EntityFramework.Tests", "YoumaconSecurityOps.Data.EntityFramework.Tests\YoumaconSecurityOps.Data.EntityFramework.Tests.csproj", "{9911D8E9-369C-44AC-AE76-C5A9258D91F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.FluentEmailer", "YoumaconSecurityOps.Core.FluentEmailer\YoumaconSecurityOps.Core.FluentEmailer.csproj", "{E6A5DEA8-640D-4341-B658-86F4E38D30F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.Shared.Tests", "YoumaconSecurityOps.Core.Shared.Tests\YoumaconSecurityOps.Core.Shared.Tests.csproj", "{D0A82F74-4153-4C78-9A1C-E92705054C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.EventStore", "YoumaconSecurityOps.Core.EventStore\YoumaconSecurityOps.Core.EventStore.csproj", "{F3F73568-2D2A-4438-81D7-68A8296DAF4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.FluentEmailer", "YoumaconSecurityOps.Core.FluentEmailer\YoumaconSecurityOps.Core.FluentEmailer.csproj", "{E6A5DEA8-640D-4341-B658-86F4E38D30F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.AutoMapper", "YoumaconSecurityOps.Core.AutoMapper\YoumaconSecurityOps.Core.AutoMapper.csproj", "{67A6BD84-0650-465E-8ACB-499D13A50C63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.EventStore", "YoumaconSecurityOps.Core.EventStore\YoumaconSecurityOps.Core.EventStore.csproj", "{F3F73568-2D2A-4438-81D7-68A8296DAF4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.EventStore.Tests", "YoumaconSecurityOps.Core.EventStore.Tests\YoumaconSecurityOps.Core.EventStore.Tests.csproj", "{72D36006-9DCC-42C3-9111-2B9E9753EFAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.AutoMapper", "YoumaconSecurityOps.Core.AutoMapper\YoumaconSecurityOps.Core.AutoMapper.csproj", "{67A6BD84-0650-465E-8ACB-499D13A50C63}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.EventStore.Tests", "YoumaconSecurityOps.Core.EventStore.Tests\YoumaconSecurityOps.Core.EventStore.Tests.csproj", "{72D36006-9DCC-42C3-9111-2B9E9753EFAE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoumaconSecurityOps.Core.FluentTexter", "YoumaconSecurityOps.Core.FluentTexter\YoumaconSecurityOps.Core.FluentTexter.csproj", "{391817ED-9650-4F2E-B3B9-14D83AF87BA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.FluentTexter", "YoumaconSecurityOps.Core.FluentTexter\YoumaconSecurityOps.Core.FluentTexter.csproj", "{391817ED-9650-4F2E-B3B9-14D83AF87BA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +47,6 @@ Global
 		{38EEC35A-C4B8-48AB-B8C0-4688D2219B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38EEC35A-C4B8-48AB-B8C0-4688D2219B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38EEC35A-C4B8-48AB-B8C0-4688D2219B76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57884BA7-F6E4-4FA3-ABCE-9CDF946822CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57884BA7-F6E4-4FA3-ABCE-9CDF946822CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57884BA7-F6E4-4FA3-ABCE-9CDF946822CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57884BA7-F6E4-4FA3-ABCE-9CDF946822CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFC64240-E167-4C5E-B65B-6E1FE7BC5CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFC64240-E167-4C5E-B65B-6E1FE7BC5CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFC64240-E167-4C5E-B65B-6E1FE7BC5CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFC64240-E167-4C5E-B65B-6E1FE7BC5CDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9911D8E9-369C-44AC-AE76-C5A9258D91F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9911D8E9-369C-44AC-AE76-C5A9258D91F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9911D8E9-369C-44AC-AE76-C5A9258D91F9}.Release|Any CPU.ActiveCfg = Release|Any CPU

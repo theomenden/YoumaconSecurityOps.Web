@@ -64,7 +64,7 @@ C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurit
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\bin\Debug\net5.0\YoumaconSecurityOps.Core.Shared.dll
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\bin\Debug\net5.0\YoumaconSecurityOps.Core.EventStore.pdb
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\bin\Debug\net5.0\YoumaconSecurityOps.Core.Shared.pdb
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\obj\Debug\net5.0\YoumaconSecurityOps.Core.Mediatr.csprojAssemblyReference.cache
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\obj\Debug\net5.0\YoumaconSecurityOps.Core.Mediatr.csproj.AssemblyReference.cache
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\obj\Debug\net5.0\YoumaconSecurityOps.Core.Mediatr.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\obj\Debug\net5.0\YoumaconSecurityOps.Core.Mediatr.AssemblyInfoInputs.cache
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Mediatr\obj\Debug\net5.0\YoumaconSecurityOps.Core.Mediatr.AssemblyInfo.cs

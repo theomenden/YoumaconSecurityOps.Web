@@ -11,6 +11,9 @@ using YoumaconSecurityOps.Core.EventStore.Events;
 
 namespace YoumaconSecurityOps.Core.EventStore.Storage
 {
+    /// <summary>
+    /// <inheritdoc cref="IEventStoreRepository"/>
+    /// </summary>
     internal sealed class EventStoreRepository : IEventStoreRepository
     {
         private readonly EventStoreDbContext _dbContext;
@@ -68,7 +71,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
 
         public async Task SaveAsync(Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
         {
-            if (events.Count == 0)
+            if (!events.Any())
             {
                 return;
             }

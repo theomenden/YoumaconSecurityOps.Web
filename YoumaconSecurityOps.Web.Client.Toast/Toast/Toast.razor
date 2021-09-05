@@ -1,0 +1,24 @@
+﻿
+<div class="toast border border-dark" id="@ToastId" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-dark">
+        @if (!String.IsNullOrWhiteSpace(ToastSettings.Icon))
+        {
+            <i class="@ToastSettings.Icon rounded mr-2" aria-hidden="true"></i>
+        }
+        <strong class="mr-auto text-light">@ToastSettings.Heading</strong>
+        <small class="text-muted">@_durationMessage</small>
+        <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="close" @onclick="@Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body @ToastSettings.BaseClass @ToastSettings.AdditionalClasses">
+        @ToastSettings.ChildContent
+    </div>
+    @if (ToastSettings.ShowProgressBar)
+    {
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: @(_progress)%;" aria-valuenow="@(_progress)" aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+    }
+</div>

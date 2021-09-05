@@ -1,0 +1,33 @@
+﻿<Form>
+    <!--Contact Information-->
+    <Fields>
+        <Blazorise.Bootstrap.Field ColumnSize="ColumnSize.Is6.OnDesktop">
+            <FieldLabel>First Name</FieldLabel>
+            <TextEdit />
+            <FieldLabel>Last Name</FieldLabel>
+            <TextEdit />
+            <FieldLabel>Preferred Name</FieldLabel>
+            <TextEdit />
+        </Blazorise.Bootstrap.Field>
+        <Blazorise.Bootstrap.Field ColumnSize="ColumnSize.Is4.OnDesktop">
+            <FieldLabel>State</FieldLabel>
+        </Blazorise.Bootstrap.Field>
+        <Blazorise.Bootstrap.Field ColumnSize="ColumnSize.Is2.OnDesktop">
+            <FieldLabel>Zip</FieldLabel>
+            <TextEdit />
+        </Blazorise.Bootstrap.Field>
+    </Fields>
+    <!--Staff Information-->
+
+    <DropdownList TItem="StaffRole" TValue="int"
+                  Data="@_roleList"
+                  TextField="@((item) => item.Name)"
+                  ValueField="@((item) => item.Id)"
+                  SelectedValue="@SelectedRoleId"
+                  SelectedValueChanged="@SelectedRoleChangedHandler"
+                  Color="Color.Primary">
+        Select Role
+    </DropdownList>
+    <!--Submit stuff pls. Use GG strat-->
+    <Blazorise.Bootstrap.Button Loading="true" Color="Color.Primary" Type="ButtonType.Submit" Clicked="@(async () => await OnSubmit())"></Blazorise.Bootstrap.Button>
+</Form>

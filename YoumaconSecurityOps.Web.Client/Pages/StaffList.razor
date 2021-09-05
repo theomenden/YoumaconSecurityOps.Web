@@ -1,0 +1,215 @@
+﻿ @page "/staff"
+
+ <Jumbotron Background="Background.Dark" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default">
+     <DisplayHeading Casing="CharacterCasing.Title" Size="DisplayHeadingSize.Is2">View our Staff</DisplayHeading>
+     <Divider Background="Background.Light"></Divider>
+     <Paragraph>
+         <Heading Size="HeadingSize.Is6" TextColor="TextColor.Danger">Staff Members in Red are on a break</Heading>
+     </Paragraph>
+</Jumbotron>
+ <Divider />
+ <DataGrid @ref="@_dataGrid"
+           TItem="StaffReader"
+           ReadData="@OnReadData"
+           Data="@_gridDisplay"
+           TotalItems="@_totalStaffMembers"
+           Editable="true"
+           CommandMode="DataGridCommandMode.Commands"
+           Responsive="true"
+           Sortable="true"
+           Hoverable="true"
+           Striped="true"
+           EditMode="DataGridEditMode.Popup"
+           FixedHeader="true"
+           FixedHeaderDataGridHeight="400px"
+           @bind-SelectedRow="@_selectedStaffMember"
+           RowStyling ="@OnRowStyling"
+           RowInserting="@OnRowInserting"
+           NewItemDefaultSetter="@OnStaffNewItemDefaultSetter"
+           Virtualize="true"
+           DetailRowTrigger="@(item => item.Id == _selectedStaffMember?.Id)"
+           >
+     <PopupTitleTemplate>
+         @if ( context.EditState == DataGridEditState.Edit )
+         {
+             @($"{context.LocalizationString} Staff {context.Item.Contact.PreferredName} {context.Item.Contact.LastName}")
+         }
+         else
+         {
+             @($"{context.LocalizationString} Staff")
+         }
+     </PopupTitleTemplate>
+     <EmptyTemplate>
+         <Span>
+             <Paragraph>
+                 <Heading Size="HeadingSize.Is5" TextColor="TextColor.Danger">No Staff members found!</Heading>
+             </Paragraph>
+         </Span>
+     </EmptyTemplate>
+     <LoadingTemplate>
+         <Span>
+             <SpinKit Type="SpinKitType.Grid"></SpinKit>
+         </Span>
+     </LoadingTemplate>
+     <DataGridAggregates>
+         <DataGridAggregate TItem="StaffReader" Field="@nameof(StaffReader.Id)" Aggregate="DataGridAggregateType.Count">
+             <DisplayTemplate>
+                 @($"Total staff: {context.Value}")
+             </DisplayTemplate>
+         </DataGridAggregate>
+         <DataGridAggregate TItem="StaffReader" Field="@nameof(StaffReader.IsOnBreak)" AggregationFunction="DataGridAggregate<StaffReader>.TrueCount">
+             <DisplayTemplate>
+                 @($"Total staff on break: {context.Value}")
+             </DisplayTemplate>
+         </DataGridAggregate>
+     </DataGridAggregates>
+     <DataGridColumns>
+         <DataGridCommandColumn TItem="StaffReader">
+             <NewCommandTemplate>
+                 <Blazorise.Bootstrap.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+             </NewCommandTemplate>
+             <SaveCommandTemplate>
+                 <Blazorise.Bootstrap.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+             </SaveCommandTemplate>
+             <CancelCommandTemplate>
+                 <Blazorise.Bootstrap.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+             </CancelCommandTemplate>
+             <EditCommandTemplate>
+                 <Blazorise.Bootstrap.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+             </EditCommandTemplate>
+         </DataGridCommandColumn>
+         <DataGridColumn TItem="StaffReader" Field="Contact.PreferredName" Caption="Preferred Name" Sortable="false" Editable="true">
+             <DisplayTemplate>
+                 @context.Contact?.PreferredName
+             </DisplayTemplate>
+             <EditTemplate>
+                 <TextEdit Text="@_selectedStaffMember.Contact?.PreferredName"></TextEdit>
+             </EditTemplate>
+         </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="Contact.LastName" Caption="Last Name" Sortable="true" Editable="true">
+             <DisplayTemplate>
+                 @context.Contact?.LastName
+             </DisplayTemplate>
+             <EditTemplate>
+                 <TextEdit Text="@_selectedStaffMember.Contact?.LastName"></TextEdit>
+             </EditTemplate>
+         </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="StaffType.Title" Caption="Type" Sortable="true" Editable="true">
+             <DisplayTemplate>
+                 @(_staffTypes.SingleOrDefault(st => st.Id == context.StaffType?.Id)?.Title ?? String.Empty)
+             </DisplayTemplate>
+             <EditTemplate>
+                 <SelectList TItem="@StaffType"
+                             TValue="Int32"
+                             Data="@_staffTypes"
+                             TextField="@((item) => item.Title)"
+                             ValueField="@((item) => item.Id)"
+                             SelectedValue="@_selectedStaffType"
+                             SelectedValueChanged="@OnSelectedStaffTypeChanged"
+                             DefaultItemText="@_staffTypes.Single(st => st.Id == 1).Title" />
+             </EditTemplate>
+         </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="Role.Name" Caption="Role" Sortable="true" Editable="true">
+             <DisplayTemplate>
+                 @(_staffRoles.SingleOrDefault(sr => sr.Id == context.Role?.Id)?.Name ?? String.Empty)
+             </DisplayTemplate>
+             <EditTemplate>
+                 <SelectList TItem="@StaffRole"
+                             TValue="Int32"
+                             Data="@_staffRoles"
+                             TextField="@((item) => item.Name)"
+                             ValueField="@((item) => item.Id)"
+                             SelectedValue="@_selectedStaffRole"
+                             SelectedValueChanged="@OnSelectedStaffRoleChanged"
+                             DefaultItemText="@_staffRoles.Single(sr => sr.Id == 5).Name" />
+             </EditTemplate>
+         </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="Contact.Email" Caption="Email" Sortable="false" Editable="true">
+             <DisplayTemplate>
+                 <a href="mailto:@context.Contact?.Email"> @context.Contact?.Email</a>
+             </DisplayTemplate>
+             <EditTemplate>
+                 <TextEdit Text="@_selectedStaffMember.Contact?.Email" Role="TextRole.Email"></TextEdit>
+             </EditTemplate>
+         </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.IsBlackShirt)" Displayable="false" Editable ="true">
+             <EditTemplate>
+                 <Blazorise.Bootstrap.Switch TValue="bool" Checked="context.Item.IsBlackShirt"/>
+             </EditTemplate>
+             </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.NeedsCrashSpace)" Displayable="false" Editable="true" />
+         <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.IsRaveApproved)" Displayable="false" Editable="true"/>
+         <DataGridColumn TItem="StaffReader" Field="Contact.PhoneNumber" Caption="Phone Number" Sortable="false" Editable="true">
+             <DisplayTemplate>
+                 <a href="tel:+@context.Contact.PhoneNumber">@($"{context.Contact.PhoneNumber:(###) ###-####}")</a>
+             </DisplayTemplate>
+             <EditTemplate>
+                 <Blazorise.Bootstrap.NumericEdit TValue="long" Value="@((long)context.CellValue)" ValueChanged="@( v => context.CellValue = v)"></Blazorise.Bootstrap.NumericEdit>
+             </EditTemplate>
+         </DataGridColumn>
+         <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.ShirtSize)" Caption="Shirt Size" Sortable="false" Editable="true" />
+     </DataGridColumns>
+     <DetailRowTemplate>
+         @{
+                  <DataGrid TItem="StaffReader"
+                            Data="new List<StaffReader>{context}"
+                            Sortable="false"
+                            ShowCaptions="true">
+                      <DataGridCommandColumn TItem="StaffReader" />
+                      <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.Id)" Caption="Actions">
+                          <DisplayTemplate Context="staffDetailContext">
+                              <Buttons Role="ButtonsRole.Toolbar">
+                                  <Buttons Margin="Margin.Is2.FromRight">
+                                      <Blazorise.Bootstrap.Button Color="Color.Primary" Clicked="@(async () => await SendMemberOnBreak(staffDetailContext.Id))" Loading="@_isLoading">
+                                          <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
+                                          <ChildContent>Send On Break</ChildContent>
+                                      </Blazorise.Bootstrap.Button>
+                                      <Blazorise.Bootstrap.Button Color="Color.Danger" Clicked="@(async () => await OnReturnedFromBreak(staffDetailContext.Id))" Loading="@_isLoading">
+                                          <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
+                                          <ChildContent>Return From Break</ChildContent>
+                                      </Blazorise.Bootstrap.Button>
+                                  </Buttons>
+                              </Buttons>
+                          </DisplayTemplate>
+                      </DataGridColumn>
+                      <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.Id)" Caption="Actions" Sortable="false" Editable="false">
+                          <DisplayTemplate Context="detailInfoContext">
+                              <Blazorise.Bootstrap.Button Type="ButtonType.Button" Color="Color.Success" Clicked="@(async () => await SendMemberOnBreak(detailInfoContext.Id))">Send On Break</Blazorise.Bootstrap.Button>
+                          </DisplayTemplate>
+                      </DataGridColumn>
+                      <DataGridCheckColumn TItem="StaffReader" Field="@nameof(StaffReader.IsOnBreak)" Caption="On Break?" Editable="true">
+                          <DisplayTemplate Context="staffDetailContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffDetailContext.IsOnBreak" Disabled="true" ReadOnly="true" />
+                          </DisplayTemplate>
+                          <EditTemplate Context="staffEditContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffEditContext.Item.IsOnBreak" Disabled="true" ReadOnly="true" />
+                          </EditTemplate>
+                      </DataGridCheckColumn>
+                      <DataGridCheckColumn TItem="StaffReader" Field="@nameof(StaffReader.IsBlackShirt)" Caption="Black Shirt?" Editable="true">
+                          <DisplayTemplate Context="staffDetailContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffDetailContext.IsBlackShirt" Disabled="true" ReadOnly="true" />
+                          </DisplayTemplate>
+                          <EditTemplate Context="staffEditContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffEditContext.Item.IsBlackShirt" Disabled="true" ReadOnly="true" />
+                          </EditTemplate>
+                      </DataGridCheckColumn>
+                      <DataGridCheckColumn TItem="StaffReader" Field="@nameof(StaffReader.IsRaveApproved)" Caption="Approved for Rave?" Editable="true">
+                          <DisplayTemplate Context="staffDetailContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffDetailContext.IsRaveApproved" Disabled="true" ReadOnly="true" />
+                          </DisplayTemplate>
+                          <EditTemplate Context="staffEditContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffEditContext.Item.IsRaveApproved" Disabled="true" ReadOnly="true" />
+                          </EditTemplate>
+                      </DataGridCheckColumn>
+                      <DataGridCheckColumn TItem="StaffReader" Field="@nameof(StaffReader.NeedsCrashSpace)" Caption="Needs Crash Space?" Editable="true">
+                          <DisplayTemplate Context="staffDetailContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffDetailContext.NeedsCrashSpace ?? false" Disabled="true" ReadOnly="true" />
+                          </DisplayTemplate>
+                          <EditTemplate Context="staffEditContext">
+                              <Blazorise.Bootstrap.Check TValue="bool" Checked="staffEditContext.Item.NeedsCrashSpace ?? false" Disabled="true" ReadOnly="true" />
+                          </EditTemplate>
+                      </DataGridCheckColumn>
+                  </DataGrid>
+         }
+     </DetailRowTemplate>
+ </DataGrid>

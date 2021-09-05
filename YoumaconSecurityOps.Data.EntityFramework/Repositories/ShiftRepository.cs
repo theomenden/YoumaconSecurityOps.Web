@@ -9,9 +9,14 @@ using Microsoft.Extensions.Logging;
 using YoumaconSecurityOps.Core.Shared.Accessors;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Core.Shared.Repositories;
+using YoumaconSecurityOps.Data.EntityFramework.Context;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>DON'T FORGET TO DEFINE THE GOD DAMN METHODS - Emma 8/27/2021 - 3:05am</remarks>
     internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
     {
         private readonly ILogger<ShiftRepository> _logger;
@@ -49,24 +54,38 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 
         public async Task<bool> AddAsync(ShiftReader entity, CancellationToken cancellationToken = default)
         {
-            await _dbContext.Shifts.AddAsync(entity, cancellationToken);
+            entity.CurrentLocationId = entity.StartingLocationId;
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            bool addResult;
 
-            return true;
+            try
+            {
+                await _dbContext.Shifts.AddAsync(entity, cancellationToken);
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                addResult = true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Task<bool> AddAsync(ShiftReader entity, CancellationToken cancellationToken = default) threw an exception: {e}", e.Message);
+
+                addResult = false;
+            }
+
+            return addResult;
         }
 
+        #region Shift Update Methods
         public async Task<ShiftReader> CheckIn(Guid shiftId, CancellationToken cancellationToken = default)
         {
-            var shift = await WithId(shiftId, cancellationToken);
+            var shift = await _dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
 
             var checkedInAt = DateTime.Now;
 
             shift.CheckedInAt = checkedInAt;
 
             shift.Notes += $"Checked In At: {checkedInAt:g}";
-
-            _dbContext.Shifts.Update(shift);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
@@ -75,7 +94,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 
         public async Task<ShiftReader> CheckOut(Guid shiftId, CancellationToken cancellationToken = default)
         {
-            var shift = await WithId(shiftId, cancellationToken);
+            var shift = await _dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
 
             var checkedOutAt = DateTime.Now;
 
@@ -83,31 +102,29 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
 
             shift.Notes += $"Checked Out At {checkedOutAt:g}";
 
-            _dbContext.Shifts.Update(shift);
-
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return shift;
         }
 
-        public async Task<ShiftReader> ReportIn(Guid shiftId, DateTime reportInAt, LocationReader currentLocation, CancellationToken cancellationToken = default)
+        public async Task<ShiftReader> ReportIn(Guid shiftId, Guid currentLocationId, CancellationToken cancellationToken = default)
         {
-            var shiftToUpdate = await WithId(shiftId, cancellationToken);
+            var shiftToUpdate = await _dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
 
-            shiftToUpdate.LastReportedAt = reportInAt;
+            var reportedInAt = DateTime.Now;
 
-            if (shiftToUpdate.CurrentLocation != currentLocation)
-            {
-                shiftToUpdate.CurrentLocationId = currentLocation.Id;
-            }
+            shiftToUpdate.LastReportedAt = reportedInAt;
 
-            shiftToUpdate.Notes += $"Reported In At: {reportInAt:g}";
+            shiftToUpdate.CurrentLocationId = currentLocationId;
 
-            _dbContext.Shifts.Update(shiftToUpdate);
+            shiftToUpdate.Notes += $"Reported In At: {reportedInAt:g}";
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return shiftToUpdate;
         }
+
+
+        #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,55 +8,97 @@ using System.Threading.Tasks;
 
 namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 {
-    public class StaffReader: BaseReader
+    [Table("Staff")]
+    public partial class StaffReader : BaseReader, IEquatable<StaffReader>
     {
-        #region BaseProperties
+        public StaffReader()
+        {
+        }
 
+        #region BaseProperties
         public Guid ContactId { get; set; }
-        
-        public int RoleId { get; set; }
-        
-        public int StaffTypeId { get; set; }
-        
-        public bool NeedsCrashSpace { get; set; }
+
+        public Guid StaffTypeRoleId { get; set; }
+
+        public bool IsOnBreak { get; set; }
+
+        [Required] public bool? NeedsCrashSpace { get; set; }
 
         public bool IsBlackShirt { get; set; }
 
-        [NotMapped]
-        public bool IsOnBreak  => BreakStartAt.HasValue && !BreakEndAt.HasValue;
+        public bool IsRaveApproved { get; set; }
 
         public DateTime? BreakStartAt { get; set; }
 
         public DateTime? BreakEndAt { get; set; }
 
         [NotMapped]
-        public TimeSpan Duration => BreakEndAt.GetValueOrDefault(DateTime.Now)  - BreakStartAt.GetValueOrDefault(DateTime.Now);
+        public StaffRole? Role =>StaffTypeRoleMaps.Any() ? StaffTypeRoleMaps.Max(r => r.Role): null;
 
-        public bool IsRaveApproved { get; set; }
+        [NotMapped]
+        public StaffType? StaffType => StaffTypeRoleMaps.Any() ? StaffTypeRoleMaps.Max(r => r.StaffTypeNavigation): null;
 
-        public string ShirtSize { get; set; }
+        [StringLength(6)] public string ShirtSize { get; set; }
+
         #endregion
 
-        #region NavigationProperties
+        #region Navigation Properties
 
-        public virtual ContactReader ContactInformation { get; set; }
+        [ForeignKey(nameof(ContactId))]
+        [InverseProperty(nameof(ContactReader.StaffMember))]
+        public virtual ContactReader Contact { get; set; } = default!;
 
-        public virtual StaffRole Role { get; set; }
 
-        public virtual StaffType StaffType { get; set; }
+        [InverseProperty(nameof(IncidentReader.RecordedBy))]
+        public virtual ICollection<IncidentReader> IncidentRecordedBy { get; set; } = new HashSet<IncidentReader>();
 
-        public virtual IEnumerable<IncidentReader> IncidentsRecordedBy { get; set; }
+        [InverseProperty(nameof(IncidentReader.ReportedBy))]
+        public virtual ICollection<IncidentReader> IncidentReportedBy { get; set; } = new HashSet<IncidentReader>();
 
-        public virtual IEnumerable<IncidentReader> IncidentsReportedBy { get; set; }
+        [InverseProperty(nameof(RadioScheduleReader.LastStaffToHave))]
+        public virtual ICollection<RadioScheduleReader> RadioSchedules { get; set; } = new HashSet<RadioScheduleReader>();
 
-        public virtual IEnumerable<RadioScheduleReader> RadioSchedule { get; set; }
+        [InverseProperty(nameof(RoomScheduleReader.LastStaffInRoom))]
+        public virtual ICollection<RoomScheduleReader> RoomSchedules { get; set; } = new HashSet<RoomScheduleReader>();
 
-        public virtual IEnumerable<RoomScheduleReader> RoomSchedule { get; set; }
+        [InverseProperty(nameof(ShiftReader.StaffMember))] 
+        public virtual ICollection<ShiftReader> Shifts { get; set; } = new HashSet<ShiftReader>();
+        
+        [InverseProperty(nameof(StaffTypesRoles.Staff))]
+        public virtual ICollection<StaffTypesRoles> StaffTypeRoleMaps { get; set; } = new HashSet<StaffTypesRoles>();
+        #endregion
 
-        public virtual IEnumerable<ShiftReader> Shifts { get; set; }
+        #region Overrides
+        public bool Equals(StaffReader other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
 
-        public virtual IEnumerable<StaffTypesRoles> StaffTypesRoles { get; set; }
+            return other.Id == Id;
+        }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is null)
+            {
+                return false;
+            }
+
+            if(ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            return obj is StaffReader other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode() * 47;
+        }
         #endregion
     }
 }
+

@@ -1,0 +1,64 @@
+﻿@using Blazorise.Localization
+<Bar Breakpoint="Breakpoint.Desktop"
+     @bind-Visible="@_isTopbarVisible"
+     Background="Background.Dark"
+     ThemeContrast="ThemeContrast.Light"
+     Shadow="Shadow.Default"
+     Border="Border.Dark.OnBottom.RoundedBottom.Is1">
+    <BarBrand>
+        <Link To="#" Title="YSec Ops" />
+    </BarBrand>
+    <Blazorise.Bootstrap.BarToggler />
+    <BarMenu>
+        <BarStart>
+        </BarStart>
+        <BarItem>
+            <BarIcon IconName="IconName.Language" />
+            <SelectList TItem="@CultureInfo"
+                        TValue="CultureInfo"
+                        Data="@LocalizationService.AvailableCultures"
+                        TextField="@((item)=> item.DisplayName)"
+                        ValueField="@((item)=>item)"
+                        SelectedValue="@_selectedCultureName"
+                        SelectedValueChanged="@SelectedCultureChanged"
+                        DefaultItemText="@CultureInfo.CurrentCulture.DisplayName"/>
+        </BarItem>
+        <BarEnd>
+            <BarItem>
+                <Blazorise.Bootstrap.Button Color="Color.Primary">Sign up</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap.Button Color="Color.Secondary">Log in</Blazorise.Bootstrap.Button>
+            </BarItem>
+            <BarItem>
+                <Blazorise.Bootstrap.BarDropdown>
+                    <BarDropdownToggle><Paragraph TextColor="TextColor.Light"><Blazorise.Icon Name="IconName.Tint"/> Theme</Paragraph></BarDropdownToggle>
+                    <Blazorise.Bootstrap.BarDropdownMenu Style="padding: 15px; min-width: 550px;" RightAligned="true">
+                        <Row>
+                            <Column Margin="Margin.Is2.FromBottom">
+                                <Blazorise.Bootstrap.Field>
+                                    <Blazorise.Bootstrap.Switch TValue="bool" Checked="@(Theme?.Enabled == true)" CheckedChanged="@ThemeEnabledChanged">Theme enabled</Blazorise.Bootstrap.Switch>
+                                </Blazorise.Bootstrap.Field>
+                            </Column>
+                        </Row>
+                        <Row>
+                            <Column Margin="Margin.Is2.FromBottom">
+                                <Blazorise.Bootstrap.Field>
+                                    <Blazorise.Bootstrap.Check TValue="bool" Checked="@(Theme?.IsGradient == true)" CheckedChanged="@ThemeGradientChanged">Gradient colors</Blazorise.Bootstrap.Check>
+                                </Blazorise.Bootstrap.Field>
+                                <Blazorise.Bootstrap.Field>
+                                    <Blazorise.Bootstrap.Check TValue="bool" Checked="@(Theme?.IsRounded == true)" CheckedChanged="@ThemeRoundedChanged">Rounded elements</Blazorise.Bootstrap.Check>
+                                </Blazorise.Bootstrap.Field>
+                            </Column>
+                        </Row>
+                        <Row>
+                            <Column>
+                                <Container Fluid="true">
+                                    <ThemeChangeComponent Value="@(Theme?.ColorOptions?.Primary)" ValueChanged="@ThemeColorChanged"></ThemeChangeComponent>
+                                </Container>
+                            </Column>
+                        </Row>
+                    </Blazorise.Bootstrap.BarDropdownMenu>
+                </Blazorise.Bootstrap.BarDropdown>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>

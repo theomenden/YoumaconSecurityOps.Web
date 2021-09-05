@@ -36,11 +36,11 @@ namespace YoumaconSecurityOps.Core.Shared.Tests.Extensions
         public void IsBetween_ShouldReturnFalseWhenValueFallsOutsideRange()
         {
             //ARRANGE
-            var lowerBound = -100;
+            const int lowerBound = -100;
 
-            var upperBound = 100;
+            const int upperBound = 100;
 
-            var testValue = 101;
+            const int testValue = 101;
 
             //ACT
             var result = testValue.IsBetween(lowerBound, upperBound);
@@ -55,9 +55,9 @@ namespace YoumaconSecurityOps.Core.Shared.Tests.Extensions
         public void IsBetweenExclusiveLowerBound_ShouldReturnTrueWhenValueFallsBetweenRange()
         {
             //ARRANGE
-            var lowerBound = -100;
+            const int lowerBound = -100;
 
-            var upperBound = 100;
+            const int upperBound = 100;
 
             var testValue = RandomData.GetInt(-99, 99);
 
@@ -74,9 +74,9 @@ namespace YoumaconSecurityOps.Core.Shared.Tests.Extensions
         public void IsBetweenExclusiveLowerBound_ShouldReturnFalseWhenValueFallsOnLowerBound()
         {
             //ARRANGE
-            var lowerBound = -100;
+            const int lowerBound = -100;
 
-            var upperBound = 100;
+            const int upperBound = 100;
 
             var testValue = -100;
 

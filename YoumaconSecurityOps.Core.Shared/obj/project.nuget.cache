@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "AoYFe6jmNd8ll/VG8rPJTb9j4W9lHudEGF8+nuX8JpmQ31B0BsdPr5Q1ERk5lJfvBtYiUdDU56Ut4wdtACCVBg==",
+  "dgSpecHash": "nVTee5F2nCmTrUcKnUpoaR3d24BOKbrj268qVY2tj5gXTkqJnWr557gmgEJdyoidINnchG+p/RqYvpKx32teqQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.9\\microsoft.entityframeworkcore.abstractions.5.0.9.nupkg.sha512"
+  ],
   "logs": []
 }

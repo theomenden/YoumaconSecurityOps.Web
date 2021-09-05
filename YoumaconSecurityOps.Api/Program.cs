@@ -22,8 +22,11 @@ namespace YoumaconSecurityOps.Api
                 .Enrich.WithMachineName()
                 .Enrich.WithProcessName()
                 .Enrich.WithEnvironmentUserName()
-                .WriteTo.Console()
-                .WriteTo.File($"./logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.Async(a =>
+                {
+                    a.File($"./logs/log-.txt", rollingInterval: RollingInterval.Day);
+                    a.Console();
+                })
                 .CreateBootstrapLogger();
 
             try

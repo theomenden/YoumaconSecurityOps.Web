@@ -1,11 +1,11 @@
 ﻿@page "/"
-
-    <div class="container container-fluid">
-        <div class="jumbotron jumbotron-fluid text-center">
-            <h1>Hello, Security Staff!</h1>
-            <h3>
+        <Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+            <JumbotronTitle Size="JumbotronTitleSize.Is4">Hello, Security Staff!</JumbotronTitle>
+            <JumbotronSubtitle>
                 Welcome to Sec Ops.
-            </h3>
-        </div>
-    </div>
-
+            </JumbotronSubtitle>
+            <Divider></Divider>
+            <Paragraph>
+                Pick any navigation on the side-menu to get started
+            </Paragraph>
+        </Jumbotron>

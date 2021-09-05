@@ -30,14 +30,19 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
         {
             var shiftLog = _shifts.GetAll();
 
-            RaiseShiftLogQueriedEvent();
+            RaiseShiftLogQueriedEvent(request);
 
             return shiftLog;
         }
 
-        private void RaiseShiftLogQueriedEvent()
+        private void RaiseShiftLogQueriedEvent(GetShiftListQuery request)
         {
-            var e = new ShiftLogQueriedEvent();
+            var e = new ShiftLogQueriedEvent(null)
+            {
+                Aggregate = nameof(GetShiftListQuery),
+                MajorVersion = 1,
+                Name = nameof(ShiftLogQueriedEvent)
+            };
 
             _mediator.Publish(e);
         }

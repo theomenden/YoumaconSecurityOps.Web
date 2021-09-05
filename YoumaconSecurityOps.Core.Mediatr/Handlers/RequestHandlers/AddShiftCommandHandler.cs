@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -11,7 +12,7 @@ using YoumaconSecurityOps.Core.Shared.Models.Writers;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 {
-    internal sealed class AddShiftCommandHandler: AsyncRequestHandler<AddShiftCommand>
+    internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommand, Guid> //AsyncRequestHandler<AddShiftCommand>
     {
         private readonly IEventStoreRepository _eventStore;
 
@@ -32,17 +33,22 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             _mediator = mediator;
         }
 
-        protected override async Task Handle(AddShiftCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(AddShiftCommand request, CancellationToken cancellationToken)
         {
-            var shiftWriter = new ShiftWriter(request.StartAt, request.EndAt, request.StaffMember,
-                request.StartingLocation);
+            var shiftWriter = new ShiftWriter(request.StartAt, request.EndAt, request.StaffMemberId, request.StaffMemberName,
+                request.StartingLocationId);
 
             await RaiseShiftCreatedEvent(shiftWriter, cancellationToken);
+
+            return shiftWriter.Id;
         }
 
         private async Task RaiseShiftCreatedEvent(ShiftWriter shiftWriter, CancellationToken cancellationToken)
         {
-            var e = new ShiftCreatedEvent(shiftWriter);
+            var e = new ShiftCreatedEvent(shiftWriter)
+            {
+                Name = nameof(AddShiftCommandHandler)
+            };
             
             await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
 

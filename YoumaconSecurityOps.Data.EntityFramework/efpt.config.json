@@ -1,0 +1,92 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "YoumaconsecurityopsContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Context",
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "YoumaconSecurityOps.Data.EntityFramework",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[BannedList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Contacts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Incidents]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Locations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RadioSchedule]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RoomSchedule]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Shifts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Staff]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[StaffTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[StaffTypesRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WatchList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[p_AddStaffRoles]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[p_AddStaffTypes]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[p_AddStartingLocations]",
+         "ObjectType": 1
+      }
+   ],
+   "UiHint": "desktop-8u2lrvo.YoumaconSecurityOps.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

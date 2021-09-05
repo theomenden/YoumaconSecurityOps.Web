@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,7 +34,14 @@ namespace YoumaconSecurityOps.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<IAsyncEnumerable<ShiftReader>>> GetShifts([FromQuery] GetShiftListQuery query, CancellationToken cancellationToken = default)
         {
-            return Ok(await _mediator.Send(query, cancellationToken));
+            var shifts = await _mediator.Send(query, cancellationToken);
+
+            if (shifts?.GetAsyncEnumerator(cancellationToken).Current is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(shifts);
         }
 
         // GET api/<ShiftController>/params
@@ -45,7 +50,14 @@ namespace YoumaconSecurityOps.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<IAsyncEnumerable<ShiftReader>>> GetShiftsWithParameters([FromQuery] GetShiftListWithParametersQuery parameters, CancellationToken cancellationToken = default)
         {
-            return Ok(await _mediator.Send(parameters, cancellationToken));
+            var shifts = await _mediator.Send(parameters, cancellationToken);
+
+            if (shifts?.GetAsyncEnumerator(cancellationToken).Current is null)
+            {
+                return NoContent();
+            }
+
+            return Ok(shifts);
         }
 
         // POST api/<ShiftController>

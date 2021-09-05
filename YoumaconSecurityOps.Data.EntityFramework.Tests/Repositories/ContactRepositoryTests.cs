@@ -32,7 +32,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories
 
             _testDbContext.SaveChanges();
 
-            _testRepository = new ContactRepository(_testDbContext);
+            //_testRepository = new ContactRepository(_testDbContext);
 
         }
 

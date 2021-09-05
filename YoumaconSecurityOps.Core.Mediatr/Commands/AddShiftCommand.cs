@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Commands
 {
-    public record AddShiftCommand(DateTime StartAt, DateTime EndAt, StaffReader StaffMember,
-        LocationReader StartingLocation) : ICommand
+    public record AddShiftCommand(DateTime StartAt, DateTime EndAt, Guid StaffMemberId, String StaffMemberName,
+        Guid StartingLocationId) : ICommand<Guid>
     {
         public Guid Id => Guid.NewGuid();
     }

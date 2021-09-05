@@ -12,7 +12,7 @@ using YoumaconSecurityOps.Core.Shared.Models.Writers;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 {
-    internal sealed class AddFullStaffRequestCommandHandler : IRequestHandler<AddFullStaffEntryCommand>
+    internal sealed class AddFullStaffRequestCommandHandler : IRequestHandler<AddFullStaffEntryCommand, Guid>
     {
         private readonly IMediator _mediator;
 
@@ -24,7 +24,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             _logger = logger;
         }
 
-        public async Task<Unit> Handle(AddFullStaffEntryCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(AddFullStaffEntryCommand request, CancellationToken cancellationToken)
         {
             var staffWriter = request.StaffWriter;
             var contactWriter = request.ContactWriter;
@@ -32,7 +32,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             await RaiseContactCreatedEvent(contactWriter, cancellationToken)
                 .ContinueWith(async (x) => await RaiseStaffCreatedEvent(staffWriter, cancellationToken), cancellationToken);
             
-            return new Unit();
+            return staffWriter.Id;
         }
 
         private async Task RaiseStaffCreatedEvent(StaffWriter staffWriter, CancellationToken cancellationToken)

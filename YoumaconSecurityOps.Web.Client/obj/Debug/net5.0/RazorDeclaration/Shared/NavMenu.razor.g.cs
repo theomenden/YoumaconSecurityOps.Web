@@ -14,70 +14,196 @@ namespace YoumaconSecurityOps.Web.Client.Shared
     using Microsoft.AspNetCore.Components;
 #nullable restore
 #line 1 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using System.Net.Http;
+using Blazorise;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 2 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.AspNetCore.Authorization;
+using Blazorise.Bootstrap;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.Authorization;
+using Blazorise.Extensions;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.Forms;
+using Blazorise.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.Routing;
+using Blazorise.Icons;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.Web;
+using Blazorise.Icons.FontAwesome;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 7 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.AspNetCore.Components.Web.Virtualization;
+using Blazorise.DataGrid;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 8 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using Microsoft.JSInterop;
+using Blazorise.Animate;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 9 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
-using YoumaconSecurityOps.Web.Client;
+using Blazorise.SpinKit;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 10 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Blazorise.Sidebar;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Blazorise.Snackbar;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using System.Net.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using System.Globalization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.AspNetCore.Authorization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.Authorization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 16 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.Forms;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.Routing;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 18 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.Web;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 19 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.AspNetCore.Components.Web.Virtualization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 20 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using Microsoft.JSInterop;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 21 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using YoumaconSecurityOps.Web.Client;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 22 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
 using YoumaconSecurityOps.Web.Client.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 23 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using YoumaconSecurityOps.Web.Client.Components;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 24 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using YoumaconSecurityOps.Core.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 25 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using YoumaconSecurityOps.Core.Shared.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 26 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using YoumaconSecurityOps.Core.Shared.Models.Readers;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 27 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\_Imports.razor"
+using YoumaconSecurityOps.Core.Shared.Parameters;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 1 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\Shared\NavMenu.razor"
+using Icon = Blazorise.Icons.FontAwesome.Icon;
 
 #line default
 #line hidden
@@ -90,16 +216,43 @@ using YoumaconSecurityOps.Web.Client.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\Shared\NavMenu.razor"
-       
-    private bool collapseNavMenu = true;
+#line 79 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\Shared\NavMenu.razor"
+ 
+    private RenderFragment _ysecIcon =
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+#line default
+#line hidden
+#nullable disable
+        (__builder2) => {
+            __builder2.AddMarkupContent(0, "<img src=\"/ysecShield.svg\" width=\"64\" height=\"64\" data-sizes=\"auto\" alt=\"Ysec Shield Emblem\" class=\"img-fluid lazyload\">");
+        }
+#nullable restore
+#line 80 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\Shared\NavMenu.razor"
+                                                                                                                                                                 ;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+private RenderFragment _discordIcon =
+
+#line default
+#line hidden
+#nullable disable
+        (__builder2) => {
+            __builder2.AddMarkupContent(1, "<i class=\"fab fa-discord\"></i>");
+        }
+#nullable restore
+#line 82 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\Shared\NavMenu.razor"
+                                                                    ;
+
+private RenderFragment _faceBookIcon =
+
+#line default
+#line hidden
+#nullable disable
+        (__builder2) => {
+            __builder2.AddMarkupContent(2, "<i class=\"fab fa-facebook-square\"></i>");
+        }
+#nullable restore
+#line 84 "C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Web.Client\Shared\NavMenu.razor"
+                                                                             ;
 
 #line default
 #line hidden

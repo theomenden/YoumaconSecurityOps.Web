@@ -19,8 +19,14 @@ namespace YoumaconSecurityOps.Core.AutoMapper.Profiles
 
             CreateMap<ContactWriter, ContactReader>();
 
+            CreateMap<IncidentWriter, IncidentReader>();
+
             CreateMap<StaffWriter, StaffReader>();
 
+            CreateMap<ShiftWriter, ShiftReader>()
+                .ForMember(sh => sh.StartingLocationId, opt => opt.MapFrom(src => src.StartingLocationId))
+                .ForMember(sr => sr.StaffId, opt => opt.MapFrom(src => src.StaffMemberId));
+               
             //"The Opt part is important" The_Faid 2021-05-08
             CreateMap<EventBase, EventReader>()
                 .ForMember(r => r.Data,

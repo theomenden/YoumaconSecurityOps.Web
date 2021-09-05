@@ -1,0 +1,214 @@
+﻿@page "/shiftlog"
+
+<Jumbotron Background="Background.Dark" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+    <DisplayHeading Casing="CharacterCasing.Title" Size="DisplayHeadingSize.Is2">View Shift Log</DisplayHeading>
+    <Divider />
+    <Paragraph>
+        <Heading Size="HeadingSize.Is6" TextColor="TextColor.Danger">Shifts In Red Show The Staff Member is currently on Break</Heading>
+        <Heading Size="HeadingSize.Is6" TextColor="TextColor.Warning">Shifts In Yellow Show the Staff Member was late to check in</Heading>
+    </Paragraph>
+</Jumbotron>
+
+<Divider />
+<DataGrid @ref="@_dataGrid"
+          TItem="ShiftReader"
+          ReadData="@OnReadData"
+          Data="@_gridDisplay"
+          TotalItems="@_totalShifts"
+          Editable="true"
+          CommandMode="DataGridCommandMode.Commands"
+          Responsive="true"
+          Sortable="true"
+          Hoverable="true"
+          Striped="true"
+          EditMode="DataGridEditMode.Popup"
+          FixedHeader="true"
+          FixedHeaderDataGridHeight="400px"
+          @bind-SelectedRow="@_selectedShift"
+          RowStyling="@OnRowStyling"
+          RowInserting="@OnRowInserting"
+          Virtualize="true"
+          DetailRowTrigger="@(item => item.Id == _selectedShift?.Id)">
+    <PopupTitleTemplate>
+        @if (context.EditState == DataGridEditState.Edit)
+        {
+            @($"{context.LocalizationString} Shift for {context.Item.StaffMember.Contact.PreferredName} {context.Item.StaffMember.Contact.LastName}")
+        }
+        else
+        {
+            @($"{context.LocalizationString} Shift")
+        }
+    </PopupTitleTemplate>
+    <EmptyTemplate>
+        <Span>
+            <Paragraph>
+                <Heading Size="HeadingSize.Is5" TextColor="TextColor.Danger">No Shifts recorded!</Heading>
+            </Paragraph>
+        </Span>
+    </EmptyTemplate>
+    <LoadingTemplate>
+        <Span>
+            <SpinKit Type="SpinKitType.Grid"></SpinKit>
+        </Span>
+    </LoadingTemplate>
+    <DataGridAggregates>
+    </DataGridAggregates>
+    <DataGridColumns>
+        <DataGridCommandColumn TItem="ShiftReader">
+            <NewCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </NewCommandTemplate>
+            <SaveCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </SaveCommandTemplate>
+            <CancelCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </CancelCommandTemplate>
+            <EditCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </EditCommandTemplate>
+            <DeleteCommandTemplate>
+                <Blazorise.Bootstrap.Button Color="Color.Danger" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+            </DeleteCommandTemplate>
+        </DataGridCommandColumn>
+        <DataGridColumn TItem="ShiftReader" Field="StaffMember.Contact.PreferredName" Caption="Staff Member Assigned" Sortable="true" Editable="true">
+            <DisplayTemplate>
+                @(_staffMembers.FirstOrDefault(st => st.Id == context.StaffMember?.Id)?.Contact.PreferredName ?? String.Empty)
+            </DisplayTemplate>
+            <EditTemplate>
+                <SelectList TItem="@StaffReader"
+                            TValue="Guid"
+                            Data="@_staffMembers"
+                            TextField="@((item)=>$"{item.Contact.LastName}, {item.Contact.PreferredName}")"
+                            ValueField="@((item)=>item.Id)"
+                            SelectedValue="@_selectedStaffMember"
+                            SelectedValueChanged="@OnSelectedStaffMemberChanged"
+                            DefaultItemText="Choose a Staff Member" />
+            </EditTemplate>
+        </DataGridColumn>
+        <DataGridDateColumn TItem="ShiftReader" Field="@nameof(ShiftReader.StartAt)" Caption="Starts At" Sortable="true" Editable="true">
+            <DisplayTemplate>
+                @context.StartAt
+            </DisplayTemplate>
+            <EditTemplate>
+                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedStartDate" DateChanged="@OnStartDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DateEdit>
+            </EditTemplate>
+        </DataGridDateColumn>
+        <DataGridDateColumn TItem="ShiftReader" Field="@nameof(ShiftReader.EndAt)" Caption="Ends At" Sortable="true" Editable="true">
+            <DisplayTemplate>
+                @context.EndAt
+            </DisplayTemplate>
+            <EditTemplate>
+                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedEndDate" DateChanged="@OnEndDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DateEdit>
+            </EditTemplate>
+        </DataGridDateColumn>
+        <DataGridColumn TItem="ShiftReader" Field="StartingLocationNavigation.Name" Caption="Starting Location" Sortable="true" Editable="true">
+            <DisplayTemplate>
+                @(_locations.FirstOrDefault(l => l.Id == context.StartingLocationNavigation?.Id)?.Name ?? String.Empty)
+            </DisplayTemplate>
+            <EditTemplate>
+                <SelectList TItem="@LocationReader"
+                            TValue="Guid"
+                            Data="@_locations"
+                            TextField="@((item)=>item.Name)"
+                            ValueField="@((item)=>item.Id)"
+                            SelectedValue="@_selectedStartingLocation"
+                            SelectedValueChanged="@OnSelectedStartingLocationChanged"
+                            DefaultItemText="Choose where the shift will start" />
+            </EditTemplate>
+        </DataGridColumn>
+        <DataGridColumn TItem="ShiftReader" Field="CurrentLocation.Name" Caption="Last Known Location" Sortable="true" Editable="false">
+            <DisplayTemplate>
+                @(_locations.FirstOrDefault(l => l.Id == context.CurrentLocation?.Id)?.Name ?? String.Empty)
+            </DisplayTemplate>
+        </DataGridColumn>
+    </DataGridColumns>
+    <DetailRowTemplate>
+        @{
+            var shiftDetailInformation = context as ShiftReader;
+
+            <DataGrid TItem="ShiftReader"
+                      Data="new List<ShiftReader> { shiftDetailInformation }"
+                      Sortable="false"
+                      ShowCaptions="true">
+                <DataGridColumn TItem="ShiftReader" Field="@nameof(ShiftReader.Id)" Caption="Actions">
+                    <DisplayTemplate Context="shiftDetailContext">
+                        <Buttons Role="ButtonsRole.Toolbar">
+                            <Buttons Margin="Margin.Is2.FromRight">
+                                <Blazorise.Bootstrap.Button Color="Color.Primary" Clicked="@(async () => await OnCheckedIn(shiftDetailContext.Id))" Loading="@_isLoading">
+                                    <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
+                                    <ChildContent>Check In</ChildContent>
+                                </Blazorise.Bootstrap.Button>
+                                <Blazorise.Bootstrap.Button Color="Color.Success" Clicked="@(() => ShowModal(shiftDetailContext.Id))" Loading="@_isLoading">
+                                    <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
+                                    <ChildContent>Report In</ChildContent>
+                                </Blazorise.Bootstrap.Button>
+                                <Blazorise.Bootstrap.Button Color="Color.Danger" Clicked="@(async () => await OnCheckedOut(shiftDetailContext.Id))" Loading="@_isLoading">
+                                    <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
+                                    <ChildContent>Check Out</ChildContent>
+                                </Blazorise.Bootstrap.Button>
+                            </Buttons>
+                        </Buttons>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridDateColumn TItem="ShiftReader" Field="@nameof(ShiftReader.CheckedInAt)" Caption="Checked in at" InputMode="DateInputMode.DateTime">
+                    <DisplayTemplate Context="detailInfoContext">
+                        @detailInfoContext.CheckedInAt
+                    </DisplayTemplate>
+                </DataGridDateColumn>
+                <DataGridDateColumn TItem="ShiftReader" Field="@nameof(ShiftReader.CheckedOutAt)" Caption="Check out at" InputMode="DateInputMode.DateTime">
+                    <DisplayTemplate Context="detailInfoContext">
+                        @detailInfoContext.CheckedOutAt
+                    </DisplayTemplate>
+                </DataGridDateColumn>
+                <DataGridColumn TItem="ShiftReader" Field="@nameof(ShiftReader.IsLate)" Caption="Late to shift?">
+                    <DisplayTemplate Context="detailInfoContext">
+                        <i class="far @DetermineDisplayIcon(shiftDetailInformation.IsLate)"></i>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridDateColumn TItem="ShiftReader" Field="@nameof(shiftDetailInformation.LastReportedAt)" Caption="Last Time Reported In" InputMode="DateInputMode.DateTime">
+                    <DisplayTemplate Context="detailInfoContext">
+                        @detailInfoContext.LastReportedAt
+                    </DisplayTemplate>
+                </DataGridDateColumn>
+            </DataGrid>
+        }
+    </DetailRowTemplate>
+</DataGrid>
+
+@if (_selectedShift is not null)
+{
+    <Blazorise.Bootstrap.Modal @ref="_modalRef">
+        <Blazorise.Bootstrap.ModalContent Size="ModalSize.Default" Centered="true">
+            <ModalHeader>
+                <ModalTitle>
+                    <i class="fal fa-edit"></i>
+                    Edit Shift
+                </ModalTitle>
+                <Blazorise.Bootstrap.CloseButton/>
+            </ModalHeader>
+            <ModalBody>
+                <Blazorise.Bootstrap.Field>
+                    <FieldLabel>Staff Assigned: </FieldLabel>
+                    <TextEdit Autofocus="false" ReadOnly="true" Placeholder="@_selectedShift.StaffMember.Contact.PreferredName"/>
+                </Blazorise.Bootstrap.Field>
+                <Blazorise.Bootstrap.Field>
+                    <SelectList TItem="@LocationReader"
+                                TValue="Guid"
+                                Data="@_locations"
+                                TextField="@((item) => item.Name)"
+                                ValueField="@((item) => item.Id)"
+                                SelectedValue="@_selectedStartingLocation"
+                                SelectedValueChanged="@OnSelectedStartingLocationChanged"
+                                DefaultItemText="@_selectedShift.CurrentLocation.Name"/>
+                </Blazorise.Bootstrap.Field>
+            </ModalBody>
+            <ModalFooter>
+                <Blazorise.Bootstrap.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap.Button Color="Color.Primary" Clicked="@(async () => await OnReportingIn(_selectedShift.Id))">Save Changes</Blazorise.Bootstrap.Button>
+            </ModalFooter>
+        </Blazorise.Bootstrap.ModalContent>
+    </Blazorise.Bootstrap.Modal>
+}

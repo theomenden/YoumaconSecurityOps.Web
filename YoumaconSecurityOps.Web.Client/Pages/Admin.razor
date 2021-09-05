@@ -1,0 +1,72 @@
+﻿@page "/admin"
+@using Blazorise.Charts
+@using YoumaconSecurityOps.Core.EventStore.Events
+
+<Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+    <JumbotronTitle Size="JumbotronTitleSize.Is4">Administrative Information for Security and Ops</JumbotronTitle>
+    <JumbotronSubtitle>
+        This page is for administration
+    </JumbotronSubtitle>
+    <Divider></Divider>
+    <Paragraph>
+        Check out any chart, graph, or function on this page
+    </Paragraph>
+</Jumbotron>
+<CardDeck>
+
+    <Card Margin="Margin.Is4.OnY">
+        <CardHeader>
+            <Blazorise.Bootstrap.CardTitle>Shift Information</Blazorise.Bootstrap.CardTitle>
+        </CardHeader>
+        <CardBody>
+            <Blazorise.Bootstrap.Button Color="Color.Primary" Outline="true" Clicked="@(async () => await HandleShiftLocationGraphRedraw(_shiftsByLocationBarChart, GetShiftLocationBarChartData))">Redraw</Blazorise.Bootstrap.Button>
+        </CardBody>
+        <CardBody>
+            <Blazorise.Charts.Chart @ref="_shiftsByLocationBarChart" Type="ChartType.Bar" TItem="int" Options="ConfigureBarChartOptions()" />
+        </CardBody>
+    </Card>
+    <Card>
+        <CardHeader>
+            <Blazorise.Bootstrap.CardTitle>Application Events</Blazorise.Bootstrap.CardTitle>
+        </CardHeader>
+        <CardBody>
+            <Blazorise.Bootstrap.Button Color="Color.Primary" Outline="true" Clicked="@(async() => await Reset())">Refresh Events</Blazorise.Bootstrap.Button>
+        </CardBody>
+        <CardBody>
+        <DataGrid @ref="@_eventDataGrid"
+                  TItem="EventReader"
+                  ReadData="@OnReadEventData"
+                  Data="@_eventDataGridDisplay"
+                  TotalItems="@_totalEvents"
+                  Editable="false"
+                  CommandMode="DataGridCommandMode.ButtonRow"
+                  Responsive="true"
+                  Sortable="true"
+                  Hoverable="true"
+                  Striped="true"
+                  FixedHeader="true"
+                  FixedHeaderDataGridHeight="400px"
+                  @bind-SelectedRow="@_selectedEvent"
+                  Virtualize="true"
+                  DetailRowTrigger="@(item => item.Id == _selectedEvent?.Id)">
+            <EmptyTemplate>
+                <Paragraph>No Events Found....</Paragraph>
+            </EmptyTemplate>
+            <LoadingTemplate>
+                <Span>
+                    <SpinKit Type="SpinKitType.Grid"></SpinKit>
+                </Span>
+            </LoadingTemplate>
+            <DataGridColumns>
+                <DataGridCommandColumn TItem="EventReader" />
+                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Id)" Caption="#" Sortable="false" />
+                <DataGridNumericColumn TItem="EventReader" Field="@nameof(EventReader.MajorVersion)" Caption="Major" />
+                <DataGridNumericColumn TItem="EventReader" Field="@nameof(EventReader.MinorVersion)" Caption="Minor" />
+                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Aggregate)" Caption="Aggregate"/>
+                <DataGridDateColumn TItem="EventReader" Field="@nameof(EventReader.CreatedAt)" Caption="Event Registered" />
+                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Name)" Caption="Name"/>
+            </DataGridColumns>
+        </DataGrid>
+        </CardBody>
+    </Card>
+</CardDeck>

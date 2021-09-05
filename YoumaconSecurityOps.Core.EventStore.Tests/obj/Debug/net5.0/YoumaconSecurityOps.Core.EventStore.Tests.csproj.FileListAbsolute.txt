@@ -1,6 +1,0 @@
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.EventStore.Tests\bin\Debug\net5.0\CoverletSourceRootsMapping
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.EventStore.Tests\obj\Debug\net5.0\YoumaconSecurityOps.Core.EventStore.Tests.csprojAssemblyReference.cache
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.EventStore.Tests\obj\Debug\net5.0\YoumaconSecurityOps.Core.EventStore.Tests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.EventStore.Tests\obj\Debug\net5.0\YoumaconSecurityOps.Core.EventStore.Tests.AssemblyInfoInputs.cache
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.EventStore.Tests\obj\Debug\net5.0\YoumaconSecurityOps.Core.EventStore.Tests.AssemblyInfo.cs
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.EventStore.Tests\obj\Debug\net5.0\YoumaconSecurityOps.Core.EventStore.Tests.csproj.CoreCompileInputs.cache
