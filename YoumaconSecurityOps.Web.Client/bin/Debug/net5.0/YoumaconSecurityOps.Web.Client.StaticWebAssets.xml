@@ -1,11 +1,12 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="_content/Blazorise" Path="C:\Users\andre\.nuget\packages\blazorise\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.Animate" Path="C:\Users\andre\.nuget\packages\blazorise.animate\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.Bootstrap" Path="C:\Users\andre\.nuget\packages\blazorise.bootstrap\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.Charts" Path="C:\Users\andre\.nuget\packages\blazorise.charts\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.Charts.Streaming" Path="C:\Users\andre\.nuget\packages\blazorise.charts.streaming\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.DataGrid" Path="C:\Users\andre\.nuget\packages\blazorise.datagrid\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.Sidebar" Path="C:\Users\andre\.nuget\packages\blazorise.sidebar\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.Snackbar" Path="C:\Users\andre\.nuget\packages\blazorise.snackbar\0.9.4.3\build\..\staticwebassets\" />
-  <ContentRoot BasePath="_content/Blazorise.SpinKit" Path="C:\Users\andre\.nuget\packages\blazorise.spinkit\0.9.4.3\build\..\staticwebassets\" />
+  <ContentRoot BasePath="/Identity" Path="C:\Users\andre\.nuget\packages\microsoft.aspnetcore.identity.ui\5.0.12\staticwebassets\V4\" />
+  <ContentRoot BasePath="_content/Blazorise" Path="C:\Users\andre\.nuget\packages\blazorise\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.Animate" Path="C:\Users\andre\.nuget\packages\blazorise.animate\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.Bootstrap5" Path="C:\Users\andre\.nuget\packages\blazorise.bootstrap5\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.Charts" Path="C:\Users\andre\.nuget\packages\blazorise.charts\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.Charts.Streaming" Path="C:\Users\andre\.nuget\packages\blazorise.charts.streaming\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.DataGrid" Path="C:\Users\andre\.nuget\packages\blazorise.datagrid\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.Sidebar" Path="C:\Users\andre\.nuget\packages\blazorise.sidebar\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.Snackbar" Path="C:\Users\andre\.nuget\packages\blazorise.snackbar\0.9.5.2\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/Blazorise.SpinKit" Path="C:\Users\andre\.nuget\packages\blazorise.spinkit\0.9.5.2\build\..\staticwebassets\" />
 </StaticWebAssets>

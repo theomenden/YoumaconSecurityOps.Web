@@ -25,6 +25,8 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Extensions
                 .AddScoped<IIncidentRepository, IncidentRepository>()
                 .AddScoped<ILocationAccessor, LocationRepository>()
                 .AddScoped<ILocationRepository, LocationRepository>()
+                .AddScoped<IRadioScheduleAccessor, RadioScheduleRepository>()
+                .AddScoped<IRadioScheduleRepository, RadioScheduleRepository>()
                 .AddScoped<IShiftAccessor, ShiftRepository>()
                 .AddScoped<IShiftRepository, ShiftRepository>()
                 .AddScoped<IStaffAccessor, StaffRepository>()

@@ -1,0 +1,45 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "YsecItSecurityContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Context",
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "YsecItAuthApp.Web.EntityFramework",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserRoleMap]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Users]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "desktop-8u2lrvo.YSecITSecurity.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

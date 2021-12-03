@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using YoumaconSecurityOps.Core.Shared.Enumerations;
 
 namespace YoumaconSecurityOps.Web.Client.Models
 {
-    public class ApiResponse<T>
+    /// <summary>
+    /// A container for responses that we get from the backend
+    /// </summary>
+    public class ApiResponse
     {
-        /// <value>
-        /// The value that our api returns
-        /// </value>
-        /// <remarks>On Success should return <typeparamref name="T"/>: On Failure should be <c>Null</c></remarks>
-        public T Data { get; set; }
-
         /// <value>
         /// Status code from the API
         /// </value>
@@ -23,5 +17,19 @@ namespace YoumaconSecurityOps.Web.Client.Models
         /// Human Readable Representation of the Response Code
         /// </value>
         public String ResponseMessage { get; set; }
+    }
+
+    /// <summary>
+    /// <para>Generic Wrapper for <see cref="ApiResponse{T}"/></para>
+    /// <inheritdoc cref="ApiResponse"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class ApiResponse<T>: ApiResponse
+    {
+        /// <value>
+        /// The value that our api returns
+        /// </value>
+        /// <remarks>On Success should return <typeparamref name="T"/>: On Failure should be <c>Null</c></remarks>
+        public T Data { get; set; }
     }
 }

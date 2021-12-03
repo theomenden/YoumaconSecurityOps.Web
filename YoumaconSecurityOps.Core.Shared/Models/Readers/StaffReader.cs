@@ -46,7 +46,7 @@ namespace YoumaconSecurityOps.Core.Shared.Models.Readers
 
         [ForeignKey(nameof(ContactId))]
         [InverseProperty(nameof(ContactReader.StaffMember))]
-        public virtual ContactReader Contact { get; set; } = default!;
+        public virtual ContactReader Contact { get; set; }
 
 
         [InverseProperty(nameof(IncidentReader.RecordedBy))]

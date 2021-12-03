@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Exceptionless.RandomData" Version="1.2.0" />
     <PackageReference Include="GenFu" Version="1.6.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.12" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />

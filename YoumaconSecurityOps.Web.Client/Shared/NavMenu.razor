@@ -1,7 +1,6 @@
-﻿@using Icon = Blazorise.Icons.FontAwesome.Icon
-<Bar Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
+﻿<Bar Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
      Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small">
-    <Blazorise.Bootstrap.BarToggler />
+    <Blazorise.Bootstrap5.BarToggler />
     <BarBrand>
         <BarItem>
             <BarLink To="">
@@ -14,7 +13,7 @@
             <BarItem>
                 <Divider />
                 <BarLink To="">
-                    <BarIcon IconName="IconName.Dashboard"/>
+                    <BarIcon IconName="IconName.Dashboard" />
                     Home
                 </BarLink>
             </BarItem>
@@ -77,7 +76,7 @@
 
 @code
 {
-    private RenderFragment _ysecIcon =@<img src="/ysecShield.svg" width="64" height="64" data-sizes="auto" alt="Ysec Shield Emblem" class="img-fluid lazyload" />;
+    private RenderFragment _ysecIcon =@<img data-src="/ysecShield.svg" width="64" height="64" data-sizes="auto" alt="Ysec Shield Emblem" class="img-fluid lazyload" />;
 
 private RenderFragment _discordIcon =@<i class="fab fa-discord"></i>;
 

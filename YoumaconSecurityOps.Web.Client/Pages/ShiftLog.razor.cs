@@ -10,7 +10,7 @@ using YoumaconSecurityOps.Core.Mediatr.Queries;
 using YoumaconSecurityOps.Core.Shared.Enumerations;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Web.Client.Services;
-using Modal = Blazorise.Bootstrap.Modal;
+using Modal = Blazorise.Bootstrap5.Modal;
 
 namespace YoumaconSecurityOps.Web.Client.Pages
 {
@@ -22,6 +22,8 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         [Inject] public ILocationService LocationService { get; set; }
 
         [Inject] public IStaffService StaffService { get; set; }
+
+        [Inject] public IMessageService MessageService { get; set; }
 
         [Inject] public INotificationService Notifications { get; set; }
         #endregion
@@ -36,7 +38,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         private ShiftReader _selectedShift;
 
-        private Int32 _totalShifts = 0;
+        private Int32 _totalShifts;
 
         private DataGrid<ShiftReader> _dataGrid = new();
 
@@ -49,7 +51,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         private DateTime? _selectedStartDate;
         private DateTime? _selectedEndDate;
 
-        private Boolean _isLoading = false;
+        private Boolean _isLoading;
         #endregion
         #region DataGrid Configuration Methods
         private async Task LoadShiftData()
@@ -59,7 +61,6 @@ namespace YoumaconSecurityOps.Web.Client.Pages
             _staffMembers = await StaffService.GetStaffMembersAsync(new GetStaffQuery());
 
             _shifts = await ShiftService.GetShiftsAsync(new GetShiftListQuery());
-
         }
 
         private async Task OnReadData(DataGridReadDataEventArgs<ShiftReader> e)
@@ -95,6 +96,18 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         private static String DetermineDisplayIcon(Boolean statusCheck)
         {
             return statusCheck ? " fa-check-circle text-success" : " fa-times-circle text-danger";
+        }
+
+        private static string SetPopupTitle(PopupTitleContext<ShiftReader> context)
+        {
+            var popupTitle = context.LocalizationString + " Shift ";
+
+            if (context.EditState is DataGridEditState.Edit)
+            {
+                popupTitle += $"for {context.Item.StaffMember.Contact.PreferredName} {context.Item.StaffMember.Contact.LastName}";
+            }
+
+            return popupTitle;
         }
 
         private Task Reset()
@@ -197,30 +210,35 @@ namespace YoumaconSecurityOps.Web.Client.Pages
                 return;
             }
 
-            await Notifications.Success(markUpResponse, $"Checked Out Successfully");
+            await Notifications.Success(markUpResponse, "Checked In Successfully");
 
             _isLoading = false;
         }
 
-        private async Task OnCheckedOut(Guid shiftId)
+        private async Task OnCheckedOut(ShiftReader shiftToCheckOut)
         {
             _isLoading = true;
 
-            var checkedOutCommand = new ShiftCheckoutCommand(shiftId);
-
-            var checkedOutResponse = await ShiftService.CheckOut(checkedOutCommand);
-
-            var markUpResponse = new MarkupString($"<em>{checkedOutResponse.ResponseMessage}</em>");
-
-            if (checkedOutResponse.ResponseCode is not ResponseCodes.ApiSuccess)
+            if (await MessageService.Confirm($"This will checkout {shiftToCheckOut.StaffMember.Contact.PreferredName} from their shift", "Are you sure?"))
             {
-                await Notifications.Error(markUpResponse, "Failed to add shift");
-                _isLoading = false;
-                return;
+                var checkedOutCommand = new ShiftCheckoutCommand(shiftToCheckOut.Id);
+
+                var checkedOutResponse = await ShiftService.CheckOut(checkedOutCommand);
+
+                var markUpResponse = new MarkupString($"<em>{checkedOutResponse.ResponseMessage}</em>");
+
+                if (checkedOutResponse.ResponseCode is not ResponseCodes.ApiSuccess)
+                {
+                    await Notifications.Error(markUpResponse, "Failed to add shift");
+                    _isLoading = false;
+                    return;
+                }
+
+                await Notifications.Success(markUpResponse, "Checked Out Successfully");
             }
 
-            await Notifications.Success(markUpResponse, "Checked Out Successfully");
             _isLoading = false;
+            StateHasChanged();
         }
 
         private async Task OnReportingIn(Guid shiftId)

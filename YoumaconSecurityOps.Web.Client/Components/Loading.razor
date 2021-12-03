@@ -1,0 +1,15 @@
+﻿@if (IsLoading)
+{
+    <Span Margin="Margin.Is5.FromTop.OnDesktop" Padding="Padding.IsAuto.OnDesktop">
+        <SpinKit Centered="true" Size="6em" Color="#000" Type="SpinKitType.CircleFade"/>
+    </Span>
+}
+else
+{
+    @ChildContent
+}
+
+@code {
+    [Parameter]public Boolean IsLoading { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

@@ -2,7 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using Blazorise;
-using Blazorise.Bootstrap;
+using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -15,11 +15,13 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using YoumaconSecurityOps.Core.AutoMapper.Extensions;
 using YoumaconSecurityOps.Core.EventStore.Extensions;
+using YoumaconSecurityOps.Core.FluentEmailer.Extensions;
 using YoumaconSecurityOps.Core.Mediatr.Extensions;
+using YoumaconSecurityOps.Core.Shared.Configuration;
 using YoumaconSecurityOps.Data.EntityFramework.Extensions;
 using YoumaconSecurityOps.Web.Client.Extensions;
 using YoumaconSecurityOps.Web.Client.Middleware;
-using YoumaconSecurityOps.Web.Client.Models;
+using YsecItAuthApp.Web.EntityFramework.Extensions;
 
 namespace YoumaconSecurityOps.Web.Client
 {
@@ -43,25 +45,28 @@ namespace YoumaconSecurityOps.Web.Client
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-              services.AddControllersWithViews();
+            services.AddControllersWithViews();
 
             var appSettings = new AppSettings
             {
                 YoumaDbConnectionString = Configuration.GetConnectionString("YSecOpsDb"),
-                EventStoreConnectionString = Configuration.GetConnectionString("YoumaEventStore")
+                EventStoreConnectionString = Configuration.GetConnectionString("YoumaEventStore"),
+                YSecItAuthConnectionString = Configuration.GetConnectionString("YSecITSecurity")
             };
 
             services.AddLogging(builder =>
             {
                 builder.AddSerilog(dispose: true);
             });
-            
+
+            services.AddAuthServices(appSettings);
+
             services
                 .AddBlazorise(options =>
                 {
                     options.ChangeTextOnKeyPress = true; // optional
                 })
-                .AddBootstrapProviders()
+                .AddBootstrap5Providers()
                 .AddFontAwesomeIcons();
 
             services.AddRazorPages();
@@ -77,6 +82,8 @@ namespace YoumaconSecurityOps.Web.Client
             services.AddEventStoreServices(appSettings.EventStoreConnectionString);
 
             services.AddFrontEndDataServices();
+
+            services.AddFluentEmailServices(Configuration);
 
             services.AddResponseCompression(options =>
             {

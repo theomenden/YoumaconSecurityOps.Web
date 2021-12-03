@@ -7,6 +7,7 @@ using Blazorise;
 using Microsoft.AspNetCore.Components;
 using YoumaconSecurityOps.Core.Mediatr.Commands;
 using YoumaconSecurityOps.Core.Mediatr.Queries;
+using YoumaconSecurityOps.Core.Shared.Enumerations;
 using YoumaconSecurityOps.Core.Shared.Models.Readers;
 using YoumaconSecurityOps.Web.Client.Services;
 
@@ -22,7 +23,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         #region Private Fields
         private IEnumerable<StaffReader> _staffMembers = new List<StaffReader>(50);
-
+        
         private IEnumerable<StaffReader> _gridDisplay = new List<StaffReader>(50);
 
         private IEnumerable<StaffRole> _staffRoles = new List<StaffRole>(5);
@@ -31,11 +32,11 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         private DataGrid<StaffReader> _dataGrid = new ();
 
-        private Int32 _totalStaffMembers = 0;
+        private Int32 _totalStaffMembers;
 
         private StaffReader _selectedStaffMember;
 
-        private Modal _modalRef;
+        private Modal _modalRef = new ();
 
         private Boolean _isLoading = false;
 
@@ -51,8 +52,10 @@ namespace YoumaconSecurityOps.Web.Client.Pages
             _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery());
 
             _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery());
-
+            
             _totalStaffMembers = _staffMembers.Count();
+
+            StateHasChanged();
         }
 
         private static String DetermineDisplayIcon(Boolean statusCheck)
@@ -71,13 +74,27 @@ namespace YoumaconSecurityOps.Web.Client.Pages
                     
                     _gridDisplay = _staffMembers.ToList(); 
             }
+
+            StateHasChanged();
         }
 
         private static void OnStaffNewItemDefaultSetter(StaffReader member)
         {
+            member.Contact = new ContactReader();
             member.StaffTypeRoleMaps = new List<StaffTypesRoles>(1);
         }
-        
+
+        private static string SetPopupTitle(PopupTitleContext<StaffReader> context)
+        {
+            var popupTitle = context.LocalizationString + " Staff ";
+
+            if (context.EditState is DataGridEditState.Edit)
+            {
+                popupTitle += $" {context.Item.Contact.PreferredName ?? context.Item.Contact.FirstName}";
+            }
+
+            return popupTitle;
+        }
         private Task ResetGrid()
         {
             return _dataGrid.Reload();
@@ -101,39 +118,9 @@ namespace YoumaconSecurityOps.Web.Client.Pages
             }
         }
 
-        private async Task OnRowInserting(CancellableRowChange<StaffReader, Dictionary<string, object>> newStaff)
+        private async Task OnRowInserted(SavedRowItem<StaffReader, Dictionary<String, Object>> newStaff)
         {
-              newStaff.Values.TryGetValue("", out var randVal1);
-        //    newStaff.Values.TryGetValue("", out var randVal2);
-        //    newStaff.Values.TryGetValue("", out var randVal3);
-        //    newStaff.Values.TryGetValue("", out var randVal4);
-        //    newStaff.Values.TryGetValue("", out var randVal5);
-        //    newStaff.Values.TryGetValue("", out var randVal6);
-
-        //    var contactWriterToAdd = new ContactWriter(DateTime.Now,
-        //        randVal1.ToString(),
-        //        randVal2.ToString(),
-        //        randVal3.ToString(),
-        //        randVal4.ToString(),
-        //        randVal5.ToString(),
-        //        Convert.ToInt64(randVal6));
-
-
-        //    var staffWriterToAdd = new StaffWriter();
-
-        //    var command = new AddFullStaffEntryCommand(staffWriterToAdd, contactWriterToAdd);
-
-        //    var addedEntityResponse = await StaffService.AddNewStaffMemberAsync(command);
-
-        //    if (addedEntityResponse.ResponseCode is not ResponseCodes.ApiSuccess)
-        //    {
-        //        await NotificationService.Error(new MarkupString($"<em>{addedEntityResponse.ResponseMessage}</em>"), "Failed to add shift");
-
-        //        return;
-        //    }
-
-        //    await NotificationService.Success(new MarkupString($"<em>{addedEntityResponse.ResponseMessage}</em>"),
-        //        "Successfully Added Staff Member");
+            var memberToAdd = newStaff.Item;
 
             StateHasChanged();
         }

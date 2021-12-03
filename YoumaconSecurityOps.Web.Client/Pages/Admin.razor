@@ -16,10 +16,10 @@
 
     <Card Margin="Margin.Is4.OnY">
         <CardHeader>
-            <Blazorise.Bootstrap.CardTitle>Shift Information</Blazorise.Bootstrap.CardTitle>
+            <Blazorise.Bootstrap5.CardTitle>Shift Information</Blazorise.Bootstrap5.CardTitle>
         </CardHeader>
         <CardBody>
-            <Blazorise.Bootstrap.Button Color="Color.Primary" Outline="true" Clicked="@(async () => await HandleShiftLocationGraphRedraw(_shiftsByLocationBarChart, GetShiftLocationBarChartData))">Redraw</Blazorise.Bootstrap.Button>
+            <Blazorise.Bootstrap5.Button Color="Color.Primary" Outline="true" Clicked="@(async () => await HandleShiftLocationGraphRedraw(_shiftsByLocationBarChart, GetShiftLocationBarChartData))">Redraw</Blazorise.Bootstrap5.Button>
         </CardBody>
         <CardBody>
             <Blazorise.Charts.Chart @ref="_shiftsByLocationBarChart" Type="ChartType.Bar" TItem="int" Options="ConfigureBarChartOptions()" />
@@ -27,10 +27,10 @@
     </Card>
     <Card>
         <CardHeader>
-            <Blazorise.Bootstrap.CardTitle>Application Events</Blazorise.Bootstrap.CardTitle>
+            <Blazorise.Bootstrap5.CardTitle>Application Events</Blazorise.Bootstrap5.CardTitle>
         </CardHeader>
         <CardBody>
-            <Blazorise.Bootstrap.Button Color="Color.Primary" Outline="true" Clicked="@(async() => await Reset())">Refresh Events</Blazorise.Bootstrap.Button>
+            <Blazorise.Bootstrap5.Button Color="Color.Primary" Outline="true" Clicked="@(async() => await Reset())">Refresh Events</Blazorise.Bootstrap5.Button>
         </CardBody>
         <CardBody>
         <DataGrid @ref="@_eventDataGrid"
@@ -59,12 +59,12 @@
             </LoadingTemplate>
             <DataGridColumns>
                 <DataGridCommandColumn TItem="EventReader" />
-                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Id)" Caption="#" Sortable="false" />
+                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Name)" Caption="Name" />
+                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Id)" Displayable="false" Sortable="false" />
                 <DataGridNumericColumn TItem="EventReader" Field="@nameof(EventReader.MajorVersion)" Caption="Major" />
                 <DataGridNumericColumn TItem="EventReader" Field="@nameof(EventReader.MinorVersion)" Caption="Minor" />
-                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Aggregate)" Caption="Aggregate"/>
+                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Aggregate)" Caption="Aggregate" />
                 <DataGridDateColumn TItem="EventReader" Field="@nameof(EventReader.CreatedAt)" Caption="Event Registered" />
-                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Name)" Caption="Name"/>
             </DataGridColumns>
         </DataGrid>
         </CardBody>

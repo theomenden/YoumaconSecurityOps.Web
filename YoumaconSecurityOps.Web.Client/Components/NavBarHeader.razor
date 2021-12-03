@@ -1,52 +1,62 @@
-﻿@using Blazorise.Localization
-<Bar Breakpoint="Breakpoint.Desktop"
+﻿<Bar Breakpoint="Breakpoint.Desktop"
      @bind-Visible="@_isTopbarVisible"
      Background="Background.Dark"
      ThemeContrast="ThemeContrast.Light"
      Shadow="Shadow.Default"
      Border="Border.Dark.OnBottom.RoundedBottom.Is1">
-    <BarBrand>
-        <Link To="#" Title="YSec Ops" />
-    </BarBrand>
-    <Blazorise.Bootstrap.BarToggler />
     <BarMenu>
         <BarStart>
+            <BarItem>
+                <Addons>
+                    <Addon AddonType="AddonType.Start">
+                        <AddonLabel>
+                            <BarIcon IconName="IconName.Language" IconSize="IconSize.Small" IconStyle="IconStyle.Regular" />
+                        </AddonLabel>
+                    </Addon>
+                    <Addon AddonType="AddonType.Body">
+                        <SelectList TItem="@CultureInfo"
+                                    TValue="CultureInfo"
+                                    Data="@LocalizationService.AvailableCultures"
+                                    TextField="@((item) => item.DisplayName)"
+                                    ValueField="@((item) => item)"
+                                    SelectedValue="@_selectedCultureName"
+                                    SelectedValueChanged="@SelectedCultureChanged"
+                                    DefaultItemText="@CultureInfo.CurrentCulture.DisplayName" />
+                    </Addon>
+                </Addons>
+            </BarItem>
         </BarStart>
-        <BarItem>
-            <BarIcon IconName="IconName.Language" />
-            <SelectList TItem="@CultureInfo"
-                        TValue="CultureInfo"
-                        Data="@LocalizationService.AvailableCultures"
-                        TextField="@((item)=> item.DisplayName)"
-                        ValueField="@((item)=>item)"
-                        SelectedValue="@_selectedCultureName"
-                        SelectedValueChanged="@SelectedCultureChanged"
-                        DefaultItemText="@CultureInfo.CurrentCulture.DisplayName"/>
-        </BarItem>
         <BarEnd>
             <BarItem>
-                <Blazorise.Bootstrap.Button Color="Color.Primary">Sign up</Blazorise.Bootstrap.Button>
-                <Blazorise.Bootstrap.Button Color="Color.Secondary">Log in</Blazorise.Bootstrap.Button>
+                <Buttons Role="ButtonsRole.Toolbar" Flex="Flex.Row">
+                    <Blazorise.Bootstrap5.Button Color="Color.Primary">Sign up</Blazorise.Bootstrap5.Button>
+                    <Blazorise.Bootstrap5.Button Color="Color.Secondary">Log in</Blazorise.Bootstrap5.Button>
+                </Buttons>
             </BarItem>
+
             <BarItem>
-                <Blazorise.Bootstrap.BarDropdown>
-                    <BarDropdownToggle><Paragraph TextColor="TextColor.Light"><Blazorise.Icon Name="IconName.Tint"/> Theme</Paragraph></BarDropdownToggle>
-                    <Blazorise.Bootstrap.BarDropdownMenu Style="padding: 15px; min-width: 550px;" RightAligned="true">
+                <Blazorise.Bootstrap5.BarDropdown>
+                    <BarDropdownToggle>
+                        <Paragraph TextColor="TextColor.Light">
+                            <Blazorise.Icon Name="IconName.Tint" /> Theme
+                        </Paragraph>
+                    </BarDropdownToggle>
+                    <Blazorise.Bootstrap5.BarDropdownMenu Style="padding: 15px; min-width: 550px;" RightAligned="true">
                         <Row>
                             <Column Margin="Margin.Is2.FromBottom">
-                                <Blazorise.Bootstrap.Field>
-                                    <Blazorise.Bootstrap.Switch TValue="bool" Checked="@(Theme?.Enabled == true)" CheckedChanged="@ThemeEnabledChanged">Theme enabled</Blazorise.Bootstrap.Switch>
-                                </Blazorise.Bootstrap.Field>
+                                <Blazorise.Bootstrap5.Field>
+                                    <Blazorise.Bootstrap5.Switch TValue="bool" Checked="@(Theme?.Enabled == true)" CheckedChanged="@ThemeEnabledChanged">Theme enabled</Blazorise.Bootstrap5.Switch>
+                                </Blazorise.Bootstrap5.Field>
                             </Column>
                         </Row>
                         <Row>
                             <Column Margin="Margin.Is2.FromBottom">
-                                <Blazorise.Bootstrap.Field>
-                                    <Blazorise.Bootstrap.Check TValue="bool" Checked="@(Theme?.IsGradient == true)" CheckedChanged="@ThemeGradientChanged">Gradient colors</Blazorise.Bootstrap.Check>
-                                </Blazorise.Bootstrap.Field>
-                                <Blazorise.Bootstrap.Field>
-                                    <Blazorise.Bootstrap.Check TValue="bool" Checked="@(Theme?.IsRounded == true)" CheckedChanged="@ThemeRoundedChanged">Rounded elements</Blazorise.Bootstrap.Check>
-                                </Blazorise.Bootstrap.Field>
+                                <Blazorise.Bootstrap5.Field>
+                                    <Blazorise.Bootstrap5.Check TValue="bool" Checked="@(Theme?.IsGradient == true)" CheckedChanged="@ThemeGradientChanged">Gradient colors</Blazorise.Bootstrap5.Check>
+                                </Blazorise.Bootstrap5.Field>
+                                <Blazorise.Bootstrap5.Field>
+                                    <Blazorise.Bootstrap5.Check TValue="bool" Checked="@(Theme?.IsRounded == true)" CheckedChanged="@ThemeRoundedChanged">Rounded elements</Blazorise.Bootstrap5.Check>
+                                </Blazorise.Bootstrap5.Field>
                             </Column>
                         </Row>
                         <Row>
@@ -56,8 +66,8 @@
                                 </Container>
                             </Column>
                         </Row>
-                    </Blazorise.Bootstrap.BarDropdownMenu>
-                </Blazorise.Bootstrap.BarDropdown>
+                    </Blazorise.Bootstrap5.BarDropdownMenu>
+                </Blazorise.Bootstrap5.BarDropdown>
             </BarItem>
         </BarEnd>
     </BarMenu>

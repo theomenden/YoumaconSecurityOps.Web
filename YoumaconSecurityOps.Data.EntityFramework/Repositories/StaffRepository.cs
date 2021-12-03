@@ -80,7 +80,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError("An exception occured while attempting to create a staff record for: {@staffMember}, {ex}", entity, ex.InnerException?.Message ?? ex.Message);
+                _logger.LogError("An exception occurred while attempting to create a staff record for: {@staffMember}, {ex}", entity, ex.InnerException?.Message ?? ex.Message);
 
                 return false;
             }

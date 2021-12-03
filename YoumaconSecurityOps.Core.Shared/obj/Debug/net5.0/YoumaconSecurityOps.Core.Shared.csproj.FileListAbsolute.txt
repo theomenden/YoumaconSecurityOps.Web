@@ -2,7 +2,6 @@ C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurit
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\bin\Debug\net5.0\YoumaconSecurityOps.Core.Shared.dll
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\bin\Debug\net5.0\ref\YoumaconSecurityOps.Core.Shared.dll
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\bin\Debug\net5.0\YoumaconSecurityOps.Core.Shared.pdb
-C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\obj\Debug\net5.0\YoumaconSecurityOps.Core.Shared.csproj.AssemblyReference.cache
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\obj\Debug\net5.0\YoumaconSecurityOps.Core.Shared.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\obj\Debug\net5.0\YoumaconSecurityOps.Core.Shared.AssemblyInfoInputs.cache
 C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.Shared\obj\Debug\net5.0\YoumaconSecurityOps.Core.Shared.AssemblyInfo.cs

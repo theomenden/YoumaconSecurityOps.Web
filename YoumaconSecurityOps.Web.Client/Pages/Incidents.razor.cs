@@ -51,7 +51,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         private Guid _selectedReportingStaffMember = Guid.Empty;
         private Guid _selectedRecordingStaffMember = Guid.Empty;
 
-        private Guid _selectedOccurranceLocation = Guid.Empty;
+        private Guid _selectedOccurrenceLocation = Guid.Empty;
 
         private Guid _selectedShift = Guid.Empty;
 
@@ -133,7 +133,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
             var shiftReportedUnder = _shifts.First(sh => sh.Id == _selectedShift);
 
-            var locationOccurredAt = _locations.First(l => l.Id == (_selectedOccurranceLocation));
+            var locationOccurredAt = _locations.First(l => l.Id == (_selectedOccurrenceLocation));
 
             var addIncidentCommand = new AddIncidentCommand
             {
@@ -256,7 +256,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         private void OnSelectedLocationChanged(Guid value)
         {
-            _selectedOccurranceLocation = value;
+            _selectedOccurrenceLocation = value;
 
             StateHasChanged();
         }

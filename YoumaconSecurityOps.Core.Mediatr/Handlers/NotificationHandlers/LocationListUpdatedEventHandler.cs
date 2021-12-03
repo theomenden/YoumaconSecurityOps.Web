@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 using YoumaconSecurityOps.Core.EventStore.Events;
 using YoumaconSecurityOps.Core.EventStore.Events.Updated;
 using YoumaconSecurityOps.Core.EventStore.Storage;

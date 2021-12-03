@@ -1,0 +1,23 @@
+﻿<Bar 
+    Background="Background.Dark"
+    Breakpoint="Breakpoint.Desktop"
+    ThemeContrast="ThemeContrast.Dark" 
+    Shadow="Shadow.Default" 
+    Border="Border.Dark.OnTop.RoundedTop.Is1">
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <Text TextWeight="TextWeight.Light" Italic="true" TextColor="TextColor.White50">
+                    <Blazorise.Icon Name="IconName.Code" IconSize="IconSize.ExtraSmall" IconStyle="IconStyle.Light"/>
+                    Version @AssemblyProductVersion
+                </Text>
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            <Text TextWeight="TextWeight.Light" Italic="true" TextColor="TextColor.Muted">
+                @ApplicationDevelopmentCompany
+                <Blazorise.Icon Name="IconName.Copyright" IconSize="IconSize.ExtraSmall" />
+            </Text>
+        </BarEnd>
+    </BarMenu>
+</Bar>

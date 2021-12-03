@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Threading.Tasks;
 using Blazorise;
 using Blazorise.Localization;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace YoumaconSecurityOps.Web.Client.Components
 {

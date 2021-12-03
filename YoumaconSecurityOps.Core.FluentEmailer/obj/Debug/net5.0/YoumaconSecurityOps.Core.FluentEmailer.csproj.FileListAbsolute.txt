@@ -1,0 +1,11 @@
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\bin\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.deps.json
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\bin\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.dll
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\bin\Debug\net5.0\ref\YoumaconSecurityOps.Core.FluentEmailer.dll
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\bin\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.pdb
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.AssemblyInfoInputs.cache
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.AssemblyInfo.cs
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.csproj.CoreCompileInputs.cache
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.dll
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\ref\YoumaconSecurityOps.Core.FluentEmailer.dll
+C:\Users\andre\source\repos\YoumaconSecurityOps.Web.BlazorServer\YoumaconSecurityOps.Core.FluentEmailer\obj\Debug\net5.0\YoumaconSecurityOps.Core.FluentEmailer.pdb

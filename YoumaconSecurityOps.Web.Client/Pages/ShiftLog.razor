@@ -8,7 +8,6 @@
         <Heading Size="HeadingSize.Is6" TextColor="TextColor.Warning">Shifts In Yellow Show the Staff Member was late to check in</Heading>
     </Paragraph>
 </Jumbotron>
-
 <Divider />
 <DataGrid @ref="@_dataGrid"
           TItem="ShiftReader"
@@ -30,14 +29,7 @@
           Virtualize="true"
           DetailRowTrigger="@(item => item.Id == _selectedShift?.Id)">
     <PopupTitleTemplate>
-        @if (context.EditState == DataGridEditState.Edit)
-        {
-            @($"{context.LocalizationString} Shift for {context.Item.StaffMember.Contact.PreferredName} {context.Item.StaffMember.Contact.LastName}")
-        }
-        else
-        {
-            @($"{context.LocalizationString} Shift")
-        }
+        @SetPopupTitle(context)
     </PopupTitleTemplate>
     <EmptyTemplate>
         <Span>
@@ -56,19 +48,19 @@
     <DataGridColumns>
         <DataGridCommandColumn TItem="ShiftReader">
             <NewCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </NewCommandTemplate>
             <SaveCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </SaveCommandTemplate>
             <CancelCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </CancelCommandTemplate>
             <EditCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </EditCommandTemplate>
             <DeleteCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Danger" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Danger" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </DeleteCommandTemplate>
         </DataGridCommandColumn>
         <DataGridColumn TItem="ShiftReader" Field="StaffMember.Contact.PreferredName" Caption="Staff Member Assigned" Sortable="true" Editable="true">
@@ -79,8 +71,8 @@
                 <SelectList TItem="@StaffReader"
                             TValue="Guid"
                             Data="@_staffMembers"
-                            TextField="@((item)=>$"{item.Contact.LastName}, {item.Contact.PreferredName}")"
-                            ValueField="@((item)=>item.Id)"
+                            TextField="@(item=>$"{item.Contact.LastName}, {item.Contact.PreferredName}")"
+                            ValueField="@(item=> item.Id)"
                             SelectedValue="@_selectedStaffMember"
                             SelectedValueChanged="@OnSelectedStaffMemberChanged"
                             DefaultItemText="Choose a Staff Member" />
@@ -137,18 +129,18 @@
                     <DisplayTemplate Context="shiftDetailContext">
                         <Buttons Role="ButtonsRole.Toolbar">
                             <Buttons Margin="Margin.Is2.FromRight">
-                                <Blazorise.Bootstrap.Button Color="Color.Primary" Clicked="@(async () => await OnCheckedIn(shiftDetailContext.Id))" Loading="@_isLoading">
+                                <Blazorise.Bootstrap5.Button Color="Color.Primary" Clicked="@(async () => await OnCheckedIn(shiftDetailContext.Id))" Loading="@_isLoading">
                                     <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
                                     <ChildContent>Check In</ChildContent>
-                                </Blazorise.Bootstrap.Button>
-                                <Blazorise.Bootstrap.Button Color="Color.Success" Clicked="@(() => ShowModal(shiftDetailContext.Id))" Loading="@_isLoading">
+                                </Blazorise.Bootstrap5.Button>
+                                <Blazorise.Bootstrap5.Button Color="Color.Success" Clicked="@(() => ShowModal(shiftDetailContext.Id))" Loading="@_isLoading">
                                     <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
                                     <ChildContent>Report In</ChildContent>
-                                </Blazorise.Bootstrap.Button>
-                                <Blazorise.Bootstrap.Button Color="Color.Danger" Clicked="@(async () => await OnCheckedOut(shiftDetailContext.Id))" Loading="@_isLoading">
+                                </Blazorise.Bootstrap5.Button>
+                                <Blazorise.Bootstrap5.Button Color="Color.Danger" Clicked="@(async () => await OnCheckedOut(shiftDetailContext))" Loading="@_isLoading">
                                     <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
                                     <ChildContent>Check Out</ChildContent>
-                                </Blazorise.Bootstrap.Button>
+                                </Blazorise.Bootstrap5.Button>
                             </Buttons>
                         </Buttons>
                     </DisplayTemplate>
@@ -180,21 +172,21 @@
 
 @if (_selectedShift is not null)
 {
-    <Blazorise.Bootstrap.Modal @ref="_modalRef">
-        <Blazorise.Bootstrap.ModalContent Size="ModalSize.Default" Centered="true">
+    <Blazorise.Bootstrap5.Modal @ref="_modalRef">
+        <Blazorise.Bootstrap5.ModalContent Size="ModalSize.Default" Centered="true">
             <ModalHeader>
                 <ModalTitle>
-                    <i class="fal fa-edit"></i>
+                    <Blazorise.Icon Name="IconName.Edit" IconSize="IconSize.Small"></Blazorise.Icon>
                     Edit Shift
                 </ModalTitle>
-                <Blazorise.Bootstrap.CloseButton/>
+                <Blazorise.Bootstrap5.CloseButton />
             </ModalHeader>
             <ModalBody>
-                <Blazorise.Bootstrap.Field>
+                <Blazorise.Bootstrap5.Field>
                     <FieldLabel>Staff Assigned: </FieldLabel>
-                    <TextEdit Autofocus="false" ReadOnly="true" Placeholder="@_selectedShift.StaffMember.Contact.PreferredName"/>
-                </Blazorise.Bootstrap.Field>
-                <Blazorise.Bootstrap.Field>
+                    <TextEdit Autofocus="false" ReadOnly="true" Placeholder="@_selectedShift.StaffMember.Contact.PreferredName" />
+                </Blazorise.Bootstrap5.Field>
+                <Blazorise.Bootstrap5.Field>
                     <SelectList TItem="@LocationReader"
                                 TValue="Guid"
                                 Data="@_locations"
@@ -202,13 +194,13 @@
                                 ValueField="@((item) => item.Id)"
                                 SelectedValue="@_selectedStartingLocation"
                                 SelectedValueChanged="@OnSelectedStartingLocationChanged"
-                                DefaultItemText="@_selectedShift.CurrentLocation.Name"/>
-                </Blazorise.Bootstrap.Field>
+                                DefaultItemText="@_selectedShift.CurrentLocation.Name" />
+                </Blazorise.Bootstrap5.Field>
             </ModalBody>
             <ModalFooter>
-                <Blazorise.Bootstrap.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Bootstrap.Button>
-                <Blazorise.Bootstrap.Button Color="Color.Primary" Clicked="@(async () => await OnReportingIn(_selectedShift.Id))">Save Changes</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Secondary" Clicked="@HideModal">Close</Blazorise.Bootstrap5.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Primary" Clicked="@(async () => await OnReportingIn(_selectedShift.Id))">Save Changes</Blazorise.Bootstrap5.Button>
             </ModalFooter>
-        </Blazorise.Bootstrap.ModalContent>
-    </Blazorise.Bootstrap.Modal>
+        </Blazorise.Bootstrap5.ModalContent>
+    </Blazorise.Bootstrap5.Modal>
 }

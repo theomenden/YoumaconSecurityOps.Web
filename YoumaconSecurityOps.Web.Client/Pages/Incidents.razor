@@ -58,16 +58,16 @@
     <DataGridColumns>
         <DataGridCommandColumn TItem="IncidentReader">
             <NewCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </NewCommandTemplate>
             <SaveCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </SaveCommandTemplate>
             <CancelCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </CancelCommandTemplate>
             <EditCommandTemplate>
-                <Blazorise.Bootstrap.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </EditCommandTemplate>
         </DataGridCommandColumn>
         <DataGridColumn TItem="IncidentReader" Field="@nameof(IncidentReader.Title)" Caption="Title" Editable="true" />
@@ -81,7 +81,7 @@
                             Data="@_locations"
                             TextField="@((item)=>item.Name)"
                             ValueField="@((item)=>item.Id)"
-                            SelectedValue="@_selectedOccurranceLocation"
+                            SelectedValue="@_selectedOccurrenceLocation"
                             SelectedValueChanged="@OnSelectedLocationChanged"
                             DefaultItemText="Choose where the incident took place" />
             </EditTemplate>

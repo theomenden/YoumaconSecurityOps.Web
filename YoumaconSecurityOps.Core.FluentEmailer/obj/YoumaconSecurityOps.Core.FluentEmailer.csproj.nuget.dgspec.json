@@ -28,7 +28,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -57,6 +58,18 @@
             "FluentEmail.Razor": {
               "target": "Package",
               "version": "[3.0.0, )"
+            },
+            "FluentEmail.SendGrid": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "FluentEmail.Smtp": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.24.4, )"
             }
           },
           "imports": [
@@ -74,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

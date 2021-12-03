@@ -1,21 +1,21 @@
 ﻿<Form>
     <!--Contact Information-->
     <Fields>
-        <Blazorise.Bootstrap.Field ColumnSize="ColumnSize.Is6.OnDesktop">
+        <Blazorise.Bootstrap5.Field ColumnSize="ColumnSize.Is6.OnDesktop">
             <FieldLabel>First Name</FieldLabel>
             <TextEdit />
             <FieldLabel>Last Name</FieldLabel>
             <TextEdit />
             <FieldLabel>Preferred Name</FieldLabel>
             <TextEdit />
-        </Blazorise.Bootstrap.Field>
-        <Blazorise.Bootstrap.Field ColumnSize="ColumnSize.Is4.OnDesktop">
+        </Blazorise.Bootstrap5.Field>
+        <Blazorise.Bootstrap5.Field ColumnSize="ColumnSize.Is4.OnDesktop">
             <FieldLabel>State</FieldLabel>
-        </Blazorise.Bootstrap.Field>
-        <Blazorise.Bootstrap.Field ColumnSize="ColumnSize.Is2.OnDesktop">
+        </Blazorise.Bootstrap5.Field>
+        <Blazorise.Bootstrap5.Field ColumnSize="ColumnSize.Is2.OnDesktop">
             <FieldLabel>Zip</FieldLabel>
             <TextEdit />
-        </Blazorise.Bootstrap.Field>
+        </Blazorise.Bootstrap5.Field>
     </Fields>
     <!--Staff Information-->
 
@@ -29,5 +29,5 @@
         Select Role
     </DropdownList>
     <!--Submit stuff pls. Use GG strat-->
-    <Blazorise.Bootstrap.Button Loading="true" Color="Color.Primary" Type="ButtonType.Submit" Clicked="@(async () => await OnSubmit())"></Blazorise.Bootstrap.Button>
+    <Blazorise.Bootstrap5.Button Loading="true" Color="Color.Primary" Type="ButtonType.Submit" Clicked="@(async () => await OnSubmit())"></Blazorise.Bootstrap5.Button>
 </Form>

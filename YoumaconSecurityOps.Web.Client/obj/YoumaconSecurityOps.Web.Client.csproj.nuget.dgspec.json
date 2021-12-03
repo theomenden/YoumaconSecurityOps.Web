@@ -28,7 +28,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -63,7 +64,7 @@
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[6.0.0, )"
             }
           },
           "imports": [
@@ -81,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -109,7 +110,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -141,19 +143,31 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Abstractions": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
             },
-            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[5.0.12, )"
             },
             "System.Linq.Async": {
               "target": "Package",
@@ -175,7 +189,94 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj",
+        "projectName": "YoumaconSecurityOps.Core.FluentEmailer",
+        "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj",
+        "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "FluentEmail.Core": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "FluentEmail.MailKit": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "FluentEmail.Razor": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "FluentEmail.SendGrid": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "FluentEmail.Smtp": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.24.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -203,7 +304,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -234,7 +336,7 @@
             },
             "FluentValidation": {
               "target": "Package",
-              "version": "[10.3.0, )"
+              "version": "[10.3.4, )"
             },
             "MediatR": {
               "target": "Package",
@@ -264,7 +366,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -292,7 +394,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -310,9 +413,25 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [
@@ -330,7 +449,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -358,7 +477,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -382,33 +502,39 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.9, )"
+              "version": "[5.0.12, )"
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[5.0.2, )"
+              "version": "[6.0.0, )"
             },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[6.0.0, )"
             },
             "System.Linq.Async": {
               "target": "Package",
@@ -430,7 +556,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -458,7 +584,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -466,6 +593,9 @@
             "projectReferences": {
               "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.AutoMapper\\YoumaconSecurityOps.Core.AutoMapper.csproj": {
                 "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.AutoMapper\\YoumaconSecurityOps.Core.AutoMapper.csproj"
+              },
+              "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj": {
+                "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj"
               },
               "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj": {
                 "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj"
@@ -475,6 +605,9 @@
               },
               "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj": {
                 "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj"
+              },
+              "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj": {
+                "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj"
               }
             }
           }
@@ -491,7 +624,7 @@
           "dependencies": {
             "Blazored.FluentValidation": {
               "target": "Package",
-              "version": "[2.0.1, )"
+              "version": "[2.0.3, )"
             },
             "Blazored.LocalStorage": {
               "target": "Package",
@@ -499,69 +632,83 @@
             },
             "Blazorise": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Animate": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
-            "Blazorise.Bootstrap": {
+            "Blazorise.Bootstrap5": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Charts": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Charts.Streaming": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Components": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.DataGrid": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Sidebar": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.Snackbar": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
             "Blazorise.SpinKit": {
               "target": "Package",
-              "version": "[0.9.4.3, )"
+              "version": "[0.9.5.2, )"
             },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.9, )",
-              "noWarn": [
-                "NU1605"
-              ]
+              "version": "[5.0.12, )"
             },
-            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+            "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[5.0.9, )",
-              "noWarn": [
-                "NU1605"
-              ]
+              "version": "[5.0.12, )"
             },
-            "Microsoft.Identity.Web": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[1.16.0, )"
+              "version": "[5.0.12, )"
             },
-            "Microsoft.Identity.Web.UI": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[1.16.0, )"
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             },
             "Serilog": {
               "target": "Package",
@@ -597,7 +744,7 @@
             },
             "Serilog.Settings.Configuration": {
               "target": "Package",
-              "version": "[3.2.0, )"
+              "version": "[3.3.0, )"
             },
             "Serilog.Sinks.Async": {
               "target": "Package",
@@ -605,7 +752,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.1, )"
+              "version": "[6.2.3, )"
             },
             "System.Linq.Async": {
               "target": "Package",
@@ -630,7 +777,134 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj",
+        "projectName": "YsecItAuthApp.Web.EntityFramework",
+        "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj",
+        "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
+                "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Abstractions": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Analyzers": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.12, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
