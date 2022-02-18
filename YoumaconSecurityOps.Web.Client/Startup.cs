@@ -1,28 +1,3 @@
-using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using Blazorise;
-using Blazorise.Bootstrap5;
-using Blazorise.Icons.FontAwesome;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Serilog;
-using YoumaconSecurityOps.Core.AutoMapper.Extensions;
-using YoumaconSecurityOps.Core.EventStore.Extensions;
-using YoumaconSecurityOps.Core.FluentEmailer.Extensions;
-using YoumaconSecurityOps.Core.Mediatr.Extensions;
-using YoumaconSecurityOps.Core.Shared.Configuration;
-using YoumaconSecurityOps.Data.EntityFramework.Extensions;
-using YoumaconSecurityOps.Web.Client.Extensions;
-using YoumaconSecurityOps.Web.Client.Middleware;
-using YsecItAuthApp.Web.EntityFramework.Extensions;
-
 namespace YoumaconSecurityOps.Web.Client
 {
     public class Startup
@@ -95,7 +70,10 @@ namespace YoumaconSecurityOps.Web.Client
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "YoumaconSecurityOps.Api", Version = "v1" });
             });
-            
+
+            services.AddSingleton<SessionDetails>();
+            services.AddScoped<CircuitHandler>((sp) => new TrackingCircuitHandler(sp.GetRequiredService<SessionDetails>()));
+
             services.AddServerSideBlazor();
         }
 

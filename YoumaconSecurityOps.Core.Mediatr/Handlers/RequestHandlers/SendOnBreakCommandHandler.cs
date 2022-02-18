@@ -1,62 +1,50 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Failed;
-using YoumaconSecurityOps.Core.EventStore.Events.Updated;
-using YoumaconSecurityOps.Core.Mediatr.Commands;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+internal sealed class SendOnBreakCommandHandler : IRequestHandler<SendOnBreakCommand, Guid>
 {
-    internal sealed class SendOnBreakCommandHandler : IRequestHandler<SendOnBreakCommand, Guid>
+    private readonly IMediator _mediator;
+
+    private readonly IStaffRepository _staff;
+
+    private readonly ILogger<SendOnBreakCommandHandler> _logger;
+
+    public SendOnBreakCommandHandler(IMediator mediator, IStaffRepository staff, ILogger<SendOnBreakCommandHandler> logger)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+        _staff = staff;
+        _logger = logger;
+    }
 
-        private readonly IStaffRepository _staff;
+    public async Task<Guid> Handle(SendOnBreakCommand request, CancellationToken cancellationToken)
+    {
+        var couldUpdateStaffMember = await _staff.SendOnBreak(request.StaffId, cancellationToken);
 
-        private readonly ILogger<SendOnBreakCommandHandler> _logger;
-
-        public SendOnBreakCommandHandler(IMediator mediator, IStaffRepository staff, ILogger<SendOnBreakCommandHandler> logger)
+        if (couldUpdateStaffMember is null)
         {
-            _mediator = mediator;
-            _staff = staff;
-            _logger = logger;
+            await RaiseFailedToUpdateEntityEvent(request, cancellationToken);
+
+            return Guid.Empty;
         }
 
-        public async Task<Guid> Handle(SendOnBreakCommand request, CancellationToken cancellationToken)
-        {
-            var couldUpdateStaffMember = await _staff.SendOnBreak(request.StaffId, cancellationToken);
+        await RaiseStaffMemberUpdatedEvent(couldUpdateStaffMember, cancellationToken);
 
-            if (couldUpdateStaffMember is null)
-            {
-                await RaiseFailedToUpdateEntityEvent(request, cancellationToken);
+        return request.StaffId;
+    }
 
-                return Guid.Empty;
-            }
+    private async Task RaiseStaffMemberUpdatedEvent(StaffReader updatedStaff, CancellationToken cancellationToken)
+    {
+        var e = new StaffMemberUpdatedEvent(updatedStaff);
 
-            await RaiseStaffMemberUpdatedEvent(couldUpdateStaffMember, cancellationToken);
+        await _mediator.Publish(e, cancellationToken);
+    }
 
-            return request.StaffId;
-        }
+    private Task RaiseFailedToUpdateEntityEvent(SendOnBreakCommand command,
+        CancellationToken cancellationToken)
+    {
+        var e = new FailedToUpdateEntityEvent();
 
-        private async Task RaiseStaffMemberUpdatedEvent(StaffReader updatedStaff, CancellationToken cancellationToken)
-        {
-            var e = new StaffMemberUpdatedEvent(updatedStaff);
+        _mediator.Publish(e, cancellationToken);
 
-            await _mediator.Publish(e, cancellationToken);
-        }
-
-        private Task RaiseFailedToUpdateEntityEvent(SendOnBreakCommand command,
-            CancellationToken cancellationToken)
-        {
-            var e = new FailedToUpdateEntityEvent();
-
-            _mediator.Publish(e, cancellationToken);
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

@@ -54,7 +54,6 @@ namespace YoumaconSecurityOps.Web.Client.Services
         #region Add Methods
         Task<ApiResponse<Guid>> AddNewStaffMemberAsync(AddFullStaffEntryCommand command, CancellationToken cancellationToken = default);
         #endregion
-
         #region Mutation Methods
         /// <summary>
         /// <paramref name="command" /> contains information to update for the staff member - including contact information.

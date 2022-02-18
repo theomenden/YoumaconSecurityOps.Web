@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Commands
+public record AddStaffCommand: ICommand
 {
-    public record AddStaffCommand: ICommand
-    {
-        public Guid Id => Guid.NewGuid();
-    }
+    public Guid Id => Guid.NewGuid();
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Enumeration;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace YoumaconSecurityOps.Web.Client.Middleware
@@ -31,11 +26,15 @@ namespace YoumaconSecurityOps.Web.Client.Middleware
                 await HandleExceptionAsync(ex);
                 throw;
             }
+            finally
+            {
+                _logger.LogDebug("Request Logged {@context}", context);
+            }
         }
 
         private Task HandleExceptionAsync(Exception ex)
         {
-            _logger.LogError(ex.Message);
+            _logger.LogError("The Exception: {@ex}",ex);
 
             return Task.CompletedTask;
         }

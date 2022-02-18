@@ -1,47 +1,36 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Added;
-using YoumaconSecurityOps.Core.EventStore.Events.Created;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
+internal sealed class ContactCreatedEventHandler : INotificationHandler<ContactCreatedEvent>
 {
-    internal sealed class ContactCreatedEventHandler : INotificationHandler<ContactCreatedEvent>
+    private readonly IContactRepository _contacts;
+
+    private readonly IMapper _mapper;
+
+    private readonly IMediator _mediator;
+
+    private readonly ILogger<ContactCreatedEventHandler> _logger;
+
+    public ContactCreatedEventHandler(IContactRepository contacts, IMapper mapper, IMediator mediator, ILogger<ContactCreatedEventHandler> logger)
     {
-        private readonly IContactRepository _contacts;
+        _contacts = contacts;
+        _mapper = mapper;
+        _mediator = mediator;
+        _logger = logger;
+    }
 
-        private readonly IMapper _mapper;
+    public async Task Handle(ContactCreatedEvent notification, CancellationToken cancellationToken)
+    {
+        var contactToAdd = _mapper.Map<ContactReader>(notification.ContactWriter);
 
-        private readonly IMediator _mediator;
+        await _contacts.AddAsync(contactToAdd, cancellationToken);
 
-        private readonly ILogger<ContactCreatedEventHandler> _logger;
+        await RaiseContactAddedEvent(contactToAdd, cancellationToken);
+    }
 
-        public ContactCreatedEventHandler(IContactRepository contacts, IMapper mapper, IMediator mediator, ILogger<ContactCreatedEventHandler> logger)
-        {
-            _contacts = contacts;
-            _mapper = mapper;
-            _mediator = mediator;
-            _logger = logger;
-        }
+    private async Task RaiseContactAddedEvent(ContactReader contactReader, CancellationToken cancellationToken)
+    {
+        var e = new ContactAddedEvent(contactReader);
 
-        public async Task Handle(ContactCreatedEvent notification, CancellationToken cancellationToken)
-        {
-            var contactToAdd = _mapper.Map<ContactReader>(notification.ContactWriter);
-
-            await _contacts.AddAsync(contactToAdd, cancellationToken);
-
-            await RaiseContactAddedEvent(contactToAdd, cancellationToken);
-        }
-
-        private async Task RaiseContactAddedEvent(ContactReader contactReader, CancellationToken cancellationToken)
-        {
-            var e = new ContactAddedEvent(contactReader);
-
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _mediator.Publish(e, cancellationToken);
     }
 }

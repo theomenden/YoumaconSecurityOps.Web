@@ -27,17 +27,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
 
         public async Task<List<RadioScheduleReader>> GetRadiosAsync(GetRadioSchedule radioScheduleQuery, CancellationToken cancellationToken = default)
         {
-            var radios = await _mediator.Send(radioScheduleQuery, cancellationToken);
-
-            return await radios.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(radioScheduleQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public async Task<List<RadioScheduleReader>> GetRadiosAsync(GetRadioScheduleWithParameters radioScheduleParameterQuery,
             CancellationToken cancellationToken = default)
         {
-            var radios = await _mediator.Send(radioScheduleParameterQuery, cancellationToken);
-
-            return await radios.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(radioScheduleParameterQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public Task<RadioScheduleReader> GetRadioAsync(Guid radioId, CancellationToken cancellationToken = default)

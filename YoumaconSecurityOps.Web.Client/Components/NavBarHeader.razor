@@ -29,34 +29,33 @@
         <BarEnd>
             <BarItem>
                 <Buttons Role="ButtonsRole.Toolbar" Flex="Flex.Row">
-                    <Blazorise.Bootstrap5.Button Color="Color.Primary">Sign up</Blazorise.Bootstrap5.Button>
-                    <Blazorise.Bootstrap5.Button Color="Color.Secondary">Log in</Blazorise.Bootstrap5.Button>
+                    <Button Color="Color.Primary">Sign up</Button>
+                    <Button Color="Color.Secondary">Log in</Button>
                 </Buttons>
             </BarItem>
-
             <BarItem>
-                <Blazorise.Bootstrap5.BarDropdown>
+                <BarDropdown>
                     <BarDropdownToggle>
                         <Paragraph TextColor="TextColor.Light">
                             <Blazorise.Icon Name="IconName.Tint" /> Theme
                         </Paragraph>
                     </BarDropdownToggle>
-                    <Blazorise.Bootstrap5.BarDropdownMenu Style="padding: 15px; min-width: 550px;" RightAligned="true">
+                    <BarDropdownMenu Style="padding: 15px; min-width: 550px;" RightAligned="true">
                         <Row>
                             <Column Margin="Margin.Is2.FromBottom">
-                                <Blazorise.Bootstrap5.Field>
-                                    <Blazorise.Bootstrap5.Switch TValue="bool" Checked="@(Theme?.Enabled == true)" CheckedChanged="@ThemeEnabledChanged">Theme enabled</Blazorise.Bootstrap5.Switch>
-                                </Blazorise.Bootstrap5.Field>
+                                <Field>
+                                    <Switch TValue="bool" Checked="@(Theme?.Enabled == true)" CheckedChanged="@ThemeEnabledChanged">Theme enabled</Switch>
+                                </Field>
                             </Column>
                         </Row>
                         <Row>
                             <Column Margin="Margin.Is2.FromBottom">
-                                <Blazorise.Bootstrap5.Field>
-                                    <Blazorise.Bootstrap5.Check TValue="bool" Checked="@(Theme?.IsGradient == true)" CheckedChanged="@ThemeGradientChanged">Gradient colors</Blazorise.Bootstrap5.Check>
-                                </Blazorise.Bootstrap5.Field>
-                                <Blazorise.Bootstrap5.Field>
-                                    <Blazorise.Bootstrap5.Check TValue="bool" Checked="@(Theme?.IsRounded == true)" CheckedChanged="@ThemeRoundedChanged">Rounded elements</Blazorise.Bootstrap5.Check>
-                                </Blazorise.Bootstrap5.Field>
+                                <Field>
+                                    <Check TValue="bool" Checked="@(Theme?.IsGradient == true)" CheckedChanged="@ThemeGradientChanged">Gradient colors</Check>
+                                </Field>
+                                <Field>
+                                    <Check TValue="bool" Checked="@(Theme?.IsRounded == true)" CheckedChanged="@ThemeRoundedChanged">Rounded elements</Check>
+                                </Field>
                             </Column>
                         </Row>
                         <Row>
@@ -66,8 +65,8 @@
                                 </Container>
                             </Column>
                         </Row>
-                    </Blazorise.Bootstrap5.BarDropdownMenu>
-                </Blazorise.Bootstrap5.BarDropdown>
+                    </BarDropdownMenu>
+                </BarDropdown>
             </BarItem>
         </BarEnd>
     </BarMenu>

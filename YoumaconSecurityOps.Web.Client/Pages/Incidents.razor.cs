@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazorise;
-using Blazorise.DataGrid;
-using Microsoft.AspNetCore.Components;
-using YoumaconSecurityOps.Core.Mediatr.Commands;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Enumerations;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Web.Client.Services;
-
-namespace YoumaconSecurityOps.Web.Client.Pages
+﻿namespace YoumaconSecurityOps.Web.Client.Pages
 {
     public partial class Incidents: ComponentBase
     {
@@ -40,7 +27,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         private DataGrid<IncidentReader> _dataGrid = new();
 
-        private Modal _modalRef;
+        private Blazorise.Modal _modalRef;
 
         private Int32 _totalIncidents = 0;
 

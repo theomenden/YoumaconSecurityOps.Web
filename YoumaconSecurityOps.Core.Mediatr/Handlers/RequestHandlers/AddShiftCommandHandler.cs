@@ -1,58 +1,45 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events;
-using YoumaconSecurityOps.Core.EventStore.Events.Created;
-using YoumaconSecurityOps.Core.EventStore.Storage;
-using YoumaconSecurityOps.Core.Mediatr.Commands;
-using YoumaconSecurityOps.Core.Shared.Models.Writers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommand, Guid> //AsyncRequestHandler<AddShiftCommand>
 {
-    internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommand, Guid> //AsyncRequestHandler<AddShiftCommand>
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly ILogger<AddShiftCommandHandler> _logger;
+        
+    private readonly IMapper _mapper;
+
+    private readonly IMediator _mediator;
+        
+    public AddShiftCommandHandler(IEventStoreRepository eventStore, ILogger<AddShiftCommandHandler> logger, IMapper mapper,IMediator mediator)
     {
-        private readonly IEventStoreRepository _eventStore;
+        _eventStore = eventStore;
 
-        private readonly ILogger<AddShiftCommandHandler> _logger;
-        
-        private readonly IMapper _mapper;
+        _logger = logger;
 
-        private readonly IMediator _mediator;
-        
-        public AddShiftCommandHandler(IEventStoreRepository eventStore, ILogger<AddShiftCommandHandler> logger, IMapper mapper,IMediator mediator)
+        _mapper = mapper;
+
+        _mediator = mediator;
+    }
+
+    public async Task<Guid> Handle(AddShiftCommand request, CancellationToken cancellationToken)
+    {
+        var shiftWriter = new ShiftWriter(request.StartAt, request.EndAt, request.StaffMemberId, request.StaffMemberName,
+            request.StartingLocationId);
+
+        await RaiseShiftCreatedEvent(shiftWriter, cancellationToken);
+
+        return shiftWriter.Id;
+    }
+
+    private async Task RaiseShiftCreatedEvent(ShiftWriter shiftWriter, CancellationToken cancellationToken)
+    {
+        var e = new ShiftCreatedEvent(shiftWriter)
         {
-            _eventStore = eventStore;
-
-            _logger = logger;
-
-            _mapper = mapper;
-
-            _mediator = mediator;
-        }
-
-        public async Task<Guid> Handle(AddShiftCommand request, CancellationToken cancellationToken)
-        {
-            var shiftWriter = new ShiftWriter(request.StartAt, request.EndAt, request.StaffMemberId, request.StaffMemberName,
-                request.StartingLocationId);
-
-            await RaiseShiftCreatedEvent(shiftWriter, cancellationToken);
-
-            return shiftWriter.Id;
-        }
-
-        private async Task RaiseShiftCreatedEvent(ShiftWriter shiftWriter, CancellationToken cancellationToken)
-        {
-            var e = new ShiftCreatedEvent(shiftWriter)
-            {
-                Name = nameof(AddShiftCommandHandler)
-            };
+            Name = nameof(AddShiftCommandHandler)
+        };
             
-            await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
+        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
 
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _mediator.Publish(e, cancellationToken);
     }
 }

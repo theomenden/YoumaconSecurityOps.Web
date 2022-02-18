@@ -1,18 +1,14 @@
-﻿using YoumaconSecurityOps.Core.Shared.Extensions;
-using YoumaconSecurityOps.Core.Shared.Parameters;
+﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Queried;
 
-namespace YoumaconSecurityOps.Core.EventStore.Events.Queried
+public class IncidentListQueriedEvent : EventBase
 {
-    public class IncidentListQueriedEvent : EventBase
+    public IncidentListQueriedEvent(IncidentQueryStringParameters? queryParameters)
     {
-        public IncidentListQueriedEvent(IncidentQueryStringParameters? queryParameters)
-        {
 
-            QueryParameters = queryParameters;
+        QueryParameters = queryParameters;
 
-            DataAsJson = queryParameters?.ToJson();
-        }
-
-        public IncidentQueryStringParameters QueryParameters { get; }
+        DataAsJson = queryParameters?.ToJson();
     }
+
+    public IncidentQueryStringParameters QueryParameters { get; }
 }

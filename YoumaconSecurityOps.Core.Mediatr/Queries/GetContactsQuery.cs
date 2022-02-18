@@ -1,13 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Queries;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Queries
-{
-    public class GetContactsQuery: QueryBase<IAsyncEnumerable<ContactReader>>
-    {
-    }
-}
+public record GetContactsQuery : StreamQueryBase<ContactReader>;

@@ -1,8 +1,5 @@
-﻿using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.Shared.Accessors;
 
-namespace YoumaconSecurityOps.Core.Shared.Accessors
+public interface IShiftAccessor: IAccessor<ShiftReader>
 {
-    public interface IShiftAccessor: IAccessor<ShiftReader>
-    {
-    }
 }

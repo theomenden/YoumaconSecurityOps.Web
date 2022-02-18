@@ -25,9 +25,7 @@ namespace YoumaconSecurityOps.Web.Client.Services
 
         public async Task<List<LocationReader>> GetLocationsAsync(GetLocationsQuery locationsQuery, CancellationToken cancellationToken = default)
         {
-            var locationStream = await _mediator.Send(locationsQuery, cancellationToken);
-
-            return await locationStream.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(locationsQuery, cancellationToken).ToListAsync(cancellationToken);
         }
     }
 }

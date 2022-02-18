@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Data.EntityFramework.Context.Configurations;
+﻿using YoumaconSecurityOps.Data.EntityFramework.Context.Configurations;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Context
 {

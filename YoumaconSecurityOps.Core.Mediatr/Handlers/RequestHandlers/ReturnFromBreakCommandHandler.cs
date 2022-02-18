@@ -1,65 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Failed;
-using YoumaconSecurityOps.Core.EventStore.Events.Updated;
-using YoumaconSecurityOps.Core.Mediatr.Commands;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFromBreakCommand, Guid>
 {
-    internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFromBreakCommand, Guid>
+    private readonly IMediator _mediator;
+
+    private readonly IStaffRepository _staff;
+
+    private readonly ILogger<ReturnFromBreakCommandHandler> _logger;
+
+    public ReturnFromBreakCommandHandler(IMediator mediator, IStaffRepository staff, ILogger<ReturnFromBreakCommandHandler> logger)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+        _staff = staff;
+        _logger = logger;
+    }
 
-        private readonly IStaffRepository _staff;
+    public async Task<Guid> Handle(ReturnFromBreakCommand request, CancellationToken cancellationToken)
+    {
+        var couldUpdateStaffMember = await _staff.ReturnFromBreak(request.StaffId, cancellationToken);
 
-        private readonly ILogger<ReturnFromBreakCommandHandler> _logger;
-
-        public ReturnFromBreakCommandHandler(IMediator mediator, IStaffRepository staff, ILogger<ReturnFromBreakCommandHandler> logger)
+        if (couldUpdateStaffMember is null)
         {
-            _mediator = mediator;
-            _staff = staff;
-            _logger = logger;
+            await RaiseFailedToUpdateEntityEvent(request, cancellationToken);
+
+            return Guid.Empty;
         }
 
-        public async Task<Guid> Handle(ReturnFromBreakCommand request, CancellationToken cancellationToken)
-        {
-            var couldUpdateStaffMember = await _staff.ReturnFromBreak(request.StaffId, cancellationToken);
+        await RaiseStaffMemberUpdatedEvent(couldUpdateStaffMember, cancellationToken);
 
-            if (couldUpdateStaffMember is null)
-            {
-                await RaiseFailedToUpdateEntityEvent(request, cancellationToken);
+        return request.StaffId;
+    }
 
-                return Guid.Empty;
-            }
+    private async Task RaiseStaffMemberUpdatedEvent(StaffReader updatedStaff, CancellationToken cancellationToken)
+    {
+        var e = new StaffMemberUpdatedEvent(updatedStaff);
 
-            await RaiseStaffMemberUpdatedEvent(couldUpdateStaffMember, cancellationToken);
+        await _mediator.Publish(e, cancellationToken);
+    }
 
-            return request.StaffId;
-        }
+    private Task RaiseFailedToUpdateEntityEvent(ReturnFromBreakCommand command,
+        CancellationToken cancellationToken)
+    {
+        var e = new FailedToUpdateEntityEvent();
 
-        private async Task RaiseStaffMemberUpdatedEvent(StaffReader updatedStaff, CancellationToken cancellationToken)
-        {
-            var e = new StaffMemberUpdatedEvent(updatedStaff);
+        _mediator.Publish(e, cancellationToken);
 
-            await _mediator.Publish(e, cancellationToken);
-        }
-
-        private Task RaiseFailedToUpdateEntityEvent(ReturnFromBreakCommand command,
-            CancellationToken cancellationToken)
-        {
-            var e = new FailedToUpdateEntityEvent();
-
-            _mediator.Publish(e, cancellationToken);
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

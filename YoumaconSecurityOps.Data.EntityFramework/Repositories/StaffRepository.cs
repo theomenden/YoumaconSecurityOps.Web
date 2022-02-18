@@ -1,141 +1,140 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.Shared.Accessors;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
-using YoumaconSecurityOps.Data.EntityFramework.Context;
+﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
-namespace YoumaconSecurityOps.Data.EntityFramework.Repositories
+internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 {
-    internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContext;
+
+    private readonly ILogger<StaffRepository> _logger;
+
+    public StaffRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext, ILogger<StaffRepository> logger)
     {
-        private readonly YoumaconSecurityDbContext _dbContext;
+        _dbContext = dbContext;
+        _logger = logger;   
+    }
 
-        private readonly ILogger<StaffRepository> _logger;
+    public IAsyncEnumerable<StaffReader> GetAll(CancellationToken cancellationToken = new())
+    {
+        using var context = _dbContext.CreateDbContext();
 
-        public StaffRepository(YoumaconSecurityDbContext dbContext, ILogger<StaffRepository> logger)
-        {
-            _dbContext = dbContext;
-            _logger = logger;   
-        }
-
-        public IAsyncEnumerable<StaffReader> GetAll(CancellationToken cancellationToken = new())
-        {
-            var staff =
-                from member in _dbContext.StaffMembers.AsAsyncEnumerable()
-                join contact in _dbContext.Contacts on member.ContactId equals contact.Id
-                join typeRoleMap in _dbContext.StaffTypesRoles on member.StaffTypeRoleId equals typeRoleMap.Id
-                join staffType in _dbContext.StaffTypes on typeRoleMap.StaffTypeId equals staffType.Id
-                join staffRole in _dbContext.StaffRoles on typeRoleMap.RoleId equals staffRole.Id
-                orderby new { staffType, staffRole, contact.LastName }
-                select new StaffReader
-                {
-                    Id = member.Id,
-                    Contact = contact,
-                    BreakEndAt = member.BreakEndAt,
-                    BreakStartAt = member.BreakStartAt,
-                    IsBlackShirt = member.IsBlackShirt,
-                    IsOnBreak = member.IsOnBreak,
-                    IsRaveApproved = member.IsRaveApproved,
-                    NeedsCrashSpace = member.NeedsCrashSpace,
-                    ShirtSize = member.ShirtSize,
-                    StaffTypeRoleMaps = new List<StaffTypesRoles>(3){typeRoleMap}
+        var staff =
+            from member in context.StaffMembers.AsAsyncEnumerable()
+            join contact in context.Contacts.AsAsyncEnumerable() on member.ContactId equals contact.Id
+            join typeRoleMap in context.StaffTypesRoles.AsAsyncEnumerable() on member.StaffTypeRoleId equals typeRoleMap.Id
+            join staffType in context.StaffTypes.AsAsyncEnumerable() on typeRoleMap.StaffTypeId equals staffType.Id
+            join staffRole in context.StaffRoles.AsAsyncEnumerable() on typeRoleMap.RoleId equals staffRole.Id
+            orderby new { staffType, staffRole, contact.LastName }
+            select new StaffReader
+            {
+                Id = member.Id,
+                Contact = contact,
+                BreakEndAt = member.BreakEndAt,
+                BreakStartAt = member.BreakStartAt,
+                IsBlackShirt = member.IsBlackShirt,
+                IsOnBreak = member.IsOnBreak,
+                IsRaveApproved = member.IsRaveApproved,
+                NeedsCrashSpace = member.NeedsCrashSpace,
+                ShirtSize = member.ShirtSize,
+                StaffTypeRoleMaps = new List<StaffTypesRoles>(3){typeRoleMap}
                     
-                };
+            };
 
-            return staff;
-        }
+        return staff;
+    }
 
-        public async Task<StaffReader> WithId(Guid entityId, CancellationToken cancellationToken = new())
+    public async Task<StaffReader> WithId(Guid entityId, CancellationToken cancellationToken = new())
+    {
+        var staffMember = await GetAll(cancellationToken)
+            .FirstOrDefaultAsync(s => s.Id == entityId, cancellationToken)
+            .ConfigureAwait(false);
+
+        return staffMember;
+    }
+
+    public IAsyncEnumerator<StaffReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
+    {
+        var staffAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+
+        return staffAsyncEnumerator;
+    }
+
+    public async Task<bool> AddAsync(StaffReader entity, CancellationToken cancellationToken = default)
+    {
+        bool isAddSuccessful;
+
+        try
         {
-            var staffMember = await GetAll(cancellationToken)
-                .FirstOrDefaultAsync(s => s.Id == entityId, cancellationToken);
+            await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-            return staffMember;
+            await context.StaffMembers.AddAsync(entity, cancellationToken);
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            isAddSuccessful = true;
         }
-
-        public IAsyncEnumerator<StaffReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
+        catch (Exception ex)
         {
-            var staffAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+            _logger.LogError("An exception occurred while attempting to create a staff record for: {@staffMember}, {ex}", entity, ex.InnerException?.Message ?? ex.Message);
 
-            return staffAsyncEnumerator;
+            isAddSuccessful = false;
         }
 
-        public async Task<bool> AddAsync(StaffReader entity, CancellationToken cancellationToken = default)
+        return isAddSuccessful;
+    }
+
+    public async Task<StaffReader> SendOnBreak(Guid staffId, CancellationToken cancellationToken = default)
+    {
+        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var staffMemberToSendOnBreak = await
+            context.StaffMembers.AsQueryable().SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
+
+        try
         {
-            try
+
+            if (staffMemberToSendOnBreak is not null)
             {
-                await _dbContext.StaffMembers.AddAsync(entity, cancellationToken);
+                staffMemberToSendOnBreak.BreakStartAt = DateTime.Now;
+                staffMemberToSendOnBreak.IsOnBreak = true;
 
-                await _dbContext.SaveChangesAsync(cancellationToken);
-
-                return true;
+                await context.SaveChangesAsync(cancellationToken);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError("An exception occurred while attempting to create a staff record for: {@staffMember}, {ex}", entity, ex.InnerException?.Message ?? ex.Message);
 
-                return false;
-            }
         }
-
-        public async Task<StaffReader> SendOnBreak(Guid staffId, CancellationToken cancellationToken = default)
+        catch (Exception ex)
         {
-            var staffMemberToSendOnBreak = await
-                _dbContext.StaffMembers.AsQueryable().SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
-
-            try
-            {
-
-                if (staffMemberToSendOnBreak is not null)
-                {
-                    staffMemberToSendOnBreak.BreakStartAt = DateTime.Now;
-                    staffMemberToSendOnBreak.IsOnBreak = true;
-
-                    await _dbContext.SaveChangesAsync(cancellationToken);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("An exception occured trying to send staff member {staffId} on break: {ex}",
-                    ex.InnerException?.Message ?? ex.Message);
-            }
-
-            return staffMemberToSendOnBreak;
+            _logger.LogError("An exception occurred trying to send staff member {staffId} on break: {ex}",
+                ex.InnerException?.Message ?? ex.Message);
         }
 
-        public async Task<StaffReader> ReturnFromBreak(Guid staffId, CancellationToken cancellationToken = default)
+        return staffMemberToSendOnBreak;
+    }
+
+    public async Task<StaffReader> ReturnFromBreak(Guid staffId, CancellationToken cancellationToken = default)
+    {
+        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var staffMemberToReturnFromBreak = await
+            context.StaffMembers.AsQueryable()
+                .SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
+
+        try
         {
-            var staffMemberToReturnFromBreak = await
-                _dbContext.StaffMembers.AsQueryable().SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
 
-            try
+            if (staffMemberToReturnFromBreak is not null)
             {
+                staffMemberToReturnFromBreak.BreakStartAt = DateTime.Now;
+                staffMemberToReturnFromBreak.IsOnBreak = true;
 
-                if (staffMemberToReturnFromBreak is not null)
-                {
-                    staffMemberToReturnFromBreak.BreakStartAt = DateTime.Now;
-                    staffMemberToReturnFromBreak.IsOnBreak = true;
-
-                    await _dbContext.SaveChangesAsync(cancellationToken);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("An exception occured trying to return staff member {staffId} from their break: {ex}",
-                    ex.InnerException?.Message ?? ex.Message);
+                await context.SaveChangesAsync(cancellationToken);
             }
 
-            return staffMemberToReturnFromBreak;
         }
+        catch (Exception ex)
+        {
+            _logger.LogError("An exception occured trying to return staff member {staffId} from their break: {ex}",
+                ex.InnerException?.Message ?? ex.Message);
+        }
+
+        return staffMemberToReturnFromBreak;
     }
 }

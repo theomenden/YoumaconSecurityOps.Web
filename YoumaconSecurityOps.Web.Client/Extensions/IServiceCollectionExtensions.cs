@@ -1,21 +1,17 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using YoumaconSecurityOps.Web.Client.Services;
+﻿namespace YoumaconSecurityOps.Web.Client.Extensions;
 
-namespace YoumaconSecurityOps.Web.Client.Extensions
+public static class IServiceCollectionExtensions
 {
-    public static class IServiceCollectionExtensions
+    public static IServiceCollection AddFrontEndDataServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddFrontEndDataServices(this IServiceCollection services)
-        {
-            services
-                .AddScoped<IEventReaderService, EventReaderService>()
-                .AddScoped<IIncidentService, IncidentService>()
-                .AddScoped<ILocationService, LocationService>()
-                .AddScoped<IRadioScheduleService, RadioScheduleService>()
-                .AddScoped<IStaffService, StaffService>()
-                .AddScoped<IShiftService, ShiftService>();
+        services
+            .AddScoped<IEventReaderService, EventReaderService>()
+            .AddScoped<IIncidentService, IncidentService>()
+            .AddScoped<ILocationService, LocationService>()
+            .AddScoped<IRadioScheduleService, RadioScheduleService>()
+            .AddScoped<IStaffService, StaffService>()
+            .AddScoped<IShiftService, ShiftService>();
 
-            return services;
-        }
+        return services;
     }
 }

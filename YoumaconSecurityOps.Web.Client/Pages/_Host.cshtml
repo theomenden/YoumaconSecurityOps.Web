@@ -48,6 +48,13 @@
     <script src="_content/Blazorise.DataGrid/blazorise.datagrid.js" defer></script>
     <script src="_content/Blazorise.Charts/blazorise.charts.js" defer></script>
     <script src="_content/Blazorise.Charts.Streaming/blazorise.charts.streaming.js" defer></script>
-    <script src="_framework/blazor.server.js"></script>
+    <script src="_framework/blazor.server.js" autostart="false"></script>
+    <script>
+        Blazor.start({
+            configureSignalR: function (builder) {
+                builder.configureLogging("information");
+            }
+        });
+    </script>
 </body>
 </html>

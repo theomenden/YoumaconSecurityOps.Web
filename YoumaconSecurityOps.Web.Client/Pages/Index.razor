@@ -1,11 +1,21 @@
 ﻿@page "/"
-        <Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
-            <JumbotronTitle Size="JumbotronTitleSize.Is4">Hello, Security Staff!</JumbotronTitle>
-            <JumbotronSubtitle>
-                Welcome to Sec Ops!
-            </JumbotronSubtitle>
-            <Divider></Divider>
-            <Paragraph>
-                Pick any navigation on the side-menu to get started
-            </Paragraph>
-        </Jumbotron>
+<Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+    <JumbotronTitle Size="JumbotronTitleSize.Is4">Hello, Security Staff!</JumbotronTitle>
+    <JumbotronSubtitle>
+        Welcome to Sec Ops!
+    </JumbotronSubtitle>
+    <Divider></Divider>
+    <Paragraph>
+        Pick any navigation on the side-menu to get started
+    </Paragraph>
+</Jumbotron>
+
+<Container Fluid="true">
+    <Carousel @bind-SelectedSlide="@_selectedSlide">
+        <Repeater Items="@_images" Context="imageContext">
+            <CarouselSlide Name="1">
+                <Image Source="imageContext.Path" Text="imageContext.Text" Display="Display.Block" Width="Width.Is100"/>
+            </CarouselSlide>
+        </Repeater>
+    </Carousel>
+</Container>

@@ -29,30 +29,22 @@ namespace YoumaconSecurityOps.Web.Client.Services
         #region Query Methods
         public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffQuery staffQuery, CancellationToken cancellationToken = default)
         {
-            var staffStream = await _mediator.Send(staffQuery, cancellationToken);
-
-            return await staffStream.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public async Task<List<StaffRole>> GetStaffRolesAsync(GetStaffRolesQuery rolesQuery, CancellationToken cancellationToken = default)
         {
-            var roleStream = await _mediator.Send(rolesQuery, cancellationToken);
-
-            return await roleStream.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(rolesQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public async Task<List<StaffType>> GetStaffTypesAsync(GetStaffTypesQuery typesQuery, CancellationToken cancellationToken = default)
         {
-            var typesStream = await _mediator.Send(typesQuery, cancellationToken);
-
-            return await typesStream.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(typesQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffWithParametersQuery staffQuery, CancellationToken cancellationToken = default)
         {
-            var staffStream = await _mediator.Send(staffQuery, cancellationToken);
-
-            return await staffStream.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken);
         }
         #endregion
 

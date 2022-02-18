@@ -28,16 +28,12 @@ namespace YoumaconSecurityOps.Web.Client.Services
         #region Query Methods
         public async Task<List<IncidentReader>> GetIncidentsAsync(GetIncidentsQuery incidentListQuery, CancellationToken cancellationToken = default)
         {
-            var incidents = await _mediator.Send(incidentListQuery, cancellationToken);
-
-            return await incidents.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(incidentListQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public async Task<List<IncidentReader>> GetIncidentsAsync(GetIncidentsWithParametersQuery incidentListQuery, CancellationToken cancellationToken = default)
         {
-            var incidents = await _mediator.Send(incidentListQuery, cancellationToken);
-
-            return await incidents.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(incidentListQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public Task<IncidentReader> GetIncidentAsync(Guid incidentId, CancellationToken cancellationToken = default)

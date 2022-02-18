@@ -1,63 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Added;
-using YoumaconSecurityOps.Core.EventStore.Events.Created;
-using YoumaconSecurityOps.Core.EventStore.Storage;
-using YoumaconSecurityOps.Core.Shared.Extensions;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
+﻿
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
+namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
+
+internal sealed class LocationCreatedEventHandler: INotificationHandler<LocationCreatedEvent>
 {
-    internal sealed class LocationCreatedEventHandler: INotificationHandler<LocationCreatedEvent>
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly IMapper _mapper;
+
+    private readonly ILocationRepository _locations;
+
+    private readonly IMediator _mediator;
+
+    private readonly ILogger<LocationCreatedEventHandler> _logger;
+
+    public LocationCreatedEventHandler(IEventStoreRepository eventStore, IMapper mapper,ILocationRepository locations, IMediator mediator, ILogger<LocationCreatedEventHandler> logger)
     {
-        private readonly IEventStoreRepository _eventStore;
+        _eventStore = eventStore;
+        _mapper = mapper;
+        _locations = locations;
+        _mediator = mediator;
+        _logger = logger;
+    }
 
-        private readonly IMapper _mapper;
+    public async Task Handle(LocationCreatedEvent notification, CancellationToken cancellationToken)
+    {
+        var locationEntry = _mapper.Map<LocationReader>(notification.LocationAdded);
 
-        private readonly ILocationRepository _locations;
+        await _locations.AddAsync(locationEntry, cancellationToken);
 
-        private readonly IMediator _mediator;
+        await RaiseLocationAddedEvent(notification, locationEntry, cancellationToken);
+    }
 
-        private readonly ILogger<LocationCreatedEventHandler> _logger;
-
-        public LocationCreatedEventHandler(IEventStoreRepository eventStore, IMapper mapper,ILocationRepository locations, IMediator mediator, ILogger<LocationCreatedEventHandler> logger)
+    private async Task RaiseLocationAddedEvent(LocationCreatedEvent createdLocation, LocationReader locationAdded, CancellationToken cancellationToken)
+    {
+        var e = new LocationAddedEvent(locationAdded)
         {
-            _eventStore = eventStore;
-            _mapper = mapper;
-            _locations = locations;
-            _mediator = mediator;
-            _logger = logger;
-        }
+            Aggregate = createdLocation.Aggregate,
+            DataAsJson = locationAdded.ToJson(),
+            MajorVersion = createdLocation.MajorVersion,
+            MinorVersion = ++createdLocation.MinorVersion,
+            Name = createdLocation.Name
+        };
 
-        public async Task Handle(LocationCreatedEvent notification, CancellationToken cancellationToken)
-        {
-            var locationEntry = _mapper.Map<LocationReader>(notification.LocationAdded);
-
-            await _locations.AddAsync(locationEntry, cancellationToken);
-
-            await RaiseLocationAddedEvent(notification, locationEntry, cancellationToken);
-        }
-
-        private async Task RaiseLocationAddedEvent(LocationCreatedEvent createdLocation, LocationReader locationAdded, CancellationToken cancellationToken)
-        {
-            var e = new LocationAddedEvent(locationAdded)
-            {
-                Aggregate = createdLocation.Aggregate,
-                DataAsJson = locationAdded.ToJson(),
-                MajorVersion = createdLocation.MajorVersion,
-                MinorVersion = ++createdLocation.MinorVersion,
-                Name = createdLocation.Name
-            };
-
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _mediator.Publish(e, cancellationToken);
     }
 }

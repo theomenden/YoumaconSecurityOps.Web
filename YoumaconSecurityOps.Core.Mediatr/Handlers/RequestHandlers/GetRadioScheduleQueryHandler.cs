@@ -1,51 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Queried;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Accessors;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+internal sealed class GetRadioScheduleQueryHandler : IStreamRequestHandler<GetRadioSchedule, RadioScheduleReader>
 {
-    internal sealed class GetRadioScheduleQueryHandler : RequestHandler<GetRadioSchedule, IAsyncEnumerable<RadioScheduleReader>>
+    private readonly IRadioScheduleAccessor _radios;
+
+    private readonly IMediator _mediator;
+
+    private readonly ILogger<GetRadioScheduleQueryHandler> _logger;
+
+    public GetRadioScheduleQueryHandler(IRadioScheduleAccessor radios, IMediator mediator, ILogger<GetRadioScheduleQueryHandler> logger)
     {
-        private readonly IRadioScheduleAccessor _radios;
+        _radios = radios;
+        _mediator = mediator;
+        _logger = logger;
+    }
 
-        private readonly IMediator _mediator;
+    public IAsyncEnumerable<RadioScheduleReader> Handle(GetRadioSchedule request, CancellationToken cancellationToken)
+    {
+        var radios = _radios.GetAll(cancellationToken);
 
-        private readonly ILogger<GetRadioScheduleQueryHandler> _logger;
+        RaiseRadioScheduleQueriedEvent(request, cancellationToken);
 
-        public GetRadioScheduleQueryHandler(IRadioScheduleAccessor radios, IMediator mediator, ILogger<GetRadioScheduleQueryHandler> logger)
+        return radios;
+    }
+
+    private Task RaiseRadioScheduleQueriedEvent(GetRadioSchedule query, CancellationToken cancellationToken)
+    {
+        var e = new RadioScheduleQueriedEvent(null)
         {
-            _radios = radios;
-            _mediator = mediator;
-            _logger = logger;
-        }
+            Aggregate = nameof(GetRadioSchedule),
+            MajorVersion = 1,
+            Name = nameof(RadioScheduleQueriedEvent)
+        };
 
-        protected override IAsyncEnumerable<RadioScheduleReader> Handle(GetRadioSchedule request)
-        {
-            var radios = _radios.GetAll();
-
-            RaiseRadioScheduleQueriedEvent(request);
-
-            return radios;
-        }
-
-        private void RaiseRadioScheduleQueriedEvent(GetRadioSchedule query)
-        {
-            var e = new RadioScheduleQueriedEvent(null)
-            {
-                Aggregate = nameof(GetRadioSchedule),
-                MajorVersion = 1,
-                Name = nameof(RadioScheduleQueriedEvent)
-            };
-
-            _mediator.Publish(e);
-        }
+        return _mediator.Publish(e, cancellationToken);
     }
 }

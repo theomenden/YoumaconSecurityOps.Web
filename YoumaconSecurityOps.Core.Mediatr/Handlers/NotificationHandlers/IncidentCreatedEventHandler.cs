@@ -1,85 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Added;
-using YoumaconSecurityOps.Core.EventStore.Events.Created;
-using YoumaconSecurityOps.Core.EventStore.Events.Failed;
-using YoumaconSecurityOps.Core.EventStore.Storage;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
+internal sealed class IncidentCreatedEventHandler : INotificationHandler<IncidentCreatedEvent>
 {
-    internal sealed class IncidentCreatedEventHandler : INotificationHandler<IncidentCreatedEvent>
+    private readonly ILogger<IncidentCreatedEventHandler> _logger;
+
+    private readonly IMapper _mapper;
+
+    private readonly IMediator _mediator;
+
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly IIncidentRepository _incidents;
+
+    public IncidentCreatedEventHandler(ILogger<IncidentCreatedEventHandler> logger, IMapper mapper, IMediator mediator,
+        IEventStoreRepository eventStore, IIncidentRepository incidents)
     {
-        private readonly ILogger<IncidentCreatedEventHandler> _logger;
+        _logger = logger;
 
-        private readonly IMapper _mapper;
+        _mapper = mapper;
 
-        private readonly IMediator _mediator;
+        _mediator = mediator;
 
-        private readonly IEventStoreRepository _eventStore;
+        _eventStore = eventStore;
 
-        private readonly IIncidentRepository _incidents;
+        _incidents = incidents;
+    }
 
-        public IncidentCreatedEventHandler(ILogger<IncidentCreatedEventHandler> logger, IMapper mapper, IMediator mediator,
-            IEventStoreRepository eventStore, IIncidentRepository incidents)
+    public async Task Handle(IncidentCreatedEvent notification, CancellationToken cancellationToken)
+    {
+        var incidentToAdd = _mapper.Map<IncidentReader>(notification.IncidentWriter);
+
+        var incidentWasAddedSuccessfully = await _incidents.AddAsync(incidentToAdd, cancellationToken);
+
+        if (!incidentWasAddedSuccessfully)
         {
-            _logger = logger;
-
-            _mapper = mapper;
-
-            _mediator = mediator;
-
-            _eventStore = eventStore;
-
-            _incidents = incidents;
+            await RaiseFailedToAddEntityEvent(incidentToAdd.Id, incidentToAdd.GetType(), cancellationToken);
+            return;
         }
 
-        public async Task Handle(IncidentCreatedEvent notification, CancellationToken cancellationToken)
-        {
-            var incidentToAdd = _mapper.Map<IncidentReader>(notification.IncidentWriter);
+        await RaiseIncidentAddEvent(incidentToAdd, cancellationToken);
+    }
 
-            var incidentWasAddedSuccessfully = await _incidents.AddAsync(incidentToAdd, cancellationToken);
+    private async Task RaiseIncidentAddEvent(IncidentReader incidentAdded, CancellationToken cancellationToken)
+    {
+        var e = new IncidentAddedEvent(incidentAdded);
 
-            if (!incidentWasAddedSuccessfully)
-            {
-                await RaiseFailedToAddEntityEvent(incidentToAdd.Id, incidentToAdd.GetType(), cancellationToken);
-                return;
-            }
+        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken)
+            .ToListAsync(cancellationToken);
 
-            await RaiseIncidentAddEvent(incidentToAdd, cancellationToken);
-        }
+        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
-        private async Task RaiseIncidentAddEvent(IncidentReader incidentAdded, CancellationToken cancellationToken)
-        {
-            var e = new IncidentAddedEvent(incidentAdded);
+        await _mediator.Publish(e, cancellationToken);
+    }
 
-            var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken)
-                .ToListAsync(cancellationToken);
+    private async Task RaiseFailedToAddEntityEvent(Guid aggregateId, Type aggregateType,
+        CancellationToken cancellationToken)
+    {
+        var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
 
-            await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken)
+            .ToListAsync(cancellationToken);
 
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
-        private async Task RaiseFailedToAddEntityEvent(Guid aggregateId, Type aggregateType,
-            CancellationToken cancellationToken)
-        {
-            var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
-
-            var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken)
-                .ToListAsync(cancellationToken);
-
-            await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
-
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _mediator.Publish(e, cancellationToken);
     }
 }

@@ -36,7 +36,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         private StaffReader _selectedStaffMember;
 
-        private Modal _modalRef = new ();
+        private Blazorise.Modal _modalRef = new ();
 
         private Boolean _isLoading = false;
 

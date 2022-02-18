@@ -1,15 +1,12 @@
-﻿using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Updated;
 
-namespace YoumaconSecurityOps.Core.EventStore.Events.Updated
+public class IncidentUpdatedEvent:EventBase
 {
-    public class IncidentUpdatedEvent:EventBase
+    public IncidentUpdatedEvent(IncidentReader incidentReader)
     {
-            public IncidentUpdatedEvent(IncidentReader incidentReader)
-            {
-                IncidentReader = incidentReader;
-            }
-
-            public IncidentReader IncidentReader { get; }
-
+        IncidentReader = incidentReader;
     }
+
+    public IncidentReader IncidentReader { get; }
+
 }

@@ -46,22 +46,23 @@
     <DataGridColumns>
         <DataGridCommandColumn TItem="StaffReader">
             <NewCommandTemplate>
-                <Blazorise.Bootstrap5.Button Color="Color.Success"
+                <Button Color="Color.Success"
                                             Border="Border.Dark.OnAll.Is1.Rounded"
                                             Shadow="Shadow.Default"
-                                            Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
+                                            To="/staff/add"
+                                            Type="ButtonType.Link">@context.LocalizationString</Button>
                                         </NewCommandTemplate>
                                         <SaveCommandTemplate>
-                                            <Blazorise.Bootstrap5.Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
+                                            <Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
                                         </SaveCommandTemplate>
                                         <CancelCommandTemplate>
-                                            <Blazorise.Bootstrap5.Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
+                                            <Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
                                         </CancelCommandTemplate>
                                         <EditCommandTemplate>
-                                            <Blazorise.Bootstrap5.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
+                                            <Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
                                         </EditCommandTemplate>
                                         <DeleteCommandTemplate>
-                                            <Blazorise.Bootstrap5.Button Color="Color.None" Display="Display.None"></Blazorise.Bootstrap5.Button>
+                                            <Button Color="Color.None" Display="Display.None"></Button>
                                         </DeleteCommandTemplate>
                                     </DataGridCommandColumn>
                                     <DataGridColumn TItem="StaffReader" Field="Contact.PreferredName" Caption="Preferred Name" Sortable="false" Editable="true">

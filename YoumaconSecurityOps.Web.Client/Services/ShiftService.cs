@@ -28,16 +28,12 @@ namespace YoumaconSecurityOps.Web.Client.Services
         #region Query Methods
         public async Task<List<ShiftReader>> GetShiftsAsync(GetShiftListQuery shiftQuery, CancellationToken cancellationToken = default)
         {
-            var shifts = await _mediator.Send(shiftQuery, cancellationToken);
-
-            return await shifts.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(shiftQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public async Task<List<ShiftReader>> GetShiftsAsync(GetShiftListWithParametersQuery shiftQuery, CancellationToken cancellationToken = default)
         {
-            var shifts = await _mediator.Send(shiftQuery, cancellationToken);
-
-            return await shifts.ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(shiftQuery, cancellationToken).ToListAsync(cancellationToken);
         }
 
         public Task<ShiftReader> GetShiftAsync(Guid shiftId, CancellationToken cancellationToken = default)

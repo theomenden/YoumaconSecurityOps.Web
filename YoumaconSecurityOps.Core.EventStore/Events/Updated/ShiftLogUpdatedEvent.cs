@@ -1,14 +1,11 @@
-﻿using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Updated;
 
-namespace YoumaconSecurityOps.Core.EventStore.Events.Updated
+public class ShiftLogUpdatedEvent: EventBase
 {
-    public class ShiftLogUpdatedEvent: EventBase
+    public ShiftLogUpdatedEvent(ShiftReader shiftReader)
     {
-        public ShiftLogUpdatedEvent(ShiftReader shiftReader)
-        {
-            ShiftReader = shiftReader;
-        }
-
-        public ShiftReader ShiftReader { get; }
+        ShiftReader = shiftReader;
     }
+
+    public ShiftReader ShiftReader { get; }
 }

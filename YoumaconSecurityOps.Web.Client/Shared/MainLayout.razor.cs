@@ -4,19 +4,36 @@ using System.Threading.Tasks;
 using Blazorise;
 using Blazorise.Localization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Server.Circuits;
+using YoumaconSecurityOps.Web.Client.Middleware;
+using YoumaconSecurityOps.Web.Client.Models;
 
 namespace YoumaconSecurityOps.Web.Client.Shared
 {
-    public partial class MainLayout: LayoutComponentBase
+    public partial class MainLayout : LayoutComponentBase, IDisposable
     {
+        [Inject] public CircuitHandler CircuitHandler { get; set; }
+
+        [Inject] public SessionDetails SessionData { get; set; }
+
         [Inject] public ITextLocalizerService LocalizationService { get; set; }
 
         [Inject] public IPageProgressService PageProgressService { get; set; }
 
         [CascadingParameter] protected Theme Theme { get; set; }
 
+        private readonly SessionModel _sessionModel = new ();
+
         protected override async Task OnInitializedAsync()
         {
+            (CircuitHandler as TrackingCircuitHandler).CircuitsChanged += HandleCircuitsChanged;
+
+            var circuitId = (CircuitHandler as TrackingCircuitHandler).CircuitId;
+
+            _sessionModel.CircuitId = circuitId;
+
+            SessionData.Add(_sessionModel);
+
             await SelectCulture(CultureInfo.CurrentCulture.Name);
             
             await base.OnInitializedAsync();
@@ -108,5 +125,15 @@ namespace YoumaconSecurityOps.Web.Client.Shared
             return Task.CompletedTask;
         }
 
+        private void HandleCircuitsChanged(object sender, EventArgs args)
+        {
+           InvokeAsync(StateHasChanged);
+        }
+
+        public void Dispose()
+        {
+            (CircuitHandler as TrackingCircuitHandler).CircuitsChanged -= HandleCircuitsChanged;
+            GC.SuppressFinalize(this);
+        }
     }
 }

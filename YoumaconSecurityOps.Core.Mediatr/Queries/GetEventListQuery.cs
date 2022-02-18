@@ -1,9 +1,3 @@
-﻿using System.Collections.Generic;
-using YoumaconSecurityOps.Core.EventStore.Events;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Queries;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Queries
-{
-    public class GetEventListQuery: QueryBase<IAsyncEnumerable<EventReader>>
-    {
-    }
-}
+public record GetEventListQuery: StreamQueryBase<EventReader>;

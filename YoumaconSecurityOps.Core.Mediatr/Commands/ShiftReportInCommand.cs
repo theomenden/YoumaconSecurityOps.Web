@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Commands
+public record ShiftReportInCommand(Guid ShiftId, Guid CurrentLocationId) : ICommand<Guid>
 {
-    public record ShiftReportInCommand(Guid ShiftId, Guid CurrentLocationId) : ICommand<Guid>
-    {
-        public Guid Id => Guid.NewGuid();
-    }
+    public Guid Id => Guid.NewGuid();
 }

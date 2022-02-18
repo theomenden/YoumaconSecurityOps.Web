@@ -1,18 +1,13 @@
-﻿using YoumaconSecurityOps.Core.Shared.Extensions;
-using YoumaconSecurityOps.Core.Shared.Parameters;
+﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Queried;
 
-namespace YoumaconSecurityOps.Core.EventStore.Events.Queried
+public class StaffRolesQueriedEvent : EventBase
 {
-    public class StaffRolesQueriedEvent : EventBase
+    public StaffRolesQueriedEvent(StaffRolesQueryStringParameters? queryParameters)
     {
-        public StaffRolesQueriedEvent(StaffRolesQueryStringParameters? queryParameters)
-        {
-            QueryParameters = queryParameters;
+        QueryParameters = queryParameters;
 
-            DataAsJson = queryParameters?.ToJson() ?? "No parameters used";
-        }
-
-        public StaffRolesQueryStringParameters? QueryParameters { get; }
+        DataAsJson = queryParameters?.ToJson() ?? "No parameters used";
     }
 
+    public StaffRolesQueryStringParameters? QueryParameters { get; }
 }

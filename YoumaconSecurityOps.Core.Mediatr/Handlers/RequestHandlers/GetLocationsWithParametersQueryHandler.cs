@@ -1,70 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events;
-using YoumaconSecurityOps.Core.EventStore.Events.Queried;
-using YoumaconSecurityOps.Core.EventStore.Storage;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Accessors;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Parameters;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+internal sealed class GetLocationsWithParametersQueryHandler : IStreamRequestHandler<GetLocationsWithParametersQuery, LocationReader>
 {
-    internal sealed class GetLocationsWithParametersQueryHandler : IRequestHandler<GetLocationsWithParametersQuery, IAsyncEnumerable<LocationReader>>
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly ILocationAccessor _locations;
+
+    private readonly IMapper _mapper;
+
+    private readonly IMediator _mediator;
+
+    private readonly ILogger<GetLocationsWithParametersQueryHandler> _logger;
+
+    public GetLocationsWithParametersQueryHandler(IEventStoreRepository eventStore, ILocationAccessor locations, ILogger<GetLocationsWithParametersQueryHandler> logger, IMapper mapper, IMediator mediator)
     {
-        private readonly IEventStoreRepository _eventStore;
+        _eventStore = eventStore;
+        _locations = locations;
+        _mapper = mapper;
+        _mediator = mediator;
+        _logger = logger;
+    }
 
-        private readonly ILocationAccessor _locations;
+    public async IAsyncEnumerable<LocationReader> Handle(GetLocationsWithParametersQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var locations = _locations.GetAll(cancellationToken);
 
-        private readonly IMapper _mapper;
+        await RaiseLocationListQueriedEvent(request.Parameters, cancellationToken);
 
-        private readonly IMediator _mediator;
+        await foreach (var location in Filter(locations, request.Parameters).WithCancellation(cancellationToken)
+                           .ConfigureAwait(false))
+        {
+            yield return location;
+        }
+    }
+
+    private static IAsyncEnumerable<LocationReader> Filter(IAsyncEnumerable<LocationReader> locations,
+        LocationQueryStringParameters parameters)
+    {
+        var (name, isHotel) = parameters;
         
-        private readonly ILogger<GetLocationsWithParametersQueryHandler> _logger;
-
-        public GetLocationsWithParametersQueryHandler(IEventStoreRepository eventStore, ILocationAccessor locations, ILogger<GetLocationsWithParametersQueryHandler> logger, IMapper mapper, IMediator mediator )
+        if (!String.IsNullOrWhiteSpace(name))
         {
-            _eventStore = eventStore;
-            _locations = locations;
-            _mapper = mapper;
-            _mediator = mediator;
-            _logger = logger;
+            locations = locations.Where(l => l.Name.Equals(name));
         }
 
-        public async Task<IAsyncEnumerable<LocationReader>> Handle(GetLocationsWithParametersQuery request, CancellationToken cancellationToken)
-        {
-            var locations =  _locations.GetAll(cancellationToken);
-            
-            await RaiseLocationListQueriedEvent(request.Parameters, cancellationToken);
+        return locations.Where(l => l.IsHotel == isHotel);
+    }
 
-            return Filter(locations, request.Parameters);
-        }
+    private async Task RaiseLocationListQueriedEvent(LocationQueryStringParameters parameters, CancellationToken cancellation)
+    {
+        var e = new LocationListQueriedEvent(parameters);
 
-        private static IAsyncEnumerable<LocationReader> Filter(IAsyncEnumerable<LocationReader> locations,
-            LocationQueryStringParameters parameters)
-        {
-            if (!String.IsNullOrWhiteSpace(parameters.Name))
-            {
-                locations = locations.Where(l => l.Name.Equals(parameters.Name));
-            }
-            
-            return locations.Where(l => l.IsHotel == parameters.IsHotel);
-        }
+        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellation);
 
-        private async Task RaiseLocationListQueriedEvent(LocationQueryStringParameters parameters, CancellationToken cancellation)
-        {
-            var e = new LocationListQueriedEvent(parameters);
-
-            await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellation);
-
-            await _mediator.Publish(e, cancellation);
-        }
+        await _mediator.Publish(e, cancellation);
     }
 }

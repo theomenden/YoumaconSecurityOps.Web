@@ -1,15 +1,11 @@
-﻿using System;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Updated;
 
-namespace YoumaconSecurityOps.Core.EventStore.Events.Updated
+public class StaffMemberUpdatedEvent : EventBase
 {
-    public class StaffMemberUpdatedEvent : EventBase
+    public StaffMemberUpdatedEvent(StaffReader updatedStaff)
     {
-        public StaffMemberUpdatedEvent(StaffReader updatedStaff)
-        {
-            UpdatedStaff = updatedStaff ?? throw new ArgumentNullException(nameof(updatedStaff));
-        }
-
-        public StaffReader UpdatedStaff { get; }
+        UpdatedStaff = updatedStaff ?? throw new ArgumentNullException(nameof(updatedStaff));
     }
+
+    public StaffReader UpdatedStaff { get; }
 }

@@ -1,14 +1,11 @@
-﻿using YoumaconSecurityOps.Core.Shared.Models.Writers;
+﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Created;
 
-namespace YoumaconSecurityOps.Core.EventStore.Events.Created
+public class LocationCreatedEvent : EventBase
 {
-    public class LocationCreatedEvent : EventBase
+    public LocationCreatedEvent(LocationWriter locationAdded)
     {
-        public LocationCreatedEvent(LocationWriter locationAdded)
-        {
-            LocationAdded = locationAdded;
-        }
-
-        public LocationWriter LocationAdded { get; }
+        LocationAdded = locationAdded;
     }
+
+    public LocationWriter LocationAdded { get; }
 }

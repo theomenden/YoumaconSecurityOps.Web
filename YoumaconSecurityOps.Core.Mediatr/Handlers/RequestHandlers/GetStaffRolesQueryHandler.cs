@@ -1,64 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events;
-using YoumaconSecurityOps.Core.EventStore.Events.Queried;
-using YoumaconSecurityOps.Core.EventStore.Storage;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Accessors;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
+internal sealed class GetStaffRolesQueryHandler : IStreamRequestHandler<GetStaffRolesQuery, StaffRole>
 {
-    internal sealed class GetStaffRolesQueryHandler : IRequestHandler<GetStaffRolesQuery, IAsyncEnumerable<StaffRole>>
+    private readonly IStaffRoleAccessor _staffRoles;
+
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly IMapper _mapper;
+
+    private readonly IMediator _mediator;
+
+    private readonly ILogger<GetStaffQueryHandler> _logger;
+
+    public GetStaffRolesQueryHandler(IStaffRoleAccessor staffRoles, IMediator mediator, ILogger<GetStaffQueryHandler> logger, IEventStoreRepository eventStore, IMapper mapper)
     {
-        private readonly IStaffRoleAccessor _staffRoles;
+        _staffRoles = staffRoles;
+        _mediator = mediator;
+        _logger = logger;
+        _eventStore = eventStore;
+        _mapper = mapper;
+    }
 
-        private readonly IEventStoreRepository _eventStore;
+    public async IAsyncEnumerable<StaffRole> Handle(GetStaffRolesQuery request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        await RaiseStaffRolesQueriedEvent(request, cancellationToken);
 
-        private readonly IMapper _mapper;
-
-        private readonly IMediator _mediator;
-
-        private readonly ILogger<GetStaffQueryHandler> _logger;
-
-        public GetStaffRolesQueryHandler(IStaffRoleAccessor staffRoles, IMediator mediator, ILogger<GetStaffQueryHandler> logger, IEventStoreRepository eventStore, IMapper mapper)
+        await foreach (var role in _staffRoles.GetAll(cancellationToken).ConfigureAwait(false))
         {
-            _staffRoles = staffRoles;
-            _mediator = mediator;
-            _logger = logger;
-            _eventStore = eventStore;
-            _mapper = mapper;
+            yield return role;
         }
-
-        public async Task<IAsyncEnumerable<StaffRole>> Handle(GetStaffRolesQuery request, CancellationToken cancellationToken = default)
+    }
+    private async Task RaiseStaffRolesQueriedEvent(GetStaffRolesQuery staffRoleQueryRequest, CancellationToken cancellationToken)
+    {
+        var e = new StaffRolesQueriedEvent(null)
         {
-            var staff = _staffRoles.GetAll(cancellationToken);
+            Aggregate = nameof(GetStaffRolesQuery),
+            MajorVersion = 1,
+            Name = nameof(staffRoleQueryRequest)
+        };
 
-            await RaiseStaffRolesQueriedEvent(request, cancellationToken);
+        _logger.LogInformation("Logged event of type {StaffRolesQueriedEvent} {e}, {request}, {StaffRolesQueriedEvent}", typeof(StaffRolesQueriedEvent), e, staffRoleQueryRequest, nameof(RaiseStaffRolesQueriedEvent));
 
-            return staff;
-        }
-        private async Task RaiseStaffRolesQueriedEvent(GetStaffRolesQuery staffRoleQueryRequest, CancellationToken cancellationToken)
-        {
-            var e = new StaffRolesQueriedEvent(null)
-            {
-                Aggregate = nameof(GetStaffRolesQuery),
-                MajorVersion = 1,
-                Name = nameof(staffRoleQueryRequest)
-            };
+        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
 
-            _logger.LogInformation("Logged event of type {StaffRolesQueriedEvent} {e}, {request}, {StaffRolesQueriedEvent}", typeof(StaffRolesQueriedEvent), e, staffRoleQueryRequest, nameof(RaiseStaffRolesQueriedEvent));
-
-            await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
-
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _mediator.Publish(e, cancellationToken);
     }
 }

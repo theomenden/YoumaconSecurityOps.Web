@@ -1,79 +1,64 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.EventStore.Events.Added;
-using YoumaconSecurityOps.Core.EventStore.Events.Created;
-using YoumaconSecurityOps.Core.EventStore.Events.Failed;
-using YoumaconSecurityOps.Core.EventStore.Storage;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Repositories;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers
+internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreatedEvent>
 {
-    internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreatedEvent>
+    private readonly ILogger<ShiftCreatedEventHandler> _logger;
+
+    private readonly IMapper _mapper;
+
+    private readonly IMediator _mediator;
+
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly IShiftRepository _shifts;
+
+    public ShiftCreatedEventHandler(ILogger<ShiftCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
     {
-        private readonly ILogger<ShiftCreatedEventHandler> _logger;
+        _logger = logger;
 
-        private readonly IMapper _mapper;
+        _mapper = mapper;
 
-        private readonly IMediator _mediator;
-
-        private readonly IEventStoreRepository _eventStore;
-
-        private readonly IShiftRepository _shifts;
-
-        public ShiftCreatedEventHandler(ILogger<ShiftCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
-        {
-            _logger = logger;
-
-            _mapper = mapper;
-
-            _mediator = mediator;
+        _mediator = mediator;
             
-            _eventStore = eventStore;
+        _eventStore = eventStore;
             
-            _shifts = shifts;
-        }
+        _shifts = shifts;
+    }
 
-        public async Task Handle(ShiftCreatedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(ShiftCreatedEvent notification, CancellationToken cancellationToken)
+    {
+        var shiftToAdd = _mapper.Map<ShiftReader>(notification.ShiftWriter);
+
+        var shiftWasAddedSuccessfully = await _shifts.AddAsync(shiftToAdd, cancellationToken);
+
+        if (!shiftWasAddedSuccessfully)
         {
-            var shiftToAdd = _mapper.Map<ShiftReader>(notification.ShiftWriter);
-
-            var shiftWasAddedSuccessfully = await _shifts.AddAsync(shiftToAdd, cancellationToken);
-
-            if (!shiftWasAddedSuccessfully)
-            {
-                await RaiseFailedToAddEntityEvent(shiftToAdd.Id, shiftToAdd.GetType(),cancellationToken);
-                return;
-            }
-
-            await RaiseShiftAddedEvent(shiftToAdd, cancellationToken);
+            await RaiseFailedToAddEntityEvent(shiftToAdd.Id, shiftToAdd.GetType(),cancellationToken);
+            return;
         }
 
-        private async Task RaiseShiftAddedEvent(ShiftReader shiftAdded, CancellationToken cancellationToken)
-        {
-            var e = new ShiftAddedEvent(shiftAdded);
+        await RaiseShiftAddedEvent(shiftToAdd, cancellationToken);
+    }
 
-            var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+    private async Task RaiseShiftAddedEvent(ShiftReader shiftAdded, CancellationToken cancellationToken)
+    {
+        var e = new ShiftAddedEvent(shiftAdded);
 
-            await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
 
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
-        private async Task RaiseFailedToAddEntityEvent(Guid aggregateId, Type aggregateType, CancellationToken cancellationToken)
-        {
-            var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
+        await _mediator.Publish(e, cancellationToken);
+    }
 
-            var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+    private async Task RaiseFailedToAddEntityEvent(Guid aggregateId, Type aggregateType, CancellationToken cancellationToken)
+    {
+        var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
 
-            await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
 
-            await _mediator.Publish(e, cancellationToken);
-        }
+        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+
+        await _mediator.Publish(e, cancellationToken);
     }
 }

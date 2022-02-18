@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace YoumaconSecurityOps.Core.Mediatr.Extensions
+namespace YoumaconSecurityOps.Core.Mediatr.Extensions;
+
+public static class IServiceCollectionExtensions
 {
-    public static class IServiceCollectionExtensions
+    public static IServiceCollection AddMediatrServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddMediatrServices(this IServiceCollection services)
-        {
-            services.AddMediatR(typeof(IServiceCollectionExtensions).Assembly);
+        services.AddMediatR(typeof(IServiceCollectionExtensions).Assembly);
 
-            return services;
-        }
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+        services.AddTransient(typeof(IStreamPipelineBehavior<,>), typeof(StreamingLoggingBehavior<,>));
+
+        services.AddLazyCache();
+
+        return services;
     }
 }
