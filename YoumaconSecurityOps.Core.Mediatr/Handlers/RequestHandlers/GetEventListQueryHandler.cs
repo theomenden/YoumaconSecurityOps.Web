@@ -15,8 +15,6 @@ internal sealed class GetEventListQueryHandler : IStreamRequestHandler<GetEventL
 
     public IAsyncEnumerable<EventReader> Handle(GetEventListQuery request, CancellationToken cancellationToken)
     {
-        //_logger.LogInformation("User : {userName} Queried the event list", Guid.NewGuid().ToString());
-
         return _eventStore.GetAll(cancellationToken);
     }
 }

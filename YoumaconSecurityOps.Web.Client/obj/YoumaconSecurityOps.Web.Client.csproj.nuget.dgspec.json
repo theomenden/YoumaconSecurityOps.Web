@@ -600,6 +600,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Azure.Extensions.AspNetCore.Configuration.Secrets": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
             "Blazored.FluentValidation": {
               "target": "Package",
               "version": "[2.0.3, )"
@@ -659,6 +667,10 @@
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[6.0.2, )"
+            },
+            "Microsoft.Azure.SignalR": {
+              "target": "Package",
+              "version": "[1.4.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
