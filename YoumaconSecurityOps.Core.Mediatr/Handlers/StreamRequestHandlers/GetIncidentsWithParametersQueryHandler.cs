@@ -1,4 +1,4 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHandler<GetIncidentsWithParametersQuery, IncidentReader>
 {
@@ -8,8 +8,11 @@ internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHan
 
     private readonly ILogger<GetIncidentsWithParametersQueryHandler> _logger;
 
-    public GetIncidentsWithParametersQueryHandler(IIncidentAccessor staff, IMediator mediator, ILogger<GetIncidentsWithParametersQueryHandler> logger)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
+    public GetIncidentsWithParametersQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IIncidentAccessor staff, IMediator mediator, ILogger<GetIncidentsWithParametersQueryHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _staff = staff;
         _mediator = mediator;
         _logger = logger;
@@ -18,9 +21,11 @@ internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHan
 
     public IAsyncEnumerable<IncidentReader> Handle(GetIncidentsWithParametersQuery request, CancellationToken cancellationToken)
     {
+        using var context = _dbContextFactory.CreateDbContext();
+
         RaiseStaffListQueriedEvent(request.Parameters, cancellationToken);
 
-        var filteredIncidents = Filter(request.Parameters, _staff.GetAll(cancellationToken));
+        var filteredIncidents = Filter(request.Parameters, _staff.GetAllAsync(context,cancellationToken));
 
         return filteredIncidents;
     }
@@ -32,7 +37,6 @@ internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHan
             .Where(i => parameters.StaffIds.Contains(i.ReportedById))
             .Where(i => parameters.StaffIds.Contains(i.RecordedById))
             .Where(i => i.Severity == (int)parameters.Severity);
-                
     }
 
     private Task RaiseStaffListQueriedEvent(IncidentQueryStringParameters parameters, CancellationToken cancellationToken)

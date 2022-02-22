@@ -1,13 +1,16 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿
+namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftListQuery, ShiftReader>
 {
     private readonly ILogger<GetShiftListQueryHandler> _logger;
     private readonly IMediator _mediator;
     private readonly IShiftAccessor _shifts;
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
-    public GetShiftListQueryHandler(ILogger<GetShiftListQueryHandler> logger, IMediator mediator, IShiftAccessor shifts)
+    public GetShiftListQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<GetShiftListQueryHandler> logger, IMediator mediator, IShiftAccessor shifts)
     {
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
         _mediator = mediator;
         _shifts = shifts;
@@ -15,7 +18,9 @@ internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftLi
         
     public IAsyncEnumerable<ShiftReader> Handle(GetShiftListQuery request, CancellationToken cancellationToken)
     {
-        var shiftLog = _shifts.GetAll(cancellationToken);
+        using var context = _dbContextFactory.CreateDbContext();
+
+        var shiftLog = _shifts.GetAllAsync(context, cancellationToken);
 
         RaiseShiftLogQueriedEvent(request, cancellationToken);
 

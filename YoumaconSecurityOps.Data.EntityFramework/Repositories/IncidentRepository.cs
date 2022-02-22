@@ -12,58 +12,58 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
         _logger = logger;
     }
 
-    public IAsyncEnumerable<IncidentReader> GetAll(CancellationToken cancellationToken = new ())
+    public IAsyncEnumerable<IncidentReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
-        using var context = _dbContext.CreateDbContext();
-
-        var incidents = context.Incidents.AsAsyncEnumerable();
+        var incidents = dbContext.Incidents.AsAsyncEnumerable();
 
         return incidents;
     }
 
-    public async Task<IncidentReader> WithId(Guid entityId, CancellationToken cancellationToken = new ())
+    public async Task<IncidentReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var incident = await context.Incidents.AsQueryable()
+        var incident = await dbContext.Incidents.AsQueryable()
             .SingleOrDefaultAsync(i => i.Id == entityId, cancellationToken);
 
         return incident;
     }
 
-    public IAsyncEnumerable<IncidentReader> GetByShiftId(Guid shiftId, CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<IncidentReader> GetByShiftId(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = new())
     {
-        var incidentsUnderShift = GetAll(cancellationToken)
+        var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
             .Where(i => i.ShiftId == shiftId);
 
         return incidentsUnderShift;
     }
 
-    public IAsyncEnumerable<IncidentReader> GetBySeverity(Severity severityToSearch, CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<IncidentReader> GetBySeverity(YoumaconSecurityDbContext dbContext, Severity severityToSearch, CancellationToken cancellationToken = new())
     {
-        var incidentsUnderShift = GetAll(cancellationToken)
+        var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
             .Where(i => Enum.IsDefined(typeof(Severity), i.Severity) && i.Severity ==(int)severityToSearch);
 
         return incidentsUnderShift;
     }
 
-    public IAsyncEnumerable<IncidentReader> GetByReportedStaffMember(Guid staffId, CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<IncidentReader> GetByReportedStaffMember(YoumaconSecurityDbContext dbContext, Guid reportingStaffId, CancellationToken cancellationToken = new())
     {
-        var incidentsUnderShift = GetAll(cancellationToken).Where(i => i.ReportedById == staffId);
+        var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
+            .Where(i => i.ReportedById == reportingStaffId);
 
         return incidentsUnderShift;
     }
 
-    public IAsyncEnumerable<IncidentReader> GetByRecordedStaffMember(Guid staffId, CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<IncidentReader> GetByRecordedStaffMember(YoumaconSecurityDbContext dbContext, Guid recordingStaffId, CancellationToken cancellationToken = new())
     {
-        var incidentsUnderShift = GetAll(cancellationToken).Where(i => i.RecordedById == staffId);
+        var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
+            .Where(i => i.RecordedById == recordingStaffId);
 
         return incidentsUnderShift;
     }
 
     public IAsyncEnumerator<IncidentReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
     {
-        var incidentAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var incidentAsyncEnumerator = GetAllAsync(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return incidentAsyncEnumerator;
     }

@@ -1,20 +1,22 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
-internal sealed class GetStaffWithParametersQueryHandler: IStreamRequestHandler<GetStaffWithParametersQuery, StaffReader>
+internal sealed class GetStaffWithParametersQueryHandler : IStreamRequestHandler<GetStaffWithParametersQuery, StaffReader>
 {
     private readonly IStaffAccessor _staff;
-        
+
     private readonly IMediator _mediator;
 
     private readonly ILogger<GetStaffWithParametersQueryHandler> _logger;
 
-    public GetStaffWithParametersQueryHandler(IStaffAccessor staff, IMediator mediator, ILogger<GetStaffWithParametersQueryHandler> logger)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
+    public GetStaffWithParametersQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IStaffAccessor staff, IMediator mediator, ILogger<GetStaffWithParametersQueryHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _staff = staff;
         _mediator = mediator;
         _logger = logger;
     }
-     
 
     private static IAsyncEnumerable<StaffReader> Filter(StaffQueryStringParameters parameters, IAsyncEnumerable<StaffReader> staffList)
     {
@@ -42,7 +44,9 @@ internal sealed class GetStaffWithParametersQueryHandler: IStreamRequestHandler<
 
     public IAsyncEnumerable<StaffReader> Handle(GetStaffWithParametersQuery request, CancellationToken cancellationToken)
     {
-        var staff = _staff.GetAll(cancellationToken);
+        using var context = _dbContextFactory.CreateDbContext();
+
+        var staff = _staff.GetAllAsync(context, cancellationToken);
 
         staff = Filter(request.Parameters, staff);
 

@@ -12,11 +12,9 @@ internal sealed class ContactRepository: IContactAccessor, IContactRepository
         _logger = logger;
     }
 
-    public IAsyncEnumerable<ContactReader> GetAll(CancellationToken cancellationToken = new ())
+    public IAsyncEnumerable<ContactReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
-        using var context = _dbContext.CreateDbContext();
-
-        var contacts = context.Contacts
+        var contacts = dbContext.Contacts
             .AsAsyncEnumerable()
             .OrderBy(c => c.LastName)
             .ThenBy(c => c.PreferredName)
@@ -25,9 +23,9 @@ internal sealed class ContactRepository: IContactAccessor, IContactRepository
         return contacts;
     }
 
-    public async Task<ContactReader> WithId(Guid entityId, CancellationToken cancellationToken = new ())
+    public async Task<ContactReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
     {
-        var contact = await GetAll(cancellationToken)
+        var contact = await GetAllAsync(dbContext,cancellationToken)
             .SingleOrDefaultAsync(c => c.Id == entityId, cancellationToken);
 
         return contact;
@@ -35,7 +33,9 @@ internal sealed class ContactRepository: IContactAccessor, IContactRepository
 
     public IAsyncEnumerator<ContactReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
     {
-        var contactAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var contactAsyncEnumerator = GetAllAsync(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return contactAsyncEnumerator;
     }

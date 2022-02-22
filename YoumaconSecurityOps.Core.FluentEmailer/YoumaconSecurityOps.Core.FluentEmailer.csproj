@@ -5,6 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+    <Version>1.0.8</Version>
+    <FileVersion>1.0.8</FileVersion>
+    <AssemblyVersion>1.0.8</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +16,7 @@
     <PackageReference Include="FluentEmail.Razor" Version="3.0.0" />
     <PackageReference Include="FluentEmail.SendGrid" Version="3.0.0" />
     <PackageReference Include="FluentEmail.Smtp" Version="3.0.0" />
-    <PackageReference Include="SendGrid" Version="9.25.2" />
+    <PackageReference Include="SendGrid" Version="9.25.3" />
   </ItemGroup>
 
   <ItemGroup>

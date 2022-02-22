@@ -47,7 +47,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories
             var countOfLocations = _locations.Count();
 
             //ACT
-            var results = await _locationRepository.GetAll().ToListAsync();
+            var results = await _locationRepository.GetAllAsync().ToListAsync();
 
             //ASSERT
             results.ShouldSatisfyAllConditions(
@@ -64,7 +64,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories
             var location = _locations.Random();
 
             //ACT
-            var result = await _locationRepository.WithId(location.Id);
+            var result = await _locationRepository.WithIdAsync(location.Id);
 
             //ASSERT
             result.ShouldSatisfyAllConditions(

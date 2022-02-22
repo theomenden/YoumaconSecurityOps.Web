@@ -43,7 +43,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories
             var countOfContacts = _contacts.Count();
 
             //ACT
-            var result = await _testRepository.GetAll().ToListAsync();
+            var result = await _testRepository.GetAllAsync().ToListAsync();
 
 
             //ASSERT
@@ -61,7 +61,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories
             var contactToRetrieve = _contacts.Random();
 
             //ACT
-            var result = await _testRepository.WithId(contactToRetrieve.Id);
+            var result = await _testRepository.WithIdAsync(contactToRetrieve.Id);
 
 
             //ASSERT

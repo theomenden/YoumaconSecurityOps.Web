@@ -1,6 +1,6 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
-internal sealed class GetIncidentsQueryHandler: IStreamRequestHandler<GetIncidentsQuery, IncidentReader>
+internal sealed class GetIncidentsQueryHandler : IStreamRequestHandler<GetIncidentsQuery, IncidentReader>
 {
     private readonly IIncidentAccessor _incidents;
 
@@ -8,16 +8,21 @@ internal sealed class GetIncidentsQueryHandler: IStreamRequestHandler<GetInciden
 
     private readonly ILogger<GetIncidentsQueryHandler> _logger;
 
-    public GetIncidentsQueryHandler(IIncidentAccessor incidents, IMediator mediator, ILogger<GetIncidentsQueryHandler> logger)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
+    public GetIncidentsQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IIncidentAccessor incidents, IMediator mediator, ILogger<GetIncidentsQueryHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _incidents = incidents;
         _mediator = mediator;
-        _logger = logger;   
+        _logger = logger;
     }
 
     public IAsyncEnumerable<IncidentReader> Handle(GetIncidentsQuery request, CancellationToken cancellationToken)
     {
-        var incidents = _incidents.GetAll(cancellationToken);
+        using var context = _dbContextFactory.CreateDbContext();
+
+        var incidents = _incidents.GetAllAsync(context, cancellationToken);
 
         RaiseIncidentListQueriedEvent(request, cancellationToken);
 

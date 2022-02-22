@@ -1,4 +1,4 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetLocationsWithParametersQueryHandler : IStreamRequestHandler<GetLocationsWithParametersQuery, LocationReader>
 {
@@ -12,8 +12,10 @@ internal sealed class GetLocationsWithParametersQueryHandler : IStreamRequestHan
 
     private readonly ILogger<GetLocationsWithParametersQueryHandler> _logger;
 
-    public GetLocationsWithParametersQueryHandler(IEventStoreRepository eventStore, ILocationAccessor locations, ILogger<GetLocationsWithParametersQueryHandler> logger, IMapper mapper, IMediator mediator)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+    public GetLocationsWithParametersQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IEventStoreRepository eventStore, ILocationAccessor locations, ILogger<GetLocationsWithParametersQueryHandler> logger, IMapper mapper, IMediator mediator)
     {
+        _dbContextFactory = dbContextFactory;
         _eventStore = eventStore;
         _locations = locations;
         _mapper = mapper;
@@ -23,9 +25,11 @@ internal sealed class GetLocationsWithParametersQueryHandler : IStreamRequestHan
 
     public async IAsyncEnumerable<LocationReader> Handle(GetLocationsWithParametersQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var locations = _locations.GetAll(cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        await RaiseLocationListQueriedEvent(request.Parameters, cancellationToken);
+        var locations = _locations.GetAllAsync(context, cancellationToken);
+
+        await RaiseLocationListQueriedEvent(request.Parameters, cancellationToken).ConfigureAwait(false);
 
         await foreach (var location in Filter(locations, request.Parameters).WithCancellation(cancellationToken)
                            .ConfigureAwait(false))
@@ -38,7 +42,7 @@ internal sealed class GetLocationsWithParametersQueryHandler : IStreamRequestHan
         LocationQueryStringParameters parameters)
     {
         var (name, isHotel) = parameters;
-        
+
         if (!String.IsNullOrWhiteSpace(name))
         {
             locations = locations.Where(l => l.Name.Equals(name));
@@ -51,8 +55,10 @@ internal sealed class GetLocationsWithParametersQueryHandler : IStreamRequestHan
     {
         var e = new LocationListQueriedEvent(parameters);
 
-        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellation);
+        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellation)
+            .ConfigureAwait(false);
 
-        await _mediator.Publish(e, cancellation);
+        await _mediator.Publish(e, cancellation)
+            .ConfigureAwait(false);
     }
 }

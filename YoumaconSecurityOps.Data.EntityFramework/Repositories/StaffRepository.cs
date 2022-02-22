@@ -9,19 +9,17 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
     public StaffRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext, ILogger<StaffRepository> logger)
     {
         _dbContext = dbContext;
-        _logger = logger;   
+        _logger = logger;
     }
 
-    public IAsyncEnumerable<StaffReader> GetAll(CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<StaffReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
-        using var context = _dbContext.CreateDbContext();
-
         var staff =
-            from member in context.StaffMembers.AsAsyncEnumerable()
-            join contact in context.Contacts.AsAsyncEnumerable() on member.ContactId equals contact.Id
-            join typeRoleMap in context.StaffTypesRoles.AsAsyncEnumerable() on member.StaffTypeRoleId equals typeRoleMap.Id
-            join staffType in context.StaffTypes.AsAsyncEnumerable() on typeRoleMap.StaffTypeId equals staffType.Id
-            join staffRole in context.StaffRoles.AsAsyncEnumerable() on typeRoleMap.RoleId equals staffRole.Id
+            from member in dbContext.StaffMembers.AsAsyncEnumerable()
+            join contact in dbContext.Contacts.AsAsyncEnumerable() on member.ContactId equals contact.Id
+            join typeRoleMap in dbContext.StaffTypesRoles.AsAsyncEnumerable() on member.StaffTypeRoleId equals typeRoleMap.Id
+            join staffType in dbContext.StaffTypes.AsAsyncEnumerable() on typeRoleMap.StaffTypeId equals staffType.Id
+            join staffRole in dbContext.StaffRoles.AsAsyncEnumerable() on typeRoleMap.RoleId equals staffRole.Id
             orderby new { staffType, staffRole, contact.LastName }
             select new StaffReader
             {
@@ -34,16 +32,16 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
                 IsRaveApproved = member.IsRaveApproved,
                 NeedsCrashSpace = member.NeedsCrashSpace,
                 ShirtSize = member.ShirtSize,
-                StaffTypeRoleMaps = new List<StaffTypesRoles>(3){typeRoleMap}
-                    
+                StaffTypeRoleMaps = new List<StaffTypesRoles>(3) { typeRoleMap }
+
             };
 
         return staff;
     }
 
-    public async Task<StaffReader> WithId(Guid entityId, CancellationToken cancellationToken = new())
+    public async Task<StaffReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
-        var staffMember = await GetAll(cancellationToken)
+        var staffMember = await GetAllAsync(dbContext, cancellationToken)
             .FirstOrDefaultAsync(s => s.Id == entityId, cancellationToken)
             .ConfigureAwait(false);
 
@@ -52,7 +50,9 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 
     public IAsyncEnumerator<StaffReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
-        var staffAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var staffAsyncEnumerator = GetAllAsync(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return staffAsyncEnumerator;
     }

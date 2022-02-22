@@ -1,6 +1,8 @@
 ﻿global using AutoMapper;
 global using LazyCache;
 global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
 global using Microsoft.Extensions.Caching.Memory;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
@@ -25,6 +27,8 @@ global using YoumaconSecurityOps.Core.Mediatr.Commands;
 global using YoumaconSecurityOps.Core.Mediatr.Extensions;
 global using YoumaconSecurityOps.Core.Mediatr.Queries;
 global using YoumaconSecurityOps.Core.Shared.Accessors;
+global using YoumaconSecurityOps.Core.Shared.Context;
+global using YoumaconSecurityOps.Core.Shared.Context.Configurations;
 global using YoumaconSecurityOps.Core.Shared.Enumerations;
 global using YoumaconSecurityOps.Core.Shared.Extensions;
 global using YoumaconSecurityOps.Core.Shared.Models.Readers;

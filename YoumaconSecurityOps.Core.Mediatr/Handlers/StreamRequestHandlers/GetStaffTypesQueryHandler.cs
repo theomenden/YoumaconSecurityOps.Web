@@ -1,4 +1,4 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetStaffTypesQueryHandler : IStreamRequestHandler<GetStaffTypesQuery, StaffType>
 {
@@ -12,8 +12,11 @@ internal sealed class GetStaffTypesQueryHandler : IStreamRequestHandler<GetStaff
 
     private readonly ILogger<GetStaffTypesQueryHandler> _logger;
 
-    public GetStaffTypesQueryHandler(IStaffTypeAccessor staffTypes, IMediator mediator, ILogger<GetStaffTypesQueryHandler> logger, IEventStoreRepository eventStore, IMapper mapper)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
+    public GetStaffTypesQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IStaffTypeAccessor staffTypes, IMediator mediator, ILogger<GetStaffTypesQueryHandler> logger, IEventStoreRepository eventStore, IMapper mapper)
     {
+        _dbContextFactory = dbContextFactory;
         _staffTypes = staffTypes;
         _mediator = mediator;
         _logger = logger;
@@ -23,9 +26,11 @@ internal sealed class GetStaffTypesQueryHandler : IStreamRequestHandler<GetStaff
 
     public async IAsyncEnumerable<StaffType> Handle(GetStaffTypesQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var staff = _staffTypes.GetAll(cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        await RaiseStaffTypesQueriedEvent(request, cancellationToken);
+        var staff = _staffTypes.GetAll(context ,cancellationToken);
+
+        await RaiseStaffTypesQueriedEvent(request, cancellationToken).ConfigureAwait(false);
 
         await foreach (var member in staff.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
@@ -44,8 +49,10 @@ internal sealed class GetStaffTypesQueryHandler : IStreamRequestHandler<GetStaff
 
         _logger.LogInformation("Logged event of type {StaffTypesQueriedEvent} {e}, {request}, {RaiseStaffTypesQueriedEvent}", typeof(StaffTypesQueriedEvent), e, staffRoleQueryRequest, nameof(RaiseStaffTypesQueriedEvent));
 
-        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
+        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken)
+            .ConfigureAwait(false);
 
-        await _mediator.Publish(e, cancellationToken);
+        await _mediator.Publish(e, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

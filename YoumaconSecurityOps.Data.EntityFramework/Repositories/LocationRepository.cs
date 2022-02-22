@@ -9,29 +9,25 @@ internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
         _dbContext = dbContext ?? throw new ArgumentException("Could not register DbContext: ", nameof(dbContext));
     }
 
-    public IAsyncEnumerable<LocationReader> GetAll(CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<LocationReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
-        using var context = _dbContext.CreateDbContext();
-
-        var locations = context.Locations
+        var locations = dbContext.Locations
             .AsAsyncEnumerable()
             .OrderBy(l => l.Name);
 
         return locations;
     }
         
-    public async Task<LocationReader> WithId(Guid entityId, CancellationToken cancellationToken = new())
+    public async Task<LocationReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var location = await context.Locations.AsQueryable().SingleOrDefaultAsync(l => l.Id == entityId, cancellationToken);
+        var location = await dbContext.Locations.AsQueryable().SingleOrDefaultAsync(l => l.Id == entityId, cancellationToken);
 
         return location;
     }
 
-    public IAsyncEnumerable<LocationReader> GetHotels(CancellationToken cancellationToken = new())
+    public IAsyncEnumerable<LocationReader> GetHotels(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
-        var hotels = GetAll(cancellationToken)
+        var hotels = GetAllAsync(dbContext,cancellationToken)
             .Where(l => l.IsHotel)
             .OrderBy(l => l.Name);
 
@@ -40,7 +36,9 @@ internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
 
     public IAsyncEnumerator<LocationReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
     {
-        var locationAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var locationAsyncEnumerator = GetAllAsync(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return locationAsyncEnumerator;
     }

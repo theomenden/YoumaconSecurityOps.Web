@@ -665,7 +665,7 @@
           }
         }
       },
-      "SendGrid/9.25.2": {
+      "SendGrid/9.25.3": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "9.0.1",
@@ -2678,10 +2678,10 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
-    "SendGrid/9.25.2": {
-      "sha512": "5C+0ThiFfaCWaA1k6zyzbqAlgEsE9uIeygw+TmvzmHJHD6XFfd7cUXq968mYmMmjI3YgLT5CkhDryzarouSIIQ==",
+    "SendGrid/9.25.3": {
+      "sha512": "Dldhsc4+jV28rfa53W+09A549lDfKqGEFFtdOU4uOxHvS/pFhBN8lRkAEzvbMbycwZJJCzfrDdKc/qT1MxWynQ==",
       "type": "package",
-      "path": "sendgrid/9.25.2",
+      "path": "sendgrid/9.25.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2697,7 +2697,7 @@
         "lib/netstandard2.0/SendGrid.dll",
         "lib/netstandard2.0/SendGrid.pdb",
         "lib/netstandard2.0/SendGrid.xml",
-        "sendgrid.9.25.2.nupkg.sha512",
+        "sendgrid.9.25.3.nupkg.sha512",
         "sendgrid.nuspec"
       ]
     },
@@ -5796,14 +5796,14 @@
       "FluentEmail.Razor >= 3.0.0",
       "FluentEmail.SendGrid >= 3.0.0",
       "FluentEmail.Smtp >= 3.0.0",
-      "SendGrid >= 9.25.2"
+      "SendGrid >= 9.25.3"
     ]
   },
   "packageFolders": {
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.8",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj",
       "projectName": "YoumaconSecurityOps.Core.FluentEmailer",
@@ -5861,7 +5861,7 @@
           },
           "SendGrid": {
             "target": "Package",
-            "version": "[9.25.2, )"
+            "version": "[9.25.3, )"
           }
         },
         "imports": [

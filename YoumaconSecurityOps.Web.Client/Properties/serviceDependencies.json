@@ -11,6 +11,17 @@
     "signalr1": {
       "type": "signalr",
       "connectionId": "Azure:SignalR:ConnectionString"
+    },
+    "compute.appService1": {
+      "group": "connections",
+      "type": "compute.appService"
+    },
+    "secrets2": {
+      "type": "secrets"
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING"
     }
   }
 }

@@ -12,29 +12,29 @@ internal sealed class RadioScheduleRepository: IRadioScheduleAccessor, IRadioSch
         _dbContext = dbContext;
     }
 
-    public IAsyncEnumerable<RadioScheduleReader> GetAll(CancellationToken cancellationToken = new ())
+    public IAsyncEnumerable<RadioScheduleReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
-        using var context = _dbContext.CreateDbContext();
-
-        var radios = context.RadioSchedules
+        var radios = dbContext.RadioSchedules
             .AsAsyncEnumerable()
             .OrderBy(r => r.RadioNumber);
 
         return radios;
     }
 
-    public async Task<RadioScheduleReader> WithId(Guid entityId, CancellationToken cancellationToken = new ())
+    public async Task<RadioScheduleReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var radio = await context.RadioSchedules.AsQueryable().SingleOrDefaultAsync(r => r.Id == entityId, cancellationToken);
+        var radio = await dbContext.RadioSchedules
+            .AsQueryable()
+            .SingleOrDefaultAsync(r => r.Id == entityId, cancellationToken);
 
         return radio;
     }
 
     public IAsyncEnumerator<RadioScheduleReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
     {
-        var radioScheduleAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var radioScheduleAsyncEnumerator = GetAllAsync(context,cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return radioScheduleAsyncEnumerator;
     }

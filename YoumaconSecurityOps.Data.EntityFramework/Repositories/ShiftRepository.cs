@@ -17,20 +17,16 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
         _dbContext = dbContext;
     }
 
-    public IAsyncEnumerable<ShiftReader> GetAll(CancellationToken cancellationToken = new ())
+    public IAsyncEnumerable<ShiftReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
-        using var context = _dbContext.CreateDbContext();
-
-        var shifts = context.Shifts.AsAsyncEnumerable();
+        var shifts = dbContext.Shifts.AsAsyncEnumerable();
 
         return shifts;
     }
 
-    public async Task<ShiftReader> WithId(Guid entityId, CancellationToken cancellationToken = new ())
+    public async Task<ShiftReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var shift = await context.Shifts.AsQueryable()
+        var shift = await dbContext.Shifts.AsQueryable()
             .SingleOrDefaultAsync(s => s.Id == entityId, cancellationToken);
 
         return shift;
@@ -38,7 +34,9 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
 
     public IAsyncEnumerator<ShiftReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
     {
-        var getShiftAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var getShiftAsyncEnumerator = GetAllAsync(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return getShiftAsyncEnumerator;
     }

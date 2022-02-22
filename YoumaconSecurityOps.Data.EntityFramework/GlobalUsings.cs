@@ -13,5 +13,5 @@ global using YoumaconSecurityOps.Core.Shared.Accessors;
 global using YoumaconSecurityOps.Core.Shared.Enumerations;
 global using YoumaconSecurityOps.Core.Shared.Models.Readers;
 global using YoumaconSecurityOps.Core.Shared.Repositories;
-global using YoumaconSecurityOps.Data.EntityFramework.Context;
+global using YoumaconSecurityOps.Core.Shared.Context;
 global using YoumaconSecurityOps.Data.EntityFramework.Repositories;

@@ -1,4 +1,4 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery, StaffReader>
 {
@@ -8,8 +8,11 @@ internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery,
 
     private readonly ILogger<GetStaffQueryHandler> _logger;
 
-    public GetStaffQueryHandler(IStaffAccessor staff, IMediator mediator, ILogger<GetStaffQueryHandler> logger)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
+    public GetStaffQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IStaffAccessor staff, IMediator mediator, ILogger<GetStaffQueryHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _staff = staff;
         _mediator = mediator;
         _logger = logger;
@@ -17,7 +20,9 @@ internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery,
 
     public IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request, CancellationToken cancellationToken)
     {
-        var staff = _staff.GetAll(cancellationToken);
+        using var context = _dbContextFactory.CreateDbContext();
+
+        var staff = _staff.GetAllAsync(context,cancellationToken);
 
         RaiseStaffListQueriedEvent(request, cancellationToken);
 

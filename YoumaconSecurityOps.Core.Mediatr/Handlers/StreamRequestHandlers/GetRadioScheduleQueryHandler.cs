@@ -8,8 +8,10 @@ internal sealed class GetRadioScheduleQueryHandler : IStreamRequestHandler<GetRa
 
     private readonly ILogger<GetRadioScheduleQueryHandler> _logger;
 
-    public GetRadioScheduleQueryHandler(IRadioScheduleAccessor radios, IMediator mediator, ILogger<GetRadioScheduleQueryHandler> logger)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+    public GetRadioScheduleQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IRadioScheduleAccessor radios, IMediator mediator, ILogger<GetRadioScheduleQueryHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _radios = radios;
         _mediator = mediator;
         _logger = logger;
@@ -17,7 +19,9 @@ internal sealed class GetRadioScheduleQueryHandler : IStreamRequestHandler<GetRa
 
     public IAsyncEnumerable<RadioScheduleReader> Handle(GetRadioSchedule request, CancellationToken cancellationToken)
     {
-        var radios = _radios.GetAll(cancellationToken);
+        using var context = _dbContextFactory.CreateDbContext();
+
+        var radios = _radios.GetAllAsync(context, cancellationToken);
 
         RaiseRadioScheduleQueriedEvent(request, cancellationToken);
 

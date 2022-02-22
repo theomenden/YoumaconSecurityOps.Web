@@ -1,4 +1,4 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetStaffRolesQueryHandler : IStreamRequestHandler<GetStaffRolesQuery, StaffRole>
 {
@@ -10,10 +10,13 @@ internal sealed class GetStaffRolesQueryHandler : IStreamRequestHandler<GetStaff
 
     private readonly IMediator _mediator;
 
-    private readonly ILogger<GetStaffQueryHandler> _logger;
+    private readonly ILogger<GetStaffRolesQueryHandler> _logger;
 
-    public GetStaffRolesQueryHandler(IStaffRoleAccessor staffRoles, IMediator mediator, ILogger<GetStaffQueryHandler> logger, IEventStoreRepository eventStore, IMapper mapper)
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
+    public GetStaffRolesQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory,IStaffRoleAccessor staffRoles, IMediator mediator, ILogger<GetStaffRolesQueryHandler> logger, IEventStoreRepository eventStore, IMapper mapper)
     {
+        _dbContextFactory = dbContextFactory;
         _staffRoles = staffRoles;
         _mediator = mediator;
         _logger = logger;
@@ -23,9 +26,13 @@ internal sealed class GetStaffRolesQueryHandler : IStreamRequestHandler<GetStaff
 
     public async IAsyncEnumerable<StaffRole> Handle(GetStaffRolesQuery request, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await RaiseStaffRolesQueriedEvent(request, cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken)
+            .ConfigureAwait(false);
 
-        await foreach (var role in _staffRoles.GetAll(cancellationToken).ConfigureAwait(false))
+        await RaiseStaffRolesQueriedEvent(request, cancellationToken)
+            .ConfigureAwait(false);
+
+        await foreach (var role in _staffRoles.GetAll(context, cancellationToken).ConfigureAwait(false))
         {
             yield return role;
         }

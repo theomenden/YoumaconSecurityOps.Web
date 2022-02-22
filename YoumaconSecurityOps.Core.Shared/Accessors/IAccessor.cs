@@ -9,16 +9,18 @@ public interface IAccessor<T>
 {
     /// <summary>
     /// Retrieves all entities types of Type <c>T</c> from their respective tables in the database
-    /// </summary>
+    /// </summary>    
+    /// <param name="dbContext">The Caller Supplied DbContext</param>
     /// <param name="cancellationToken"></param>
-    /// <returns>An asynchronous stream of the entities (<see cref="IAsyncEnumerable{T}"/>)</returns>
-    IAsyncEnumerable<T> GetAll(CancellationToken cancellationToken = new ());
+    /// <returns>An asynchronous stream of the entities (<see cref="IAsyncEnumerable{T}"/>) of type <typeparamref name="T"/></returns>
+    IAsyncEnumerable<T> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ());
 
     /// <summary>
     /// Returns a single entity of Type <c>T</c> from it's respective table in the database
     /// </summary>
-    /// <param name="entityId"></param>
+    /// <param name="dbContext">The Caller Supplied DbContext</param>
+    /// <param name="entityId">The supplied Id for lookup</param>
     /// <param name="cancellationToken"></param>
-    /// <returns>A <see cref="Task{T}"/></returns>
-    Task<T> WithId(Guid entityId, CancellationToken cancellationToken = new());
+    /// <returns>A <see cref="Task{T}"/> of <typeparamref name="T"/></returns>
+    Task<T> WithIdAsync(YoumaconSecurityDbContext dbContext,Guid entityId, CancellationToken cancellationToken = new());
 }
