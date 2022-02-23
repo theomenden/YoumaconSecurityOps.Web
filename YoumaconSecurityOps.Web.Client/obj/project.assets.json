@@ -4261,6 +4261,18 @@
           "lib/net6.0/System.Linq.Async.dll": {}
         }
       },
+      "System.Linq.Async.Queryable/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Linq.Async": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/System.Linq.Async.Queryable.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/System.Linq.Async.Queryable.dll": {}
+        }
+      },
       "System.Linq.Expressions/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -5471,7 +5483,9 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.2",
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
           "Microsoft.Extensions.Logging": "6.0.0",
-          "Serilog": "2.10.0"
+          "Serilog": "2.10.0",
+          "System.Linq.Async": "6.0.1",
+          "System.Linq.Async.Queryable": "6.0.1"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.Shared.dll": {}
@@ -12226,6 +12240,26 @@
         "ref/netstandard2.1/System.Linq.Async.xml",
         "system.linq.async.6.0.1.nupkg.sha512",
         "system.linq.async.nuspec"
+      ]
+    },
+    "System.Linq.Async.Queryable/6.0.1": {
+      "sha512": "2kjCNQ/Un1fYq1oujwkiCeMzypWYeatpxbTwgoDhNMw8QTTkadxrTJMwPtLg+r2/qNTYyyiVc4oCsin7633vgA==",
+      "type": "package",
+      "path": "system.linq.async.queryable/6.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Logo.png",
+        "lib/net48/System.Linq.Async.Queryable.dll",
+        "lib/net48/System.Linq.Async.Queryable.xml",
+        "lib/net6.0/System.Linq.Async.Queryable.dll",
+        "lib/net6.0/System.Linq.Async.Queryable.xml",
+        "lib/netstandard2.0/System.Linq.Async.Queryable.dll",
+        "lib/netstandard2.0/System.Linq.Async.Queryable.xml",
+        "lib/netstandard2.1/System.Linq.Async.Queryable.dll",
+        "lib/netstandard2.1/System.Linq.Async.Queryable.xml",
+        "system.linq.async.queryable.6.0.1.nupkg.sha512",
+        "system.linq.async.queryable.nuspec"
       ]
     },
     "System.Linq.Expressions/4.3.0": {

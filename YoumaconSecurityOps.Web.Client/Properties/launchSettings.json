@@ -13,24 +13,26 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://ysecopsak.vault.azure.net/",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR",
         "AZURE_USERNAME": "andrew.d.beers@gmail.com",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
+        "AZURE_TENANT_ID": "9f03e218-dfef-4853-93c8-39ffe0c87a9a",
+        "VaultUri": "https://ysecopsak.vault.azure.net/"
       },
-      "nativeDebugging": false,
-      "jsWebView2Debugging": false
+      "jsWebView2Debugging": false,
+      "nativeDebugging": false
     },
     "YoumaconSecurityOps.Web.Client": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://ysecopsak.vault.azure.net/",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR",
         "AZURE_USERNAME": "andrew.d.beers@gmail.com",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
+        "AZURE_TENANT_ID": "9f03e218-dfef-4853-93c8-39ffe0c87a9a",
+        "VaultUri": "https://ysecopsak.vault.azure.net/"
       },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "dotnetRunMessages": "true"
     }
   }
 }

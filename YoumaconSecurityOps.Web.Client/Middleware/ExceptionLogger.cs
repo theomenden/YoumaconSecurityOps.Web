@@ -24,7 +24,6 @@ namespace YoumaconSecurityOps.Web.Client.Middleware
             catch (Exception ex)
             {
                 await HandleExceptionAsync(ex);
-                throw;
             }
             finally
             {

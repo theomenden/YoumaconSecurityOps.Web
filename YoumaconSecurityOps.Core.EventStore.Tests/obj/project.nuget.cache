@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WGljz8Xg/ONir03kZCifoZ3FQ690WRqyKCUHC1aDaB85aNQmYIaMmGDai9dwetOvj8DZ5srhpBLwp4GI5/RmRg==",
+  "dgSpecHash": "NTcjYV8n9btAIsNDzJ7+SAs93FbDf5OTOqjqzCOGDf7xjIAHiMHfwvprrBDqZIhf9QQQR1llUH7l7GMimdNalQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore.Tests\\YoumaconSecurityOps.Core.EventStore.Tests.csproj",
   "expectedPackageFiles": [
@@ -119,6 +119,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\system.io.ports\\5.0.0\\system.io.ports.5.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.linq.async\\6.0.1\\system.linq.async.6.0.1.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\system.linq.async.queryable\\6.0.1\\system.linq.async.queryable.6.0.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.management\\5.0.0\\system.management.5.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",

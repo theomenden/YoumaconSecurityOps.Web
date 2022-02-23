@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wxpRyC14/hYkBrhKE7L+DV/mau7YVxWlnW6gGq5aFHXYSU14WMgKVAOtCbRa6wOMaf20kXi030OkYKC90DR3+A==",
+  "dgSpecHash": "bNLXvQXh70YkTysQJIlpcIXC1/ugySyUhCDHKl7AK8UkLJs+xmdV7WjlhS3FDBIkCr1/r3HEra1XY7VXdQ9heg==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared.Tests\\YoumaconSecurityOps.Core.Shared.Tests.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\emptyfiles\\2.3.3\\emptyfiles.2.3.3.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\exceptionless.randomdata\\1.2.0\\exceptionless.randomdata.1.2.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\genfu\\1.6.0\\genfu.1.6.0.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
@@ -113,6 +114,8 @@
     "C:\\Users\\andre\\.nuget\\packages\\system.io.pipes.accesscontrol\\5.0.0\\system.io.pipes.accesscontrol.5.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.io.ports\\5.0.0\\system.io.ports.5.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\system.linq.async\\6.0.1\\system.linq.async.6.0.1.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\system.linq.async.queryable\\6.0.1\\system.linq.async.queryable.6.0.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.management\\5.0.0\\system.management.5.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",

@@ -14,19 +14,19 @@
           ReadData="@OnReadData"
           Data="@_gridDisplay"
           TotalItems="@_totalShifts"
-          Editable="true"
+          Editable
           CommandMode="DataGridCommandMode.Commands"
-          Responsive="true"
-          Sortable="true"
-          Hoverable="true"
-          Striped="true"
+          Responsive
+          Sortable
+          Hoverable
+          Striped
           EditMode="DataGridEditMode.Popup"
-          FixedHeader="true"
+          FixedHeader
           FixedHeaderDataGridHeight="400px"
           @bind-SelectedRow="@_selectedShift"
           RowStyling="@OnRowStyling"
           RowInserting="@OnRowInserting"
-          Virtualize="true"
+          Virtualize
           DetailRowTrigger="@(item => item.Id == _selectedShift?.Id)">
     <PopupTitleTemplate>
         @SetPopupTitle(context)

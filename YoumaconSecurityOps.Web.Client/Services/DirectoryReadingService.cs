@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
-using YoumaconSecurityOps.Web.Client.Models;
 
 namespace YoumaconSecurityOps.Web.Client.Services
 {

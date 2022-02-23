@@ -12,8 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Youmacon Security Operations</title>
     <base href="~/" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" onload="this.rel='stylesheet';this.onload=null;" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+    <noscript>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    </noscript>
+    
+    <link rel="preload" as="style" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" onload="this.rel='stylesheet';this.onload=null;" />
+    
+    <noscript>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    </noscript>
+    
     <link href="_content/Blazorise/blazorise.css" rel="stylesheet" />
     <link href="_content/Blazorise.Bootstrap5/blazorise.bootstrap5.css" rel="stylesheet" />
     <link rel="stylesheet" href="_content/Blazorise.DataGrid/blazorise.datagrid.css" />
@@ -21,7 +30,7 @@
     <link rel="stylesheet" href="_content/Blazorise.Sidebar/blazorise.sidebar.css" />
     <link rel="stylesheet" href="_content/Blazorise.Snackbar/blazorise.snackbar.css" />
     <link rel="stylesheet" href="css/site.min.css" />
-
+    
     <script src="https://kit.fontawesome.com/dd5fa8ce90.js" crossorigin="anonymous" async></script>
     <script src="js/lazysizes/lazysizes.min.js" async></script>
 </head>
@@ -44,10 +53,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0" defer></script>
     <script src="js/lazysizes/plugins/rias/ls.rias.min.js" async></script>
 
-    <script src="_content/Blazorise/blazorise.js" defer></script>
-    <script src="_content/Blazorise.DataGrid/blazorise.datagrid.js" defer></script>
-    <script src="_content/Blazorise.Charts/blazorise.charts.js" defer></script>
-    <script src="_content/Blazorise.Charts.Streaming/blazorise.charts.streaming.js" defer></script>
     <script src="_framework/blazor.server.js" autostart="false"></script>
     <script>
         Blazor.start({

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fIpDkOcDwVoBRlPiAcOJFeK1geLW+ZZLjlvzsrYBfzAAU5heLKSAj9yNaG6Huftaf8PsLBSWACiSN1il3sa3Cg==",
+  "dgSpecHash": "fjhDRwppv9wqmhZnsjWx7ByzSfkuDJXTfcvL5kD1ytihnK+9a60Bd2CE48C0y53vFmi1tjeczKJje8H0tAc9Mg==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj",
   "expectedPackageFiles": [
@@ -45,6 +45,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.linq.async\\6.0.1\\system.linq.async.6.0.1.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\system.linq.async.queryable\\6.0.1\\system.linq.async.queryable.6.0.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",

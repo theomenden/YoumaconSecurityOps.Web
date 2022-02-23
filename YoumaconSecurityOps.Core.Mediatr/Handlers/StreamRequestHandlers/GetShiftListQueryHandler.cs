@@ -16,15 +16,16 @@ internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftLi
         _shifts = shifts;
     }
         
-    public IAsyncEnumerable<ShiftReader> Handle(GetShiftListQuery request, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<ShiftReader> Handle(GetShiftListQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        using var context = _dbContextFactory.CreateDbContext();
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        var shiftLog = _shifts.GetAllAsync(context, cancellationToken);
+        await foreach (var shift in _shifts.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        {
+            yield return shift;
+        }
 
-        RaiseShiftLogQueriedEvent(request, cancellationToken);
-
-        return shiftLog;
+        await RaiseShiftLogQueriedEvent(request, cancellationToken);
     }
 
     private Task RaiseShiftLogQueriedEvent(GetShiftListQuery request, CancellationToken cancellationToken)

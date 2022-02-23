@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using Org.BouncyCastle.Asn1.Cmp;
-using YoumaconSecurityOps.Web.Client.Models;
+﻿using System.Threading;
 
 namespace YoumaconSecurityOps.Web.Client.Services
 {

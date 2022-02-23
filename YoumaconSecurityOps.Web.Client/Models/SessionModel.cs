@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace YoumaconSecurityOps.Web.Client.Models;
+﻿namespace YoumaconSecurityOps.Web.Client.Models;
 
 /// <summary>
 /// Container for relevant session information

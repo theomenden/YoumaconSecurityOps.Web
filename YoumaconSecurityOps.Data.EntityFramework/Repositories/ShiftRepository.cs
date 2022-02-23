@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Linq.Expressions;
+using YoumaconSecurityOps.Core.Shared.Extensions;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 /// <summary>
 /// 
@@ -20,6 +23,14 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
     public IAsyncEnumerable<ShiftReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
         var shifts = dbContext.Shifts.AsAsyncEnumerable();
+
+        return shifts;
+    }
+
+    public IAsyncEnumerable<ShiftReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<ShiftReader, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        var shifts = dbContext.Shifts.FindAllAsync(predicate);
 
         return shifts;
     }

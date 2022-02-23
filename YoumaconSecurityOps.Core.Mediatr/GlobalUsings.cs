@@ -23,6 +23,7 @@ global using YoumaconSecurityOps.Core.EventStore.Events.Updated;
 global using YoumaconSecurityOps.Core.EventStore.Storage;
 global using YoumaconSecurityOps.Core.Mediatr.Behaviors;
 global using YoumaconSecurityOps.Core.Mediatr.Caching;
+global using YoumaconSecurityOps.Core.Mediatr.Caching.Configurations.Streaming;
 global using YoumaconSecurityOps.Core.Mediatr.Commands;
 global using YoumaconSecurityOps.Core.Mediatr.Extensions;
 global using YoumaconSecurityOps.Core.Mediatr.Queries;

@@ -18,7 +18,7 @@ public class CacheAccessor<TCache, TResult> : IRequest<TResult>
         var key = query is not null ? JsonSerializer.Serialize(query) : "defaultKey";
         _logger.LogWarning("Accessing the Cache: {Prefix}:{Key}", keyPrefix, key);
 
-        var entryOptions = new MemoryCacheEntryOptions()
+        var entryOptions = new MemoryCacheEntryOptions
         {
             AbsoluteExpirationRelativeToNow = absoluteExpiration,
             SlidingExpiration = slidingExpiration

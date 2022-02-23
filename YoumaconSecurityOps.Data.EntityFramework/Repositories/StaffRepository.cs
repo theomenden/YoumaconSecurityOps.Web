@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Linq.Expressions;
+using YoumaconSecurityOps.Core.Shared.Extensions;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 {
@@ -35,6 +38,14 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
                 StaffTypeRoleMaps = new List<StaffTypesRoles>(3) { typeRoleMap }
 
             };
+
+        return staff;
+    }
+
+    public IAsyncEnumerable<StaffReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<StaffReader, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        var staff = GetAllAsync(dbContext, cancellationToken).Where(predicate.Compile());
 
         return staff;
     }

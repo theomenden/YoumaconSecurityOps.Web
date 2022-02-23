@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using YoumaconSecurityOps.Core.EventStore.Events;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
 
 namespace YoumaconSecurityOps.Web.Client.Services
 {

@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Linq.Expressions;
+using YoumaconSecurityOps.Core.Shared.Extensions;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal sealed class RadioScheduleRepository: IRadioScheduleAccessor, IRadioScheduleRepository
 {
@@ -17,6 +20,14 @@ internal sealed class RadioScheduleRepository: IRadioScheduleAccessor, IRadioSch
         var radios = dbContext.RadioSchedules
             .AsAsyncEnumerable()
             .OrderBy(r => r.RadioNumber);
+
+        return radios;
+    }
+
+    public IAsyncEnumerable<RadioScheduleReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<RadioScheduleReader, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        var radios = dbContext.RadioSchedules.FindAllAsync(predicate);
 
         return radios;
     }

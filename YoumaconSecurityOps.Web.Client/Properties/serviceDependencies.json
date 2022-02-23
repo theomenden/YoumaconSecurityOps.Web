@@ -4,24 +4,37 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:YSecItContextConnection"
     },
-    "secrets1": {
-      "type": "secrets",
-      "connectionId": "VaultUri"
+    "compute.appService1": {
+      "group": "connections",
+      "type": "compute.appService"
     },
     "signalr1": {
       "type": "signalr",
       "connectionId": "Azure:SignalR:ConnectionString"
     },
-    "compute.appService1": {
-      "group": "connections",
-      "type": "compute.appService"
-    },
-    "secrets2": {
-      "type": "secrets"
-    },
     "appInsights1": {
       "type": "appInsights",
       "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
+    },
+    "secrets2": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:YSecOpsDb"
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:YoumaEventStore"
+    },
+    "mssql4": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:YSecITSecurity"
     }
   }
 }

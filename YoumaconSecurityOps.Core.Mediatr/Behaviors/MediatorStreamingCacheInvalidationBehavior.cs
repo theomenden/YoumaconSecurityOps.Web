@@ -25,7 +25,7 @@ public class MediatorStreamingCacheInvalidationBehavior<TCache, TCacheResult, TT
 
             var qualifiedKeysCount = _cache.RemoveItemFromCache(_keyPrefix);
 
-            _logger.LogWarning("Invalidating Cache {Cache} for trigger {Trigger} and {Count} qualified keys based on provided partial.", _keyPrefix, typeof(TTrigger).GetTypeInfo().FullName, qualifiedKeysCount);
+            _logger.LogWarning("Invalidating Streaming Cache {Cache} for trigger {Trigger} and {Count} qualified keys based on provided partial.", _keyPrefix, typeof(TTrigger).GetTypeInfo().FullName, qualifiedKeysCount);
         }
     }
 }

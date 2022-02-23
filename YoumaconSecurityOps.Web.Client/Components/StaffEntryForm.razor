@@ -68,7 +68,7 @@
                     <CardBody>
                         <CardTitle Size="5">Add Staff Information <Blazorise.Icon Name="IconName.UserCheck" IconSize="IconSize.Small" IconStyle="IconStyle.Solid"/></CardTitle>
                         <Form Width="Width.Is100">
-                            @if (_staffTypes?.Any() is true)
+                            @if (!_isLoading)
                             {
                                 <SelectList TItem="@StaffType"
                                             TValue="Int32"
@@ -86,7 +86,7 @@
                                 </Span>
                             }
 
-                            @if (_staffRoles?.Any() is true)
+                            @if (!_isLoading)
                             {
                                 <SelectList TItem="@StaffRole"
                                             TValue="Int32"

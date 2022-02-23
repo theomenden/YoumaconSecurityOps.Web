@@ -1,7 +1,7 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Caching
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Caching;
+
+internal interface IStreamingCacheConfiguration
 {
-    internal interface IStreamingCacheConfiguration
-    {
-        void Register(IServiceCollection services);
-    }
+    void Register(IServiceCollection services);
 }
+

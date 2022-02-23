@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Linq.Expressions;
+using YoumaconSecurityOps.Core.Shared.Extensions;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal sealed class ContactRepository: IContactAccessor, IContactRepository
 {
@@ -21,6 +24,14 @@ internal sealed class ContactRepository: IContactAccessor, IContactRepository
             .ThenBy(c => c.CreatedOn);
 
         return contacts;
+    }
+
+    public IAsyncEnumerable<ContactReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<ContactReader, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        var contactsThatMatch = dbContext.Contacts.FindAllAsync(predicate);
+
+        return contactsThatMatch;
     }
 
     public async Task<ContactReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())

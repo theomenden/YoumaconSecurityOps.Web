@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+
+namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetStaffWithParametersQueryHandler : IStreamRequestHandler<GetStaffWithParametersQuery, StaffReader>
 {
@@ -18,17 +21,21 @@ internal sealed class GetStaffWithParametersQueryHandler : IStreamRequestHandler
         _logger = logger;
     }
 
-    private static IAsyncEnumerable<StaffReader> Filter(StaffQueryStringParameters parameters, IAsyncEnumerable<StaffReader> staffList)
+    public async IAsyncEnumerable<StaffReader> Handle(GetStaffWithParametersQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        return staffList
-            .Where(s => s.IsBlackShirt == parameters.IsBlackShirt)
-            .Where(s => s.IsRaveApproved == parameters.IsRaveApproved)
-            .Where(s => s.NeedsCrashSpace == parameters.NeedsCrashSpace)
-            .Where(s => s.IsOnBreak == parameters.IsOnBreak)
-            .Where(s => s.Role?.Id == parameters.RoleId)
-            .Where(s => s.StaffType?.Id == parameters.TypeId);
-    }
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        
 
+        await foreach (var member in _staff.GetAllThatMatchAsync(context, st => StaffFilterBuilder(st, request.Parameters), cancellationToken)
+                           .WithCancellation(cancellationToken)
+                           .ConfigureAwait(false))
+        {
+            yield return member;
+        }
+
+        await RaiseStaffListQueriedEvent(request.Parameters, cancellationToken);
+    }
+    
     private Task RaiseStaffListQueriedEvent(StaffQueryStringParameters parameters, CancellationToken cancellationToken)
     {
         var e = new StaffListQueriedEvent(parameters)
@@ -42,16 +49,11 @@ internal sealed class GetStaffWithParametersQueryHandler : IStreamRequestHandler
         return _mediator.Publish(e, cancellationToken);
     }
 
-    public IAsyncEnumerable<StaffReader> Handle(GetStaffWithParametersQuery request, CancellationToken cancellationToken)
+    private Boolean StaffFilterBuilder(StaffReader staff, StaffQueryStringParameters parameters)
     {
-        using var context = _dbContextFactory.CreateDbContext();
-
-        var staff = _staff.GetAllAsync(context, cancellationToken);
-
-        staff = Filter(request.Parameters, staff);
-
-        RaiseStaffListQueriedEvent(request.Parameters, cancellationToken);
-
-        return staff;
+        return staff.IsRaveApproved == parameters.IsRaveApproved
+               && staff.IsBlackShirt == parameters.IsBlackShirt
+               && staff.IsOnBreak == parameters.IsOnBreak
+               && staff.NeedsCrashSpace == parameters.NeedsCrashSpace;
     }
 }

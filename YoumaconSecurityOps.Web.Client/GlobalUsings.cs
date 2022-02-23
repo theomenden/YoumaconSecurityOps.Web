@@ -33,4 +33,5 @@ global using YoumaconSecurityOps.Core.Mediatr.Commands;
 global using YoumaconSecurityOps.Core.Mediatr.Queries;
 global using YoumaconSecurityOps.Core.Shared.Enumerations;
 global using YoumaconSecurityOps.Core.Shared.Models.Readers;
+global using YoumaconSecurityOps.Core.Shared.Models.Writers;
 global using YoumaconSecurityOps.Web.Client.Services;

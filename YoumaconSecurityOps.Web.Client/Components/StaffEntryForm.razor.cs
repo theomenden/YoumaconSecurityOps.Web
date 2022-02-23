@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Components;
-using YoumaconSecurityOps.Core.Mediatr.Commands;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Accessors;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Core.Shared.Models.Writers;
-using YoumaconSecurityOps.Web.Client.Services;
+﻿namespace YoumaconSecurityOps.Web.Client.Components;
 
-namespace YoumaconSecurityOps.Web.Client.Components
-{
     public partial class StaffEntryForm : ComponentBase
     {
         [Inject] public IStaffService StaffService { get; set; }
 
-        [Inject] public IMediator Mediatr { get; set; }
+        [Inject] public IMediator Mediator { get; set; }
 
         private IEnumerable<StaffRole> _staffRoles = new List<StaffRole>(5);
 
@@ -37,9 +23,13 @@ namespace YoumaconSecurityOps.Web.Client.Components
 
         protected override async Task OnInitializedAsync()
         {
+            _isLoading = true;
+
             _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery());
 
             _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery());
+
+            _isLoading = false;
         }
 
         private void OnSelectedStaffRoleChanged(Int32 staffRole)
@@ -56,20 +46,24 @@ namespace YoumaconSecurityOps.Web.Client.Components
             StateHasChanged();
         }
 
-        private async Task SaveContactInformation()
+        private Task SaveContactInformation()
         {
             _contactWriter = new ContactWriter(DateTime.Now, string.Empty, string.Empty, string.Empty, string.Empty,
-                string.Empty, 0l);
+                string.Empty, 0L);
+
+            return Task.CompletedTask;
         }
 
-        private async Task SaveStaffInformation()
+        private Task SaveStaffInformation()
         {
             _staffWriter = new StaffWriter(_contactWriter.Id, 1, 1, false, false, false, string.Empty);
+
+            return Task.CompletedTask;
         }
 
         private async Task OnSubmit()
         {
-            await Mediatr.Send(new AddFullStaffEntryCommand(_staffWriter, _contactWriter));
+            await Mediator.Send(new AddFullStaffEntryCommand(_staffWriter, _contactWriter));
         }
     }
-}
+

@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Linq.Expressions;
+using YoumaconSecurityOps.Core.Shared.Extensions;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
 {
@@ -17,7 +20,15 @@ internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
 
         return locations;
     }
-        
+
+    public IAsyncEnumerable<LocationReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<LocationReader, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        var locations = dbContext.Locations.FindAllAsync(predicate);
+
+        return locations;
+    }
+
     public async Task<LocationReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
         var location = await dbContext.Locations.AsQueryable().SingleOrDefaultAsync(l => l.Id == entityId, cancellationToken);

@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Linq.Expressions;
+using YoumaconSecurityOps.Core.Shared.Extensions;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
 {
@@ -15,6 +18,14 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public IAsyncEnumerable<IncidentReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
         var incidents = dbContext.Incidents.AsAsyncEnumerable();
+
+        return incidents;
+    }
+
+    public IAsyncEnumerable<IncidentReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<IncidentReader, bool>> predicate,
+        CancellationToken cancellationToken = default)
+    {
+        var incidents = dbContext.Incidents.FindAllAsync(predicate);
 
         return incidents;
     }

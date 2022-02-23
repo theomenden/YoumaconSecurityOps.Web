@@ -53,6 +53,7 @@ public class Startup
 
         services.AddMediatrServices();
 
+
         services.AddEventStoreServices(appSettings.EventStoreConnectionString);
 
         services.AddFrontEndDataServices();
@@ -75,6 +76,10 @@ public class Startup
 
         services.AddSignalR();
         services.AddServerSideBlazor();
+        
+        services.RegisterBuiltCaches();
+
+        services.RegisterBuiltStreamingCaches();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

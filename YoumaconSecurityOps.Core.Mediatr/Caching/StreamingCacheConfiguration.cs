@@ -7,8 +7,7 @@
 
         protected virtual Action<IServiceCollection>[] ConfigureStreamingCacheInvalidation() =>
             Array.Empty<Action<IServiceCollection>>();
-
-
+        
         public void Register(IServiceCollection services)
         {
             services.AddSingleton<StreamingCacheAccessor<TCache, TResult>>();

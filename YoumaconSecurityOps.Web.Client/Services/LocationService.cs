@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using System.Threading;
 using Microsoft.Extensions.Logging;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Accessors;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 namespace YoumaconSecurityOps.Web.Client.Services
 {

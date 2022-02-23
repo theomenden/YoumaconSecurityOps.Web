@@ -18,15 +18,16 @@ internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery,
         _logger = logger;
     }
 
-    public IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request, [EnumeratorCancellation]CancellationToken cancellationToken)
     {
-        using var context = _dbContextFactory.CreateDbContext();
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        var staff = _staff.GetAllAsync(context,cancellationToken);
+        await foreach (var member in _staff.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        {
+            yield return member;
+        }
 
-        RaiseStaffListQueriedEvent(request, cancellationToken);
-
-        return staff;
+        await RaiseStaffListQueriedEvent(request, cancellationToken);
     }
 
     private Task RaiseStaffListQueriedEvent(GetStaffQuery query, CancellationToken cancellationToken)
