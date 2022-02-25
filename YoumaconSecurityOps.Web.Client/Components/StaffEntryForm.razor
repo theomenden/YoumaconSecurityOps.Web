@@ -2,128 +2,129 @@
 
 <Container Fluid="true" Margin="Margin.Is4.OnY.OnDesktop">
     <Row>
-            <Column ColumnSize="ColumnSize.Is5">
-                <Card>
-                    <CardBody>
-                        <CardTitle Size="5">Add Contact Information <Blazorise.Icon Name="IconName.IdCard" IconSize="IconSize.Small" IconStyle="IconStyle.Solid"/></CardTitle>
-                        <Form>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>First Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Username" />
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Last Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Username" />
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Preferred Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Username" />
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Email</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Username" Role="TextRole.Email" />
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Phone Number</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Username" Role="TextRole.Telephone" />
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Facebook Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Username" />
-                                </Addon>
-                            </Addons>
-                        </Form>
-                        <Button Color="Color.Primary">Save Contact</Button>
-                    </CardBody>
-                </Card>
-            </Column>
-            <Column ColumnSize="ColumnSize.Is2">
-                <Blazorise.Icon Name="IconName.ArrowRight" IconSize="IconSize.Large" IconStyle="IconStyle.DuoTone" Margin="Margin.Is2.OnX.OnDesktop"/>
-            </Column>
-            <Column ColumnSize="ColumnSize.Is5">
-                <Card >
-                    <CardBody>
-                        <CardTitle Size="5">Add Staff Information <Blazorise.Icon Name="IconName.UserCheck" IconSize="IconSize.Small" IconStyle="IconStyle.Solid"/></CardTitle>
-                        <Form Width="Width.Is100">
-                            @if (!_isLoading)
-                            {
-                                <SelectList TItem="@StaffType"
-                                            TValue="Int32"
-                                            Data="@_staffTypes"
-                                            TextField="@(item => item.Title)"
-                                            ValueField="@(item => item.Id)"
-                                            SelectedValue="@_selectedStaffType"
-                                            SelectedValueChanged="@OnSelectedStaffTypeChanged"
-                                            DefaultItemText="@_staffTypes.Single(st => st.Id == 1).Title"/>
-                            }    
-                            else
-                            {
-                                <Span>
-                                    <SpinKit Type="SpinKitType.Chase" Size="3rem" />
-                                </Span>
-                            }
+        
+        <Column ColumnSize="ColumnSize.Is5">
+            <Card>
+                <CardBody>
+                    <CardTitle Size="5">Add Staff Information <Blazorise.Icon Name="IconName.UserCheck" IconSize="IconSize.Small" IconStyle="IconStyle.Solid" /></CardTitle>
+                    <Form Width="Width.Is100">
+                        @if (!_isLoading)
+                        {
+                            <SelectList TItem="@StaffType"
+                                        TValue="Int32"
+                                        Data="@_staffTypes"
+                                        TextField="@(item => item.Title)"
+                                        ValueField="@(item => item.Id)"
+                                        SelectedValue="@_selectedStaffType"
+                                        SelectedValueChanged="@OnSelectedStaffTypeChanged"
+                                        DefaultItemText="@_staffTypes.Single(st => st.Id == 1).Title" />
+                        }
+                        else
+                        {
+                            <Span>
+                                <SpinKit Type="SpinKitType.Chase" Size="3rem" />
+                            </Span>
+                        }
 
-                            @if (!_isLoading)
-                            {
-                                <SelectList TItem="@StaffRole"
-                                            TValue="Int32"
-                                            Data="@_staffRoles"
-                                            TextField="@(item => item.Name)"
-                                            ValueField="@(item => item.Id)"
-                                            SelectedValue="@_selectedStaffRole"
-                                            SelectedValueChanged="@OnSelectedStaffRoleChanged"
-                                            DefaultItemText="@_staffRoles.Single(sr => sr.Id == 5).Name"/>
-                            }
-                            else
-                            {
-                                <Span>
-                                    <SpinKit Type="SpinKitType.Chase" Size="3rem" />
-                                </Span>
-                            }
-                            <Switch TValue="bool">Needs Crash Space</Switch>
-                            <Switch TValue="bool">Is Black Shirt</Switch>
-                            <Switch TValue="bool">Is Rave Approved</Switch>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Shirt Size</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Size"/>
-                                </Addon>
-                            </Addons>
-                        </Form>
-                        <Button Color="Color.Primary">Save Staff Information</Button>
-                    </CardBody>
-                </Card>
-            </Column>
+                        @if (!_isLoading)
+                        {
+                            <SelectList TItem="@StaffRole"
+                                        TValue="Int32"
+                                        Data="@_staffRoles"
+                                        TextField="@(item => item.Name)"
+                                        ValueField="@(item => item.Id)"
+                                        SelectedValue="@_selectedStaffRole"
+                                        SelectedValueChanged="@OnSelectedStaffRoleChanged"
+                                        DefaultItemText="@_staffRoles.Single(sr => sr.Id == 5).Name" />
+                        }
+                        else
+                        {
+                            <Span>
+                                <SpinKit Type="SpinKitType.Chase" Size="3rem" />
+                            </Span>
+                        }
+                        <Switch TValue="bool" @bind-Checked="@_needCrashSpace">Needs Crash Space</Switch>
+                        <Switch TValue="bool" @bind-Checked="@_isBlackShirt">Is Black Shirt</Switch>
+                        <Switch TValue="bool" @bind-Checked="@_isRaveApproved">Is Rave Approved</Switch>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>Shirt Size</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="Size"  @bind-Text="@_shirtSize"/>
+                            </Addon>
+                        </Addons>
+                    </Form>
+                    <Button Color="Color.Primary" Clicked="@SaveStaffInformation">Save Staff Information</Button>
+                </CardBody>
+            </Card>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is2">
+            <Blazorise.Icon Name="IconName.ArrowRight" IconSize="IconSize.x8" IconStyle="IconStyle.DuoTone" Margin="Margin.Is2.OnX.OnDesktop"/>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is5">
+            <Card>
+                <CardBody>
+                    <CardTitle Size="5">Add Contact Information <Blazorise.Icon Name="IconName.IdCard" IconSize="IconSize.Small" IconStyle="IconStyle.Solid"/></CardTitle>
+                    <Form>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>First Name</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="First Name" @bind-Text="@_firstName"/>
+                            </Addon>
+                        </Addons>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>Last Name</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="Last Name" @bind-Text="@_lastName"/>
+                            </Addon>
+                        </Addons>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>Preferred Name</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="Preferred Name" @bind-Text="@_preferredName"/>
+                            </Addon>
+                        </Addons>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>Email</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="Email" Role="TextRole.Email" @bind-Text="@_email"/>
+                            </Addon>
+                        </Addons>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>Phone Number</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="Phone Number" Role="TextRole.Telephone" @bind-Text="@_phoneNumber"/>
+                            </Addon>
+                        </Addons>
+                        <Addons Margin="Margin.Is2.OnY.OnDesktop">
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel>Facebook Name</AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Placeholder="Facebook Name" @bind-Text="@_facebookName"/>
+                            </Addon>
+                        </Addons>
+                    </Form>
+                    <Button Color="Color.Primary" Clicked="@SaveContactInformation">Save Contact</Button>
+                </CardBody>
+            </Card>
+        </Column>
     </Row>
-    <Row>
+    <Row Flex="Flex.AlignItems.Center.AlignContent.Between.OnDesktop">
         <Column>
             <Buttons>
-                <Button Color="Color.Primary" Loading="false" Margin="Margin.Is2.OnX.OnDesktop" Disabled="true">
+                <Button Type="ButtonType.Submit" Color="Color.Primary" Loading="false" Margin="Margin.Is2.OnX.OnDesktop" Disabled="@IsDisabled()" Clicked="@OnSubmit">
                     <LoadingTemplate>
                         Saving Staff Member.
                     </LoadingTemplate>

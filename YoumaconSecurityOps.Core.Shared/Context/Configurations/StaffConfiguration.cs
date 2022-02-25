@@ -11,26 +11,16 @@ public partial class StaffConfiguration : IEntityTypeConfiguration<StaffReader>
 
         entity.HasKey(e => e.Id);
 
-        entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
+        entity.Property(e => e.Id)
+            .HasDefaultValueSql("(newsequentialid())");
 
         entity.Property(e => e.NeedsCrashSpace).HasDefaultValueSql("((1))");
-
-        entity.Property(e => e.ContactId)
-            .HasColumnName("Contact_Id");
-
-        entity.Property(e => e.StaffTypeRoleId)
-            .HasColumnName("StaffTypeRoleId");
-
-        entity.HasOne(d => d.Contact)
-            .WithOne(p => p.StaffMember)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_Staff_Contacts_ContactId");
-
+        
         entity.HasMany(s => s.StaffTypeRoleMaps)
             .WithOne(p => p.Staff)
             .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_Staff_StaffTypesRoles_StaffTypeRoleId");
-
+            .HasConstraintName("FK_StaffTypesRoles_Staff");
+        
         OnConfigurePartial(entity);
     }
 

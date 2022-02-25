@@ -4,6 +4,8 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
 internal sealed class LocationCreatedEventHandler: INotificationHandler<LocationCreatedEvent>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly IEventStoreRepository _eventStore;
 
     private readonly IMapper _mapper;
@@ -14,20 +16,23 @@ internal sealed class LocationCreatedEventHandler: INotificationHandler<Location
 
     private readonly ILogger<LocationCreatedEventHandler> _logger;
 
-    public LocationCreatedEventHandler(IEventStoreRepository eventStore, IMapper mapper,ILocationRepository locations, IMediator mediator, ILogger<LocationCreatedEventHandler> logger)
+    public LocationCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IEventStoreRepository eventStore, IMapper mapper, ILocationRepository locations, IMediator mediator, ILogger<LocationCreatedEventHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _eventStore = eventStore;
         _mapper = mapper;
         _locations = locations;
         _mediator = mediator;
-        _logger = logger;
+        _logger = logger;   
     }
 
     public async Task Handle(LocationCreatedEvent notification, CancellationToken cancellationToken)
     {
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
         var locationEntry = _mapper.Map<LocationReader>(notification.LocationAdded);
 
-        await _locations.AddAsync(locationEntry, cancellationToken);
+        await _locations.AddAsync(context, locationEntry, cancellationToken);
 
         await RaiseLocationAddedEvent(notification, locationEntry, cancellationToken);
     }

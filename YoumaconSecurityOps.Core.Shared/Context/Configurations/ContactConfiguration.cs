@@ -15,6 +15,11 @@ public partial class ContactConfiguration : IEntityTypeConfiguration<ContactRead
         entity.Property(e => e.CreatedOn)
             .HasDefaultValueSql("(getdate())");
 
+        entity.HasOne(d => d.StaffMember)
+            .WithOne(p => p.Contact)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Contacts_Staff_Id");
+
         OnConfigurePartial(entity);
     }
 

@@ -14,7 +14,7 @@ internal sealed class AddContactCommandHandler: IRequestHandler<AddContactComman
 
     public async Task<Unit> Handle(AddContactCommand request, CancellationToken cancellationToken)
     {
-        var contactWriter = new ContactWriter(request.CreatedOn, request.Email, request.FirstName, request.LastName,
+        var contactWriter = new ContactWriter(request.Id,request.CreatedOn, request.Email, request.FirstName, request.LastName,
             request.FacebookName, request.PreferredName, request.PhoneNumber);
 
         await RaiseContactCreatedEvent(contactWriter, cancellationToken);

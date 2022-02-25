@@ -19,13 +19,15 @@ public class MediatorStreamingCacheInvalidationBehavior<TCache, TCacheResult, TT
 
     public async IAsyncEnumerable<TTriggerResult> Handle(TTrigger request, [EnumeratorCancellation] CancellationToken cancellationToken, StreamHandlerDelegate<TTriggerResult> next)
     {
-        await foreach (var result in next().WithCancellation(cancellationToken))
-        {
-            yield return result;
+        _logger.LogWarning("IAsyncEnumerable<TTriggerResult> Handle(TTrigger {@request}, [EnumeratorCancellation] CancellationToken cancellationToken, StreamHandlerDelegate<TTriggerResult> {@next})", request, next);
 
+        await foreach (var result in next().WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
             var qualifiedKeysCount = _cache.RemoveItemFromCache(_keyPrefix);
 
             _logger.LogWarning("Invalidating Streaming Cache {Cache} for trigger {Trigger} and {Count} qualified keys based on provided partial.", _keyPrefix, typeof(TTrigger).GetTypeInfo().FullName, qualifiedKeysCount);
+
+            yield return result;
         }
     }
 }

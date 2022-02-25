@@ -1,4 +1,4 @@
 ﻿namespace YoumaconSecurityOps.Core.Shared.Models.Writers;
 
-public record ContactWriter(DateTime CreatedOn, string Email, string FirstName, string LastName,
-    string FacebookName, string PreferredName, long PhoneNumber) : BaseWriter;
+public record ContactWriter(Guid StaffId, DateTime CreatedOn, String Email, String FirstName, String LastName,
+    String FacebookName, String PreferredName, Int64 PhoneNumber) : BaseWriter;

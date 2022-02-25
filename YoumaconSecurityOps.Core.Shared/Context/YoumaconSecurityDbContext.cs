@@ -42,6 +42,7 @@ public partial class YoumaconSecurityDbContext : DbContext
         modelBuilder.ApplyConfiguration(new StaffConfiguration());
         modelBuilder.ApplyConfiguration(new StaffTypesRoleConfiguration());
         modelBuilder.ApplyConfiguration(new StaffRoleConfiguration());
+        modelBuilder.ApplyConfiguration(new StaffTypesConfiguration());
         modelBuilder.ApplyConfiguration(new WatchListConfiguration());
         OnModelCreatingPartial(modelBuilder);
     }

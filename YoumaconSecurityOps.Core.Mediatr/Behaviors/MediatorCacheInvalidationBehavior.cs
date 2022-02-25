@@ -14,7 +14,7 @@ where TTrigger : IRequest<TTriggerResult>
     {
         _cache = cache;
         _logger = logger;
-        _keyPrefix = cachePrefix ?? typeof(TCache).GetTypeInfo().FullName ?? "";
+        _keyPrefix = cachePrefix ?? typeof(TCache).GetTypeInfo().FullName ?? String.Empty;
     }
 
     public async Task<TTriggerResult> Handle(TTrigger request, CancellationToken cancellationToken, RequestHandlerDelegate<TTriggerResult> next)
@@ -22,6 +22,11 @@ where TTrigger : IRequest<TTriggerResult>
         try
         {
             return await next();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Could not move to next item: {@ex}", ex);
+            throw;
         }
         finally
         {

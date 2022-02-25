@@ -22,9 +22,14 @@ public class MediatorStreamCachingBehavior<TCache, TResult> : IStreamPipelineBeh
         _cacheAccessor = cacheAccessor;
     }
 
-    public IAsyncEnumerable<TResult> Handle(TCache request, CancellationToken cancellationToken, StreamHandlerDelegate<TResult> next)
+    public async IAsyncEnumerable<TResult> Handle(TCache request, [EnumeratorCancellation] CancellationToken cancellationToken, StreamHandlerDelegate<TResult> next)
     {
-        return _cacheAccessor.GetOrCacheItems(request, () => next(), _absoluteExpiration, _slidingExpiration,
-            _keyPrefix, _keyGenerator, cancellationToken);
+        await foreach (var item in next().WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            var result = await _cacheAccessor.GetOrCacheItems(request, () => item, _absoluteExpiration, _slidingExpiration, _keyPrefix, _keyGenerator, cancellationToken);
+
+            yield return result;
+        }
+
     }
 }

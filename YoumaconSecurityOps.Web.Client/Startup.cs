@@ -53,7 +53,6 @@ public class Startup
 
         services.AddMediatrServices();
 
-
         services.AddEventStoreServices(appSettings.EventStoreConnectionString);
 
         services.AddFrontEndDataServices();
@@ -75,6 +74,7 @@ public class Startup
         services.AddScoped<CircuitHandler>(sp => new TrackingCircuitHandler(sp.GetRequiredService<SessionDetails>()));
 
         services.AddSignalR();
+
         services.AddServerSideBlazor();
         
         services.RegisterBuiltCaches();

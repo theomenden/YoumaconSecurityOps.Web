@@ -2,6 +2,8 @@
 
 internal sealed class IncidentCreatedEventHandler : INotificationHandler<IncidentCreatedEvent>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly ILogger<IncidentCreatedEventHandler> _logger;
 
     private readonly IMapper _mapper;
@@ -12,25 +14,23 @@ internal sealed class IncidentCreatedEventHandler : INotificationHandler<Inciden
 
     private readonly IIncidentRepository _incidents;
 
-    public IncidentCreatedEventHandler(ILogger<IncidentCreatedEventHandler> logger, IMapper mapper, IMediator mediator,
-        IEventStoreRepository eventStore, IIncidentRepository incidents)
+    public IncidentCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<IncidentCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IIncidentRepository incidents)
     {
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
-
         _mapper = mapper;
-
         _mediator = mediator;
-
         _eventStore = eventStore;
-
         _incidents = incidents;
     }
 
     public async Task Handle(IncidentCreatedEvent notification, CancellationToken cancellationToken)
     {
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
         var incidentToAdd = _mapper.Map<IncidentReader>(notification.IncidentWriter);
 
-        var incidentWasAddedSuccessfully = await _incidents.AddAsync(incidentToAdd, cancellationToken);
+        var incidentWasAddedSuccessfully = await _incidents.AddAsync(context,incidentToAdd, cancellationToken);
 
         if (!incidentWasAddedSuccessfully)
         {

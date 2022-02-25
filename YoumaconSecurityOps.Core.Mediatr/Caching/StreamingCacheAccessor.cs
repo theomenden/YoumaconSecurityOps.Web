@@ -12,12 +12,13 @@ public class StreamingCacheAccessor<TCache, TResult> : IStreamRequest<TResult>
         _logger = logger;
     }
 
-    public IAsyncEnumerable<TResult> GetOrCacheItems(TCache streamQuery, Func<IAsyncEnumerable<TResult>> itemGetter,
+    public async Task<TResult> GetOrCacheItems(TCache streamQuery, Func<TResult> itemGetter,
         TimeSpan? absoluteExpiration, TimeSpan? slidingExpiration, string keyPrefix = null, Func<TCache, string> keyGenerator = null,
         CancellationToken cancellationToken = default)
     {
         var key = streamQuery is not null ? JsonSerializer.Serialize(streamQuery) : "defaultKey";
-        _logger.LogWarning("Accessing the Cache: {Prefix}:{Key}", keyPrefix, key);
+
+        _logger.LogInformation("Accessing the Cache: {Prefix}:{Key}", keyPrefix, key);
 
         var entryOptions = new MemoryCacheEntryOptions
         {
@@ -25,7 +26,7 @@ public class StreamingCacheAccessor<TCache, TResult> : IStreamRequest<TResult>
             SlidingExpiration = slidingExpiration
         };
 
-        var result = _appCache.GetOrAdd(key, () =>
+        var result = await _appCache.GetOrAddAsync(key, () =>
         {
             //updates our partial key
             var partials = _appCache.GetOrAdd(keyPrefix, _ => new List<string>());
@@ -35,9 +36,10 @@ public class StreamingCacheAccessor<TCache, TResult> : IStreamRequest<TResult>
                 partials.Add(key);
                 _appCache.Add(keyPrefix, partials, new MemoryCacheEntryOptions { Priority = CacheItemPriority.NeverRemove });
             }
-            _logger.LogWarning("Caching Mediator: {Prefix}:{Key}", keyPrefix, key);
 
-            return itemGetter();
+            _logger.LogWarning("Caching Mediator: {Prefix}:{Key}", keyPrefix, key);
+            
+            return Task.FromResult(itemGetter());
         }, entryOptions);
 
         return result;
@@ -45,7 +47,7 @@ public class StreamingCacheAccessor<TCache, TResult> : IStreamRequest<TResult>
 
     public int RemoveItemFromCache(string keyPrefix)
     {
-        _logger.LogWarning("Invalidating Cache for : {Prefix}", keyPrefix);
+        _logger.LogInformation("In RemoveItemFromCache(string {Prefix})", keyPrefix);
 
         var qualifiedKeyList = _appCache.Get<List<string>>(keyPrefix) ?? new List<string>();
 
@@ -55,7 +57,7 @@ public class StreamingCacheAccessor<TCache, TResult> : IStreamRequest<TResult>
         {
             _appCache.Remove(key);
         }
-
+        
         _appCache.Remove(keyPrefix);
 
         return qualifiedKeyCount;

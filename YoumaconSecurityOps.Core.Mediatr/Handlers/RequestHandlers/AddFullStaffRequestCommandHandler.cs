@@ -14,13 +14,19 @@ internal sealed class AddFullStaffRequestCommandHandler : IRequestHandler<AddFul
 
     public async Task<Guid> Handle(AddFullStaffEntryCommand request, CancellationToken cancellationToken)
     {
-        var staffWriter = request.StaffWriter;
-        var contactWriter = request.ContactWriter;
+        try
+        {
+            await RaiseStaffCreatedEvent(request.StaffWriter, cancellationToken);
 
-        await RaiseContactCreatedEvent(contactWriter, cancellationToken)
-            .ContinueWith(async (x) => await RaiseStaffCreatedEvent(staffWriter, cancellationToken), cancellationToken);
-            
-        return staffWriter.Id;
+            await RaiseContactCreatedEvent(request.ContactWriter, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Could not handle request {@request}: exception {@ex}", request,ex);
+            throw;
+        }
+
+        return request.StaffWriter.Id;
     }
 
     private async Task RaiseStaffCreatedEvent(StaffWriter staffWriter, CancellationToken cancellationToken)
@@ -33,6 +39,13 @@ internal sealed class AddFullStaffRequestCommandHandler : IRequestHandler<AddFul
     private async Task RaiseContactCreatedEvent(ContactWriter contactWriter, CancellationToken cancellationToken)
     {
         var e = new ContactCreatedEvent(contactWriter);
+
+        await _mediator.Publish(e, cancellationToken);
+    }
+
+    private async Task RaiseFailedToCreateEntityEvent(AddFullStaffEntryCommand request, CancellationToken cancellationToken)
+    {
+        var e = new FailedToAddEntityEvent(request.Id, typeof(AddFullStaffEntryCommand));
 
         await _mediator.Publish(e, cancellationToken);
     }

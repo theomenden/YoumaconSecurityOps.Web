@@ -3,7 +3,7 @@ using YoumaconSecurityOps.Core.Shared.Extensions;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
-internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
+internal sealed class LocationRepository : ILocationAccessor, ILocationRepository
 {
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContext;
 
@@ -12,6 +12,7 @@ internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
         _dbContext = dbContext ?? throw new ArgumentException("Could not register DbContext: ", nameof(dbContext));
     }
 
+    #region Get Methods
     public IAsyncEnumerable<LocationReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var locations = dbContext.Locations
@@ -38,14 +39,16 @@ internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
 
     public IAsyncEnumerable<LocationReader> GetHotels(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
-        var hotels = GetAllAsync(dbContext,cancellationToken)
+        var hotels = GetAllAsync(dbContext, cancellationToken)
             .Where(l => l.IsHotel)
             .OrderBy(l => l.Name);
 
         return hotels;
     }
 
-    public IAsyncEnumerator<LocationReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
+    #endregion
+
+    public IAsyncEnumerator<LocationReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
         using var context = _dbContext.CreateDbContext();
 
@@ -54,15 +57,13 @@ internal sealed class LocationRepository: ILocationAccessor, ILocationRepository
         return locationAsyncEnumerator;
     }
 
-    public async Task<bool> AddAsync(LocationReader entity, CancellationToken cancellationToken = new())
+    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, LocationReader entity, CancellationToken cancellationToken = new())
     {
         try
         {
-            await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.Locations.Add(entity);
 
-            context.Locations.Add(entity);
-
-            await context.SaveChangesAsync(cancellationToken)
+            await dbContext.SaveChangesAsync(cancellationToken)
                 .ConfigureAwait(false);
 
             return true;

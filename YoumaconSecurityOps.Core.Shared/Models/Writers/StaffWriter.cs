@@ -1,5 +1,5 @@
 ﻿namespace YoumaconSecurityOps.Core.Shared.Models.Writers;
 
-public record StaffWriter(Guid ContactId, int RoleId,
-    int StaffTypeId, bool NeedsCrashSpace, bool IsBlackShirt, bool IsRaveApproved
-    , string ShirtSize) : BaseWriter;
+public record StaffWriter(Int32 RoleId,
+    Int32 StaffTypeId, Boolean NeedsCrashSpace, Boolean IsBlackShirt, Boolean IsRaveApproved
+    , String ShirtSize) : BaseWriter;

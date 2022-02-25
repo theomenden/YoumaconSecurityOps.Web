@@ -98,6 +98,6 @@ internal sealed class EventStoreRepository : IEventStoreRepository
 
         await context.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation($"Aggregate for {initialEvent.Id} added", initialEvent);
+        _logger.LogInformation("Aggregate for {initialEvent} added", initialEvent.Id);
     }
 }

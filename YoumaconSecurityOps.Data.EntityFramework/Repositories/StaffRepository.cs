@@ -15,12 +15,13 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
         _logger = logger;
     }
 
+    #region Get Methods
     public IAsyncEnumerable<StaffReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var staff =
             from member in dbContext.StaffMembers.AsAsyncEnumerable()
-            join contact in dbContext.Contacts.AsAsyncEnumerable() on member.ContactId equals contact.Id
-            join typeRoleMap in dbContext.StaffTypesRoles.AsAsyncEnumerable() on member.StaffTypeRoleId equals typeRoleMap.Id
+            join contact in dbContext.Contacts.AsAsyncEnumerable() on member.Id equals contact.Staff_Id
+            join typeRoleMap in dbContext.StaffTypesRoles.AsAsyncEnumerable() on member.Id equals typeRoleMap.StaffId
             join staffType in dbContext.StaffTypes.AsAsyncEnumerable() on typeRoleMap.StaffTypeId equals staffType.Id
             join staffRole in dbContext.StaffRoles.AsAsyncEnumerable() on typeRoleMap.RoleId equals staffRole.Id
             orderby new { staffType, staffRole, contact.LastName }
@@ -36,7 +37,6 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
                 NeedsCrashSpace = member.NeedsCrashSpace,
                 ShirtSize = member.ShirtSize,
                 StaffTypeRoleMaps = new List<StaffTypesRoles>(3) { typeRoleMap }
-
             };
 
         return staff;
@@ -58,6 +58,7 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 
         return staffMember;
     }
+    #endregion
 
     public IAsyncEnumerator<StaffReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
@@ -68,17 +69,17 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
         return staffAsyncEnumerator;
     }
 
-    public async Task<bool> AddAsync(StaffReader entity, CancellationToken cancellationToken = default)
+    #region Mutation Methods
+    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, StaffReader entity, CancellationToken cancellationToken = default)
     {
         bool isAddSuccessful;
 
         try
         {
-            await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.StaffMembers.Add(entity);
 
-            await context.StaffMembers.AddAsync(entity, cancellationToken);
-
-            await context.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             isAddSuccessful = true;
         }
@@ -148,4 +149,5 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 
         return staffMemberToReturnFromBreak;
     }
+    #endregion
 }

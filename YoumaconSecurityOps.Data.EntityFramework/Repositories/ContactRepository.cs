@@ -3,19 +3,20 @@ using YoumaconSecurityOps.Core.Shared.Extensions;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
-internal sealed class ContactRepository: IContactAccessor, IContactRepository
+internal sealed class ContactRepository : IContactAccessor, IContactRepository
 {
     private readonly ILogger<ContactRepository> _logger;
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContext;
-        
+
     public ContactRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext, ILogger<ContactRepository> logger)
     {
         _dbContext = dbContext;
         _logger = logger;
     }
 
-    public IAsyncEnumerable<ContactReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
+    #region Get Methods
+    public IAsyncEnumerable<ContactReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var contacts = dbContext.Contacts
             .AsAsyncEnumerable()
@@ -34,15 +35,16 @@ internal sealed class ContactRepository: IContactAccessor, IContactRepository
         return contactsThatMatch;
     }
 
-    public async Task<ContactReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
+    public async Task<ContactReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
-        var contact = await GetAllAsync(dbContext,cancellationToken)
+        var contact = await GetAllAsync(dbContext, cancellationToken)
             .SingleOrDefaultAsync(c => c.Id == entityId, cancellationToken);
 
         return contact;
     }
+    #endregion
 
-    public IAsyncEnumerator<ContactReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
+    public IAsyncEnumerator<ContactReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
         using var context = _dbContext.CreateDbContext();
 
@@ -51,15 +53,13 @@ internal sealed class ContactRepository: IContactAccessor, IContactRepository
         return contactAsyncEnumerator;
     }
 
-    public async Task<bool> AddAsync(ContactReader entity, CancellationToken cancellationToken = default)
+    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, ContactReader entity, CancellationToken cancellationToken = default)
     {
         try
         {
-            await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.Contacts.Add(entity);
 
-            context.Contacts.Add(entity);
-
-            await context.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
         }

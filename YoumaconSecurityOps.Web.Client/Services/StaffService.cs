@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using Microsoft.Extensions.Logging;
-
-namespace YoumaconSecurityOps.Web.Client.Services
+﻿namespace YoumaconSecurityOps.Web.Client.Services
 {
     public class StaffService : IStaffService
     {
@@ -11,30 +8,30 @@ namespace YoumaconSecurityOps.Web.Client.Services
 
         public StaffService(ILogger<StaffService> logger, IMediator mediator)
         {
-            _logger = logger ?? throw new ArgumentException("Could not be injected", nameof(logger));
+            _logger = logger ?? throw new ArgumentException(@"Could not be injected", nameof(logger));
 
-            _mediator = mediator ?? throw new ArgumentException("Could not be injected", nameof(mediator));
+            _mediator = mediator ?? throw new ArgumentException(@"Could not be injected", nameof(mediator));
         }
 
         #region Query Methods
         public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffQuery staffQuery, CancellationToken cancellationToken = default)
         {
-            return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<List<StaffRole>> GetStaffRolesAsync(GetStaffRolesQuery rolesQuery, CancellationToken cancellationToken = default)
         {
-            return await _mediator.CreateStream(rolesQuery, cancellationToken).ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(rolesQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<List<StaffType>> GetStaffTypesAsync(GetStaffTypesQuery typesQuery, CancellationToken cancellationToken = default)
         {
-            return await _mediator.CreateStream(typesQuery, cancellationToken).ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(typesQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffWithParametersQuery staffQuery, CancellationToken cancellationToken = default)
         {
-            return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken);
+            return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
         #endregion
 

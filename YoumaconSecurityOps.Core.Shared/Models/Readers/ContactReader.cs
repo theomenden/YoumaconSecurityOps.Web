@@ -38,7 +38,7 @@ public class ContactReader : BaseReader, IEquatable<ContactReader>
     [StringLength(100)]
     public string PreferredName { get; set; }
 
-
+    [ForeignKey(nameof(Staff_Id))]
     [InverseProperty(nameof(StaffReader.Contact))]
     public virtual StaffReader StaffMember { get; set; }
 

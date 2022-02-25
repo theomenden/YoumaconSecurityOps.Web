@@ -2,6 +2,8 @@
 
 internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreatedEvent>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly ILogger<ShiftCreatedEventHandler> _logger;
 
     private readonly IMapper _mapper;
@@ -12,24 +14,23 @@ internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreate
 
     private readonly IShiftRepository _shifts;
 
-    public ShiftCreatedEventHandler(ILogger<ShiftCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
+    public ShiftCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<ShiftCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
     {
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
-
         _mapper = mapper;
-
         _mediator = mediator;
-            
         _eventStore = eventStore;
-            
-        _shifts = shifts;
+        _shifts = shifts;   
     }
 
     public async Task Handle(ShiftCreatedEvent notification, CancellationToken cancellationToken)
     {
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
         var shiftToAdd = _mapper.Map<ShiftReader>(notification.ShiftWriter);
 
-        var shiftWasAddedSuccessfully = await _shifts.AddAsync(shiftToAdd, cancellationToken);
+        var shiftWasAddedSuccessfully = await _shifts.AddAsync(context,shiftToAdd, cancellationToken);
 
         if (!shiftWasAddedSuccessfully)
         {

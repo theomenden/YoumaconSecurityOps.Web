@@ -1,14 +1,19 @@
 ﻿namespace YoumaconSecurityOps.Data.EntityFramework.Extensions;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDataAccessServices(this IServiceCollection services, string youmaDbConnectionString)
+    private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
+    {
+        builder.AddConsole();
+    });
+
+public static IServiceCollection AddDataAccessServices(this IServiceCollection services, string youmaDbConnectionString)
     {
         services
             .AddPooledDbContextFactory<YoumaconSecurityDbContext>(options =>
             {
+                options.UseLoggerFactory(_loggerFactory);
                 options.UseSqlServer(youmaDbConnectionString);
-                options.UseLazyLoadingProxies();
                 options.EnableDetailedErrors();
                 options.EnableSensitiveDataLogging();
                 options.EnableServiceProviderCaching();

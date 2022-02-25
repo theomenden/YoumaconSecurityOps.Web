@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Server.Circuits;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using YoumaconSecurityOps.Web.Client.Models;
+﻿namespace YoumaconSecurityOps.Web.Client.Middleware;
 
-namespace YoumaconSecurityOps.Web.Client.Middleware;
 public class TrackingCircuitHandler : CircuitHandler
 {
 

@@ -7,7 +7,7 @@ namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 /// 
 /// </summary>
 /// <remarks>DON'T FORGET TO DEFINE THE GOD DAMN METHODS - Emma 8/27/2021 - 3:05am</remarks>
-internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
+internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 {
     private readonly ILogger<ShiftRepository> _logger;
 
@@ -20,7 +20,8 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
         _dbContext = dbContext;
     }
 
-    public IAsyncEnumerable<ShiftReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
+    #region Get Methods
+    public IAsyncEnumerable<ShiftReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var shifts = dbContext.Shifts.AsAsyncEnumerable();
 
@@ -35,15 +36,16 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
         return shifts;
     }
 
-    public async Task<ShiftReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
+    public async Task<ShiftReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
         var shift = await dbContext.Shifts.AsQueryable()
             .SingleOrDefaultAsync(s => s.Id == entityId, cancellationToken);
 
         return shift;
     }
+    #endregion
 
-    public IAsyncEnumerator<ShiftReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
+    public IAsyncEnumerator<ShiftReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
         using var context = _dbContext.CreateDbContext();
 
@@ -52,7 +54,8 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
         return getShiftAsyncEnumerator;
     }
 
-    public async Task<bool> AddAsync(ShiftReader entity, CancellationToken cancellationToken = default)
+    #region Mutation Methods
+    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, ShiftReader entity, CancellationToken cancellationToken = default)
     {
         entity.CurrentLocationId = entity.StartingLocationId;
 
@@ -60,11 +63,9 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
 
         try
         {
-            await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.Shifts.Add(entity);
 
-            context.Shifts.Add(entity);
-
-            await context.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             addResult = true;
         }
@@ -77,8 +78,7 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
 
         return addResult;
     }
-
-    #region Shift Update Methods
+    
     public async Task<ShiftReader> CheckIn(Guid shiftId, CancellationToken cancellationToken = default)
     {
         await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,5 @@ internal sealed class ShiftRepository:  IShiftAccessor, IShiftRepository
 
         return shiftToUpdate;
     }
-
-
     #endregion
 }

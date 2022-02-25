@@ -4,7 +4,7 @@
     {
         protected override CachingOptions<GetStaffRolesQuery> ConfigureCaching()
         {
-            return new CachingOptions<GetStaffRolesQuery>()
+            return new ()
             {
                 AbsoluteDuration = TimeSpan.FromHours(10),
                 SlidingDuration = TimeSpan.FromHours(1)

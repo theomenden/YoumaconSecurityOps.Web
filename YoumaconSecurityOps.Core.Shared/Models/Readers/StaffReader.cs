@@ -1,16 +1,13 @@
 ﻿namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
+
 [Table("Staff")]
-public partial class StaffReader : BaseReader, IEquatable<StaffReader>
+public class StaffReader : BaseReader, IEquatable<StaffReader>
 {
     public StaffReader()
     {
     }
 
     #region BaseProperties
-    public Guid ContactId { get; set; }
-
-    public Guid StaffTypeRoleId { get; set; }
-
     public bool IsOnBreak { get; set; }
 
     [Required] public bool? NeedsCrashSpace { get; set; }
@@ -34,8 +31,7 @@ public partial class StaffReader : BaseReader, IEquatable<StaffReader>
     #endregion
 
     #region Navigation Properties
-
-    [ForeignKey(nameof(ContactId))]
+    
     [InverseProperty(nameof(ContactReader.StaffMember))]
     public virtual ContactReader Contact { get; set; }
 

@@ -14,7 +14,7 @@ public partial class StaffTypesRoleConfiguration : IEntityTypeConfiguration<Staf
             .HasDefaultValueSql("(newsequentialid())");
 
         entity.Property(e => e.StaffTypeId)
-            .HasColumnName("StaffType");
+            .HasColumnName("StaffTypeId");
 
         entity.Property(e => e.RoleId)
             .HasColumnName("RoleId");
@@ -22,21 +22,18 @@ public partial class StaffTypesRoleConfiguration : IEntityTypeConfiguration<Staf
         entity.HasOne(d => d.Role)
             .WithMany(p => p.StaffTypeRoleMap)
             .HasForeignKey(d => d.RoleId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_StaffTypesRoles_Roles");
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         entity.HasOne(d => d.Staff)
             .WithMany(p => p.StaffTypeRoleMaps)
             .HasForeignKey(d => d.StaffId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_StaffTypesRoles_Staff");
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
         entity.HasOne(d => d.StaffTypeNavigation)
             .WithMany(p => p.StaffTypeRoleMaps)
             .HasForeignKey(d => d.StaffTypeId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_StaffTypesRoles_StaffTypes");
-
+            .OnDelete(DeleteBehavior.ClientSetNull);
+        
         OnConfigurePartial(entity);
     }
 

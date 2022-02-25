@@ -15,6 +15,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
         _logger = logger;
     }
 
+    #region Get Methods
     public IAsyncEnumerable<IncidentReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
         var incidents = dbContext.Incidents.AsAsyncEnumerable();
@@ -69,6 +70,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
 
         return incidentsUnderShift;
     }
+    #endregion
 
     public IAsyncEnumerator<IncidentReader> GetAsyncEnumerator(CancellationToken cancellationToken = new ())
     {
@@ -79,17 +81,18 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
         return incidentAsyncEnumerator;
     }
 
-    public async Task<bool> AddAsync(IncidentReader entity, CancellationToken cancellationToken = default)
+    #region Mutation Methods
+
+    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext,IncidentReader entity, CancellationToken cancellationToken = default)
     {
         bool addResult;
 
         try
         {
-            await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.Incidents.Add(entity);
 
-            context.Incidents.Add(entity);
-
-            await context.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             addResult = true;
         }
@@ -152,4 +155,6 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
 
         return updateIncidentResult;
     }
+    #endregion
+
 }

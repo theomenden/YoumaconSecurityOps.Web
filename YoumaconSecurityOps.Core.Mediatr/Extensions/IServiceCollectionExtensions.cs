@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace YoumaconSecurityOps.Core.Mediatr.Extensions;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Extensions;
 
 public static class IServiceCollectionExtensions
 {

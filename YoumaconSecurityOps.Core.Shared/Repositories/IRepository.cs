@@ -14,5 +14,5 @@ public interface IRepository<T>: IAsyncEnumerable<T>
     /// <param name="entity"></param>
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Boolean"/>: True if operation succeeds: False if anything else happens</returns>
-    Task<bool> AddAsync(T entity, CancellationToken cancellationToken = default);
+    Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, T entity, CancellationToken cancellationToken = default);
 }
