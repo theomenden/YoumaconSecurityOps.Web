@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFromBreakCommand, Guid>
+internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFromBreakCommandWithReturn, Guid>
 {
     private readonly IMediator _mediator;
 
@@ -15,7 +15,7 @@ internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFrom
         _logger = logger;
     }
 
-    public async Task<Guid> Handle(ReturnFromBreakCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(ReturnFromBreakCommandWithReturn request, CancellationToken cancellationToken)
     {
         var couldUpdateStaffMember = await _staff.ReturnFromBreak(request.StaffId, cancellationToken);
 
@@ -38,7 +38,7 @@ internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFrom
         await _mediator.Publish(e, cancellationToken);
     }
 
-    private Task RaiseFailedToUpdateEntityEvent(ReturnFromBreakCommand command,
+    private Task RaiseFailedToUpdateEntityEvent(ReturnFromBreakCommandWithReturn commandWithReturn,
         CancellationToken cancellationToken)
     {
         var e = new FailedToUpdateEntityEvent();

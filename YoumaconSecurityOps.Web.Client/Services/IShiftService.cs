@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using YoumaconSecurityOps.Core.Mediatr.Commands;
 
 namespace YoumaconSecurityOps.Web.Client.Services
 {
@@ -34,39 +35,39 @@ namespace YoumaconSecurityOps.Web.Client.Services
 
         #region Create Methods
         /// <summary>
-        /// Adds a new shift record to the database with the information provided from the <see cref="AddShiftCommand"/>
+        /// Adds a new shift record to the database with the information provided from the <see cref="AddShiftCommandWithReturn"/>
         /// </summary>
-        /// <param name="addShiftCommand"></param>
+        /// <param name="addShiftCommandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{TResult}"/>: <seealso cref="ResponseCodes"/></returns>
         /// <remarks>This method should catch all exceptions and return them as an appropriate <see cref="ResponseCodes"/></remarks>
-        Task<ApiResponse<Guid>> AddShiftAsync(AddShiftCommand addShiftCommand, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> AddShiftAsync(AddShiftCommandWithReturn addShiftCommandWithReturn, CancellationToken cancellationToken = default);
         #endregion
 
         #region Mutation Methods
         /// <summary>
-        /// Takes the supplied <paramref name="command"/> and uses the supplied <see cref="ShiftReader"/>-Id to check in the shift.
+        /// Takes the supplied <paramref name="commandWithReturn"/> and uses the supplied <see cref="ShiftReader"/>-Id to check in the shift.
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="commandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{TResult}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/> - the shift that was checked in</returns>
-        Task<ApiResponse<Guid>> CheckIn(ShiftCheckInCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> CheckIn(ShiftCheckInCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Takes the supplied <paramref name="command"/> and uses the supplied <see cref="ShiftReader"/>-Id to check out the shift.
+        /// Takes the supplied <paramref name="commandWithReturn"/> and uses the supplied <see cref="ShiftReader"/>-Id to check out the shift.
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="commandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{TResult}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/> - the shift that was checked out</returns>
-        Task<ApiResponse<Guid>> CheckOut(ShiftCheckoutCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> CheckOut(ShiftCheckoutCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Takes the supplied <paramref name="command"/> and uses the supplied <see cref="ShiftReader"/>-Id to report current status for the shift.
+        /// Takes the supplied <paramref name="commandWithReturn"/> and uses the supplied <see cref="ShiftReader"/>-Id to report current status for the shift.
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="commandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{TResult}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/> - the shift that was had it's status recently reported</returns>
-        Task<ApiResponse<Guid>> ReportIn(ShiftReportInCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> ReportIn(ShiftReportInCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
         #endregion
     }
 }

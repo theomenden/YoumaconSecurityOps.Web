@@ -36,31 +36,31 @@ namespace YoumaconSecurityOps.Web.Client.Services
         /// <summary>
         /// Adds a new Radio entity to the radio schedule table
         /// </summary>
-        /// <param name="addRadioCommand"></param>
+        /// <param name="addRadioCommandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{T}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/></returns>
         /// <remarks><see cref="ApiResponse{T}"/> is used to determine if operation was successful, or encountered an error on adding</remarks>
-        Task<ApiResponse<Guid>> AddRadioAsync(AddRadioCommand addRadioCommand, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> AddRadioAsync(AddRadioCommandWithReturn addRadioCommandWithReturn, CancellationToken cancellationToken = default);
         #endregion
 
         #region Mutation Methods
         /// <summary>
         /// Checks in a Radio entity from a <see cref="StaffReader"/>
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="commandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{T}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/></returns>
         /// <remarks><see cref="ApiResponse{T}"/> is used to determine if operation was successful, or encountered an error during the check in process</remarks>
-        Task<ApiResponse<Guid>> CheckInRadioAsync(CheckInRadioCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> CheckInRadioAsync(CheckInRadioCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks out a Radio entity to a <see cref="StaffReader"/>
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="commandWithReturn"></param>
         /// <param name="cancellationToken"></param>
         /// <returns><see cref="Task{T}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/></returns>
         /// <remarks><see cref="ApiResponse{T}"/> is used to determine if operation was successful, or encountered an error during the check out process</remarks>
-        Task<ApiResponse<Guid>> CheckOutRadioAsync(CheckOutRadioCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> CheckOutRadioAsync(CheckOutRadioCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
         #endregion
     }
 }

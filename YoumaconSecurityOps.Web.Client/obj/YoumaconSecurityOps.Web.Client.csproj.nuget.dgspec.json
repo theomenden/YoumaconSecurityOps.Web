@@ -341,6 +341,10 @@
             "System.Linq.Async": {
               "target": "Package",
               "version": "[6.0.1, )"
+            },
+            "TG.Blazor.IndexedDB": {
+              "target": "Package",
+              "version": "[1.5.0-preview, )"
             }
           },
           "imports": [
@@ -646,51 +650,51 @@
             },
             "Blazorise": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Animate": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Bootstrap5": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Charts": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Charts.Streaming": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Components": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.DataGrid": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Sidebar": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.Snackbar": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Blazorise.SpinKit": {
               "target": "Package",
-              "version": "[0.9.5.5, )"
+              "version": "[0.9.5.6, )"
             },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
-              "version": "[2.15.0, )"
+              "version": "[2.20.0, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -702,7 +706,7 @@
             },
             "Microsoft.Azure.SignalR": {
               "target": "Package",
-              "version": "[1.15.1, )"
+              "version": "[1.15.2, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -795,6 +799,10 @@
             "System.Linq.Async": {
               "target": "Package",
               "version": "[6.0.1, )"
+            },
+            "TG.Blazor.IndexedDB": {
+              "target": "Package",
+              "version": "[1.5.0-preview, )"
             }
           },
           "imports": [

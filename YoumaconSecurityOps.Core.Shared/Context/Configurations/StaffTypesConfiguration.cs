@@ -16,8 +16,7 @@ public partial class StaffTypesConfiguration : IEntityTypeConfiguration<StaffTyp
             .HasColumnName("Description");
 
         entity.HasMany(st => st.StaffTypeRoleMaps)
-            .WithOne(str => str.StaffTypeNavigation)
-            .HasForeignKey("FK_StaffTypesRoles_StaffTypes");
+            .WithOne(str => str.StaffTypeNavigation);
 
         entity.Ignore(e => e.StaffTypeRoleMaps);
     }

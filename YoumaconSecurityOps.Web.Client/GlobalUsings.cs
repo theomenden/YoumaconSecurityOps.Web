@@ -21,6 +21,8 @@ global using System.Linq;
 global using System.Net.Mime;
 global using System.Threading;
 global using System.Threading.Tasks;
+global using TG.Blazor;
+global using TG.Blazor.IndexedDB;
 global using YoumaconSecurityOps.Core.AutoMapper.Extensions;
 global using YoumaconSecurityOps.Core.EventStore.Extensions;
 global using YoumaconSecurityOps.Core.FluentEmailer.Extensions;

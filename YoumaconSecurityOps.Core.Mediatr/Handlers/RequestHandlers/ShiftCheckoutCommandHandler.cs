@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal sealed class ShiftCheckoutCommandHandler : IRequestHandler<ShiftCheckoutCommand, Guid>
+internal sealed class ShiftCheckoutCommandHandler : IRequestHandler<ShiftCheckoutCommandWithReturn, Guid>
 {
     private readonly IMediator _mediator;
 
@@ -15,7 +15,7 @@ internal sealed class ShiftCheckoutCommandHandler : IRequestHandler<ShiftCheckou
         _logger = logger;   
     }
 
-    public async Task<Guid> Handle(ShiftCheckoutCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(ShiftCheckoutCommandWithReturn request, CancellationToken cancellationToken)
     {
         var updatedShift = await _shifts.CheckOut(request.ShiftId, cancellationToken);
 

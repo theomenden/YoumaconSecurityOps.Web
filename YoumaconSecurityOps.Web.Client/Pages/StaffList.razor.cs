@@ -3,9 +3,11 @@
 public partial class StaffList : ComponentBase
 {
     #region Injected Services
-    [Inject] public IStaffService StaffService { get; set; }
+    [Inject] public IStaffService StaffService { get; init; }
 
-    [Inject] public INotificationService NotificationService { get; set; }
+    [Inject] public INotificationService NotificationService { get; init; }
+
+    [Inject] public IndexedDBManager DbManager { get; init; }
     #endregion
 
     #region Private Fields
@@ -65,6 +67,31 @@ public partial class StaffList : ComponentBase
         StateHasChanged();
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        foreach (var staffType in  _staffTypes)
+        {
+            var staffTypeIndexRecord = new StoreRecord<StaffType>
+            {
+                Storename= "YSecStaffTypes",
+                Data = staffType
+            };
+
+            await DbManager.AddRecord(staffTypeIndexRecord);
+        }
+        
+        foreach (var staffRole in _staffRoles)
+        {
+            var staffTypeIndexRecord = new StoreRecord<StaffRole>
+            {
+                Storename = "YSecRoles",
+                Data = staffRole
+            };
+
+            await DbManager.AddRecord(staffTypeIndexRecord);
+        }
+    }
+
     private static void OnStaffNewItemDefaultSetter(StaffReader member)
     {
         member.Contact = new ContactReader();
@@ -82,19 +109,24 @@ public partial class StaffList : ComponentBase
 
         return popupTitle;
     }
+    
     private Task ResetGrid()
     {
         return _dataGrid.Reload();
     }
 
-    private void OnFilteredDataChanged(DataGridFilteredDataEventArgs<StaffReader> eventArgs)
+    private Task OnFilteredDataChanged(DataGridFilteredDataEventArgs<StaffReader> eventArgs)
     {
         Console.WriteLine($"Filter changed > Items: {eventArgs.FilteredItems}; Total: {eventArgs.TotalItems};");
+
+        return Task.CompletedTask;
     }
 
-    private void OnSortChanged(DataGridSortChangedEventArgs eventArgs)
+    private Task OnSortChanged(DataGridSortChangedEventArgs eventArgs)
     {
         Console.WriteLine($"Sort changed > Field: {eventArgs.FieldName}; Direction: {eventArgs.SortDirection};");
+
+        return Task.CompletedTask;
     }
 
     private static void OnRowStyling(StaffReader member, DataGridRowStyling styling)
@@ -104,14 +136,7 @@ public partial class StaffList : ComponentBase
             styling.Background = Background.Danger;
         }
     }
-
-    private async Task OnRowInserted(SavedRowItem<StaffReader, Dictionary<String, Object>> newStaff)
-    {
-        var memberToAdd = newStaff.Item;
-
-        StateHasChanged();
-    }
-
+    
     private void OnSelectedStaffRoleChanged(Int32 staffRole)
     {
         _selectedStaffRole = staffRole;
@@ -131,7 +156,7 @@ public partial class StaffList : ComponentBase
         var memberToSendOnBreak = _staffMembers.Single(s => s.Id == staffId);
 
 
-        var command = new SendOnBreakCommand(memberToSendOnBreak.Id);
+        var command = new SendOnBreakCommandWithReturn(memberToSendOnBreak.Id);
 
         var status = await StaffService.SendStaffMemberOnBreakAsync(command);
 
@@ -150,7 +175,7 @@ public partial class StaffList : ComponentBase
     {
         var memberToReturn = _staffMembers.Single(s => s.Id == staffId);
 
-        var command = new ReturnFromBreakCommand(memberToReturn.Id);
+        var command = new ReturnFromBreakCommandWithReturn(memberToReturn.Id);
 
         var status = await StaffService.ReturnStaffMemberFromBreakAsync(command);
 

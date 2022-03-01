@@ -32,13 +32,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
         }
         #endregion
         #region Add Methods
-        public async Task<ApiResponse<Guid>> AddShiftAsync(AddShiftCommand addShiftCommand, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> AddShiftAsync(AddShiftCommandWithReturn addShiftCommandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(addShiftCommand, cancellationToken);
+                response.Data = await _mediator.Send(addShiftCommandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -65,13 +65,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
         }
         #endregion
         #region Mutation Methods
-        public async Task<ApiResponse<Guid>> CheckIn(ShiftCheckInCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> CheckIn(ShiftCheckInCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -97,13 +97,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
             return response;
         }
 
-        public async Task<ApiResponse<Guid>> CheckOut(ShiftCheckoutCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> CheckOut(ShiftCheckoutCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -129,13 +129,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
             return response;
         }
 
-        public async Task<ApiResponse<Guid>> ReportIn(ShiftReportInCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> ReportIn(ShiftReportInCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }

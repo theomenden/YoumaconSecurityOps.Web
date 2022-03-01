@@ -99,7 +99,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
             {
                 _isAlreadyInitialised = true;
 
-                await Task.WhenAll(HandleShiftLocationGraphRedraw(_shiftsByLocationBarChart, GetShiftLocationBarChartData));
+                await HandleShiftLocationGraphRedraw(_shiftsByLocationBarChart, GetShiftLocationBarChartData);
             }
         }
         #endregion

@@ -53,13 +53,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0" defer></script>
     <script src="js/lazysizes/plugins/rias/ls.rias.min.js" async></script>
 
-    <script src="_framework/blazor.server.js" autostart="false"></script>
-    <script>
-        Blazor.start({
-            configureSignalR: function (builder) {
-                builder.configureLogging("information");
-            }
-        });
-    </script>
+<script src="_framework/blazor.server.js" autostart="false"></script>
+<script>
+    Blazor.start({
+        configureSignalR: function (builder) {
+            builder.configureLogging("information");
+        }
+    });
+</script>
+<script src="_content/TG.Blazor.IndexedDB/indexedDb.Blazor.js"></script>
 </body>
 </html>

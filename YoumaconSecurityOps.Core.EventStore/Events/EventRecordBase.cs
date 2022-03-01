@@ -2,5 +2,11 @@
 
 public abstract record EventRecordBase(Guid AggregateId) : IEvent
 {
-    public Guid Id => Guid.NewGuid();
+    protected EventRecordBase()
+        :this(Guid.Empty)
+    {
+        Id = Guid.NewGuid();
+    }
+
+    public Guid Id {get;}
 }

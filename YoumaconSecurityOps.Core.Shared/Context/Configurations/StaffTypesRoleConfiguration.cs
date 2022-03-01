@@ -22,6 +22,7 @@ public partial class StaffTypesRoleConfiguration : IEntityTypeConfiguration<Staf
         entity.HasOne(d => d.Role)
             .WithMany(p => p.StaffTypeRoleMap)
             .HasForeignKey(d => d.RoleId)
+            .HasConstraintName("FK_StaffTypesRoles_Roles")
             .OnDelete(DeleteBehavior.ClientSetNull);
 
         entity.HasOne(d => d.Staff)
@@ -32,6 +33,7 @@ public partial class StaffTypesRoleConfiguration : IEntityTypeConfiguration<Staf
         entity.HasOne(d => d.StaffTypeNavigation)
             .WithMany(p => p.StaffTypeRoleMaps)
             .HasForeignKey(d => d.StaffTypeId)
+            .HasConstraintName("FK_StaffTypesRoles_Types")
             .OnDelete(DeleteBehavior.ClientSetNull);
         
         OnConfigurePartial(entity);

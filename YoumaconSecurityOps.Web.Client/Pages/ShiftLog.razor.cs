@@ -147,7 +147,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
             var startingLocation = _locations.First(l => l.Id == (_selectedStartingLocation));
 
-            var addShiftCommand = new AddShiftCommand(_selectedStartDate.GetValueOrDefault(DateTime.Now), _selectedEndDate.GetValueOrDefault(DateTime.Now),
+            var addShiftCommand = new AddShiftCommandWithReturn(_selectedStartDate.GetValueOrDefault(DateTime.Now), _selectedEndDate.GetValueOrDefault(DateTime.Now),
                 staffMemberAssigned.Id, staffMemberAssigned.Contact.PreferredName, startingLocation.Id);
 
             var addedEntityResponse = await ShiftService.AddShiftAsync(addShiftCommand);
@@ -195,7 +195,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         {
             _isLoading = true;
 
-            var checkInCommand = new ShiftCheckInCommand(shiftId);
+            var checkInCommand = new ShiftCheckInCommandWithReturn(shiftId);
 
             var checkedInResponse = await ShiftService.CheckIn(checkInCommand);
 
@@ -221,7 +221,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
             if (await MessageService.Confirm($"This will checkout {shiftToCheckOut.StaffMember.Contact.PreferredName} from their shift", "Are you sure?"))
             {
-                var checkedOutCommand = new ShiftCheckoutCommand(shiftToCheckOut.Id);
+                var checkedOutCommand = new ShiftCheckoutCommandWithReturn(shiftToCheckOut.Id);
 
                 var checkedOutResponse = await ShiftService.CheckOut(checkedOutCommand);
 
@@ -244,7 +244,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         private async Task OnReportingIn(Guid shiftId)
         {
             _isLoading = true;
-            var reportInCommand = new ShiftReportInCommand(shiftId, Guid.NewGuid());
+            var reportInCommand = new ShiftReportInCommandWithReturn(shiftId, Guid.NewGuid());
 
             var reportedInResponse = await ShiftService.ReportIn(reportInCommand);
 

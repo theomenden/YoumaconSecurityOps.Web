@@ -32,13 +32,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
         }
 
         #region Add Methods
-        public async Task<ApiResponse<Guid>> AddRadioAsync(AddRadioCommand addRadioCommand, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> AddRadioAsync(AddRadioCommandWithReturn addRadioCommandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(addRadioCommand, cancellationToken);
+                response.Data = await _mediator.Send(addRadioCommandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -66,13 +66,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
         #endregion
 
         #region Mutation Methods
-        public async Task<ApiResponse<Guid>> CheckInRadioAsync(CheckInRadioCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> CheckInRadioAsync(CheckInRadioCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -98,13 +98,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
             return response;
         }
 
-        public async Task<ApiResponse<Guid>> CheckOutRadioAsync(CheckOutRadioCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> CheckOutRadioAsync(CheckOutRadioCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }

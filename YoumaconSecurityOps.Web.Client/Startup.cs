@@ -76,7 +76,43 @@ public class Startup
         services.AddSignalR();
 
         services.AddServerSideBlazor();
-        
+
+        services.AddIndexedDB(dbStore =>
+        {
+            dbStore.DbName = nameof(YoumaconSecurityOps);
+            dbStore.Version = 1;
+
+            dbStore.Stores.Add(new StoreSchema
+            {
+                Name = "YSecRoles",
+                PrimaryKey = new(){Auto = false, Name = "roleId", KeyPath = "id"},
+                Indexes = new()
+                {
+                    new()
+                    {
+                        Auto = false,
+                        Name = "Name",
+                        KeyPath = nameof(StaffRole.Name),
+                    }
+                }
+            });
+
+            dbStore.Stores.Add(new StoreSchema
+            {
+                Name = "YSecStaffTypes",
+                PrimaryKey = new() { Auto = false, Name = "staffTypeId", KeyPath = "id" },
+                Indexes = new ()
+                {
+                    new()
+                    {
+                        Auto = false,
+                        Name = "Title",
+                        KeyPath = nameof(StaffType.Title),
+                    }
+                }
+            });
+        });
+
         services.RegisterBuiltCaches();
 
         services.RegisterBuiltStreamingCaches();

@@ -11,8 +11,10 @@ public interface IRepository<T>: IAsyncEnumerable<T>
     /// <summary>
     /// Adds a given <paramref name="entity"/> to the database asynchronously
     /// </summary>
-    /// <param name="entity"></param>
+    /// <param name="dbContext">The caller supplied <see cref="YoumaconSecurityDbContext"/></param>
+    /// <param name="entity">The <typeparamref name="T" /> entity we are trying to add to the respective table</param>
     /// <param name="cancellationToken"></param>
+    /// <typeparam name="T">Type of entity to add</typeparam>
     /// <returns><see cref="Boolean"/>: True if operation succeeds: False if anything else happens</returns>
     Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, T entity, CancellationToken cancellationToken = default);
 }

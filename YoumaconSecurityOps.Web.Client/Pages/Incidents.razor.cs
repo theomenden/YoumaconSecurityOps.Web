@@ -122,7 +122,7 @@
 
             var locationOccurredAt = _locations.First(l => l.Id == (_selectedOccurrenceLocation));
 
-            var addIncidentCommand = new AddIncidentCommand
+            var addIncidentCommand = new AddIncidentCommandWithReturn
             {
                 RecordedById = recordingStaffMember.Id,
                 ReportedById = reportingStaffMember.Id,
@@ -163,7 +163,7 @@
         {
             _isLoading = true;
 
-            var resolveIncidentCommand = new ResolveIncidentCommand(incidentId);
+            var resolveIncidentCommand = new ResolveIncidentCommandWithReturn(incidentId);
 
             var resolvedIncidentResponse = await IncidentService.ResolveIncidentAsync(resolveIncidentCommand);
 
@@ -189,7 +189,7 @@
 
             var targetSeverity = (Severity)_selectedSeverity;
 
-            var adjustIncidentSeverityCommand = new AdjustIncidentSeverityCommand(incidentId, targetSeverity);
+            var adjustIncidentSeverityCommand = new AdjustIncidentSeverityCommandWithReturn(incidentId, targetSeverity);
 
             var severityUpdatedResponse = await IncidentService.AdjustIncidentSeverityAsync(adjustIncidentSeverityCommand);
 

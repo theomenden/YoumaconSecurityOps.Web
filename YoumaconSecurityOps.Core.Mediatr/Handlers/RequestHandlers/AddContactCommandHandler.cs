@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal sealed class AddContactCommandHandler: IRequestHandler<AddContactCommand>
+internal sealed class AddContactCommandHandler: IRequestHandler<AddContactCommand,Guid>
 {
     private readonly IMediator _mediator;
 
@@ -12,14 +12,13 @@ internal sealed class AddContactCommandHandler: IRequestHandler<AddContactComman
         _logger = logger;
     }
 
-    public async Task<Unit> Handle(AddContactCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AddContactCommand request, CancellationToken cancellationToken)
     {
-        var contactWriter = new ContactWriter(request.Id,request.CreatedOn, request.Email, request.FirstName, request.LastName,
-            request.FacebookName, request.PreferredName, request.PhoneNumber);
+        var contactWriter = request.ContactInformation;
 
         await RaiseContactCreatedEvent(contactWriter, cancellationToken);
 
-        return new Unit();
+        return contactWriter.Id;
     }
 
     private async Task RaiseContactCreatedEvent(ContactWriter contactWriter, CancellationToken cancellationToken)

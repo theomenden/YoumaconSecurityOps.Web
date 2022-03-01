@@ -33,16 +33,81 @@
         {
             return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
-        #endregion
-
 
         public Task<StaffReader> GetStaffMemberAsync(Guid staffId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
+        #endregion
+
         #region Adding Methods
-        public async Task<ApiResponse<Guid>> AddNewStaffMemberAsync(AddFullStaffEntryCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> AddNewStaffMemberAsync(AddFullStaffEntryCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
+        {
+            var response = new ApiResponse<Guid>();
+
+            try
+            {
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
+
+                response.ResponseCode = ResponseCodes.ApiSuccess;
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError("Exception Thrown: {@ex}", ex);
+                response.ResponseCode = ResponseCodes.UnrecognizedError;
+                response.ResponseMessage = ex.Message;
+            }
+            catch (AggregateException ex)
+            {
+                _logger.LogError("Exception Thrown: {@ex}", ex);
+                response.ResponseCode = ResponseCodes.UnintelligibleResponse;
+                response.ResponseMessage = ex.InnerException?.Message ?? ex.Message;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Exception Thrown: {@ex}", ex);
+                response.ResponseCode = ResponseCodes.HttpError;
+                response.ResponseMessage = ex.Message;
+            }
+
+            return response;
+        }
+
+        public async Task<ApiResponse<Guid>> AddNewStaffMemberAsync(AddStaffCommand commandWithReturn, CancellationToken cancellationToken = default)
+        {
+            var response = new ApiResponse<Guid>();
+
+            try
+            {
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
+
+                response.ResponseCode = ResponseCodes.ApiSuccess;
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError("Exception Thrown: {@ex}", ex);
+                response.ResponseCode = ResponseCodes.UnrecognizedError;
+                response.ResponseMessage = ex.Message;
+            }
+            catch (AggregateException ex)
+            {
+                _logger.LogError("Exception Thrown: {@ex}", ex);
+                response.ResponseCode = ResponseCodes.UnintelligibleResponse;
+                response.ResponseMessage = ex.InnerException?.Message ?? ex.Message;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Exception Thrown: {@ex}", ex);
+                response.ResponseCode = ResponseCodes.HttpError;
+                response.ResponseMessage = ex.Message;
+            }
+
+            return response;
+        }
+
+        public async Task<ApiResponse<Guid>> AddNewStaffTypeRoleMapAsync(AddStaffTypeRoleMapCommand command,
+            CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
@@ -76,13 +141,13 @@
         #endregion
 
         #region Mutation Methods
-        public async Task<ApiResponse<Guid>> UpdateStaffInformationAsync(UpdateStaffInfoCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> UpdateStaffInformationAsync(UpdateStaffInfoCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -108,13 +173,13 @@
             return response;
         }
 
-        public async Task<ApiResponse<Guid>> SendStaffMemberOnBreakAsync(SendOnBreakCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> SendStaffMemberOnBreakAsync(SendOnBreakCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -140,13 +205,13 @@
             return response;
         }
 
-        public async Task<ApiResponse<Guid>> ReturnStaffMemberFromBreakAsync(ReturnFromBreakCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> ReturnStaffMemberFromBreakAsync(ReturnFromBreakCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }

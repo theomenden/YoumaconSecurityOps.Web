@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-public record CheckInRadioCommand(Guid RadioId) : ICommand<Guid>
+public record SendOnBreakCommandWithReturn(Guid StaffId) : ICommandWithReturn<Guid>
 {
     public Guid Id => Guid.NewGuid();
 }

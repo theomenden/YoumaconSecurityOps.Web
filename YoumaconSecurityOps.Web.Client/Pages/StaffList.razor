@@ -13,20 +13,19 @@
           ReadData="@OnReadData"
           Data="@_gridDisplay"
           TotalItems="@_totalStaffMembers"
-          Editable="true"
+          Editable
           CommandMode="DataGridCommandMode.Commands"
-          Responsive="true"
-          Sortable="true"
-          Hoverable="true"
-          Striped="true"
+          Responsive
+          Sortable
+          Hoverable
+          Striped
           EditMode="DataGridEditMode.Popup"
-          FixedHeader="true"
+          FixedHeader
           FixedHeaderDataGridHeight="400px"
           @bind-SelectedRow="@_selectedStaffMember"
           RowStyling="@OnRowStyling"
-          RowInserted="@OnRowInserted"
           NewItemDefaultSetter="@OnStaffNewItemDefaultSetter"
-          Virtualize="true"
+          Virtualize
           DetailRowTrigger="@(item => item.Id == _selectedStaffMember?.Id)">
     <PopupTitleTemplate>
         @SetPopupTitle(context)
@@ -83,7 +82,9 @@
                                     </DataGridColumn>
                                     <DataGridColumn TItem="StaffReader" Field="StaffType.Title" Caption="Type" Sortable="true" Editable="true">
                                         <DisplayTemplate>
-                                            @(_staffTypes.SingleOrDefault(st => st.Id == context.StaffType?.Id)?.Title ?? String.Empty)
+                                            <Tooltip Text="@(context.StaffType?.Description)" Placement="TooltipPlacement.Right">
+                                            @(context.StaffType?.Title)
+                                            </Tooltip>
                                         </DisplayTemplate>
                                         <EditTemplate>
                                             <SelectList TItem="@StaffType"
@@ -98,7 +99,9 @@
                                     </DataGridColumn>
                                     <DataGridColumn TItem="StaffReader" Field="Role.Name" Caption="Role" Sortable="true" Editable="true">
                                         <DisplayTemplate>
-                                            @(_staffRoles.SingleOrDefault(sr => sr.Id == context.Role?.Id)?.Name ?? String.Empty)
+                                            <Tooltip Text="@(context.Role?.Name)" Placement="TooltipPlacement.Right">
+                                            @(context.Role?.Name)
+                                            </Tooltip>
                                         </DisplayTemplate>
                                         <EditTemplate>
                                             <SelectList TItem="@StaffRole"

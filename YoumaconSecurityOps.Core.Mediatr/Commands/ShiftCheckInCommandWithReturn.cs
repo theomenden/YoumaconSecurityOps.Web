@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-public record ShiftReportInCommand(Guid ShiftId, Guid CurrentLocationId) : ICommand<Guid>
+public record ShiftCheckInCommandWithReturn(Guid ShiftId): ICommandWithReturn<Guid>
 {
     public Guid Id => Guid.NewGuid();
 }

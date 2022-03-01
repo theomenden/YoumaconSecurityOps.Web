@@ -12,12 +12,12 @@ namespace YoumaconSecurityOps.Web.Client.Services
         Task<IncidentReader> GetIncidentAsync(Guid incidentId, CancellationToken cancellationToken = default);
         #endregion
         #region Add Methods
-        Task<ApiResponse<Guid>> AddIncidentAsync(AddIncidentCommand addIncidentCommand, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> AddIncidentAsync(AddIncidentCommandWithReturn addIncidentCommandWithReturn, CancellationToken cancellationToken = default);
         #endregion
         #region Mutation Methods
-        Task<ApiResponse<Guid>> ResolveIncidentAsync(ResolveIncidentCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> ResolveIncidentAsync(ResolveIncidentCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
 
-        Task<ApiResponse<Guid>> AdjustIncidentSeverityAsync(AdjustIncidentSeverityCommand command, CancellationToken cancellationToken = default);
+        Task<ApiResponse<Guid>> AdjustIncidentSeverityAsync(AdjustIncidentSeverityCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
         #endregion
     }
 }

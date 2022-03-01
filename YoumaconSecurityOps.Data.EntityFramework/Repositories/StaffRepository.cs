@@ -18,26 +18,13 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
     #region Get Methods
     public IAsyncEnumerable<StaffReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
-        var staff =
-            from member in dbContext.StaffMembers.AsAsyncEnumerable()
-            join contact in dbContext.Contacts.AsAsyncEnumerable() on member.Id equals contact.Staff_Id
-            join typeRoleMap in dbContext.StaffTypesRoles.AsAsyncEnumerable() on member.Id equals typeRoleMap.StaffId
-            join staffType in dbContext.StaffTypes.AsAsyncEnumerable() on typeRoleMap.StaffTypeId equals staffType.Id
-            join staffRole in dbContext.StaffRoles.AsAsyncEnumerable() on typeRoleMap.RoleId equals staffRole.Id
-            orderby new { staffType, staffRole, contact.LastName }
-            select new StaffReader
-            {
-                Id = member.Id,
-                Contact = contact,
-                BreakEndAt = member.BreakEndAt,
-                BreakStartAt = member.BreakStartAt,
-                IsBlackShirt = member.IsBlackShirt,
-                IsOnBreak = member.IsOnBreak,
-                IsRaveApproved = member.IsRaveApproved,
-                NeedsCrashSpace = member.NeedsCrashSpace,
-                ShirtSize = member.ShirtSize,
-                StaffTypeRoleMaps = new List<StaffTypesRoles>(3) { typeRoleMap }
-            };
+        var staff = dbContext.StaffMembers
+            .Include(st => st.Contact)
+            .Include(st => st.StaffTypeRoleMaps)
+                .ThenInclude(str => str.Role)
+            .Include(st => st.StaffTypeRoleMaps)
+                .ThenInclude(str => str.StaffTypeNavigation)
+            .AsAsyncEnumerable();
 
         return staff;
     }

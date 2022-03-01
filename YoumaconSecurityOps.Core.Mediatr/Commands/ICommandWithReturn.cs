@@ -9,7 +9,11 @@ public interface ICommand: IRequest
     public Guid Id { get; }
 }
 
-public interface ICommand<out T> : IRequest<T>
+/// <summary>
+/// The basis for all commands in the application that return a <see cref="IRequest{T}"/>
+/// </summary>
+/// <typeparam name="T">The type we return</typeparam>
+public interface ICommandWithReturn<out T> : IRequest<T>
 {
     /// <value>The unique identifier for each command that we source an event from</value>
     public Guid Id { get; }

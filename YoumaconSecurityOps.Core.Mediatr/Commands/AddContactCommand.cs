@@ -1,7 +1,14 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-public record AddContactCommand(DateTime CreatedOn, string Email, string FirstName, string LastName,
-    string FacebookName, string PreferredName, long PhoneNumber) : ICommand
+public record AddContactCommand : ICommandWithReturn<Guid>
 {
-    public Guid Id => Guid.NewGuid();
+    public AddContactCommand(ContactWriter contactInformation)
+    {
+        Id = Guid.NewGuid();
+        ContactInformation = contactInformation;
+    }
+
+    public Guid Id { get; }
+
+    public ContactWriter ContactInformation { get; }
 }

@@ -23,6 +23,9 @@ namespace YoumaconSecurityOps.Core.AutoMapper.Profiles
 
             CreateMap<StaffWriter, StaffReader>();
 
+            CreateMap<StaffTypeRoleMapWriter, StaffTypesRoles>()
+                .ForMember(str => str.Staff, opt => opt.Ignore());
+
             CreateMap<ShiftWriter, ShiftReader>()
                 .ForMember(sh => sh.StartingLocationId, opt => opt.MapFrom(src => src.StartingLocationId))
                 .ForMember(sr => sr.StaffId, opt => opt.MapFrom(src => src.StaffMemberId));

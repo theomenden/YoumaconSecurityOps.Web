@@ -13,11 +13,9 @@ public partial class StaffRoleConfiguration : IEntityTypeConfiguration<StaffRole
             .HasColumnName("Role");
 
         entity.HasMany(sr => sr.StaffTypeRoleMap)
-            .WithOne(str => str.Role)
-            .HasForeignKey("FK_StaffTypesRoles_Roles");
+            .WithOne(str => str.Role);
 
         entity.Ignore(e => e.StaffTypeRoleMap);
-
     }
 
     partial void OnConfigurePartial(EntityTypeBuilder<StaffRole> entity);

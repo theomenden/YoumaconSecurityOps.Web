@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommand, Guid> //AsyncRequestHandler<AddShiftCommand>
+internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWithReturn, Guid> //AsyncRequestHandler<AddShiftCommandWithReturn>
 {
     private readonly IEventStoreRepository _eventStore;
 
@@ -21,7 +21,7 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommand, G
         _mediator = mediator;
     }
 
-    public async Task<Guid> Handle(AddShiftCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AddShiftCommandWithReturn request, CancellationToken cancellationToken)
     {
         var shiftWriter = new ShiftWriter(request.StartAt, request.EndAt, request.StaffMemberId, request.StaffMemberName,
             request.StartingLocationId);

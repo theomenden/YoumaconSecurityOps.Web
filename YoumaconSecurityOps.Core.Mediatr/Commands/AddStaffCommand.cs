@@ -1,6 +1,13 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-public record AddStaffCommand: ICommand
+public record AddStaffCommand: ICommandWithReturn<Guid>
 {
-    public Guid Id => Guid.NewGuid();
+    public AddStaffCommand(StaffWriter staffWriter)
+    {
+        StaffWriter = staffWriter;
+        Id = Guid.NewGuid();
+    }
+    public Guid Id { get; }
+
+    public StaffWriter StaffWriter { get; }
 }

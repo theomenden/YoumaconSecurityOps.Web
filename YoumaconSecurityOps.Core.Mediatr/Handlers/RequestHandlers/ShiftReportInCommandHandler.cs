@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal sealed class ShiftReportInCommandHandler : IRequestHandler<ShiftReportInCommand, Guid>
+internal sealed class ShiftReportInCommandHandler : IRequestHandler<ShiftReportInCommandWithReturn, Guid>
 {
     private readonly IMediator _mediator;
 
@@ -17,7 +17,7 @@ internal sealed class ShiftReportInCommandHandler : IRequestHandler<ShiftReportI
         _shifts = shifts;
     }
 
-    public async Task<Guid> Handle(ShiftReportInCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(ShiftReportInCommandWithReturn request, CancellationToken cancellationToken)
     {
         var updatedShift = await _shifts.ReportIn(request.ShiftId, request.CurrentLocationId, cancellationToken);
 

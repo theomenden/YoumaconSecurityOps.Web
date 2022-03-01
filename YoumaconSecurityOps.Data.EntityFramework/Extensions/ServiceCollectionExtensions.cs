@@ -30,6 +30,7 @@ public static IServiceCollection AddDataAccessServices(this IServiceCollection s
             .AddScoped<IShiftRepository, ShiftRepository>()
             .AddScoped<IStaffAccessor, StaffRepository>()
             .AddScoped<IStaffRepository, StaffRepository>()
+            .AddScoped<IStaffRoleMapRepository, StaffTypeRoleMapRepository>()
             .AddScoped<IStaffRoleAccessor, StaffRoleRepository>()
             .AddScoped<IStaffTypeAccessor, StaffTypeRepository>();
 

@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains parameters that will allow for the creation of an <see cref="IncidentWriter"/>
 /// </summary>
-public record AddIncidentCommand : ICommand<Guid>
+public record AddIncidentCommandWithReturn : ICommandWithReturn<Guid>
 {
     /// <value>
     /// Staff Member's ID who recorded the incident

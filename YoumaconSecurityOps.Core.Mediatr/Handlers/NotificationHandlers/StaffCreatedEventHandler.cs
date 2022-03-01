@@ -26,15 +26,7 @@ internal sealed class StaffCreatedEventHandler : INotificationHandler<StaffCreat
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
         var staffMember = _mapper.Map<StaffReader>(notification.StaffWriter);
-
-        staffMember.StaffTypeRoleMaps = new List<StaffTypesRoles>{new ()
-        {
-            Id = Guid.NewGuid(),
-            RoleId = notification.StaffWriter.RoleId,
-            StaffId = staffMember.Id,
-            StaffTypeId = notification.StaffWriter.StaffTypeId
-        }};
-
+        
         try
         {
             await _staff.AddAsync(context, staffMember, cancellationToken);

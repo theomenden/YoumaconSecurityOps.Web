@@ -2,7 +2,9 @@
 
 public partial class StaffEntryForm : ComponentBase
 {
-    [Inject] public IStaffService StaffService { get; set; }
+    [Inject] public IStaffService StaffService { get; init; }
+    
+    [Inject] public IContactService ContactService { get; init; }
 
     private IEnumerable<StaffRole> _staffRoles = new List<StaffRole>(5);
 
@@ -56,32 +58,35 @@ public partial class StaffEntryForm : ComponentBase
         StateHasChanged();
     }
 
-    private Task SaveContactInformation()
+    private async Task SaveContactInformation()
     {
         _contactWriter = new ContactWriter(_staffWriter.Id, DateTime.Now, _email, _firstName, _lastName, _facebookName, _preferredName, Convert.ToInt64(_phoneNumber));
 
-        _isContactInfoPrepared = true;
+        var command = new AddContactCommand(_contactWriter);
 
-        return Task.CompletedTask;
+        var savedContactResponse = await ContactService.AddContactInformationAsync(command);
+
+        _isContactInfoPrepared = savedContactResponse.ResponseCode is ResponseCodes.ApiSuccess;
     }
 
-    private Task SaveStaffInformation()
+    private async Task SaveStaffInformation()
     {
         _staffWriter = new StaffWriter(_selectedStaffRole, _selectedStaffType, _needCrashSpace, _isBlackShirt, _isRaveApproved, _shirtSize);
 
-        _isStaffInfoPrepared = true;
+        var command = new AddStaffCommand(_staffWriter);
 
-        return Task.CompletedTask;
+       var createdStaffId = await StaffService.AddNewStaffMemberAsync(command);
+
+        _isStaffInfoPrepared = createdStaffId.ResponseCode is ResponseCodes.ApiSuccess;
     }
 
     private async Task OnSubmit()
     {
-        if (_staffWriter is not null && _contactWriter is not null)
-        {
-            var fullStaffAddCommand = new AddFullStaffEntryCommand(_staffWriter, _contactWriter);
+        var staffRoleMapWriter = new StaffTypeRoleMapWriter(_staffWriter.Id, _selectedStaffType, _selectedStaffRole);
 
-            await StaffService.AddNewStaffMemberAsync(fullStaffAddCommand);
-        }
+        var addStaffRoleMapCommand = new AddStaffTypeRoleMapCommand(staffRoleMapWriter);
+
+        await StaffService.AddNewStaffTypeRoleMapAsync(addStaffRoleMapCommand);
     }
 
     private bool IsDisabled() => (_isContactInfoPrepared && _isStaffInfoPrepared) is not true;

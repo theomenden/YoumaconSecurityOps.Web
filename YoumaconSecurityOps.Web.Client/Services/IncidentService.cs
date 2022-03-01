@@ -32,13 +32,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
         }
         #endregion
         #region Add Methods
-        public async Task<ApiResponse<Guid>> AddIncidentAsync(AddIncidentCommand addIncidentCommand, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> AddIncidentAsync(AddIncidentCommandWithReturn addIncidentCommandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(addIncidentCommand, cancellationToken);
+                response.Data = await _mediator.Send(addIncidentCommandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -65,13 +65,13 @@ namespace YoumaconSecurityOps.Web.Client.Services
         }
         #endregion
         #region Mutation Methods
-        public async Task<ApiResponse<Guid>> ResolveIncidentAsync(ResolveIncidentCommand command, CancellationToken cancellationToken = default)
+        public async Task<ApiResponse<Guid>> ResolveIncidentAsync(ResolveIncidentCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }
@@ -97,14 +97,14 @@ namespace YoumaconSecurityOps.Web.Client.Services
             return response;
         }
 
-        public async Task<ApiResponse<Guid>> AdjustIncidentSeverityAsync(AdjustIncidentSeverityCommand command,
+        public async Task<ApiResponse<Guid>> AdjustIncidentSeverityAsync(AdjustIncidentSeverityCommandWithReturn commandWithReturn,
             CancellationToken cancellationToken = default)
         {
             var response = new ApiResponse<Guid>();
 
             try
             {
-                response.Data = await _mediator.Send(command, cancellationToken);
+                response.Data = await _mediator.Send(commandWithReturn, cancellationToken);
 
                 response.ResponseCode = ResponseCodes.ApiSuccess;
             }

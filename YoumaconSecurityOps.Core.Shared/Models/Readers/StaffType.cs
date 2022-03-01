@@ -34,13 +34,6 @@ public partial class StaffType : IEquatable<StaffType>
         
     [InverseProperty(nameof(StaffTypesRoles.StaffTypeNavigation))]
     public virtual ICollection<StaffTypesRoles> StaffTypeRoleMaps { get; set; } = new HashSet<StaffTypesRoles>();
-
-    /*
-* {"error":"
-* The [InverseProperty] attribute on property 'StaffRole.StaffTypeRoleMaps' is not valid.
-* The property 'StaffTypeNavigation' is not a valid navigation on the related type 'StaffTypesRoles'
-* . Ensure that the property exists and is a valid reference or collection navigation."}
-*/
     #endregion
 
     #region Overrides
