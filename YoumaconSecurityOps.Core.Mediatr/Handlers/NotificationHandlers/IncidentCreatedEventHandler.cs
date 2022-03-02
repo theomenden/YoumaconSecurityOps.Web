@@ -2,6 +2,8 @@
 
 internal sealed class IncidentCreatedEventHandler : INotificationHandler<IncidentCreatedEvent>
 {
+    private readonly IDbContextFactory<EventStoreDbContext> _eventStoreContextFactory;
+
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
     private readonly ILogger<IncidentCreatedEventHandler> _logger;
@@ -14,8 +16,9 @@ internal sealed class IncidentCreatedEventHandler : INotificationHandler<Inciden
 
     private readonly IIncidentRepository _incidents;
 
-    public IncidentCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<IncidentCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IIncidentRepository incidents)
+    public IncidentCreatedEventHandler(IDbContextFactory<EventStoreDbContext> eventStoreContextFactory, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<IncidentCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IIncidentRepository incidents)
     {
+        _eventStoreContextFactory = eventStoreContextFactory;
         _dbContextFactory = dbContextFactory;
         _logger = logger;
         _mapper = mapper;
@@ -45,10 +48,12 @@ internal sealed class IncidentCreatedEventHandler : INotificationHandler<Inciden
     {
         var e = new IncidentAddedEvent(incidentAdded);
 
-        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken)
+        await using var context = await _eventStoreContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var previousEvents = await _eventStore.GetAllByAggregateId(context,e.AggregateId, cancellationToken)
             .ToListAsync(cancellationToken);
 
-        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }
@@ -58,10 +63,13 @@ internal sealed class IncidentCreatedEventHandler : INotificationHandler<Inciden
     {
         var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
 
-        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken)
+        await using var context = await _eventStoreContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+
+        var previousEvents = await _eventStore.GetAllByAggregateId(context, e.AggregateId, cancellationToken)
             .ToListAsync(cancellationToken);
 
-        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

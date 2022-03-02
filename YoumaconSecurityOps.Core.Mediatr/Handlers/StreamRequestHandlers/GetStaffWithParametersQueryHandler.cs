@@ -6,19 +6,16 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 internal sealed class GetStaffWithParametersQueryHandler : IStreamRequestHandler<GetStaffWithParametersQuery, StaffReader>
 {
     private readonly IStaffAccessor _staff;
-
-    private readonly IMediator _mediator;
-
+    
     private readonly ILogger<GetStaffWithParametersQueryHandler> _logger;
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
-    public GetStaffWithParametersQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IStaffAccessor staff, IMediator mediator, ILogger<GetStaffWithParametersQueryHandler> logger)
+    public GetStaffWithParametersQueryHandler(IStaffAccessor staff, ILogger<GetStaffWithParametersQueryHandler> logger, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
     {
-        _dbContextFactory = dbContextFactory;
         _staff = staff;
-        _mediator = mediator;
         _logger = logger;
+        _dbContextFactory = dbContextFactory;
     }
 
     public async IAsyncEnumerable<StaffReader> Handle(GetStaffWithParametersQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
@@ -32,21 +29,6 @@ internal sealed class GetStaffWithParametersQueryHandler : IStreamRequestHandler
         {
             yield return member;
         }
-
-        await RaiseStaffListQueriedEvent(request.Parameters, cancellationToken);
-    }
-    
-    private Task RaiseStaffListQueriedEvent(StaffQueryStringParameters parameters, CancellationToken cancellationToken)
-    {
-        var e = new StaffListQueriedEvent(parameters)
-        {
-            Aggregate = nameof(StaffQueryStringParameters),
-            MajorVersion = 1,
-            MinorVersion = 1,
-            Name = nameof(StaffListQueriedEvent)
-        };
-
-        return _mediator.Publish(e, cancellationToken);
     }
 
     private Boolean StaffFilterBuilder(StaffReader staff, StaffQueryStringParameters parameters)

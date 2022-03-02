@@ -17,55 +17,54 @@ internal sealed class EventStoreRepository : IEventStoreRepository
 
     public IAsyncEnumerator<EventReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
     {
-        var eventStoreAsyncEnumerator = GetAll(cancellationToken).GetAsyncEnumerator(cancellationToken);
+        using var context = _dbContext.CreateDbContext();
+
+        var eventStoreAsyncEnumerator = GetAll(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         return eventStoreAsyncEnumerator;
     }
 
-    public IAsyncEnumerable<EventReader> GetAll(CancellationToken cancellationToken = default)
+    public IAsyncEnumerable<EventReader> GetAll(EventStoreDbContext dbContext, CancellationToken cancellationToken = default)
     {
         using var context = _dbContext.CreateDbContext();
 
         var events = context.Events
-            .AsAsyncEnumerable()
             .OrderBy(e => e.Name)
             .ThenBy(e => e.MajorVersion)
-            .ThenBy(e => e.MinorVersion);
+            .ThenBy(e => e.MinorVersion)
+            .AsAsyncEnumerable();
 
         return events;
     }
 
-    public async Task<IEnumerable<EventReader>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<EventReader>> GetAllAsync(EventStoreDbContext dbContext, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var eventsAsIEnumerable = await context.Events.ToListAsync(cancellationToken);
+        var eventsAsIEnumerable = await dbContext.Events.ToListAsync(cancellationToken);
 
         return eventsAsIEnumerable;
     }
 
-    public IAsyncEnumerable<EventReader> GetAllByAggregateId(Guid aggregateId, CancellationToken cancellationToken = default)
+    public IAsyncEnumerable<EventReader> GetAllByAggregateId(EventStoreDbContext dbContext, Guid aggregateId, CancellationToken cancellationToken = default)
     {
-        using var context = _dbContext.CreateDbContext();
-
-
-        var events = context.Events
+        var events = dbContext.Events
             .AsAsyncEnumerable()
             .Where(e => e.Id == aggregateId);
 
         return events;
     }
 
-    public async Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(Guid aggregateId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(EventStoreDbContext dbContext, Guid aggregateId, CancellationToken cancellationToken = default)
     {
-        var eventsWithMatchedAggregateId = (await GetAllAsync(cancellationToken))
-            .Where(e => e.Id.Equals(aggregateId));
+        var eventsWithMatchedAggregateId = await dbContext.Events
+            .Where(e => e.Id.Equals(aggregateId))
+            .AsQueryable()
+            .ToListAsync(cancellationToken);
 
         return eventsWithMatchedAggregateId;
     }
 
 
-    public async Task SaveAsync(Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
+    public async Task SaveAsync(EventStoreDbContext dbContext, Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
     {
         if (!events.Any())
         {
@@ -80,23 +79,19 @@ internal sealed class EventStoreRepository : IEventStoreRepository
             MinorVersion = ++originatingVersion,
             MajorVersion = ev.MajorVersion
         });
+        
+        dbContext.Events.AddRange(listOfEvents);
 
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        context.Events.AddRange(listOfEvents);
-
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default)
+    public async Task SaveAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
         _logger.LogInformation("SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default): Attempting to add: {@initialEvent}", initialEvent);
             
-        context.Events.Add(initialEvent);
+        dbContext.Events.Add(initialEvent);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Aggregate for {initialEvent} added", initialEvent.Id);
     }

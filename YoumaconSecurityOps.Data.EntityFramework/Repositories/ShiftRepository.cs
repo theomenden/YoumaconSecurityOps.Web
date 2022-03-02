@@ -23,7 +23,18 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     #region Get Methods
     public IAsyncEnumerable<ShiftReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
-        var shifts = dbContext.Shifts.AsAsyncEnumerable();
+        var shifts = dbContext.Shifts
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.Contact)
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.StaffTypeRoleMaps)
+                    .ThenInclude(sr => sr.Role)
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.StaffTypeRoleMaps)
+                    .ThenInclude(str => str.StaffTypeNavigation)
+            .Include(sh => sh.CurrentLocation)
+            .Include(sh => sh.StartingLocationNavigation)
+            .AsAsyncEnumerable();
 
         return shifts;
     }
@@ -31,14 +42,37 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     public IAsyncEnumerable<ShiftReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<ShiftReader, bool>> predicate,
         CancellationToken cancellationToken = default)
     {
-        var shifts = dbContext.Shifts.FindAllAsync(predicate);
+        var shifts = dbContext.Shifts
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.Contact)
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.StaffTypeRoleMaps)
+                    .ThenInclude(sr => sr.Role)
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.StaffTypeRoleMaps)
+                    .ThenInclude(str => str.StaffTypeNavigation)
+            .Include(sh => sh.CurrentLocation)
+            .Include(sh => sh.StartingLocationNavigation)
+            .Where(predicate)
+            .AsAsyncEnumerable();
 
         return shifts;
     }
 
     public async Task<ShiftReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
-        var shift = await dbContext.Shifts.AsQueryable()
+        var shift = await dbContext.Shifts
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.Contact)
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.StaffTypeRoleMaps)
+                    .ThenInclude(sr => sr.Role)
+            .Include(sh => sh.StaffMember)
+                .ThenInclude(st => st.StaffTypeRoleMaps)
+                    .ThenInclude(str => str.StaffTypeNavigation)
+            .Include(sh => sh.CurrentLocation)
+            .Include(sh => sh.StartingLocationNavigation)
+            .AsQueryable()
             .SingleOrDefaultAsync(s => s.Id == entityId, cancellationToken);
 
         return shift;
@@ -79,11 +113,9 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
         return addResult;
     }
     
-    public async Task<ShiftReader> CheckIn(Guid shiftId, CancellationToken cancellationToken = default)
+    public async Task<ShiftReader> CheckIn(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var shift = await context.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
+        var shift = await dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
 
         var checkedInAt = DateTime.Now;
 
@@ -91,16 +123,14 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 
         shift.Notes += $"Checked In At: {checkedInAt:g}";
 
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return shift;
     }
 
-    public async Task<ShiftReader> CheckOut(Guid shiftId, CancellationToken cancellationToken = default)
+    public async Task<ShiftReader> CheckOut(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var shift = await context.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
+        var shift = await dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
 
         var checkedOutAt = DateTime.Now;
 
@@ -108,17 +138,14 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 
         shift.Notes += $"Checked Out At {checkedOutAt:g}";
 
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return shift;
     }
 
-    public async Task<ShiftReader> ReportIn(Guid shiftId, Guid currentLocationId, CancellationToken cancellationToken = default)
+    public async Task<ShiftReader> ReportIn(YoumaconSecurityDbContext dbContext, Guid shiftId, Guid currentLocationId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-
-        var shiftToUpdate = await context.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
+        var shiftToUpdate = await dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
 
         var reportedInAt = DateTime.Now;
 
@@ -128,7 +155,7 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 
         shiftToUpdate.Notes += $"Reported In At: {reportedInAt:g}";
 
-        await context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return shiftToUpdate;
     }

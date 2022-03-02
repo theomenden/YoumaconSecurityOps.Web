@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore.Tests\\YoumaconSecurityOps.Core.EventStore.Tests.csproj": {
-      "version": "1.0.8",
+      "version": "1.0.18",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore.Tests\\YoumaconSecurityOps.Core.EventStore.Tests.csproj",
         "projectName": "YoumaconSecurityOps.Core.EventStore.Tests",
@@ -106,7 +106,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore\\YoumaconSecurityOps.Core.EventStore.csproj": {
-      "version": "1.0.8",
+      "version": "1.0.18",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore\\YoumaconSecurityOps.Core.EventStore.csproj",
         "projectName": "YoumaconSecurityOps.Core.EventStore",
@@ -207,7 +207,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
-      "version": "1.0.8",
+      "version": "1.0.18",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj",
         "projectName": "YoumaconSecurityOps.Core.Shared",

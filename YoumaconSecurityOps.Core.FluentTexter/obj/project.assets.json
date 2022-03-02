@@ -11,7 +11,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.8",
+    "version": "1.0.18",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentTexter\\YoumaconSecurityOps.Core.FluentTexter.csproj",
       "projectName": "YoumaconSecurityOps.Core.FluentTexter",

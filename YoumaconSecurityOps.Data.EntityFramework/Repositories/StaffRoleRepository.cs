@@ -5,13 +5,9 @@ internal class StaffRoleRepository : IStaffRoleAccessor
 {
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContext;
 
-    private readonly ILogger<StaffRoleRepository> _logger;
-
     public StaffRoleRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext, ILogger<StaffRoleRepository> logger)
     {
         _dbContext = dbContext ?? throw new ArgumentException("Could Not be injected", nameof(dbContext));
-
-        _logger = logger ?? throw new ArgumentException("Could Not be injected", nameof(logger));
     }
 
 
@@ -22,11 +18,11 @@ internal class StaffRoleRepository : IStaffRoleAccessor
             
         return staffRoles;
     }
-    public async Task<StaffRole> WithId(YoumaconSecurityDbContext dbContext, int staffRoleId, CancellationToken cancellationToken = default)
+    public Task<StaffRole> WithId(YoumaconSecurityDbContext dbContext, int staffRoleId, CancellationToken cancellationToken = default)
     {
         var role = dbContext.StaffRoles.SingleOrDefault(r => r.Id == staffRoleId);
 
-        return role;
+        return Task.FromResult(role);
     }
 
     public IAsyncEnumerator<StaffRole> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())

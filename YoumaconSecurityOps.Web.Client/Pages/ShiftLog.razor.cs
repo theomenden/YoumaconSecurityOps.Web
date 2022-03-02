@@ -1,31 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazorise;
-using Blazorise.DataGrid;
-using Microsoft.AspNetCore.Components;
-using YoumaconSecurityOps.Core.Mediatr.Commands;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Enumerations;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Web.Client.Services;
-using Modal = Blazorise.Bootstrap5.Modal;
+﻿namespace YoumaconSecurityOps.Web.Client.Pages;
 
-namespace YoumaconSecurityOps.Web.Client.Pages
-{
     public partial class ShiftLog : ComponentBase
     {
         #region Injected Services
-        [Inject] public IShiftService ShiftService { get; set; }
+        [Inject] public IShiftService ShiftService { get; init; }
 
-        [Inject] public ILocationService LocationService { get; set; }
+        [Inject] public ILocationService LocationService { get; init; }
 
-        [Inject] public IStaffService StaffService { get; set; }
+        [Inject] public IStaffService StaffService { get; init; }
 
-        [Inject] public IMessageService MessageService { get; set; }
+        [Inject] public IMessageService MessageService { get; init; }
 
-        [Inject] public INotificationService Notifications { get; set; }
+        [Inject] public INotificationService Notifications { get; init; }
         #endregion
         #region Fields
         private IEnumerable<ShiftReader> _shifts = new List<ShiftReader>(200);
@@ -42,7 +28,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
         private DataGrid<ShiftReader> _dataGrid = new();
 
-        private Modal _modalRef;
+        private Blazorise.Bootstrap5.Modal _modalRef;
 
         private Guid _selectedStaffMember = Guid.Empty;
 
@@ -179,16 +165,7 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
 
             //var employee = e.Item;
-
-            //employee.FirstName = (string)e.Values["FirstName"];
-            //employee.LastName = (string)e.Values["LastName"];
-            //employee.EMail = (string)e.Values["EMail"];
-            //employee.City = (string)e.Values["City"];
-            //employee.Zip = (string)e.Values["Zip"];
-            //employee.DateOfBirth = (DateTime?)e.Values["DateOfBirth"];
-            //employee.Childrens = (int?)e.Values["Childrens"];
-            //employee.Gender = (string)e.Values["Gender"];
-            //employee.Salary = (decimal)e.Values["Salary"];
+            
         }
 
         private async Task OnCheckedIn(Guid shiftId)
@@ -213,6 +190,8 @@ namespace YoumaconSecurityOps.Web.Client.Pages
             await Notifications.Success(markUpResponse, "Checked In Successfully");
 
             _isLoading = false;
+
+            StateHasChanged();
         }
 
         private async Task OnCheckedOut(ShiftReader shiftToCheckOut)
@@ -238,13 +217,15 @@ namespace YoumaconSecurityOps.Web.Client.Pages
             }
 
             _isLoading = false;
+
             StateHasChanged();
         }
 
         private async Task OnReportingIn(Guid shiftId)
         {
             _isLoading = true;
-            var reportInCommand = new ShiftReportInCommandWithReturn(shiftId, Guid.NewGuid());
+
+            var reportInCommand = new ShiftReportInCommandWithReturn(shiftId, _selectedStartingLocation);
 
             var reportedInResponse = await ShiftService.ReportIn(reportInCommand);
 
@@ -261,6 +242,8 @@ namespace YoumaconSecurityOps.Web.Client.Pages
 
             await Notifications.Success(markUpResponse, "Reported In Successfully");
             _isLoading = false;
+
+            StateHasChanged();
         }
         #endregion
         #region Edit Form Methods
@@ -277,4 +260,4 @@ namespace YoumaconSecurityOps.Web.Client.Pages
         }
         #endregion
     }
-}
+

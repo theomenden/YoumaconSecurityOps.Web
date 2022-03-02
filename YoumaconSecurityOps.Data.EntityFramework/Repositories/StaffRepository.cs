@@ -80,12 +80,10 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
         return isAddSuccessful;
     }
 
-    public async Task<StaffReader> SendOnBreak(Guid staffId, CancellationToken cancellationToken = default)
+    public async Task<StaffReader> SendOnBreak(YoumaconSecurityDbContext dbContext, Guid staffId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
         var staffMemberToSendOnBreak = await
-            context.StaffMembers.AsQueryable().SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
+            dbContext.StaffMembers.AsQueryable().SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
 
         try
         {
@@ -95,25 +93,23 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
                 staffMemberToSendOnBreak.BreakStartAt = DateTime.Now;
                 staffMemberToSendOnBreak.IsOnBreak = true;
 
-                await context.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
 
         }
         catch (Exception ex)
         {
             _logger.LogError("An exception occurred trying to send staff member {staffId} on break: {ex}",
-                ex.InnerException?.Message ?? ex.Message);
+                staffId,ex.InnerException?.Message ?? ex.Message);
         }
 
         return staffMemberToSendOnBreak;
     }
 
-    public async Task<StaffReader> ReturnFromBreak(Guid staffId, CancellationToken cancellationToken = default)
+    public async Task<StaffReader> ReturnFromBreak(YoumaconSecurityDbContext dbContext, Guid staffId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _dbContext.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
         var staffMemberToReturnFromBreak = await
-            context.StaffMembers.AsQueryable()
+            dbContext.StaffMembers.AsQueryable()
                 .SingleOrDefaultAsync(st => st.Id == staffId, cancellationToken);
 
         try
@@ -121,17 +117,18 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 
             if (staffMemberToReturnFromBreak is not null)
             {
-                staffMemberToReturnFromBreak.BreakStartAt = DateTime.Now;
-                staffMemberToReturnFromBreak.IsOnBreak = true;
+                staffMemberToReturnFromBreak.BreakEndAt = DateTime.Now;
+                staffMemberToReturnFromBreak.IsOnBreak = false;
 
-                await context.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken)
+                    .ConfigureAwait(false);
             }
 
         }
         catch (Exception ex)
         {
-            _logger.LogError("An exception occured trying to return staff member {staffId} from their break: {ex}",
-                ex.InnerException?.Message ?? ex.Message);
+            _logger.LogError("An exception occurred trying to return staff member {staffId} from their break: {ex}",
+                staffId,ex.InnerException?.Message ?? ex.Message);
         }
 
         return staffMemberToReturnFromBreak;

@@ -39,7 +39,7 @@ public class Startup
             .AddBlazorise(options =>
             {
                 options.ChangeTextOnKeyPress = true; // optional
-                })
+            })
             .AddBootstrap5Providers()
             .AddFontAwesomeIcons();
 

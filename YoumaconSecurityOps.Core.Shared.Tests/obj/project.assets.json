@@ -2937,7 +2937,7 @@
           "build/netcoreapp2.1/xunit.runner.visualstudio.props": {}
         }
       },
-      "YoumaconSecurityOps.Core.Shared/1.0.8": {
+      "YoumaconSecurityOps.Core.Shared/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -9922,7 +9922,7 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "YoumaconSecurityOps.Core.Shared/1.0.8": {
+    "YoumaconSecurityOps.Core.Shared/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
@@ -9934,7 +9934,7 @@
       "GenFu >= 1.6.0",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
       "Shouldly >= 4.0.3",
-      "YoumaconSecurityOps.Core.Shared >= 1.0.8",
+      "YoumaconSecurityOps.Core.Shared >= 1.0.18",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.1",
       "xunit.runner.visualstudio >= 2.4.3"
@@ -9944,7 +9944,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.8",
+    "version": "1.0.18",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared.Tests\\YoumaconSecurityOps.Core.Shared.Tests.csproj",
       "projectName": "YoumaconSecurityOps.Core.Shared.Tests",

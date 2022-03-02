@@ -2,6 +2,8 @@
 
 internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreatedEvent>
 {
+    private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
+
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
     private readonly ILogger<ShiftCreatedEventHandler> _logger;
@@ -14,14 +16,15 @@ internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreate
 
     private readonly IShiftRepository _shifts;
 
-    public ShiftCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<ShiftCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
+    public ShiftCreatedEventHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<ShiftCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
     {
+        _eventStoreDbContextFactory = eventStoreDbContextFactory;
         _dbContextFactory = dbContextFactory;
         _logger = logger;
         _mapper = mapper;
         _mediator = mediator;
         _eventStore = eventStore;
-        _shifts = shifts;   
+        _shifts = shifts;
     }
 
     public async Task Handle(ShiftCreatedEvent notification, CancellationToken cancellationToken)
@@ -45,9 +48,11 @@ internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreate
     {
         var e = new ShiftAddedEvent(shiftAdded);
 
-        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+        await using var context = await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        var previousEvents = await _eventStore.GetAllByAggregateId(context,e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+
+        await _eventStore.SaveAsync(context,e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }
@@ -56,9 +61,11 @@ internal sealed class ShiftCreatedEventHandler: INotificationHandler<ShiftCreate
     {
         var e = new FailedToAddEntityEvent(aggregateId, aggregateType);
 
-        var previousEvents = await _eventStore.GetAllByAggregateId(e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+        await using var context = await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        await _eventStore.SaveAsync(e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        var previousEvents = await _eventStore.GetAllByAggregateId(context, e.AggregateId, cancellationToken).ToListAsync(cancellationToken);
+
+        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

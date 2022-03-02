@@ -3,19 +3,13 @@
 internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery, StaffReader>
 {
     private readonly IStaffAccessor _staff;
-
-    private readonly IMediator _mediator;
-
-    private readonly ILogger<GetStaffQueryHandler> _logger;
-
+    
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
-    public GetStaffQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IStaffAccessor staff, IMediator mediator, ILogger<GetStaffQueryHandler> logger)
+    public GetStaffQueryHandler(IStaffAccessor staff, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
     {
-        _dbContextFactory = dbContextFactory;
         _staff = staff;
-        _mediator = mediator;
-        _logger = logger;
+        _dbContextFactory = dbContextFactory;
     }
 
     public async IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request, [EnumeratorCancellation]CancellationToken cancellationToken)
@@ -26,19 +20,6 @@ internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery,
         {
             yield return member;
         }
-
-        await RaiseStaffListQueriedEvent(request, cancellationToken);
     }
-
-    private Task RaiseStaffListQueriedEvent(GetStaffQuery query, CancellationToken cancellationToken)
-    {
-        var e = new StaffListQueriedEvent(null)
-        {
-            Aggregate = nameof(GetStaffQuery),
-            MajorVersion = 1,
-            Name = nameof(StaffListQueriedEvent)
-        };
-
-        return _mediator.Publish(e, cancellationToken);
-    }
+    
 }

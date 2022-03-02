@@ -169,6 +169,8 @@ public partial class StaffList : ComponentBase
         }
 
         await NotificationService.Success(response, $"{memberToSendOnBreak.Contact.PreferredName} Sent on break");
+
+        StateHasChanged();
     }
 
     private async Task OnReturnedFromBreak(Guid staffId)
@@ -187,9 +189,11 @@ public partial class StaffList : ComponentBase
             return;
         }
 
-        await NotificationService.Success(response, $"{memberToReturn.Contact.PreferredName} Sent on break");
-    }
+        await NotificationService.Success(response, $"{memberToReturn.Contact.PreferredName} returned from their break");
 
+        StateHasChanged();
+    }
+    
     #region Edit Form Methods
     private void ShowModal(Guid incidentId)
     {

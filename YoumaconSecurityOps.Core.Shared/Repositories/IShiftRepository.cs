@@ -12,7 +12,7 @@ public interface IShiftRepository: IRepository<ShiftReader>
     /// <param name="shiftId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>The updated <see cref="ShiftReader"/></returns>
-    Task<ShiftReader> CheckIn(Guid shiftId, CancellationToken cancellationToken = default);
+    Task<ShiftReader> CheckIn(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a particular shift's Check Out date, and notes it in the database
@@ -20,7 +20,7 @@ public interface IShiftRepository: IRepository<ShiftReader>
     /// <param name="shiftId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>The updated <see cref="ShiftReader"/></returns>
-    Task<ShiftReader> CheckOut(Guid shiftId, CancellationToken cancellationToken = default);
+    Task<ShiftReader> CheckOut(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a particular shift's <paramref name="currentLocationId"/> that the shift is reporting from.
@@ -29,5 +29,5 @@ public interface IShiftRepository: IRepository<ShiftReader>
     /// <param name="currentLocationId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>The updated <see cref="ShiftReader"/></returns>
-    Task<ShiftReader> ReportIn(Guid shiftId, Guid currentLocationId, CancellationToken cancellationToken = default);
+    Task<ShiftReader> ReportIn(YoumaconSecurityDbContext dbContext, Guid shiftId, Guid currentLocationId, CancellationToken cancellationToken = default);
 }

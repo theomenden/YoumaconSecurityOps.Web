@@ -2,22 +2,27 @@
 
 internal sealed class ShiftCheckInCommandHandler : IRequestHandler<ShiftCheckInCommandWithReturn, Guid>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly IMediator _mediator;
 
     private readonly IShiftRepository _shifts;
 
     private readonly ILogger<ShiftReportInCommandHandler> _logger;
 
-    public ShiftCheckInCommandHandler(IMediator mediator, IShiftRepository shifts, ILogger<ShiftReportInCommandHandler> logger)
+    public ShiftCheckInCommandHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMediator mediator, IShiftRepository shifts, ILogger<ShiftReportInCommandHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _mediator = mediator;
         _shifts = shifts;
-        _logger = logger;   
+        _logger = logger;
     }
 
     public async Task<Guid> Handle(ShiftCheckInCommandWithReturn request, CancellationToken cancellationToken)
     {
-        var updatedShift = await _shifts.CheckIn(request.ShiftId, cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var updatedShift = await _shifts.CheckIn(context,request.ShiftId, cancellationToken);
 
         await RaiseShiftUpdatedEvent(updatedShift, cancellationToken);
 

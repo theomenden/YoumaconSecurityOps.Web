@@ -2983,7 +2983,7 @@
           "build/netcoreapp2.1/xunit.runner.visualstudio.props": {}
         }
       },
-      "YoumaconSecurityOps.Core.EventStore/1.0.8": {
+      "YoumaconSecurityOps.Core.EventStore/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -2994,7 +2994,7 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.2",
           "System.Linq.Async": "6.0.1",
-          "YoumaconSecurityOps.Core.Shared": "1.0.8"
+          "YoumaconSecurityOps.Core.Shared": "1.0.18"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
@@ -3003,7 +3003,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.Shared/1.0.8": {
+      "YoumaconSecurityOps.Core.Shared/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -10045,12 +10045,12 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "YoumaconSecurityOps.Core.EventStore/1.0.8": {
+    "YoumaconSecurityOps.Core.EventStore/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj"
     },
-    "YoumaconSecurityOps.Core.Shared/1.0.8": {
+    "YoumaconSecurityOps.Core.Shared/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
@@ -10064,7 +10064,7 @@
       "Microsoft.EntityFrameworkCore.InMemory >= 6.0.2",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
       "Shouldly >= 4.0.3",
-      "YoumaconSecurityOps.Core.EventStore >= 1.0.8",
+      "YoumaconSecurityOps.Core.EventStore >= 1.0.18",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.1",
       "xunit.runner.visualstudio >= 2.4.3"
@@ -10074,7 +10074,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.8",
+    "version": "1.0.18",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore.Tests\\YoumaconSecurityOps.Core.EventStore.Tests.csproj",
       "projectName": "YoumaconSecurityOps.Core.EventStore.Tests",

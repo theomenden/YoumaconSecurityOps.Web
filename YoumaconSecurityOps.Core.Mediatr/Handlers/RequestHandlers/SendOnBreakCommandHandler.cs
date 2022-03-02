@@ -2,14 +2,17 @@
 
 internal sealed class SendOnBreakCommandHandler : IRequestHandler<SendOnBreakCommandWithReturn, Guid>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly IMediator _mediator;
 
     private readonly IStaffRepository _staff;
 
     private readonly ILogger<SendOnBreakCommandHandler> _logger;
 
-    public SendOnBreakCommandHandler(IMediator mediator, IStaffRepository staff, ILogger<SendOnBreakCommandHandler> logger)
+    public SendOnBreakCommandHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMediator mediator, IStaffRepository staff, ILogger<SendOnBreakCommandHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _mediator = mediator;
         _staff = staff;
         _logger = logger;
@@ -17,7 +20,9 @@ internal sealed class SendOnBreakCommandHandler : IRequestHandler<SendOnBreakCom
 
     public async Task<Guid> Handle(SendOnBreakCommandWithReturn request, CancellationToken cancellationToken)
     {
-        var couldUpdateStaffMember = await _staff.SendOnBreak(request.StaffId, cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var couldUpdateStaffMember = await _staff.SendOnBreak(context, request.StaffId, cancellationToken);
 
         if (couldUpdateStaffMember is null)
         {
@@ -38,13 +43,10 @@ internal sealed class SendOnBreakCommandHandler : IRequestHandler<SendOnBreakCom
         await _mediator.Publish(e, cancellationToken);
     }
 
-    private Task RaiseFailedToUpdateEntityEvent(SendOnBreakCommandWithReturn commandWithReturn,
-        CancellationToken cancellationToken)
+    private async Task RaiseFailedToUpdateEntityEvent(SendOnBreakCommandWithReturn commandWithReturn, CancellationToken cancellationToken)
     {
         var e = new FailedToUpdateEntityEvent();
 
-        _mediator.Publish(e, cancellationToken);
-
-        return Task.CompletedTask;
+        await _mediator.Publish(e, cancellationToken);
     }
 }

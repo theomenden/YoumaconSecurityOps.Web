@@ -5,9 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
-    <Version>1.0.8</Version>
-    <FileVersion>1.0.8</FileVersion>
-    <AssemblyVersion>1.0.8</AssemblyVersion>
+    <Version>1.0.18</Version>
+    <FileVersion>1.0.18</FileVersion>
+    <AssemblyVersion>1.0.18</AssemblyVersion>
   </PropertyGroup>
 
 </Project>

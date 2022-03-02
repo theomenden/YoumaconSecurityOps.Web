@@ -22,9 +22,7 @@ internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHan
     public IAsyncEnumerable<IncidentReader> Handle(GetIncidentsWithParametersQuery request, CancellationToken cancellationToken)
     {
         using var context = _dbContextFactory.CreateDbContext();
-
-        RaiseStaffListQueriedEvent(request.Parameters, cancellationToken);
-
+        
         var filteredIncidents = Filter(request.Parameters, _staff.GetAllAsync(context,cancellationToken));
 
         return filteredIncidents;
@@ -37,18 +35,5 @@ internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHan
             .Where(i => parameters.StaffIds.Contains(i.ReportedById))
             .Where(i => parameters.StaffIds.Contains(i.RecordedById))
             .Where(i => i.Severity == (int)parameters.Severity);
-    }
-
-    private Task RaiseStaffListQueriedEvent(IncidentQueryStringParameters parameters, CancellationToken cancellationToken)
-    {
-        var e = new IncidentListQueriedEvent(parameters)
-        {
-            Aggregate = nameof(IncidentQueryStringParameters),
-            MajorVersion = 1,
-            MinorVersion = 1,
-            Name = nameof(IncidentListQueriedEvent)
-        };
-
-        return _mediator.Publish(e, cancellationToken);
     }
 }

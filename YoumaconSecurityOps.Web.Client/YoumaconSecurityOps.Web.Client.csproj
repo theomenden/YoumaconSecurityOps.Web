@@ -5,14 +5,14 @@
     <UserSecretsId>aspnet-YoumaconSecurityOps.Web.Client-C3AB2D32-D248-4500-9C36-6C8117B848FC</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-    <Version>1.0.8</Version>
+    <Version>1.0.18</Version>
     <Company>AbDevCo</Company>
     <Description>An application developed to further support the efforts of the Youmacon Security Operations Team, and each member.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>2021</Copyright>
     <SignAssembly>False</SignAssembly>
-    <FileVersion>1.0.8</FileVersion>
-    <AssemblyVersion>1.0.8</AssemblyVersion>
+    <FileVersion>1.0.18</FileVersion>
+    <AssemblyVersion>1.0.18</AssemblyVersion>
     <ApplicationInsightsResourceId>/subscriptions/4fe94f7e-f6a2-43e0-a248-c28c347bd410/resourceGroups/YSecIt-rg/providers/microsoft.insights/components/YSecIt</ApplicationInsightsResourceId>
     <StartupObject>YoumaconSecurityOps.Web.Client.Program</StartupObject>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>

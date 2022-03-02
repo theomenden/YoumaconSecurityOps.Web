@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "guVVkkLFy91SnQKdY05uy32nQzfK8RhnbtT0la6kRBbyO+dAgTyGT+coVjH06997pEmKnX6HysVMlyK0XZLAmg==",
+  "dgSpecHash": "/epaJ0OcrKGDKYA0I0XcfT/K4mFIAl44i5hYIEjOug7XjSUD3XEvcyf5Py6qCorn5EkMPGyAQU2u58hU1uWGPw==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj",
   "expectedPackageFiles": [

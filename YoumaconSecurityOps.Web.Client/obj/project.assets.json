@@ -5341,15 +5341,15 @@
           "buildMultiTargeting/TG.Blazor.IndexedDB.props": {}
         }
       },
-      "YoumaconSecurityOps.Core.AutoMapper/1.0.8": {
+      "YoumaconSecurityOps.Core.AutoMapper/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "AutoMapper": "11.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "YoumaconSecurityOps.Core.EventStore": "1.0.8",
-          "YoumaconSecurityOps.Core.Shared": "1.0.8"
+          "YoumaconSecurityOps.Core.EventStore": "1.0.18",
+          "YoumaconSecurityOps.Core.Shared": "1.0.18"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.AutoMapper.dll": {}
@@ -5358,7 +5358,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.AutoMapper.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.EventStore/1.0.8": {
+      "YoumaconSecurityOps.Core.EventStore/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -5369,7 +5369,7 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.2",
           "System.Linq.Async": "6.0.1",
-          "YoumaconSecurityOps.Core.Shared": "1.0.8"
+          "YoumaconSecurityOps.Core.Shared": "1.0.18"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
@@ -5378,7 +5378,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.FluentEmailer/1.0.8": {
+      "YoumaconSecurityOps.Core.FluentEmailer/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -5396,7 +5396,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.FluentEmailer.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.Mediatr/1.0.8": {
+      "YoumaconSecurityOps.Core.Mediatr/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -5410,8 +5410,8 @@
           "Serilog": "2.10.0",
           "System.Linq.Async": "6.0.1",
           "TG.Blazor.IndexedDB": "1.5.0-preview",
-          "YoumaconSecurityOps.Core.EventStore": "1.0.8",
-          "YoumaconSecurityOps.Core.Shared": "1.0.8"
+          "YoumaconSecurityOps.Core.EventStore": "1.0.18",
+          "YoumaconSecurityOps.Core.Shared": "1.0.18"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.Mediatr.dll": {}
@@ -5420,7 +5420,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.Mediatr.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.Shared/1.0.8": {
+      "YoumaconSecurityOps.Core.Shared/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -5441,7 +5441,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.Shared.dll": {}
         }
       },
-      "YoumaconSecurityOps.Data.EntityFramework/1.0.8": {
+      "YoumaconSecurityOps.Data.EntityFramework/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -5455,7 +5455,7 @@
           "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
           "Microsoft.Extensions.Logging.Console": "6.0.0",
           "System.Linq.Async": "6.0.1",
-          "YoumaconSecurityOps.Core.Shared": "1.0.8"
+          "YoumaconSecurityOps.Core.Shared": "1.0.18"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Data.EntityFramework.dll": {}
@@ -5464,7 +5464,7 @@
           "bin/placeholder/YoumaconSecurityOps.Data.EntityFramework.dll": {}
         }
       },
-      "YsecItAuthApp.Web.EntityFramework/1.0.8": {
+      "YsecItAuthApp.Web.EntityFramework/1.0.18": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -5480,7 +5480,7 @@
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "YoumaconSecurityOps.Core.Shared": "1.0.8"
+          "YoumaconSecurityOps.Core.Shared": "1.0.18"
         },
         "compile": {
           "bin/placeholder/YsecItAuthApp.Web.EntityFramework.dll": {}
@@ -15287,37 +15287,37 @@
         "tg.blazor.indexeddb.nuspec"
       ]
     },
-    "YoumaconSecurityOps.Core.AutoMapper/1.0.8": {
+    "YoumaconSecurityOps.Core.AutoMapper/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.AutoMapper/YoumaconSecurityOps.Core.AutoMapper.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.AutoMapper/YoumaconSecurityOps.Core.AutoMapper.csproj"
     },
-    "YoumaconSecurityOps.Core.EventStore/1.0.8": {
+    "YoumaconSecurityOps.Core.EventStore/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj"
     },
-    "YoumaconSecurityOps.Core.FluentEmailer/1.0.8": {
+    "YoumaconSecurityOps.Core.FluentEmailer/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.FluentEmailer/YoumaconSecurityOps.Core.FluentEmailer.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.FluentEmailer/YoumaconSecurityOps.Core.FluentEmailer.csproj"
     },
-    "YoumaconSecurityOps.Core.Mediatr/1.0.8": {
+    "YoumaconSecurityOps.Core.Mediatr/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Mediatr/YoumaconSecurityOps.Core.Mediatr.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Mediatr/YoumaconSecurityOps.Core.Mediatr.csproj"
     },
-    "YoumaconSecurityOps.Core.Shared/1.0.8": {
+    "YoumaconSecurityOps.Core.Shared/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
     },
-    "YoumaconSecurityOps.Data.EntityFramework/1.0.8": {
+    "YoumaconSecurityOps.Data.EntityFramework/1.0.18": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Data.EntityFramework/YoumaconSecurityOps.Data.EntityFramework.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Data.EntityFramework/YoumaconSecurityOps.Data.EntityFramework.csproj"
     },
-    "YsecItAuthApp.Web.EntityFramework/1.0.8": {
+    "YsecItAuthApp.Web.EntityFramework/1.0.18": {
       "type": "project",
       "path": "../YsecItAuthApp.Web.EntityFramework/YsecItAuthApp.Web.EntityFramework.csproj",
       "msbuildProject": "../YsecItAuthApp.Web.EntityFramework/YsecItAuthApp.Web.EntityFramework.csproj"
@@ -15368,19 +15368,19 @@
       "Swashbuckle.AspNetCore >= 6.2.3",
       "System.Linq.Async >= 6.0.1",
       "TG.Blazor.IndexedDB >= 1.5.0-preview",
-      "YoumaconSecurityOps.Core.AutoMapper >= 1.0.8",
-      "YoumaconSecurityOps.Core.FluentEmailer >= 1.0.8",
-      "YoumaconSecurityOps.Core.Mediatr >= 1.0.8",
-      "YoumaconSecurityOps.Core.Shared >= 1.0.8",
-      "YoumaconSecurityOps.Data.EntityFramework >= 1.0.8",
-      "YsecItAuthApp.Web.EntityFramework >= 1.0.8"
+      "YoumaconSecurityOps.Core.AutoMapper >= 1.0.18",
+      "YoumaconSecurityOps.Core.FluentEmailer >= 1.0.18",
+      "YoumaconSecurityOps.Core.Mediatr >= 1.0.18",
+      "YoumaconSecurityOps.Core.Shared >= 1.0.18",
+      "YoumaconSecurityOps.Data.EntityFramework >= 1.0.18",
+      "YsecItAuthApp.Web.EntityFramework >= 1.0.18"
     ]
   },
   "packageFolders": {
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.8",
+    "version": "1.0.18",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
       "projectName": "YoumaconSecurityOps.Web.Client",

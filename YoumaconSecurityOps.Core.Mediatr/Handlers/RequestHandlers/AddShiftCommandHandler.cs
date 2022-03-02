@@ -2,6 +2,8 @@
 
 internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWithReturn, Guid> //AsyncRequestHandler<AddShiftCommandWithReturn>
 {
+    private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
+
     private readonly IEventStoreRepository _eventStore;
 
     private readonly ILogger<AddShiftCommandHandler> _logger;
@@ -9,15 +11,13 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWit
     private readonly IMapper _mapper;
 
     private readonly IMediator _mediator;
-        
-    public AddShiftCommandHandler(IEventStoreRepository eventStore, ILogger<AddShiftCommandHandler> logger, IMapper mapper,IMediator mediator)
+
+    public AddShiftCommandHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, ILogger<AddShiftCommandHandler> logger, IMapper mapper, IMediator mediator)
     {
+        _eventStoreDbContextFactory = eventStoreDbContextFactory;
         _eventStore = eventStore;
-
         _logger = logger;
-
         _mapper = mapper;
-
         _mediator = mediator;
     }
 
@@ -37,8 +37,11 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWit
         {
             Name = nameof(AddShiftCommandHandler)
         };
-            
-        await _eventStore.SaveAsync(_mapper.Map<EventReader>(e), cancellationToken);
+
+        await using var context =
+            await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        await _eventStore.SaveAsync(context, _mapper.Map<EventReader>(e), cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

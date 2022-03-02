@@ -4,15 +4,13 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftListQuery, ShiftReader>
 {
     private readonly ILogger<GetShiftListQueryHandler> _logger;
-    private readonly IMediator _mediator;
     private readonly IShiftAccessor _shifts;
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
-    public GetShiftListQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<GetShiftListQueryHandler> logger, IMediator mediator, IShiftAccessor shifts)
+    public GetShiftListQueryHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<GetShiftListQueryHandler> logger, IShiftAccessor shifts)
     {
         _dbContextFactory = dbContextFactory;
         _logger = logger;
-        _mediator = mediator;
         _shifts = shifts;
     }
         
@@ -24,19 +22,5 @@ internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftLi
         {
             yield return shift;
         }
-
-        await RaiseShiftLogQueriedEvent(request, cancellationToken);
-    }
-
-    private Task RaiseShiftLogQueriedEvent(GetShiftListQuery request, CancellationToken cancellationToken)
-    {
-        var e = new ShiftLogQueriedEvent(null)
-        {
-            Aggregate = nameof(GetShiftListQuery),
-            MajorVersion = 1,
-            Name = nameof(ShiftLogQueriedEvent)
-        };
-
-        return _mediator.Publish(e, cancellationToken);
     }
 }

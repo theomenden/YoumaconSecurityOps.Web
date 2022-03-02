@@ -1,6 +1,15 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-public record ReturnFromBreakCommandWithReturn(Guid StaffId) : ICommandWithReturn<Guid>
+public record ReturnFromBreakCommandWithReturn : ICommandWithReturn<Guid>
 {
-    public Guid Id => Guid.NewGuid();
+    public ReturnFromBreakCommandWithReturn(Guid staffId)
+    {
+        Id = Guid.NewGuid();
+        StaffId = staffId;
+    }
+
+    public Guid Id {get; }
+
+    public Guid StaffId { get; }
+
 }

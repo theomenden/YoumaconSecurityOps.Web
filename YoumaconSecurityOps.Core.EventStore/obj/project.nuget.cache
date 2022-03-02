@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tel/XkC7D7hymxjC+v5gdv0nhOi/YYZG80EysuM0FLmuThjgzvuBo3fKOrojx2ftADol+JTPFUnGjprM2D3a4g==",
+  "dgSpecHash": "2Wj0FmfnQuDHh7KVWb7+FSh5qf3a4TKaZxWEht/lb0xjeahjLFku6g3RnC1PEMnSaR1PbRbHmHtzrtXEB+mN4A==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore\\YoumaconSecurityOps.Core.EventStore.csproj",
   "expectedPackageFiles": [

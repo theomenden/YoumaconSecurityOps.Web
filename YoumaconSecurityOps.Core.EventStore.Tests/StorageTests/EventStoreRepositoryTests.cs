@@ -44,7 +44,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
             var eventsCount = _events.Count();
 
             //ACT
-            var results = await _eventStoreRepository.GetAll().ToListAsync();
+            var results = await _eventStoreRepository.GetAll(_testDbContext).ToListAsync();
 
             //ASSERT
             results.ShouldSatisfyAllConditions(
@@ -58,12 +58,14 @@ namespace YoumaconSecurityOps.Core.EventStore.Tests.StorageTests
         public async Task GetAllByAggregateId_ShouldReturnAllEventsInTheStore()
         {
             //ARRANGE
+
+
             var aggregateId = _events.Random().Id;
 
             var eventsCount = _events.Count(a => a.Id == aggregateId);
 
             //ACT
-            var results = await _eventStoreRepository.GetAllByAggregateId(aggregateId).ToListAsync();
+            var results = await _eventStoreRepository.GetAllByAggregateId(_testDbContext,aggregateId).ToListAsync();
 
             //ASSERT
             results.ShouldSatisfyAllConditions(

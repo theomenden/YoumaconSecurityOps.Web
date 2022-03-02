@@ -2,14 +2,17 @@
 
 internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFromBreakCommandWithReturn, Guid>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly IMediator _mediator;
 
     private readonly IStaffRepository _staff;
 
     private readonly ILogger<ReturnFromBreakCommandHandler> _logger;
 
-    public ReturnFromBreakCommandHandler(IMediator mediator, IStaffRepository staff, ILogger<ReturnFromBreakCommandHandler> logger)
+    public ReturnFromBreakCommandHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMediator mediator, IStaffRepository staff, ILogger<ReturnFromBreakCommandHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _mediator = mediator;
         _staff = staff;
         _logger = logger;
@@ -17,7 +20,9 @@ internal sealed class ReturnFromBreakCommandHandler : IRequestHandler<ReturnFrom
 
     public async Task<Guid> Handle(ReturnFromBreakCommandWithReturn request, CancellationToken cancellationToken)
     {
-        var couldUpdateStaffMember = await _staff.ReturnFromBreak(request.StaffId, cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var couldUpdateStaffMember = await _staff.ReturnFromBreak(context, request.StaffId, cancellationToken);
 
         if (couldUpdateStaffMember is null)
         {

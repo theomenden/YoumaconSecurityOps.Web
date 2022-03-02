@@ -2,14 +2,17 @@
 
 internal sealed class ShiftCheckoutCommandHandler : IRequestHandler<ShiftCheckoutCommandWithReturn, Guid>
 {
+    private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
+
     private readonly IMediator _mediator;
 
     private readonly IShiftRepository _shifts;
 
     private readonly ILogger<ShiftReportInCommandHandler> _logger;
 
-    public ShiftCheckoutCommandHandler(IMediator mediator, IShiftRepository shifts, ILogger<ShiftReportInCommandHandler> logger)
+    public ShiftCheckoutCommandHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMediator mediator, IShiftRepository shifts, ILogger<ShiftReportInCommandHandler> logger)
     {
+        _dbContextFactory = dbContextFactory;
         _mediator = mediator;
         _shifts = shifts;
         _logger = logger;   
@@ -17,7 +20,9 @@ internal sealed class ShiftCheckoutCommandHandler : IRequestHandler<ShiftCheckou
 
     public async Task<Guid> Handle(ShiftCheckoutCommandWithReturn request, CancellationToken cancellationToken)
     {
-        var updatedShift = await _shifts.CheckOut(request.ShiftId, cancellationToken);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var updatedShift = await _shifts.CheckOut(context, request.ShiftId, cancellationToken);
 
         await RaiseShiftUpdatedEvent(updatedShift, cancellationToken);
 
