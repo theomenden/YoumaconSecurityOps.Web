@@ -1,3 +1,12 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+using YoumaconSecurityOps.Core.EventStore.Events;
+using YoumaconSecurityOps.Web.Client.Bootstrapping;
+using YoumaconSecurityOps.Web.Client.Invariants;
+
 namespace YoumaconSecurityOps.Web.Client;
 public class Startup
 {
@@ -11,15 +20,23 @@ public class Startup
         builder.AddEnvironmentVariables();
 
         Configuration = builder.Build();
+        WebHostEnvironment = webHost;
+        Assemblies = GetAssemblies();
     }
 
     public IConfigurationRoot Configuration { get; }
+    
+    public IWebHostEnvironment WebHostEnvironment { get; }
+
+    public IDictionary<String, Assembly> Assemblies { get; set; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllersWithViews();
+        var initialScopes = Configuration.GetValue<String>("DownstreamApi:Scopes")?.Split(' ');
+
+        JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
         var appSettings = new AppSettings
         {
@@ -27,33 +44,33 @@ public class Startup
             EventStoreConnectionString = Configuration.GetConnectionString("YoumaEventStore"),
             YSecItAuthConnectionString = Configuration.GetConnectionString("YSecITSecurity")
         };
-
+        
         services.AddLogging(builder =>
         {
+            builder.ClearProviders();
             builder.AddSerilog(dispose: true);
         });
 
-        services.AddAuthServices(appSettings);
+        //services.AddAuthServices(appSettings);
 
         services
             .AddBlazorise(options =>
             {
-                options.ChangeTextOnKeyPress = true; // optional
+                options.Immediate = true; // optional
             })
             .AddBootstrap5Providers()
             .AddFontAwesomeIcons();
-
-        services.AddRazorPages();
-
-        services.AddMediatR(typeof(Program));
+        
 
         services.AddDataAccessServices(appSettings.YoumaDbConnectionString);
+
+        services.AddEventStoreServices(appSettings.EventStoreConnectionString);
+
+        services.AddMediatR(typeof(Program));
 
         services.AddAutoMappingServices();
 
         services.AddMediatrServices();
-
-        services.AddEventStoreServices(appSettings.EventStoreConnectionString);
 
         services.AddFrontEndDataServices();
 
@@ -73,16 +90,32 @@ public class Startup
         services.AddSingleton<SessionDetails>();
         services.AddScoped<CircuitHandler>(sp => new TrackingCircuitHandler(sp.GetRequiredService<SessionDetails>()));
 
-        services.AddSignalR();
+        services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
+            .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
+            .AddMicrosoftGraph(Configuration.GetSection("DownstreamApi"))
+            .AddInMemoryTokenCaches();
 
-        services.AddServerSideBlazor();
+        services.AddControllersWithViews()
+            .AddMicrosoftIdentityUI();
+
+        services.AddAuthorization(options =>
+        {
+            options.FallbackPolicy = options.DefaultPolicy;
+        });
+
+        services.AddSignalR();
+        
+        services.AddServerSideBlazor()
+            .AddMicrosoftIdentityConsentHandler();
+        services.AddRazorPages();
 
         services.AddIndexedDB(dbStore =>
         {
             dbStore.DbName = nameof(YoumaconSecurityOps);
             dbStore.Version = 1;
 
-            dbStore.Stores.Add(new StoreSchema
+            dbStore.Stores.Add(new()
             {
                 Name = "YSecRoles",
                 PrimaryKey = new(){Auto = false, Name = "roleId", KeyPath = "id"},
@@ -91,13 +124,13 @@ public class Startup
                     new()
                     {
                         Auto = false,
-                        Name = "Name",
+                        Name = "name",
                         KeyPath = nameof(StaffRole.Name),
                     }
                 }
             });
 
-            dbStore.Stores.Add(new StoreSchema
+            dbStore.Stores.Add(new ()
             {
                 Name = "YSecStaffTypes",
                 PrimaryKey = new() { Auto = false, Name = "staffTypeId", KeyPath = "id" },
@@ -106,18 +139,36 @@ public class Startup
                     new()
                     {
                         Auto = false,
-                        Name = "Title",
+                        Name = "title",
                         KeyPath = nameof(StaffType.Title),
                     }
                 }
             });
+
+            dbStore.Stores.Add(new ()
+            {
+                Name = "YSecEvents",
+                PrimaryKey = new () { Auto = false, Name = "aggregate", KeyPath = "aggregate"},
+                Indexes = new()
+                {
+                    new()
+                    {
+                        Auto = false,
+                        Name = "id",
+                        KeyPath = nameof(EventReader.Id)
+                    },
+                    new()
+                    {
+                    Auto = false,
+                    Name = "aggregateId",
+                    KeyPath = nameof(EventReader.AggregateId)
+                }
+                }
+            });
         });
 
-        services.RegisterBuiltCaches();
-
-        services.RegisterBuiltStreamingCaches();
     }
-
+    
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
@@ -134,24 +185,38 @@ public class Startup
         }
         app.UseHttpsRedirection();
 
-        app.UseSerilogRequestLogging();
+        app.UseSerilogRequestLogging(options => options.EnrichDiagnosticContext = RequestLoggingConfigurer.EnrichFromRequest);
 
         app.UseStaticFiles();
 
         app.UseRouting();
 
-        app.UseMiddleware(typeof(ExceptionLogger));
-
-        app.UseMiddleware(typeof(ExceptionHandler));
-
+        app.UseApiExceptionHandler(options =>
+        {
+            options.AddResponseDetails = OptionsDelegates.UpdateApiErrorResponse;
+            options.DetermineLogLevel = OptionsDelegates.DetermineLogLevel;
+        });
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapControllers();
             endpoints.MapBlazorHub();
             endpoints.MapFallbackToPage("/_Host");
         });
+        
+    }
+
+    private IDictionary<String, Assembly> GetAssemblies()
+    {
+        var assemblies = new Dictionary<String, Assembly>(StringComparer.Ordinal)
+        {
+            {StartUp.Executing, typeof(Startup).GetTypeInfo().Assembly},
+            {StartUp.Domain, typeof(BaseReader).GetTypeInfo().Assembly},
+        };
+
+        return assemblies;
     }
 }
 

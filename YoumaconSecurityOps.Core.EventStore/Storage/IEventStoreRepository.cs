@@ -54,7 +54,7 @@ public interface IEventStoreRepository : IAsyncEnumerable<EventReader>
     /// <param name="aggregateName"></param>
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Task"/></returns>
-    Task SaveAsync(EventStoreDbContext dbContext, Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events,
+    Task SaveAsync(EventStoreDbContext dbContext, Guid aggregateId, int originatingVersion, string callerName, IReadOnlyCollection<EventReader> events,
         string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default);
 
     /// <summary>

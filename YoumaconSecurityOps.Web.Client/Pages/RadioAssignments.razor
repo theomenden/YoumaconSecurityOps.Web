@@ -16,24 +16,24 @@
           ReadData="@OnReadData"
           Data="@_gridDisplay"
           TotalItems="@_totalRadios"
-          Editable="true"
+          Editable
           CommandMode="DataGridCommandMode.Commands"
-          Responsive="true"
-          Sortable="true"
-          Hoverable="true"
-          Striped="true"
+          Responsive
+          Sortable
+          Hoverable
+          Striped
           EditMode="DataGridEditMode.Popup"
-          FixedHeader="true"
+          FixedHeader
           FixedHeaderDataGridHeight="400px"
           @bind-SelectedRow="@_selectedRadio"
           RowStyling="@OnRowStyling"
-          ShowPager="true"
+          ShowPager
           PagerPosition="DataGridPagerPosition.Bottom"
-          ShowPageSizes="true"
+          ShowPageSizes
           CurrentPage="CurrentPage"
           PageChanged="e => CurrentPage = e.Page"
-          DetailRowTrigger="@(item => item.Id == _selectedRadio?.Id)"
-          Class="bg-dark text-white-50">
+          DetailRowTrigger="@(context => context.Item.Id == _selectedRadio?.Id)"
+          >
     <PopupTitleTemplate>
         @SetPopupTitle(context);
     </PopupTitleTemplate>
@@ -50,20 +50,20 @@
         </Span>
     </EmptyTemplate>
     <DataGridAggregates>
-        <DataGridAggregate TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCheckedIn)" AggregationFunction=@(DataGridAggregate<RadioScheduleReader>.FalseCount)>
+        <DataGridAggregate TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCheckedIn)" AggregationFunction="@(DataGridAggregate<RadioScheduleReader>.FalseCount)">
             <DisplayTemplate>
-                <Text TextColor="TextColor.White50" Italic="true">@($"Total Checked Out Radios: {context.Value}")</Text>
+                <Text TextColor="TextColor.White50" Italic>@($"Total Checked Out Radios: {context.Value}")</Text>
             </DisplayTemplate>
         </DataGridAggregate>
         <DataGridAggregate TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCharging)"
                            AggregationFunction="@(DataGridAggregate<RadioScheduleReader>.TrueCount)">
             <DisplayTemplate>
-                <Text TextColor="TextColor.White50" Italic="true">@($"Total Charging Radios: {context.Value}")</Text>
+                <Text TextColor="TextColor.White50" Italic>@($"Total Charging Radios: {context.Value}")</Text>
             </DisplayTemplate>
         </DataGridAggregate>
     </DataGridAggregates>
     <DataGridColumns>
-        <DataGridCommandColumn TItem="RadioScheduleReader" HeaderCellClass="bg-dark">
+        <DataGridCommandColumn TItem="RadioScheduleReader">
             <NewCommandTemplate>
                 <Blazorise.Bootstrap5.Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </NewCommandTemplate>
@@ -77,10 +77,10 @@
                 <Blazorise.Bootstrap5.Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Blazorise.Bootstrap5.Button>
             </EditCommandTemplate>
             <DeleteCommandTemplate>
-                <Blazorise.Bootstrap5.Button Color="Color.None" Display="Display.None"></Blazorise.Bootstrap5.Button>
+                <Blazorise.Bootstrap5.Button Color="Color.Default" Display="Display.None"></Blazorise.Bootstrap5.Button>
             </DeleteCommandTemplate>
         </DataGridCommandColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.RadioNumber)" Caption="Radio Number" Sortable="true" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.RadioNumber)" Caption="Radio Number" Sortable="true" Editable="true">
             <DisplayTemplate>
                 @context.RadioNumber
             </DisplayTemplate>
@@ -88,7 +88,7 @@
                 <TextEdit Text="@_selectedRadio.RadioNumber"></TextEdit>
             </EditTemplate>
         </DataGridColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="LastStaffToHave.Contact.PreferredName" Caption="Last Staff To Have" Sortable="true" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="LastStaffToHave.Contact.PreferredName" Caption="Last Staff To Have" Sortable="true" Editable="true">
             <DisplayTemplate>
                 @(_staffMembers.FirstOrDefault(st => st.Id == context.LastStaffToHave?.Id)?.Contact.PreferredName ?? String.Empty)
             </DisplayTemplate>
@@ -103,7 +103,7 @@
                             DefaultItemText="Choose a Staff Member"/>
             </EditTemplate>
         </DataGridColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="Location.Name" Caption="Starting Location" Sortable="true" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="Location.Name" Caption="Starting Location" Sortable="true" Editable="true">
             <DisplayTemplate>
                 @(_locations.FirstOrDefault(l => l.Id == context.Location?.Id)?.Name ?? String.Empty)
             </DisplayTemplate>
@@ -118,25 +118,25 @@
                             DefaultItemText="Choose where the radio will start"/>
             </EditTemplate>
         </DataGridColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.CheckedInAt)" Caption="Checked In At" Sortable="true" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.CheckedInAt)" Caption="Checked In At" Sortable="true" Editable="true">
             <DisplayTemplate>
                 @context.CheckedInAt
             </DisplayTemplate>
             <EditTemplate>
-                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedStartDate" DateChanged="@OnStartDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
-                </DateEdit>
+                <DatePicker TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedStartDate" DateChanged="@OnStartDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DatePicker>
             </EditTemplate>
         </DataGridColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.CheckedOutAt)" Caption="Checked Out At" Sortable="true" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.CheckedOutAt)" Caption="Checked Out At" Sortable="true" Editable="true">
             <DisplayTemplate>
                 @context.CheckedOutAt
             </DisplayTemplate>
             <EditTemplate>
-                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedEndDate" DateChanged="@OnEndDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
-                </DateEdit>
+                <DatePicker TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedEndDate" DateChanged="@OnEndDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DatePicker>
             </EditTemplate>
         </DataGridColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCheckedIn)" Caption="Currently Checked In" Sortable="false" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCheckedIn)" Caption="Currently Checked In" Sortable="false" Editable="true">
             <DisplayTemplate>
                 <i class="far @DetermineDisplayIcon(context.IsCheckedIn)"></i>
             </DisplayTemplate>
@@ -144,7 +144,7 @@
                 <Blazorise.Bootstrap5.Check TValue="bool" Checked="context.Item.IsCheckedIn" Disabled="false" ReadOnly="false"/>
             </EditTemplate>
         </DataGridColumn>
-        <DataGridColumn HeaderCellClass="bg-dark" TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCharging)" Caption="Charging" Sortable="false" Editable="true">
+        <DataGridColumn TItem="RadioScheduleReader" Field="@nameof(RadioScheduleReader.IsCharging)" Caption="Charging" Sortable="false" Editable="true">
             <DisplayTemplate>
                 <i class="far @DetermineDisplayIcon(context.IsCharging)"></i>
             </DisplayTemplate>

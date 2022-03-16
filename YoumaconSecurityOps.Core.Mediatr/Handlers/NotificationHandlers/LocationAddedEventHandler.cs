@@ -28,7 +28,7 @@ internal sealed class LocationAddedEventHandler: INotificationHandler<LocationAd
                 .ToListAsync(cancellationToken))
             .AsReadOnly();
 
-        await _eventStore.SaveAsync(context, notification.Id,notification.MinorVersion,eventsOnThisAggregate, notification.Name, cancellationToken);
+        await _eventStore.SaveAsync(context, notification.Id,notification.MinorVersion, nameof(LocationAddedEventHandler),eventsOnThisAggregate, notification.Name, cancellationToken);
 
         await RaiseLocationListUpdatedEvent(notification, cancellationToken);
     }

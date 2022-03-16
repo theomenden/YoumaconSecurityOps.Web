@@ -1,22 +1,24 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿using TG.Blazor.IndexedDB;
+
+namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
 internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWithReturn, Guid> //AsyncRequestHandler<AddShiftCommandWithReturn>
 {
+    private readonly IndexedDBManager _indexedDbManager;
+
     private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
 
     private readonly IEventStoreRepository _eventStore;
-
-    private readonly ILogger<AddShiftCommandHandler> _logger;
-        
+    
     private readonly IMapper _mapper;
 
     private readonly IMediator _mediator;
 
-    public AddShiftCommandHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, ILogger<AddShiftCommandHandler> logger, IMapper mapper, IMediator mediator)
+    public AddShiftCommandHandler(IndexedDBManager indexedDbManager, IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator)
     {
+        _indexedDbManager = indexedDbManager;
         _eventStoreDbContextFactory = eventStoreDbContextFactory;
         _eventStore = eventStore;
-        _logger = logger;
         _mapper = mapper;
         _mediator = mediator;
     }
@@ -35,14 +37,29 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWit
     {
         var e = new ShiftCreatedEvent(shiftWriter)
         {
-            Name = nameof(AddShiftCommandHandler)
+            Name = nameof(AddShiftCommandWithReturn)
         };
 
         await using var context =
             await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        await _eventStore.SaveAsync(context, _mapper.Map<EventReader>(e), cancellationToken);
+        var eventReader = _mapper.Map<EventReader>(e);
 
-        await _mediator.Publish(e, cancellationToken);
+        await _eventStore.SaveAsync(context, eventReader , cancellationToken).ConfigureAwait(false);
+
+        await PersistEventToClientStorage(eventReader).ConfigureAwait(false);
+
+        await _mediator.Publish(e, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task PersistEventToClientStorage(EventReader eventToStore)
+    {
+        var eventRecord = new StoreRecord<EventReader>
+        {
+            Storename = "YsecEvents",
+            Data = eventToStore
+        };
+
+        await _indexedDbManager.AddRecord(eventRecord).ConfigureAwait(false);
     }
 }

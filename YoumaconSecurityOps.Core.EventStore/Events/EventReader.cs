@@ -34,6 +34,11 @@ public class EventReader : IEntity, IEquatable<EventReader>, IComparable<EventRe
     public String Aggregate { get; set; }
 
     /// <value>
+    /// The id of the aggregate that the event takes place under
+    /// </value>
+    public Guid AggregateId { get; set; }
+
+    /// <value>
     /// The data that event carries through processing
     /// </value>
     public String Data { get; set; }

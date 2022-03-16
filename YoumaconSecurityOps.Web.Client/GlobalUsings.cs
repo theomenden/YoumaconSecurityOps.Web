@@ -35,6 +35,7 @@ global using YoumaconSecurityOps.Core.Shared.Models.Readers;
 global using YoumaconSecurityOps.Core.Shared.Models.Writers;
 global using YoumaconSecurityOps.Data.EntityFramework.Extensions;
 global using YoumaconSecurityOps.Web.Client.Extensions;
+global using YoumaconSecurityOps.Web.Client.Helpers;
 global using YoumaconSecurityOps.Web.Client.Middleware;
 global using YoumaconSecurityOps.Web.Client.Models;
 global using YoumaconSecurityOps.Web.Client.Services;

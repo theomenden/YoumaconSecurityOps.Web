@@ -1,72 +1,20 @@
 ﻿@page "/admin"
-@using Blazorise.Charts
-@using YoumaconSecurityOps.Core.EventStore.Events
 
-<Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
-    <JumbotronTitle Size="JumbotronTitleSize.Is4">Administrative Information for Security and Ops</JumbotronTitle>
-    <JumbotronSubtitle>
-        This page is for administration
-    </JumbotronSubtitle>
-    <Divider></Divider>
-    <Paragraph>
-        Check out any chart, graph, or function on this page
-    </Paragraph>
-</Jumbotron>
-<CardDeck>
-
-    <Card Margin="Margin.Is4.OnY">
-        <CardHeader>
-            <Blazorise.Bootstrap5.CardTitle>Shift Information</Blazorise.Bootstrap5.CardTitle>
-        </CardHeader>
-        <CardBody>
-            <Blazorise.Bootstrap5.Button Color="Color.Primary" Outline="true" Clicked="@(async () => await HandleShiftLocationGraphRedraw(_shiftsByLocationBarChart, GetShiftLocationBarChartData))">Redraw</Blazorise.Bootstrap5.Button>
-        </CardBody>
-        <CardBody>
-            <Blazorise.Charts.Chart @ref="_shiftsByLocationBarChart" Type="ChartType.Bar" TItem="int" Options="ConfigureBarChartOptions()" />
-        </CardBody>
-    </Card>
-    <Card>
-        <CardHeader>
-            <Blazorise.Bootstrap5.CardTitle>Application Events</Blazorise.Bootstrap5.CardTitle>
-        </CardHeader>
-        <CardBody>
-            <Blazorise.Bootstrap5.Button Color="Color.Primary" Outline="true" Clicked="@(async() => await Reset())">Refresh Events</Blazorise.Bootstrap5.Button>
-        </CardBody>
-        <CardBody>
-        <DataGrid @ref="@_eventDataGrid"
-                  TItem="EventReader"
-                  ReadData="@OnReadEventData"
-                  Data="@_eventDataGridDisplay"
-                  TotalItems="@_totalEvents"
-                  Editable="false"
-                  CommandMode="DataGridCommandMode.ButtonRow"
-                  Responsive="true"
-                  Sortable="true"
-                  Hoverable="true"
-                  Striped="true"
-                  FixedHeader="true"
-                  FixedHeaderDataGridHeight="400px"
-                  @bind-SelectedRow="@_selectedEvent"
-                  Virtualize="true"
-                  DetailRowTrigger="@(item => item.Id == _selectedEvent?.Id)">
-            <EmptyTemplate>
-                <Paragraph>No Events Found....</Paragraph>
-            </EmptyTemplate>
-            <LoadingTemplate>
-                <Span>
-                    <SpinKit Type="SpinKitType.Grid"></SpinKit>
-                </Span>
-            </LoadingTemplate>
-            <DataGridColumns>
-                <DataGridCommandColumn TItem="EventReader" />
-                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Name)" Caption="Name" />
-                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Id)" Displayable="false" Sortable="false" />
-                <DataGridNumericColumn TItem="EventReader" Field="@nameof(EventReader.MajorVersion)" Caption="Major" />
-                <DataGridNumericColumn TItem="EventReader" Field="@nameof(EventReader.MinorVersion)" Caption="Minor" />
-                <DataGridColumn TItem="EventReader" Field="@nameof(EventReader.Aggregate)" Caption="Aggregate" />
-                <DataGridDateColumn TItem="EventReader" Field="@nameof(EventReader.CreatedAt)" Caption="Event Registered" />
-            </DataGridColumns>
-        </DataGrid>
-        </CardBody>
-    </Card>
-</CardDeck>
+<DropContainer TItem="StaffReader" Items="@_staff" ItemsFilter="@OnItemFilter" ItemDropped="@OnItemDropped" Flex="Flex.Wrap.Grow.Is1">
+    <ChildContent>
+        @foreach (var location in _locations)
+        {
+            <DropZone TItem="LocationReader" Name="@nameof(LocationReader.Name)" DropAllowed="@((item) => !item.IsHotel)" Border="Border.Rounded" Background="Background.Light" Padding="Padding.Is3" Margin="Margin.Is3" Flex="Flex.Grow.Is1">
+                <Heading Size="HeadingSize.Is4" Margin="Margin.Is3.FromBottom">@location.Name</Heading>
+            </DropZone>
+        }
+    </ChildContent>
+    <ItemTemplate>
+        <Card Shadow="Shadow.Default" Margin="Margin.Is3.OnY">
+            <CardBody>
+                <Blazorise.Icon IconSize="IconSize.Large" IconStyle="IconStyle.Solid" Name="IconName.UserCheck" />
+                <CardText> @context.Contact.LastName, @context.Contact.PreferredName </CardText>
+            </CardBody>
+        </Card>
+    </ItemTemplate>
+</DropContainer>

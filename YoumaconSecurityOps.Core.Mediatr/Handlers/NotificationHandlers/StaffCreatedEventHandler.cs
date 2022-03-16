@@ -2,6 +2,10 @@
 
 internal sealed class StaffCreatedEventHandler : INotificationHandler<StaffCreatedEvent>
 {
+    private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
+
+    private readonly IEventStoreRepository _eventStore;
+
     private readonly IStaffRepository _staff;
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
@@ -12,8 +16,10 @@ internal sealed class StaffCreatedEventHandler : INotificationHandler<StaffCreat
 
     private readonly ILogger<StaffCreatedEventHandler> _logger;
 
-    public StaffCreatedEventHandler(IStaffRepository staff, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMapper mapper, IMediator mediator, ILogger<StaffCreatedEventHandler> logger)
+    public StaffCreatedEventHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IStaffRepository staff, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMapper mapper, IMediator mediator, ILogger<StaffCreatedEventHandler> logger)
     {
+        _eventStoreDbContextFactory = eventStoreDbContextFactory;
+        _eventStore = eventStore;
         _staff = staff;
         _dbContextFactory = dbContextFactory;
         _mapper = mapper;
@@ -27,23 +33,30 @@ internal sealed class StaffCreatedEventHandler : INotificationHandler<StaffCreat
 
         var staffMember = _mapper.Map<StaffReader>(notification.StaffWriter);
         
-        try
+        if(!(await _staff.AddAsync(context, staffMember, cancellationToken)))
         {
-            await _staff.AddAsync(context, staffMember, cancellationToken);
-
-            await RaiseStaffListUpdatedEvent(staffMember, cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Failed to add staff information for member with id {staffId} exception: {@ex}", staffMember.Id, ex);
+            _logger.LogError("Failed to add staff information for member with id {staffId}", staffMember.Id);
             await RaiseFailedToAddEntityEvent(notification, cancellationToken);
-            throw;
+            return;
         }
+        
+        await RaiseStaffListUpdatedEvent(notification, staffMember, cancellationToken);
     }
 
-    private async Task RaiseStaffListUpdatedEvent(StaffReader staffReader, CancellationToken cancellationToken)
+    private async Task RaiseStaffListUpdatedEvent(StaffCreatedEvent previousEvent,StaffReader staffReader, CancellationToken cancellationToken)
     {
-        var e = new StaffListUpdatedEvent(staffReader);
+        var e = new StaffListUpdatedEvent(staffReader)
+        {
+            Name = nameof(StaffListUpdatedEvent)
+        };
+
+        await using var context = await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var previousEvents = (await _eventStore.GetAllByAggregateIdAsync(context, previousEvent.AggregateId, cancellationToken)).ToList();
+
+        await _eventStore.SaveAsync(context, previousEvent.AggregateId, previousEvent.MinorVersion,
+            nameof(RaiseStaffListUpdatedEvent), previousEvents.AsReadOnly(),
+            previousEvent.Aggregate, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

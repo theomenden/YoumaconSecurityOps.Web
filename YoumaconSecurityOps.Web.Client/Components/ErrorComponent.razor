@@ -1,19 +1,19 @@
-﻿@page "/appError"
-<Div>
-    <Container Fluid="true" Background="Background.Dark" VerticalAlignment="VerticalAlignment.Top" Margin="Margin.Is3.OnDesktop.Is2.OnMobile" >
-        <Row>
-            <Column>
-                <Div>
-                    <Paragraph Casing="CharacterCasing.Upper" TextColor="TextColor.Danger" TextWeight="TextWeight.Bold" TextAlignment="TextAlignment.Center">Error: @ApiError.ResponseCode.ToString()</Paragraph>
-                </Div>
-            </Column>
-        </Row>
-        <Row>
-            <Column>
-                <Div>
-                    <Paragraph Casing="CharacterCasing.Title" TextColor="TextColor.White" TextWeight="TextWeight.Normal" TextAlignment="TextAlignment.Left">Message: @ApiError.ResponseMessage</Paragraph>
-                </Div>
-            </Column>
-        </Row>
-    </Container>
-</Div>
+﻿<Card Background="Background.Dark" WhiteText Margin="Margin.Is3.FromTop.Is2.OnX.OnDesktop" Shadow="Shadow.Default" Border="Border.Dark.OnAll.Is1.Rounded">
+    <CardHeader>
+        An Error Has Occurred <Blazorise.Icon IconStyle="IconStyle.Solid" TextColor="TextColor.Danger" Name="IconName.ExclamationTriangle" />
+    </CardHeader>
+    <CardBody>
+        <CardTitle>
+            Error Status Code: @GetResponseCodes()
+        </CardTitle>
+        <CardSubtitle>
+            Correlation Id: @GetCorrelationIds()
+        </CardSubtitle>
+        <CardText>
+            @GetResponseMessages()                                    
+        </CardText>
+    </CardBody>
+    <CardFooter TextColor="TextColor.Muted">
+        <Text Italic>Give the Status Code and Correlation Id to an IT member for them to review</Text>
+    </CardFooter>
+</Card>

@@ -47,8 +47,8 @@ internal sealed class EventStoreRepository : IEventStoreRepository
     public IAsyncEnumerable<EventReader> GetAllByAggregateId(EventStoreDbContext dbContext, Guid aggregateId, CancellationToken cancellationToken = default)
     {
         var events = dbContext.Events
-            .AsAsyncEnumerable()
-            .Where(e => e.Id == aggregateId);
+            .Where(e => e.AggregateId == aggregateId)
+            .AsAsyncEnumerable();
 
         return events;
     }
@@ -56,7 +56,7 @@ internal sealed class EventStoreRepository : IEventStoreRepository
     public async Task<IEnumerable<EventReader>> GetAllByAggregateIdAsync(EventStoreDbContext dbContext, Guid aggregateId, CancellationToken cancellationToken = default)
     {
         var eventsWithMatchedAggregateId = await dbContext.Events
-            .Where(e => e.Id.Equals(aggregateId))
+            .Where(e => e.AggregateId == aggregateId)
             .AsQueryable()
             .ToListAsync(cancellationToken);
 
@@ -64,7 +64,7 @@ internal sealed class EventStoreRepository : IEventStoreRepository
     }
 
 
-    public async Task SaveAsync(EventStoreDbContext dbContext, Guid aggregateId, int originatingVersion, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
+    public async Task SaveAsync(EventStoreDbContext dbContext, Guid aggregateId, int originatingVersion, string callerName, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
     {
         if (!events.Any())
         {
@@ -72,10 +72,12 @@ internal sealed class EventStoreRepository : IEventStoreRepository
         }
             
         var listOfEvents = events.Select(ev => new EventReader
-        {
+        { 
+            Id = Guid.NewGuid(),
+            AggregateId = aggregateId,
             Aggregate = aggregateName,
-            Data = JsonSerializer.Serialize(ev),
-            Name = ev.GetType().Name,
+            Data = JsonSerializer.Serialize(ev.Data),
+            Name = callerName,
             MinorVersion = ++originatingVersion,
             MajorVersion = ev.MajorVersion
         });
@@ -84,7 +86,6 @@ internal sealed class EventStoreRepository : IEventStoreRepository
 
         await dbContext.SaveChangesAsync(cancellationToken);
     }
-
     public async Task SaveAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default): Attempting to add: {@initialEvent}", initialEvent);

@@ -1,6 +1,71 @@
 ﻿@page "/room-schedule"
-<h3>Rooms</h3>
+<Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+    <JumbotronTitle Casing="CharacterCasing.Title" Size="JumbotronTitleSize.Is4">
+        Room Schedule
+    </JumbotronTitle>
+    <JumbotronSubtitle>
+        View Currently Available and Occupied Rooms
+    </JumbotronSubtitle>
+    <Divider />
+</Jumbotron>
 
-@code {
-
-}
+<Divider />
+<DataGrid
+    @ref="_dataGrid"
+    CommandMode="DataGridCommandMode.Commands"
+    RowStyling="OnRowStyling"
+    Responsive
+    Sortable
+    Filterable
+    Editable
+    EditMode="DataGridEditMode.Popup"
+    Hoverable
+    Striped
+    FixedHeader
+    FixedHeaderDataGridHeight="400px"
+    @bind-SelectedRow="@_selectedRoom"
+    DetailRowTrigger="@(context => context.Item.Id == _selectedRoom?.Id)"
+    ReadData="OnReadData"
+    TItem="RoomScheduleReader"
+    Virtualize
+    TotalItems="_totalRooms">
+    <PopupTitleTemplate>
+        @SetPopupTitle(context);
+    </PopupTitleTemplate>
+    <LoadingTemplate>
+        <Div>
+            <SpinKit Type="SpinKitType.Grid" Color="#ab3ed8"/>
+        </Div>
+    </LoadingTemplate>
+    <EmptyTemplate>
+        <Div>
+            <Paragraph>
+                <Heading Size="HeadingSize.Is5" TextColor="TextColor.Danger">No Rooms found!</Heading>
+            </Paragraph>
+        </Div>
+    </EmptyTemplate>
+    <DataGridColumns>
+    <DataGridCommandColumn TItem="RoomScheduleReader">
+        <NewCommandTemplate>
+            <Button Color="Color.Success" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </NewCommandTemplate>
+        <SaveCommandTemplate>
+            <Button Color="Color.Primary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </SaveCommandTemplate>
+        <CancelCommandTemplate>
+            <Button Color="Color.Secondary" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </CancelCommandTemplate>
+        <EditCommandTemplate>
+            <Button Color="Color.Primary" Margin="Margin.Is2.OnX.OnDesktop.Is1.OnX.OnMobile" Padding="Padding.Is1.OnAll" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
+        </EditCommandTemplate>
+        <DeleteCommandTemplate>
+            <Button Color="Color.Default" Display="Display.None"></Button>
+        </DeleteCommandTemplate>
+    </DataGridCommandColumn>
+    <DataGridColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.RoomNumber)" Caption="Room Number" Sortable Editable>
+        <DisplayTemplate>
+            @context.RoomNumber
+        </DisplayTemplate>
+    </DataGridColumn>
+    </DataGridColumns>
+</DataGrid>

@@ -22,6 +22,6 @@ internal sealed class IncidentUpdatedEventHandler : INotificationHandler<Inciden
 
         var previousEvents = (await _eventStore.GetAllByAggregateIdAsync(context,notification.Id, cancellationToken)).ToList();
         
-        await _eventStore.SaveAsync(context,notification.Id, notification.MajorVersion, previousEvents.AsReadOnly(), notification.Name, cancellationToken);
+        await _eventStore.SaveAsync(context,notification.Id, notification.MajorVersion, nameof(IncidentUpdatedEventHandler), previousEvents.AsReadOnly(), notification.Name, cancellationToken);
     }
 }

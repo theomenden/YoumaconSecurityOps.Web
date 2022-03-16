@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.EventStore.Events.Added;
 
-public class ShiftAddedEvent: EventBase
+public class ShiftAddedEvent : EventBase
 {
     public ShiftAddedEvent(ShiftReader shift)
     {

@@ -2,6 +2,10 @@
 
 internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffTypeRoleMapCreatedEvent>
 {
+    private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
+
+    private readonly IEventStoreRepository _eventStore;
+
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
     private readonly ILogger<StaffTypeRoleMapCreatedEventHandler> _logger;
@@ -12,9 +16,10 @@ internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffT
 
     private readonly IStaffRoleMapRepository _staffRoleMaps;
 
-    public StaffTypeRoleMapCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<StaffTypeRoleMapCreatedEventHandler> logger,
-        IMapper mapper, IMediator mediator, IStaffRoleMapRepository staffRoleMaps)
+    public StaffTypeRoleMapCreatedEventHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<StaffTypeRoleMapCreatedEventHandler> logger, IMapper mapper, IMediator mediator, IStaffRoleMapRepository staffRoleMaps)
     {
+        _eventStoreDbContextFactory = eventStoreDbContextFactory;
+        _eventStore = eventStore;
         _dbContextFactory = dbContextFactory;
         _logger = logger;
         _mapper = mapper;
@@ -24,7 +29,6 @@ internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffT
 
     public async Task Handle(StaffTypeRoleMapCreatedEvent notification, CancellationToken cancellationToken)
     {
-
         try
         {
             await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
@@ -33,7 +37,7 @@ internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffT
 
             await _staffRoleMaps.AddAsync(context, staffTypeRoleMap, cancellationToken);
 
-            await RaiseStaffTypeRoleMapAddedEvent(staffTypeRoleMap, cancellationToken);
+            await RaiseStaffTypeRoleMapAddedEvent(notification, staffTypeRoleMap, cancellationToken);
         }
         catch (Exception e)
         {
@@ -49,10 +53,22 @@ internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffT
         await _mediator.Publish(e, cancellationToken);
     }
 
-    private async Task RaiseStaffTypeRoleMapAddedEvent(StaffTypesRoles staffTypeRoleMap,
+    private async Task RaiseStaffTypeRoleMapAddedEvent(StaffTypeRoleMapCreatedEvent previousEvent, StaffTypesRoles staffTypeRoleMap,
         CancellationToken cancellationToken)
     {
-        var e = new StaffTypeRoleMapAddedEvent(staffTypeRoleMap);
+        var e = new StaffTypeRoleMapAddedEvent(staffTypeRoleMap)
+        {
+            Name = nameof(StaffTypeRoleMapCreatedEvent)
+        };
+        
+        await using var context =
+            await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+       var previousEvents = (await _eventStore.GetAllByAggregateIdAsync(context, previousEvent.AggregateId, cancellationToken)).ToList();
+
+       await _eventStore.SaveAsync(context, previousEvent.AggregateId, previousEvent.MinorVersion,
+           nameof(RaiseStaffTypeRoleMapAddedEvent),
+           previousEvents.AsReadOnly(), previousEvent.Aggregate, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

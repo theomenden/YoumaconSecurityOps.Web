@@ -25,7 +25,7 @@ internal class StaffTypeRoleMapAddedEventHandler : INotificationHandler<StaffTyp
                 .ToListAsync(cancellationToken))
             .AsReadOnly();
 
-        await _eventStore.SaveAsync(context,notification.Id, notification.MinorVersion, eventsOnThisAggregate, notification.Name, cancellationToken);
+        await _eventStore.SaveAsync(context,notification.Id, notification.MinorVersion, nameof(StaffTypeRoleMapAddedEventHandler), eventsOnThisAggregate, notification.Name, cancellationToken);
     }
 }
 

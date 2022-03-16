@@ -63,7 +63,7 @@
             },
             "SendGrid": {
               "target": "Package",
-              "version": "[9.25.3, )"
+              "version": "[9.26.0, )"
             }
           },
           "imports": [
@@ -81,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

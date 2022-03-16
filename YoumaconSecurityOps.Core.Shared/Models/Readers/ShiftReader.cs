@@ -7,14 +7,8 @@
 /// <inheritdoc cref="BaseReader"/>
 /// </summary>
 [Table("Shifts")]
-public partial class ShiftReader: BaseReader
+public partial class ShiftReader: BaseReader, IComparable<ShiftReader>
 {
-    public ShiftReader()
-        :base()
-    {
-            
-    }
-
     #region Basic Properties
     /// <value>
     /// Id for the <see cref="StaffReader"/> who owns this shift
@@ -138,4 +132,6 @@ public partial class ShiftReader: BaseReader
     }
 
     #endregion
+
+    public int CompareTo(ShiftReader? other) => other is null ? 1 : StartAt.CompareTo(other.StartAt);
 }

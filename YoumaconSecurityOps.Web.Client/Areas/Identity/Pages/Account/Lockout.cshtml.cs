@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TestAuthApp.Areas.Identity.Pages.Account
-{
-    [AllowAnonymous]
-    public class LockoutModel : PageModel
-    {
-        public void OnGet()
-        {
+namespace TestAuthApp.Areas.Identity.Pages.Account;
 
-        }
+[AllowAnonymous]
+public class LockoutModel : PageModel
+{
+    public void OnGet()
+    {
+
     }
 }

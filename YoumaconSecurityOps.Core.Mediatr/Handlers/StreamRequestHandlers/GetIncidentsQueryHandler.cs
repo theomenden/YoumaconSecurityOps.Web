@@ -15,12 +15,13 @@ internal sealed class GetIncidentsQueryHandler : IStreamRequestHandler<GetIncide
         _logger = logger;
     }
 
-    public IAsyncEnumerable<IncidentReader> Handle(GetIncidentsQuery request, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<IncidentReader> Handle(GetIncidentsQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        using var context = _dbContextFactory.CreateDbContext();
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        var incidents = _incidents.GetAllAsync(context, cancellationToken);
-        
-        return incidents;
+        await foreach (var incident in _incidents.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        {
+            yield return incident;
+        }
     }
 }

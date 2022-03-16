@@ -1,139 +1,142 @@
-﻿using System;
-using System.Globalization;
-using System.Threading.Tasks;
-using Blazorise;
+﻿using System.Globalization;
 using Blazorise.Localization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Server.Circuits;
-using YoumaconSecurityOps.Web.Client.Middleware;
-using YoumaconSecurityOps.Web.Client.Models;
+using Microsoft.AspNetCore.Components.Web;
 
-namespace YoumaconSecurityOps.Web.Client.Shared
+namespace YoumaconSecurityOps.Web.Client.Shared;
+
+public partial class MainLayout : LayoutComponentBase, IDisposable
 {
-    public partial class MainLayout : LayoutComponentBase, IDisposable
+    [Inject] public CircuitHandler CircuitHandler { get; init; }
+
+    [Inject] public SessionDetails SessionData { get; init; }
+
+    [Inject] public ITextLocalizerService LocalizationService { get; init; }
+
+    [Inject] public IPageProgressService PageProgressService { get; init; }
+
+    [CascadingParameter] protected Theme Theme { get; set; }
+
+    private readonly SessionModel _sessionModel = new ();
+
+    private ErrorBoundary? _errorBoundary;
+
+    protected override void OnParametersSet()
     {
-        [Inject] public CircuitHandler CircuitHandler { get; set; }
+        _errorBoundary?.Recover();
+    }
 
-        [Inject] public SessionDetails SessionData { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var circuitId = String.Empty;
 
-        [Inject] public ITextLocalizerService LocalizationService { get; set; }
-
-        [Inject] public IPageProgressService PageProgressService { get; set; }
-
-        [CascadingParameter] protected Theme Theme { get; set; }
-
-        private readonly SessionModel _sessionModel = new ();
-
-        protected override async Task OnInitializedAsync()
+        if (CircuitHandler is TrackingCircuitHandler circuitHandler)
         {
-            (CircuitHandler as TrackingCircuitHandler).CircuitsChanged += HandleCircuitsChanged;
+            circuitHandler.CircuitsChanged += HandleCircuitsChanged;
+            circuitId = circuitHandler?.CircuitId;
+        }
 
-            var circuitId = (CircuitHandler as TrackingCircuitHandler).CircuitId;
+        _sessionModel.CircuitId = circuitId;
 
-            _sessionModel.CircuitId = circuitId;
+        SessionData.Add(_sessionModel);
 
-            SessionData.Add(_sessionModel);
-
-            await SelectCulture(CultureInfo.CurrentCulture.Name);
+        await SelectCulture(CultureInfo.CurrentCulture.Name);
             
-            await base.OnInitializedAsync();
-        }
+        await base.OnInitializedAsync();
+    }
 
-        private Task SelectCulture(string name)
+    private Task SelectCulture(string name)
+    {
+        LocalizationService.ChangeLanguage(name);
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnThemeEnabledChanged(bool value)
+    {
+        if (Theme is null)
         {
-            LocalizationService.ChangeLanguage(name);
-
             return Task.CompletedTask;
         }
 
-        private Task OnThemeEnabledChanged(bool value)
+        Theme.Enabled = value;
+
+        Theme.ThemeHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnThemeGradientChanged(bool value)
+    {
+        if (Theme is null)
         {
-            if (Theme is null)
-            {
-                return Task.CompletedTask;
-            }
-
-            Theme.Enabled = value;
-
-            Theme.ThemeHasChanged();
-
             return Task.CompletedTask;
         }
 
-        private Task OnThemeGradientChanged(bool value)
+        Theme.IsGradient = value;
+        
+        Theme.ThemeHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnThemeRoundedChanged(bool value)
+    {
+        if (Theme is null)
         {
-            if (Theme is null)
-            {
-                return Task.CompletedTask;
-            }
-
-            Theme.IsGradient = value;
-
-            //if ( Theme.GradientOptions == null )
-            //    Theme.GradientOptions = new GradientOptions();
-
-            //Theme.GradientOptions.BlendPercentage = 80;
-
-            Theme.ThemeHasChanged();
-
             return Task.CompletedTask;
         }
 
-        private Task OnThemeRoundedChanged(bool value)
+        Theme.IsRounded = value;
+
+        Theme.ThemeHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnThemeColorChanged(string value)
+    {
+        if (Theme is null)
         {
-            if (Theme is null)
-            {
-                return Task.CompletedTask;
-            }
-
-            Theme.IsRounded = value;
-
-            Theme.ThemeHasChanged();
-
             return Task.CompletedTask;
         }
 
-        private Task OnThemeColorChanged(string value)
+        Theme.ColorOptions ??= new ThemeColorOptions();
+
+        Theme.BackgroundOptions ??= new ThemeBackgroundOptions();
+
+        Theme.TextColorOptions ??= new ThemeTextColorOptions();
+
+        Theme.ColorOptions.Primary = value;
+        Theme.BackgroundOptions.Primary = value;
+        Theme.TextColorOptions.Primary = value;
+
+        Theme.InputOptions ??= new ThemeInputOptions();
+
+        //Theme.InputOptions.Color = value;
+        Theme.InputOptions.CheckColor = value;
+        Theme.InputOptions.SliderColor = value;
+
+        Theme.SpinKitOptions ??= new();
+
+        Theme.SpinKitOptions.Color = value;
+
+        Theme.ThemeHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    private void HandleCircuitsChanged(object sender, EventArgs args)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        if (CircuitHandler is TrackingCircuitHandler circuitHandler)
         {
-            if (Theme is null)
-            {
-                return Task.CompletedTask;
-            }
-
-            Theme.ColorOptions ??= new ThemeColorOptions();
-
-            Theme.BackgroundOptions ??= new ThemeBackgroundOptions();
-
-            Theme.TextColorOptions ??= new ThemeTextColorOptions();
-
-            Theme.ColorOptions.Primary = value;
-            Theme.BackgroundOptions.Primary = value;
-            Theme.TextColorOptions.Primary = value;
-
-            Theme.InputOptions ??= new ThemeInputOptions();
-
-            //Theme.InputOptions.Color = value;
-            Theme.InputOptions.CheckColor = value;
-            Theme.InputOptions.SliderColor = value;
-
-            Theme.SpinKitOptions ??= new();
-
-            Theme.SpinKitOptions.Color = value;
-
-            Theme.ThemeHasChanged();
-
-            return Task.CompletedTask;
+            circuitHandler.CircuitsChanged -= HandleCircuitsChanged;
         }
 
-        private void HandleCircuitsChanged(object sender, EventArgs args)
-        {
-           InvokeAsync(StateHasChanged);
-        }
-
-        public void Dispose()
-        {
-            (CircuitHandler as TrackingCircuitHandler).CircuitsChanged -= HandleCircuitsChanged;
-            GC.SuppressFinalize(this);
-        }
+        GC.SuppressFinalize(this);
     }
 }

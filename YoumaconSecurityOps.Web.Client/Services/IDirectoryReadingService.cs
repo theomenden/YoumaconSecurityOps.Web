@@ -1,9 +1,8 @@
 ﻿using System.Threading;
 
-namespace YoumaconSecurityOps.Web.Client.Services
+namespace YoumaconSecurityOps.Web.Client.Services;
+
+public interface IDirectoryReadingService
 {
-    public interface IDirectoryReadingService
-    {
-        IAsyncEnumerable<ImageInformationHolder> GetAllImagesAsync(CancellationToken cancellationToken);
-    }
+    IAsyncEnumerable<ImageInformationHolder> GetAllImagesAsync(CancellationToken cancellationToken);
 }

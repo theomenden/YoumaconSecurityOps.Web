@@ -8,13 +8,19 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 {
     internal class AddStaffTypeRoleMapCommandHandler: IRequestHandler<AddStaffTypeRoleMapCommand, Guid>
     {
-        private readonly ILogger<AddStaffTypeRoleMapCommandHandler> _logger;
+        private readonly IDbContextFactory<EventStoreDbContext> _dbContextFactory;
+
+        private readonly IEventStoreRepository _eventStore;
+
+        private readonly IMapper _mapper;
 
         private readonly IMediator _mediator;
 
-        public AddStaffTypeRoleMapCommandHandler(ILogger<AddStaffTypeRoleMapCommandHandler> logger, IMediator mediator)
+        public AddStaffTypeRoleMapCommandHandler(IDbContextFactory<EventStoreDbContext> dbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator)
         {
-            _logger = logger;
+            _dbContextFactory = dbContextFactory;
+            _eventStore = eventStore;
+            _mapper = mapper;
             _mediator = mediator;
         }
 
@@ -27,7 +33,17 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
 
         private async Task RaiseStaffTypeRoleMapCreatedEvent(StaffTypeRoleMapWriter typeRoleMapWriter, CancellationToken cancellationToken)
         {
-            var e = new StaffTypeRoleMapCreatedEvent(typeRoleMapWriter);
+            var e = new StaffTypeRoleMapCreatedEvent(typeRoleMapWriter)
+            {
+                Name= nameof(AddStaffTypeRoleMapCommand)
+            };
+
+            var mappedEvent = _mapper.Map<EventReader>(e);
+
+            await using var context =
+                await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+            await _eventStore.SaveAsync(context, mappedEvent, cancellationToken);
 
             await _mediator.Publish(e, cancellationToken);
         }

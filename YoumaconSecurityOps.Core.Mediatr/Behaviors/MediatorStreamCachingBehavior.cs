@@ -30,6 +30,5 @@ public class MediatorStreamCachingBehavior<TCache, TResult> : IStreamPipelineBeh
 
             yield return result;
         }
-
     }
 }

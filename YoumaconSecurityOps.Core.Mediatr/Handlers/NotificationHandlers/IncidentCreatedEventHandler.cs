@@ -53,7 +53,7 @@ internal sealed class IncidentCreatedEventHandler : INotificationHandler<Inciden
         var previousEvents = await _eventStore.GetAllByAggregateId(context,e.AggregateId, cancellationToken)
             .ToListAsync(cancellationToken);
 
-        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, nameof(IncidentCreatedEventHandler) ,previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }
@@ -69,7 +69,7 @@ internal sealed class IncidentCreatedEventHandler : INotificationHandler<Inciden
         var previousEvents = await _eventStore.GetAllByAggregateId(context, e.AggregateId, cancellationToken)
             .ToListAsync(cancellationToken);
 
-        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, previousEvents.AsReadOnly(), e.Name, cancellationToken);
+        await _eventStore.SaveAsync(context, e.Id, e.MajorVersion, nameof(IncidentCreatedEventHandler), previousEvents.AsReadOnly(), e.Name, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

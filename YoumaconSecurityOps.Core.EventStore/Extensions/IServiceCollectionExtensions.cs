@@ -12,8 +12,6 @@ public static class IServiceCollectionExtensions
             options.EnableSensitiveDataLogging();
         });
 
-        services.AddMediatR(typeof(IServiceCollectionExtensions).Assembly);
-
         services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
         return services;

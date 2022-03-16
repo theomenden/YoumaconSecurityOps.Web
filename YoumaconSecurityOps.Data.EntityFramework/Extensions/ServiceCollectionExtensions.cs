@@ -26,6 +26,8 @@ public static IServiceCollection AddDataAccessServices(this IServiceCollection s
             .AddScoped<ILocationRepository, LocationRepository>()
             .AddScoped<IRadioScheduleAccessor, RadioScheduleRepository>()
             .AddScoped<IRadioScheduleRepository, RadioScheduleRepository>()
+            .AddScoped<IRoomScheduleAccessor, RoomScheduleRepository>()
+            .AddScoped<IRoomScheduleRepository, RoomScheduleRepository>()
             .AddScoped<IShiftAccessor, ShiftRepository>()
             .AddScoped<IShiftRepository, ShiftRepository>()
             .AddScoped<IStaffAccessor, StaffRepository>()

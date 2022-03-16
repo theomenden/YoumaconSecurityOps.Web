@@ -159,5 +159,24 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 
         return shiftToUpdate;
     }
+
+    public async Task<ShiftReader> UpdateCurrentLocation(YoumaconSecurityDbContext dbContext, Guid shiftId, Guid locationId,
+        CancellationToken cancellationToken = default)
+    {
+        var locationChangeResult = false;
+
+        var shiftToUpdate = await dbContext.Shifts.SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
+
+        if (shiftToUpdate is not null)
+        {
+            shiftToUpdate.CurrentLocationId = locationId;
+            locationChangeResult = true;
+        }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return shiftToUpdate;
+    }
+
     #endregion
 }

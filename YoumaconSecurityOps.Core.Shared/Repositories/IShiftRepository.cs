@@ -30,4 +30,14 @@ public interface IShiftRepository: IRepository<ShiftReader>
     /// <param name="cancellationToken"></param>
     /// <returns>The updated <see cref="ShiftReader"/></returns>
     Task<ShiftReader> ReportIn(YoumaconSecurityDbContext dbContext, Guid shiftId, Guid currentLocationId, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Updates a shift's current location
+    /// </summary>
+    /// <param name="dbContext">The caller provided <see cref="DbContext"/></param>
+    /// <param name="shiftId">The <see cref="ShiftReader"/> id to modify</param>
+    /// <param name="locationId">The <see cref="LocationReader"/> id to set current location to</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Updated <see cref="ShiftReader"/></returns>
+    Task<ShiftReader> UpdateCurrentLocation(YoumaconSecurityDbContext dbContext, Guid shiftId, Guid locationId, CancellationToken cancellationToken = default);
 }

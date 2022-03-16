@@ -1,26 +1,24 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.StreamRequestHandlers;
 
 internal sealed class GetRadioScheduleQueryHandler : IStreamRequestHandler<GetRadioSchedule, RadioScheduleReader>
 {
     private readonly IRadioScheduleAccessor _radios;
     
-    private readonly ILogger<GetRadioScheduleQueryHandler> _logger;
-
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
-    public GetRadioScheduleQueryHandler(IRadioScheduleAccessor radios, ILogger<GetRadioScheduleQueryHandler> logger, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
+    public GetRadioScheduleQueryHandler(IRadioScheduleAccessor radios, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
     {
         _radios = radios;
-        _logger = logger;
-        _dbContextFactory = dbContextFactory;   
+        _dbContextFactory = dbContextFactory;
     }
 
-    public IAsyncEnumerable<RadioScheduleReader> Handle(GetRadioSchedule request, CancellationToken cancellationToken)
+    public async IAsyncEnumerable<RadioScheduleReader> Handle(GetRadioSchedule request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        using var context = _dbContextFactory.CreateDbContext();
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        var radios = _radios.GetAllAsync(context, cancellationToken);
-        
-        return radios;
+        await foreach (var radio in _radios.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        {
+            yield return radio;
+        }
     }
 }

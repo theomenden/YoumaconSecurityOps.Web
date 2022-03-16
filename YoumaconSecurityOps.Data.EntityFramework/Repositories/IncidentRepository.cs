@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using YoumaconSecurityOps.Core.Shared.Extensions;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
@@ -18,7 +17,22 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     #region Get Methods
     public IAsyncEnumerable<IncidentReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ())
     {
-        var incidents = dbContext.Incidents.AsAsyncEnumerable();
+        var incidents = dbContext.Incidents
+            .Include(i => i.Location)
+            .Include(i => i.ReportedBy)
+                .ThenInclude(s => s.Contact)
+            .Include(i => i.ReportedBy)
+                .ThenInclude(s => s.StaffTypeRoleMaps)
+            .Include(i => i.ReportedBy)
+                .ThenInclude(s => s.StaffTypeRoleMaps)
+            .Include(i => i.RecordedBy)
+                .ThenInclude(s => s.Contact)
+            .Include(i => i.RecordedBy)
+                .ThenInclude(s => s.StaffTypeRoleMaps)
+            .Include(i => i.RecordedBy)
+                .ThenInclude(s => s.StaffTypeRoleMaps)
+            .Include(i => i.Shift)
+            .AsAsyncEnumerable();
 
         return incidents;
     }
@@ -26,14 +40,45 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public IAsyncEnumerable<IncidentReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<IncidentReader, bool>> predicate,
         CancellationToken cancellationToken = default)
     {
-        var incidents = dbContext.Incidents.FindAllAsync(predicate);
+        var incidents = dbContext.Incidents
+            .Include(i => i.Location)
+            .Include(i => i.ReportedBy)
+            .ThenInclude(s => s.Contact)
+            .Include(i => i.ReportedBy)
+            .ThenInclude(s => s.Role)
+            .Include(i => i.ReportedBy)
+            .ThenInclude(s => s.StaffType)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.Contact)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.Role)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.StaffType)
+            .Include(i => i.Shift)
+            .Where(predicate)
+            .AsAsyncEnumerable();
 
         return incidents;
     }
 
     public async Task<IncidentReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
     {
-        var incident = await dbContext.Incidents.AsQueryable()
+        var incident = await dbContext.Incidents
+            .Include(i => i.Location)
+            .Include(i => i.ReportedBy)
+            .ThenInclude(s => s.Contact)
+            .Include(i => i.ReportedBy)
+            .ThenInclude(s => s.Role)
+            .Include(i => i.ReportedBy)
+            .ThenInclude(s => s.StaffType)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.Contact)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.Role)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.StaffType)
+            .Include(i => i.Shift)
+            .AsQueryable()
             .SingleOrDefaultAsync(i => i.Id == entityId, cancellationToken);
 
         return incident;

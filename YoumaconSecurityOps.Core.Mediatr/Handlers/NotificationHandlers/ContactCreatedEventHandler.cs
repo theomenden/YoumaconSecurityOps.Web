@@ -6,16 +6,22 @@ internal sealed class ContactCreatedEventHandler : INotificationHandler<ContactC
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
+    private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
+
+    private readonly IEventStoreRepository _eventStore;
+
     private readonly IMapper _mapper;
 
     private readonly IMediator _mediator;
 
     private readonly ILogger<ContactCreatedEventHandler> _logger;
 
-    public ContactCreatedEventHandler(IContactRepository contacts, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IMapper mapper, IMediator mediator, ILogger<ContactCreatedEventHandler> logger)
+    public ContactCreatedEventHandler(IContactRepository contacts, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator, ILogger<ContactCreatedEventHandler> logger)
     {
         _contacts = contacts;
         _dbContextFactory = dbContextFactory;
+        _eventStoreDbContextFactory = eventStoreDbContextFactory;
+        _eventStore = eventStore;
         _mapper = mapper;
         _mediator = mediator;
         _logger = logger;
@@ -27,24 +33,30 @@ internal sealed class ContactCreatedEventHandler : INotificationHandler<ContactC
 
         var contactToAdd = _mapper.Map<ContactReader>(notification.ContactWriter);
 
-        try
-        {
-            await _contacts.AddAsync(context, contactToAdd, cancellationToken);
+        var couldAdd = await _contacts.AddAsync(context, contactToAdd, cancellationToken);
 
-            await RaiseContactAddedEvent(contactToAdd, cancellationToken);
-        }
-        catch (Exception ex)
+        if (!couldAdd)
         {
-            _logger.LogError("Could not add contact with Id: {contactId} to database: {@ex}", contactToAdd.Id, ex);
-            
             await RaiseFailedToAddEntityEvent(notification, cancellationToken);
-            throw;
         }
+
+        await RaiseContactAddedEvent(notification, contactToAdd, cancellationToken);
     }
 
-    private async Task RaiseContactAddedEvent(ContactReader contactReader, CancellationToken cancellationToken)
+    private async Task RaiseContactAddedEvent(ContactCreatedEvent notification, ContactReader contactReader, CancellationToken cancellationToken)
     {
-        var e = new ContactAddedEvent(contactReader);
+        var e = new ContactAddedEvent(contactReader)
+        {
+            Aggregate = notification.Aggregate,
+            AggregateId = notification.AggregateId
+        };
+
+        await using var context = await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+
+        var previousEvents = (await _eventStore.GetAllByAggregateIdAsync(context, notification.AggregateId, cancellationToken)).ToList();
+
+        await _eventStore.SaveAsync(context, e.AggregateId, notification.MinorVersion, nameof(RaiseContactAddedEvent),
+            previousEvents.AsReadOnly(), notification.Aggregate, cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

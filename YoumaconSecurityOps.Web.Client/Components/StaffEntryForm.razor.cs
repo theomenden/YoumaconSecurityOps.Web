@@ -1,11 +1,17 @@
-﻿namespace YoumaconSecurityOps.Web.Client.Components;
+﻿using YoumaconSecurityOps.Core.Shared.Responses;
+
+namespace YoumaconSecurityOps.Web.Client.Components;
 
 public partial class StaffEntryForm : ComponentBase
 {
-    [Inject] public IStaffService StaffService { get; init; }
-    
-    [Inject] public IContactService ContactService { get; init; }
+    #region Injected Services
+    [Inject] public NavigationManager NavigationManager { get; init; }
 
+    [Inject] public IStaffService StaffService { get; init; }
+
+    [Inject] public IContactService ContactService { get; init; }
+    #endregion
+    #region Instance Members
     private IEnumerable<StaffRole> _staffRoles = new List<StaffRole>(5);
 
     private IEnumerable<StaffType> _staffTypes = new List<StaffType>(5);
@@ -16,10 +22,15 @@ public partial class StaffEntryForm : ComponentBase
     private Boolean _needCrashSpace;
     private Boolean _isBlackShirt;
     private Boolean _isRaveApproved;
+    private Boolean _isSavingContactInfo;
+    private Boolean _isSavingStaffInfo;
+    private Boolean _isSubmitting;
 
-
-    private Int32 _selectedStaffRole;
-    private Int32 _selectedStaffType;
+    //Default to GENERAL
+    private Int32 _selectedStaffRole = 5;
+    
+    //Default to FLOOR
+    private Int32 _selectedStaffType = 1;
 
     private String _firstName = String.Empty;
     private String _lastName = String.Empty;
@@ -29,9 +40,12 @@ public partial class StaffEntryForm : ComponentBase
     private String _phoneNumber = String.Empty;
     private String _shirtSize = String.Empty;
 
+    private List<ApiResponse> _apiResponses = new (3);
+
     private ContactWriter _contactWriter;
 
     private StaffWriter _staffWriter;
+    #endregion
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,33 +74,57 @@ public partial class StaffEntryForm : ComponentBase
 
     private async Task SaveContactInformation()
     {
+        _isSavingContactInfo = true;
         _contactWriter = new ContactWriter(_staffWriter.Id, DateTime.Now, _email, _firstName, _lastName, _facebookName, _preferredName, Convert.ToInt64(_phoneNumber));
 
         var command = new AddContactCommand(_contactWriter);
 
         var savedContactResponse = await ContactService.AddContactInformationAsync(command);
 
+        if (savedContactResponse.Outcome.IsError)
+        {
+            _apiResponses.Add(savedContactResponse);
+        }
+
         _isContactInfoPrepared = savedContactResponse.ResponseCode is ResponseCodes.ApiSuccess;
+
+        _isSavingContactInfo = false;
     }
 
     private async Task SaveStaffInformation()
     {
+        _isSavingStaffInfo = true;
+
         _staffWriter = new StaffWriter(_selectedStaffRole, _selectedStaffType, _needCrashSpace, _isBlackShirt, _isRaveApproved, _shirtSize);
 
         var command = new AddStaffCommand(_staffWriter);
 
-       var createdStaffId = await StaffService.AddNewStaffMemberAsync(command);
+        var savedStaffInformationResponse = await StaffService.AddNewStaffMemberAsync(command);
 
-        _isStaffInfoPrepared = createdStaffId.ResponseCode is ResponseCodes.ApiSuccess;
+
+        if (savedStaffInformationResponse.Outcome.IsError)
+        {
+            _apiResponses.Add(savedStaffInformationResponse);
+        }
+
+        _isContactInfoPrepared = savedStaffInformationResponse.ResponseCode is ResponseCodes.ApiSuccess;
+
+        _isSavingStaffInfo = false;
     }
 
     private async Task OnSubmit()
     {
+        _isSubmitting = true;
+
         var staffRoleMapWriter = new StaffTypeRoleMapWriter(_staffWriter.Id, _selectedStaffType, _selectedStaffRole);
 
         var addStaffRoleMapCommand = new AddStaffTypeRoleMapCommand(staffRoleMapWriter);
 
         await StaffService.AddNewStaffTypeRoleMapAsync(addStaffRoleMapCommand);
+
+        _isSubmitting = false;
+
+        NavigationManager.NavigateTo("/staff");
     }
 
     private bool IsDisabled() => (_isContactInfoPrepared && _isStaffInfoPrepared) is not true;

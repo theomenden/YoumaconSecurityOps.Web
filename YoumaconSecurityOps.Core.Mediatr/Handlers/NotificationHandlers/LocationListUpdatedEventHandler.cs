@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
 internal sealed class LocationListUpdatedEventHandler: INotificationHandler<LocationListUpdatedEvent>
 {
@@ -29,7 +27,7 @@ internal sealed class LocationListUpdatedEventHandler: INotificationHandler<Loca
 
         var previousEvents = await _eventStore.GetAllByAggregateId(context, eventToAdd.Id, cancellationToken).ToListAsync(cancellationToken);
             
-        await _eventStore.SaveAsync(context, eventToAdd.Id, eventToAdd.MinorVersion, previousEvents.AsReadOnly(), eventToAdd.Aggregate,
+        await _eventStore.SaveAsync(context, eventToAdd.Id, eventToAdd.MinorVersion,  nameof(LocationListUpdatedEventHandler),previousEvents.AsReadOnly(), eventToAdd.Aggregate,
             cancellationToken);
     }
 }

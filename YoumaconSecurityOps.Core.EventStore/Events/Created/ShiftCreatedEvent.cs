@@ -10,7 +10,7 @@ public class ShiftCreatedEvent: EventBase
     {
         ShiftWriter = shiftWriter;
         DataAsJson = shiftWriter.ToJson();
-        Aggregate = $"{Id}-{shiftWriter.StaffMemberName}";
+        Aggregate = $"{shiftWriter.Id}-{shiftWriter.StaffMemberName}";
         AggregateId = shiftWriter.Id;
         MajorVersion = 1;
         MinorVersion = 1;

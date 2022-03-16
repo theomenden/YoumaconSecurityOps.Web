@@ -1,9 +1,8 @@
-﻿namespace YoumaconSecurityOps.Web.Client.Models
-{
-    public struct LiveDataPoint
-    {
-        public object X { get; set; }
+﻿namespace YoumaconSecurityOps.Web.Client.Models;
 
-        public object Y { get; set; }
-    }
+public struct LiveDataPoint
+{
+    public object X { get; set; }
+
+    public object Y { get; set; }
 }

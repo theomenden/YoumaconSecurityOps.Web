@@ -27,7 +27,8 @@
           RowStyling="@OnRowStyling"
           RowInserting="@OnRowInserting"
           Virtualize
-          DetailRowTrigger="@(item => item.Id == _selectedShift?.Id)">
+          VirtualizeOptions="_virtualizeOptions"
+          DetailRowTrigger="@(context => context.Item.Id == _selectedShift?.Id)">
     <PopupTitleTemplate>
         @SetPopupTitle(context)
     </PopupTitleTemplate>
@@ -85,8 +86,8 @@
                 @context.StartAt
             </DisplayTemplate>
             <EditTemplate>
-                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedStartDate" DateChanged="@OnStartDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
-                </DateEdit>
+                <DatePicker TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedStartDate" DateChanged="@OnStartDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DatePicker>
             </EditTemplate>
         </DataGridDateColumn>
         <DataGridDateColumn TItem="ShiftReader" Field="@nameof(ShiftReader.EndAt)" Caption="Ends At" Sortable="true" Editable="true">
@@ -94,8 +95,8 @@
                 @context.EndAt
             </DisplayTemplate>
             <EditTemplate>
-                <DateEdit TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedEndDate" DateChanged="@OnEndDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
-                </DateEdit>
+                <DatePicker TValue="DateTime?" InputMode="DateInputMode.DateTime" Date="@_selectedEndDate" DateChanged="@OnEndDateChanged" Placeholder="@DateTime.Now.ToString(CultureInfo.CurrentCulture)">
+                </DatePicker>
             </EditTemplate>
         </DataGridDateColumn>
         <DataGridColumn TItem="ShiftReader" Field="StartingLocationNavigation.Name" Caption="Starting Location" Sortable="true" Editable="true">
@@ -106,8 +107,8 @@
                 <SelectList TItem="@LocationReader"
                             TValue="Guid"
                             Data="@_locations"
-                            TextField="@((item)=>item.Name)"
-                            ValueField="@((item)=>item.Id)"
+                            TextField="@(item=>item.Name)"
+                            ValueField="@(item=>item.Id)"
                             SelectedValue="@_selectedStartingLocation"
                             SelectedValueChanged="@OnSelectedStartingLocationChanged"
                             DefaultItemText="Choose where the shift will start" />
@@ -121,7 +122,7 @@
     </DataGridColumns>
     <DetailRowTemplate>
         @{
-            var shiftDetailInformation = context as ShiftReader;
+                var shiftDetailInformation = context as ShiftReader;
 
             <DataGrid TItem="ShiftReader"
                   Data="new List<ShiftReader> { shiftDetailInformation }"
@@ -130,7 +131,7 @@
                 <DataGridColumn TItem="ShiftReader" Field="@nameof(ShiftReader.Id)" Caption="Actions">
                     <DisplayTemplate Context="shiftDetailContext">
                         <Buttons Role="ButtonsRole.Toolbar">
-                            <Buttons Margin="Margin.Is2.FromRight">
+                            <Buttons Margin="Margin.Is2.FromEnd">
                                 <Button Color="Color.Primary" Clicked="@(async () => await OnCheckedIn(shiftDetailContext.Id))" Disabled="@shiftDetailContext.CheckedInAt.HasValue" Loading="@_isLoading">
                                     <LoadingTemplate><SpinKit Type="SpinKitType.CircleFade" Color="#fff"></SpinKit></LoadingTemplate>
                                     <ChildContent>Check In</ChildContent>
@@ -192,8 +193,8 @@
                     <SelectList TItem="@LocationReader"
                             TValue="Guid"
                             Data="@_locations"
-                            TextField="@((item) => item.Name)"
-                            ValueField="@((item) => item.Id)"
+                            TextField="@(item => item.Name)"
+                            ValueField="@(item => item.Id)"
                             SelectedValue="@_selectedStartingLocation"
                             SelectedValueChanged="@OnSelectedStartingLocationChanged"
                             DefaultItemText="@_selectedShift.CurrentLocation.Name" />

@@ -1,9 +1,8 @@
 ﻿using System.Threading;
 
-namespace YoumaconSecurityOps.Web.Client.Services
+namespace YoumaconSecurityOps.Web.Client.Services;
+
+public interface ILocationService
 {
-    public interface ILocationService
-    {
-        Task<List<LocationReader>> GetLocationsAsync(GetLocationsQuery locationsQuery, CancellationToken cancellationToken = default);
-    }
+    Task<List<LocationReader>> GetLocationsAsync(GetLocationsQuery locationsQuery, CancellationToken cancellationToken = default);
 }

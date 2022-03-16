@@ -1,4 +1,8 @@
-﻿namespace YoumaconSecurityOps.Web.Client.Pages;
+﻿using Blazorise.DataGrid.Configuration;
+using Blazorise.SpinKit;
+using Microsoft.AspNetCore.Components.Web;
+
+namespace YoumaconSecurityOps.Web.Client.Pages;
 
 public partial class StaffList : ComponentBase
 {
@@ -9,7 +13,6 @@ public partial class StaffList : ComponentBase
 
     [Inject] public IndexedDBManager DbManager { get; init; }
     #endregion
-
     #region Private Fields
     private IEnumerable<StaffReader> _staffMembers = new List<StaffReader>(50);
 
@@ -23,26 +26,69 @@ public partial class StaffList : ComponentBase
 
     private Int32 _totalStaffMembers;
 
+    private ErrorBoundary? _errorBoundary;
+
+    private ApiResponse<List<StaffReader>> _apiResponse;
+
     private StaffReader _selectedStaffMember;
 
     private Blazorise.Modal _modalRef = new();
 
+    private SpinKit _spinKitRef = new();
+
     private Boolean _isLoading = false;
+
+    private Boolean _isBlackShirt;
 
     private Int32 _selectedStaffRole;
 
     private Int32 _selectedStaffType;
+
+    private Int32 _selectedTypeFilter = 0;
+
+    private Int32 _selectedRoleFilter = 0;
+
+
+    private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5 };
     #endregion
 
-    private async Task LoadStaffModels()
+    protected override void OnParametersSet()
     {
-        _staffMembers = await StaffService.GetStaffMembersAsync(new GetStaffQuery());
+        _errorBoundary?.Recover();
+    }
 
-        _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery());
+    #region DataGrid Configuration Methods
+    private async Task LoadStaffModels(CancellationToken cancellationToken = default)
+    {
+        _apiResponse = await StaffService.GetStaffMembersWithResponseAsync(new GetStaffQuery(), cancellationToken);
 
-        _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery());
+        _staffMembers = _apiResponse.Data;
 
-        _totalStaffMembers = _staffMembers.Count();
+        _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery(), cancellationToken);
+
+        _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery(), cancellationToken);
+
+        foreach (var staffType in _staffTypes)
+        {
+            var staffTypeIndexRecord = new StoreRecord<StaffType>
+            {
+                Storename = "YSecStaffTypes",
+                Data = staffType
+            };
+
+            await DbManager.AddRecord(staffTypeIndexRecord);
+        }
+
+        foreach (var staffRole in _staffRoles)
+        {
+            var staffTypeIndexRecord = new StoreRecord<StaffRole>
+            {
+                Storename = "YSecRoles",
+                Data = staffRole
+            };
+
+            await DbManager.AddRecord(staffTypeIndexRecord);
+        }
 
         StateHasChanged();
     }
@@ -54,42 +100,25 @@ public partial class StaffList : ComponentBase
 
     private async Task OnReadData(DataGridReadDataEventArgs<StaffReader> e)
     {
-        await LoadStaffModels();
+        await LoadStaffModels(e.CancellationToken);
 
         if (!e.CancellationToken.IsCancellationRequested)
         {
+            var sortDeterminant = new DataGridHelpers<StaffReader>(e);
+
+            var columnToSort =
+                sortDeterminant.ColumnStates.Where(cs =>
+                    cs.SortDirection is not SortDirection.Default).ToList();
 
             _totalStaffMembers = _staffMembers.Count();
 
-            _gridDisplay = _staffMembers.ToList();
+            _gridDisplay = _staffMembers
+                .DynamicFilter(columnToSort)
+                .DynamicSort(columnToSort)
+                .ToList();
         }
 
         StateHasChanged();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        foreach (var staffType in  _staffTypes)
-        {
-            var staffTypeIndexRecord = new StoreRecord<StaffType>
-            {
-                Storename= "YSecStaffTypes",
-                Data = staffType
-            };
-
-            await DbManager.AddRecord(staffTypeIndexRecord);
-        }
-        
-        foreach (var staffRole in _staffRoles)
-        {
-            var staffTypeIndexRecord = new StoreRecord<StaffRole>
-            {
-                Storename = "YSecRoles",
-                Data = staffRole
-            };
-
-            await DbManager.AddRecord(staffTypeIndexRecord);
-        }
     }
 
     private static void OnStaffNewItemDefaultSetter(StaffReader member)
@@ -109,24 +138,10 @@ public partial class StaffList : ComponentBase
 
         return popupTitle;
     }
-    
+
     private Task ResetGrid()
     {
         return _dataGrid.Reload();
-    }
-
-    private Task OnFilteredDataChanged(DataGridFilteredDataEventArgs<StaffReader> eventArgs)
-    {
-        Console.WriteLine($"Filter changed > Items: {eventArgs.FilteredItems}; Total: {eventArgs.TotalItems};");
-
-        return Task.CompletedTask;
-    }
-
-    private Task OnSortChanged(DataGridSortChangedEventArgs eventArgs)
-    {
-        Console.WriteLine($"Sort changed > Field: {eventArgs.FieldName}; Direction: {eventArgs.SortDirection};");
-
-        return Task.CompletedTask;
     }
 
     private static void OnRowStyling(StaffReader member, DataGridRowStyling styling)
@@ -136,7 +151,8 @@ public partial class StaffList : ComponentBase
             styling.Background = Background.Danger;
         }
     }
-    
+    #endregion
+    #region Staff Mutation Methods
     private void OnSelectedStaffRoleChanged(Int32 staffRole)
     {
         _selectedStaffRole = staffRole;
@@ -193,7 +209,69 @@ public partial class StaffList : ComponentBase
 
         StateHasChanged();
     }
-    
+    #endregion
+    #region Filtering Methods
+
+    private static bool OnStaffTypeFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is int typeFilter)
+        {
+            return typeFilter == 0 || typeFilter == Convert.ToInt32(itemValue);
+        }
+
+        return true;
+    }
+
+    private static bool OnStaffRoleFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is int roleFilter)
+        {
+            return roleFilter == 0 || roleFilter == Convert.ToInt32(itemValue);
+        }
+
+        return true;
+    }
+
+    private static bool OnBlackShirtFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is bool blackShirtFilter)
+        {
+            return blackShirtFilter || false == Convert.ToBoolean(itemValue);
+        }
+
+        return true;
+    }
+
+    private static bool IsRaveApprovedFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is bool isRaveApprovedFilter)
+        {
+            return isRaveApprovedFilter || false == Convert.ToBoolean(itemValue);
+        }
+
+        return true;
+    }
+
+    private static bool NeedsCrashSpaceFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is bool needsCrashSpaceFilter)
+        {
+            return needsCrashSpaceFilter || false == Convert.ToBoolean(itemValue);
+        }
+
+        return true;
+    }
+
+    private static bool NotOnBreakFilter(object itemValue, object searchValue)
+    {
+        if (searchValue is bool breakFilter)
+        {
+            return !breakFilter || Convert.ToBoolean(itemValue);
+        }
+
+        return false;
+    }
+    #endregion
     #region Edit Form Methods
     private void ShowModal(Guid incidentId)
     {

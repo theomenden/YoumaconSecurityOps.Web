@@ -16,6 +16,15 @@ public interface IStaffService
     Task<List<StaffReader>> GetStaffMembersAsync(GetStaffQuery staffQuery, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Uses a <paramref name="staffQuery"/> with no parameters to retrieve an asynchronous stream of <see cref="StaffReader"/>
+    /// </summary>
+    /// <param name="staffQuery">The Provided parameterless query</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns><see cref="ApiResponse{T}"/></returns>
+    Task<ApiResponse<List<StaffReader>>> GetStaffMembersWithResponseAsync(GetStaffQuery staffQuery,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Uses a <paramref name="staffQuery" /> with no parameters to retrieve an asynchronous stream <see cref="StaffReader"/> 
     /// </summary>
     /// <param name="staffQuery"></param>

@@ -9,13 +9,61 @@
         Pick any navigation on the side-menu to get started
     </Paragraph>
 </Jumbotron>
-
-<Container Fluid="true">
-    <Carousel @bind-SelectedSlide="@_selectedSlide">
-        <Repeater Items="@_images" Context="imageContext">
-            <CarouselSlide Name="1">
-                <Image Source="imageContext.Path" Text="imageContext.Text" Display="Display.Block" Width="Width.Is100"/>
-            </CarouselSlide>
-        </Repeater>
-    </Carousel>
-</Container>
+<Card Flex="Flex.Fill.OnDesktop" 
+      Margin="Margin.Is2.OnY.Is3.OnX.OnDesktop" 
+      Background="Background.Dark" 
+      TextColor="TextColor.White50"
+      >
+    <CardHeader>Your upcoming shifts are:</CardHeader>
+    <CardBody>
+    @if (!_isLoading && _shiftsForStaffMember?.Any() == true)
+    {
+        <Table
+            Bordered
+            Hoverable
+            Narrow
+            Striped
+            Responsive
+            Resizable
+            FixedHeader
+            FixedHeaderTableHeight="300px"
+            TextColor="TextColor.White50"
+            Background="Background.Light">
+            <TableHeader TextColor="TextColor.White">
+                <TableRow>
+                    <TableHeaderCell Background="Background.Dark">
+                        Starting At
+                    </TableHeaderCell>
+                    <TableHeaderCell Background="Background.Dark">
+                        Starting Location
+                    </TableHeaderCell>
+                    <TableHeaderCell Background="Background.Dark">
+                        Type
+                    </TableHeaderCell>
+                    <TableHeaderCell Background="Background.Dark">
+                        Role
+                    </TableHeaderCell>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                <Repeater TItem="ShiftReader" Items="_shiftsForStaffMember" Context="shiftContext">
+                    <TableRow @key="@shiftContext.Id.ToString()">
+                        <TableRowCell>
+                            @($"{shiftContext.StartAt:F}")
+                        </TableRowCell>
+                        <TableRowCell>
+                            @(shiftContext.StartingLocationNavigation.Name ?? "Ren Cen Ops")
+                        </TableRowCell>
+                        <TableRowCell>
+                            @(shiftContext.StaffMember.Role?.Name ?? "General")
+                        </TableRowCell>
+                        <TableRowCell>
+                            @(shiftContext.StaffMember.StaffType?.Title ?? "Floor")
+                        </TableRowCell>
+                    </TableRow>
+                </Repeater>
+            </TableBody>
+        </Table>
+    }
+    </CardBody>
+</Card>
