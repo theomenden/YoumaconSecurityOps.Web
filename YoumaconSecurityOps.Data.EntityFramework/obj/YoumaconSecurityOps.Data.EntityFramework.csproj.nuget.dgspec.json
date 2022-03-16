@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj",
         "projectName": "YoumaconSecurityOps.Core.Shared",
@@ -102,7 +102,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj",
         "projectName": "YoumaconSecurityOps.Data.EntityFramework",

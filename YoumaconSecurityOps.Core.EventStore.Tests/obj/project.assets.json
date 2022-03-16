@@ -33,7 +33,7 @@
           "buildTransitive/EmptyFiles.targets": {}
         }
       },
-      "Exceptionless.RandomData/1.2.0": {
+      "Exceptionless.RandomData/1.2.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Exceptionless.RandomData.dll": {}
@@ -2992,7 +2992,7 @@
           "build/netcoreapp2.1/xunit.runner.visualstudio.props": {}
         }
       },
-      "YoumaconSecurityOps.Core.EventStore/1.0.18": {
+      "YoumaconSecurityOps.Core.EventStore/1.0.25": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -3003,7 +3003,7 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.3",
           "System.Linq.Async": "6.0.1",
-          "YoumaconSecurityOps.Core.Shared": "1.0.18"
+          "YoumaconSecurityOps.Core.Shared": "1.0.25"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
@@ -3012,7 +3012,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.Shared/1.0.18": {
+      "YoumaconSecurityOps.Core.Shared/1.0.25": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -3167,16 +3167,16 @@
         "lib/netstandard2.1/EmptyFiles.xml"
       ]
     },
-    "Exceptionless.RandomData/1.2.0": {
-      "sha512": "yjRIqs/fsJeT8uw03kCMjCYKHHmO2o8dkh6GwQfSnIPMwJu5F/UzEiYPI4PoKgeYF1i2yX5bIJ8hDuMvNhiA7g==",
+    "Exceptionless.RandomData/1.2.1": {
+      "sha512": "DHvblTyjHRBgn+7QXVXztVpYhufd2STgFsaWOPLc+gzxG7zGh0beTeJJubYzQlB1rnMWidOpRV8Do/TtMP72cA==",
       "type": "package",
-      "path": "exceptionless.randomdata/1.2.0",
+      "path": "exceptionless.randomdata/1.2.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
         "exceptionless-icon.png",
-        "exceptionless.randomdata.1.2.0.nupkg.sha512",
+        "exceptionless.randomdata.1.2.1.nupkg.sha512",
         "exceptionless.randomdata.nuspec",
         "lib/netstandard2.0/Exceptionless.RandomData.dll",
         "lib/netstandard2.0/Exceptionless.RandomData.pdb",
@@ -10070,12 +10070,12 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "YoumaconSecurityOps.Core.EventStore/1.0.18": {
+    "YoumaconSecurityOps.Core.EventStore/1.0.25": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj"
     },
-    "YoumaconSecurityOps.Core.Shared/1.0.18": {
+    "YoumaconSecurityOps.Core.Shared/1.0.25": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
@@ -10083,13 +10083,13 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Exceptionless.RandomData >= 1.2.0",
+      "Exceptionless.RandomData >= 1.2.1",
       "GenFu >= 1.6.0",
       "Microsoft.EntityFrameworkCore >= 6.0.3",
       "Microsoft.EntityFrameworkCore.InMemory >= 6.0.3",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
       "Shouldly >= 4.0.3",
-      "YoumaconSecurityOps.Core.EventStore >= 1.0.18",
+      "YoumaconSecurityOps.Core.EventStore >= 1.0.25",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.1",
       "xunit.runner.visualstudio >= 2.4.3"
@@ -10099,7 +10099,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.18",
+    "version": "1.0.25",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore.Tests\\YoumaconSecurityOps.Core.EventStore.Tests.csproj",
       "projectName": "YoumaconSecurityOps.Core.EventStore.Tests",
@@ -10141,7 +10141,7 @@
         "dependencies": {
           "Exceptionless.RandomData": {
             "target": "Package",
-            "version": "[1.2.0, )"
+            "version": "[1.2.1, )"
           },
           "GenFu": {
             "target": "Package",

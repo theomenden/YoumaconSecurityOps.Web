@@ -4,8 +4,6 @@ using System.Text.Json;
 using YoumaconSecurityOps.Core.Shared.Logging;
 using YoumaconSecurityOps.Core.Shared.Responses;
 using YoumaconSecurityOps.Web.Client.Bootstrapping;
-using YoumaconSecurityOps.Web.Client.Invariants;
-
 namespace YoumaconSecurityOps.Web.Client.Middleware;
 
 public class ExceptionLogger

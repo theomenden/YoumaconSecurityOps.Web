@@ -28,10 +28,7 @@
         </BarStart>
         <BarEnd>
             <BarItem>
-                <Buttons Role="ButtonsRole.Toolbar" Flex="Flex.Row">
-                    <Button Color="Color.Primary">Sign up</Button>
-                    <Button Color="Color.Secondary">Log in</Button>
-                </Buttons>
+                <LoginDisplay />
             </BarItem>
             <BarItem>
                 <BarDropdown>
@@ -40,7 +37,7 @@
                             <Blazorise.Icon Name="IconName.Tint" /> Theme
                         </Paragraph>
                     </BarDropdownToggle>
-                    <BarDropdownMenu Style="padding: 15px; min-width: 550px;" RightAligned="true">
+                    <BarDropdownMenu Style="padding: 15px; min-width: 550px;" TextAlignment="TextAlignment.End">
                         <Row>
                             <Column Margin="Margin.Is2.FromBottom">
                                 <Field>

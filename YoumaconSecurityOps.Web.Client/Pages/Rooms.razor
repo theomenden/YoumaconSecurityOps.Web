@@ -62,10 +62,15 @@
             <Button Color="Color.Default" Display="Display.None"></Button>
         </DeleteCommandTemplate>
     </DataGridCommandColumn>
-    <DataGridColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.RoomNumber)" Caption="Room Number" Sortable Editable>
-        <DisplayTemplate>
-            @context.RoomNumber
-        </DisplayTemplate>
-    </DataGridColumn>
+        <DataGridColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.RoomNumber)" Caption="Room Number" Sortable Editable>
+            <DisplayTemplate>
+                @context.RoomNumber
+            </DisplayTemplate>
+        </DataGridColumn>
+        <DataGridNumericColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.NumberOfKeys)" Caption="Keys" Sortable Editable>
+            <DisplayTemplate>
+                @context.NumberOfKeys
+            </DisplayTemplate>
+        </DataGridNumericColumn>
     </DataGridColumns>
 </DataGrid>

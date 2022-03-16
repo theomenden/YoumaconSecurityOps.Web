@@ -1,11 +1,33 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace YoumaconSecurityOps.Web.Client.Shared;
 
 public partial class FooterNav: ComponentBase
 {
-    [Parameter] public EventCallback<string> ThemeColorChanged { get; set; }
-        
+    [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; init; }
+
+    [Parameter] public EventCallback<string> ThemeColorChanged { get; init; }
+
+    private string _username = String.Empty;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await GetClaimsPrincipalData();
+    }
+
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {    
+           _username = user.Claims.FirstOrDefault(c => c.Type == "name")?.Value ?? user.Identity?.Name;
+        }
+    }
+
     private static string AssemblyProductVersion
     {
         get

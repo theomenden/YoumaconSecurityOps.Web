@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.AutoMapper\\YoumaconSecurityOps.Core.AutoMapper.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.AutoMapper\\YoumaconSecurityOps.Core.AutoMapper.csproj",
         "projectName": "YoumaconSecurityOps.Core.AutoMapper",
@@ -81,7 +81,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore\\YoumaconSecurityOps.Core.EventStore.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.EventStore\\YoumaconSecurityOps.Core.EventStore.csproj",
         "projectName": "YoumaconSecurityOps.Core.EventStore",
@@ -182,7 +182,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.FluentEmailer\\YoumaconSecurityOps.Core.FluentEmailer.csproj",
         "projectName": "YoumaconSecurityOps.Core.FluentEmailer",
@@ -263,7 +263,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj",
         "projectName": "YoumaconSecurityOps.Core.Mediatr",
@@ -367,7 +367,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj",
         "projectName": "YoumaconSecurityOps.Core.Shared",
@@ -464,7 +464,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj",
         "projectName": "YoumaconSecurityOps.Data.EntityFramework",
@@ -577,7 +577,7 @@
       }
     },
     "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj": {
-      "version": "1.0.18",
+      "version": "1.0.25",
       "restore": {
         "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
         "projectName": "YoumaconSecurityOps.Web.Client",
@@ -615,9 +615,6 @@
               },
               "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj": {
                 "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Data.EntityFramework\\YoumaconSecurityOps.Data.EntityFramework.csproj"
-              },
-              "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj": {
-                "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj"
               }
             }
           }
@@ -847,127 +844,6 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj": {
-      "version": "1.0.18",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj",
-        "projectName": "YsecItAuthApp.Web.EntityFramework",
-        "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\YsecItAuthApp.Web.EntityFramework.csproj",
-        "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecItAuthApp.Web.EntityFramework\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net6.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
-        },
-        "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {
-              "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
-                "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.Identity": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.AspNetCore.Identity.UI": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Abstractions": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Analyzers": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[6.0.3, )"
-            },
-            "Microsoft.Extensions.Configuration": {
-              "target": "Package",
-              "version": "[6.0.1, )"
-            },
-            "Microsoft.Extensions.Configuration.Abstractions": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.Extensions.DependencyInjection": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            },
-            "Microsoft.Extensions.DependencyInjection.Abstractions": {
-              "target": "Package",
-              "version": "[6.0.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

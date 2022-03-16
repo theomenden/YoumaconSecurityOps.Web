@@ -1,13 +1,5 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
-using YoumaconSecurityOps.Core.EventStore.Events;
-using YoumaconSecurityOps.Web.Client.Bootstrapping;
-using YoumaconSecurityOps.Web.Client.Invariants;
-
 namespace YoumaconSecurityOps.Web.Client;
+
 public class Startup
 {
     public Startup(IWebHostEnvironment webHost)
@@ -50,9 +42,7 @@ public class Startup
             builder.ClearProviders();
             builder.AddSerilog(dispose: true);
         });
-
-        //services.AddAuthServices(appSettings);
-
+        
         services
             .AddBlazorise(options =>
             {
@@ -60,7 +50,6 @@ public class Startup
             })
             .AddBootstrap5Providers()
             .AddFontAwesomeIcons();
-        
 
         services.AddDataAccessServices(appSettings.YoumaDbConnectionString);
 
@@ -108,6 +97,7 @@ public class Startup
         
         services.AddServerSideBlazor()
             .AddMicrosoftIdentityConsentHandler();
+
         services.AddRazorPages();
 
         services.AddIndexedDB(dbStore =>
@@ -166,25 +156,15 @@ public class Startup
                 }
             });
         });
-
     }
     
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-        }
-        else
-        {
-            app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
-        app.UseHttpsRedirection();
+        app.UseEnvironmentMiddleware(env);
 
+        app.UseHttpsRedirection();
+        
         app.UseSerilogRequestLogging(options => options.EnrichDiagnosticContext = RequestLoggingConfigurer.EnrichFromRequest);
 
         app.UseStaticFiles();
@@ -205,10 +185,9 @@ public class Startup
             endpoints.MapBlazorHub();
             endpoints.MapFallbackToPage("/_Host");
         });
-        
     }
 
-    private IDictionary<String, Assembly> GetAssemblies()
+    private static IDictionary<String, Assembly> GetAssemblies()
     {
         var assemblies = new Dictionary<String, Assembly>(StringComparer.Ordinal)
         {

@@ -1,10 +1,9 @@
 ﻿<AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity.Name!
-        <Link To="" Title="Log out"/>
+        <Button Type="ButtonType.Link" Color="Color.Danger" To="/signout-oidc">Log out</Button>
     </Authorized>
     <NotAuthorized>
-        <Link To="Identity/Account/Register" Title="Register" />
-        <Link To="Identity/Account/Login" Title="Log In"/>
+        <Button Type="ButtonType.Link" To="/signup-oidc" Color="Color.Info">Register</Button>
+        <Button Type="ButtonType.Link" To="/signin-oidc" Color="Color.Success">Log In</Button>
     </NotAuthorized>
 </AuthorizeView>

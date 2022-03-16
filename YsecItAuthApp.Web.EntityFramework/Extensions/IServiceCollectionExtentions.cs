@@ -1,9 +1,6 @@
-﻿using System;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using YoumaconSecurityOps.Core.Shared.Configuration;
 using YsecItAuthApp.Web.EntityFramework.Context;
 using YsecItAuthApp.Web.EntityFramework.Models;
@@ -20,11 +17,6 @@ namespace YsecItAuthApp.Web.EntityFramework.Extensions
                     .EnableServiceProviderCaching()
                 );
             
-            services.AddIdentity<YsecItUser, YsecItRole>()
-                .AddEntityFrameworkStores<YsecItSecurityContext>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
-
             return services;
         }
     }
