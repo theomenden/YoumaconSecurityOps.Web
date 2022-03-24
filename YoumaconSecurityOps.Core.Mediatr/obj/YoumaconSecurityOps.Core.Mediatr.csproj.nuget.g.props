@@ -12,7 +12,4 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\andre\.nuget\packages\" />
   </ItemGroup>
-  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)tg.blazor.indexeddb\1.5.0-preview\buildTransitive\TG.Blazor.IndexedDB.props" Condition="Exists('$(NuGetPackageRoot)tg.blazor.indexeddb\1.5.0-preview\buildTransitive\TG.Blazor.IndexedDB.props')" />
-  </ImportGroup>
 </Project>

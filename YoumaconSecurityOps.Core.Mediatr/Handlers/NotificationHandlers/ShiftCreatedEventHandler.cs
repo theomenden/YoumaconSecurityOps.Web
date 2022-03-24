@@ -1,11 +1,7 @@
-﻿using TG.Blazor.IndexedDB;
-
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
 internal sealed class ShiftCreatedEventHandler : INotificationHandler<ShiftCreatedEvent>
 {
-    private readonly IndexedDBManager _indexedDbManager;
-
     private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
@@ -20,12 +16,10 @@ internal sealed class ShiftCreatedEventHandler : INotificationHandler<ShiftCreat
 
     private readonly IShiftRepository _shifts;
 
-    public ShiftCreatedEventHandler(IndexedDBManager indexedDbManager,
-        IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory,
+    public ShiftCreatedEventHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory,
         IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, ILogger<ShiftCreatedEventHandler> logger,
         IMapper mapper, IMediator mediator, IEventStoreRepository eventStore, IShiftRepository shifts)
     {
-        _indexedDbManager = indexedDbManager;
         _eventStoreDbContextFactory = eventStoreDbContextFactory;
         _dbContextFactory = dbContextFactory;
         _logger = logger;

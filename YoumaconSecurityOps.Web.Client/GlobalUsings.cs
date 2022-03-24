@@ -17,7 +17,6 @@ global using System;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Net.Mime;
 global using System.Reflection;
-global using TG.Blazor.IndexedDB;
 global using YoumaconSecurityOps.Core.AutoMapper.Extensions;
 global using YoumaconSecurityOps.Core.EventStore.Events;
 global using YoumaconSecurityOps.Core.EventStore.Extensions;

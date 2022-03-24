@@ -10,8 +10,7 @@ public partial class StaffList : ComponentBase
     [Inject] public IStaffService StaffService { get; init; }
 
     [Inject] public INotificationService NotificationService { get; init; }
-
-    [Inject] public IndexedDBManager DbManager { get; init; }
+    
     #endregion
     #region Private Fields
     private IEnumerable<StaffReader> _staffMembers = new List<StaffReader>(50);
@@ -67,29 +66,7 @@ public partial class StaffList : ComponentBase
         _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery(), cancellationToken);
 
         _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery(), cancellationToken);
-
-        foreach (var staffType in _staffTypes)
-        {
-            var staffTypeIndexRecord = new StoreRecord<StaffType>
-            {
-                Storename = "YSecStaffTypes",
-                Data = staffType
-            };
-
-            await DbManager.AddRecord(staffTypeIndexRecord);
-        }
-
-        foreach (var staffRole in _staffRoles)
-        {
-            var staffTypeIndexRecord = new StoreRecord<StaffRole>
-            {
-                Storename = "YSecRoles",
-                Data = staffRole
-            };
-
-            await DbManager.AddRecord(staffTypeIndexRecord);
-        }
-
+        
         StateHasChanged();
     }
 

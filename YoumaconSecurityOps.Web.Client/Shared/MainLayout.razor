@@ -1,23 +1,23 @@
 ﻿@layout RootLayout
 @inherits LayoutComponentBase
-<Layout Sider="true">
+<Layout Sider>
     <LayoutSider>
         <LayoutSiderContent>
             <NavMenu />
         </LayoutSiderContent>
     </LayoutSider>
     <Layout>
-        <LayoutHeader Fixed="true">
+        <LayoutHeader Fixed>
             <NavBarHeader ThemeEnabledChanged="@OnThemeEnabledChanged"
                           ThemeGradientChanged="@OnThemeGradientChanged"
                           ThemeRoundedChanged="@OnThemeRoundedChanged"
                           ThemeColorChanged="@OnThemeColorChanged"/>
         </LayoutHeader>
         <Layout>
-            <LayoutContent>
+            <LayoutContent Class="-content -index">
                 <ErrorBoundary @ref="@_errorBoundary">
                     <ChildContent>
-                    <Container Fluid="true">
+                    <Container Fluid>
                         @Body
                     </Container>
                     </ChildContent>
@@ -45,7 +45,7 @@
                 </ErrorBoundary>
             </LayoutContent>
         </Layout>
-        <LayoutFooter Fixed="true">
+        <LayoutFooter Fixed Class="new_footer_area">
             <FooterNav ThemeColorChanged="@OnThemeColorChanged" />
         </LayoutFooter>
     </Layout>

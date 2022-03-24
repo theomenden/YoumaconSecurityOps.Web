@@ -99,63 +99,6 @@ public class Startup
             .AddMicrosoftIdentityConsentHandler();
 
         services.AddRazorPages();
-
-        services.AddIndexedDB(dbStore =>
-        {
-            dbStore.DbName = nameof(YoumaconSecurityOps);
-            dbStore.Version = 1;
-
-            dbStore.Stores.Add(new()
-            {
-                Name = "YSecRoles",
-                PrimaryKey = new(){Auto = false, Name = "roleId", KeyPath = "id"},
-                Indexes = new()
-                {
-                    new()
-                    {
-                        Auto = false,
-                        Name = "name",
-                        KeyPath = nameof(StaffRole.Name),
-                    }
-                }
-            });
-
-            dbStore.Stores.Add(new ()
-            {
-                Name = "YSecStaffTypes",
-                PrimaryKey = new() { Auto = false, Name = "staffTypeId", KeyPath = "id" },
-                Indexes = new ()
-                {
-                    new()
-                    {
-                        Auto = false,
-                        Name = "title",
-                        KeyPath = nameof(StaffType.Title),
-                    }
-                }
-            });
-
-            dbStore.Stores.Add(new ()
-            {
-                Name = "YSecEvents",
-                PrimaryKey = new () { Auto = false, Name = "aggregate", KeyPath = "aggregate"},
-                Indexes = new()
-                {
-                    new()
-                    {
-                        Auto = false,
-                        Name = "id",
-                        KeyPath = nameof(EventReader.Id)
-                    },
-                    new()
-                    {
-                    Auto = false,
-                    Name = "aggregateId",
-                    KeyPath = nameof(EventReader.AggregateId)
-                }
-                }
-            });
-        });
     }
     
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

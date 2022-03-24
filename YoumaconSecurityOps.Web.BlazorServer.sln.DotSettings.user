@@ -1,4 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\andre\AppData\Local\Temp\JetBrains\ReSharperPlatformVs17\vAny_5651b93d\CoverageData\_YoumaconSecurityOps.Web.BlazorServer.1344667007\Snapshot\snapshot.utdcvr</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e4bbff06_002D8911_002D405f_002D8590_002Dc6b3975e7258/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WithId_ShouldReturnSpecificLocationUsingSuppliedId" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net5.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.LocationRepositoryTests.WithId_ShouldReturnSpecificLocationUsingSuppliedId&lt;/TestId&gt;&#xD;

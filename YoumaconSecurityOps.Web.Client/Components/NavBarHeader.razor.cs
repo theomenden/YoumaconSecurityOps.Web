@@ -9,7 +9,8 @@ namespace YoumaconSecurityOps.Web.Client.Components;
 public partial class NavBarHeader : ComponentBase
 {
     #region Parameters
-    [Inject]public ITextLocalizerService LocalizationService { get; set; }
+    [Inject] public ITextLocalizerService LocalizationService { get; init; }
+    
     [Parameter] public EventCallback<bool> ThemeEnabledChanged { get; set; }
 
     [Parameter] public EventCallback<bool> ThemeGradientChanged { get; set; }
@@ -23,15 +24,16 @@ public partial class NavBarHeader : ComponentBase
     #region Fields
     private bool _isTopbarVisible = false;
 
+    private ThemeChoice _selectedTheme;
+
     private CultureInfo _selectedCultureName;
+    
     #endregion
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _selectedCultureName = LocalizationService.SelectedCulture;
 
         SelectedCultureChanged(CultureInfo.CurrentCulture);
-
-        await base.OnInitializedAsync();
     }
 
     private void SelectedCultureChanged(CultureInfo cultureInfo)
@@ -39,7 +41,7 @@ public partial class NavBarHeader : ComponentBase
         _selectedCultureName = cultureInfo;
 
         LocalizationService.ChangeLanguage(cultureInfo.Name);
-            
+
         StateHasChanged();
     }
 }

@@ -1,10 +1,7 @@
-﻿using TG.Blazor.IndexedDB;
-
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
 internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWithReturn, Guid> //AsyncRequestHandler<AddShiftCommandWithReturn>
 {
-    private readonly IndexedDBManager _indexedDbManager;
 
     private readonly IDbContextFactory<EventStoreDbContext> _eventStoreDbContextFactory;
 
@@ -14,9 +11,8 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWit
 
     private readonly IMediator _mediator;
 
-    public AddShiftCommandHandler(IndexedDBManager indexedDbManager, IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator)
+    public AddShiftCommandHandler(IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator)
     {
-        _indexedDbManager = indexedDbManager;
         _eventStoreDbContextFactory = eventStoreDbContextFactory;
         _eventStore = eventStore;
         _mapper = mapper;
@@ -46,20 +42,8 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWit
         var eventReader = _mapper.Map<EventReader>(e);
 
         await _eventStore.SaveAsync(context, eventReader , cancellationToken).ConfigureAwait(false);
-
-        await PersistEventToClientStorage(eventReader).ConfigureAwait(false);
-
+        
         await _mediator.Publish(e, cancellationToken).ConfigureAwait(false);
     }
-
-    private async Task PersistEventToClientStorage(EventReader eventToStore)
-    {
-        var eventRecord = new StoreRecord<EventReader>
-        {
-            Storename = "YsecEvents",
-            Data = eventToStore
-        };
-
-        await _indexedDbManager.AddRecord(eventRecord).ConfigureAwait(false);
-    }
+    
 }

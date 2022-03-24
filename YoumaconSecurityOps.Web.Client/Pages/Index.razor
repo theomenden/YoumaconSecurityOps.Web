@@ -9,61 +9,44 @@
         Pick any navigation on the side-menu to get started
     </Paragraph>
 </Jumbotron>
-<Card Flex="Flex.Fill.OnDesktop" 
-      Margin="Margin.Is2.OnY.Is3.OnX.OnDesktop" 
-      Background="Background.Dark" 
-      TextColor="TextColor.White50"
-      >
+<Card Flex="Flex.Fill.OnDesktop"
+      Margin="Margin.Is2.OnY.Is3.OnX.OnDesktop"
+      Background="Background.Dark"
+      TextColor="TextColor.White50">
     <CardHeader>Your upcoming shifts are:</CardHeader>
     <CardBody>
-    @if (!_isLoading && _shiftsForStaffMember?.Any() == true)
-    {
-        <Table
-            Bordered
-            Hoverable
-            Narrow
-            Striped
-            Responsive
-            Resizable
-            FixedHeader
-            FixedHeaderTableHeight="300px"
-            TextColor="TextColor.White50"
-            Background="Background.Light">
-            <TableHeader TextColor="TextColor.White">
-                <TableRow>
-                    <TableHeaderCell Background="Background.Dark">
-                        Starting At
-                    </TableHeaderCell>
-                    <TableHeaderCell Background="Background.Dark">
-                        Starting Location
-                    </TableHeaderCell>
-                    <TableHeaderCell Background="Background.Dark">
-                        Type
-                    </TableHeaderCell>
-                    <TableHeaderCell Background="Background.Dark">
-                        Role
-                    </TableHeaderCell>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <Repeater TItem="ShiftReader" Items="_shiftsForStaffMember" Context="shiftContext">
-                    <TableRow @key="@shiftContext.Id.ToString()">
-                        <TableRowCell>
-                            @($"{shiftContext.StartAt:F}")
-                        </TableRowCell>
-                        <TableRowCell>
-                            @(shiftContext.StartingLocationNavigation.Name ?? "Ren Cen Ops")
-                        </TableRowCell>
-                        <TableRowCell>
-                            @(shiftContext.StaffMember.Role?.Name ?? "General")
-                        </TableRowCell>
-                        <TableRowCell>
-                            @(shiftContext.StaffMember.StaffType?.Title ?? "Floor")
-                        </TableRowCell>
-                    </TableRow>
+        @if (!_isLoading && _shiftsForStaffMember?.Any() == true)
+        {
+            <ListGroup Background="Background.Dark" TextColor="TextColor.Light" Flush Flex="Flex.InlineFlex.JustifyContent.Between" TextOverflow="TextOverflow.NoWrap">
+                <ListGroupItem Border="Border.Dark.OnAll.Is1" Shadow="Shadow.Default">
+                    <Fields>
+                        <Field>
+                            <Heading Size="HeadingSize.Is2">Starts At</Heading>
+                        </Field>
+                        <Field>
+                            <Heading Size="HeadingSize.Is2">Location</Heading>
+                        </Field>
+                        <Field>
+                            <Heading Size="HeadingSize.Is2">Type & Role</Heading>
+                        </Field>
+                    </Fields>
+                </ListGroupItem>
+                <Repeater TItem="ShiftReader" Items="_shiftsForStaffMember">
+                    <ListGroupItem Margin="Margin.Is2.OnY.OnWidescreen.Is3.OnY.OnMobile" Border="Border.Dark.OnAll.Is1" Shadow="Shadow.Default">
+                        <Fields>
+                            <Field>
+                                <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize" TextOverflow="TextOverflow.Wrap">@context.StartAt.ToString("f")</Paragraph>
+                            </Field>
+                            <Field>
+                                <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">@context.StartingLocationNavigation.Name</Paragraph>
+                            </Field>
+                            <Field>
+                                <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">@context.StaffMember.StaffType?.Title : @context.StaffMember.Role?.Name</Paragraph>
+                            </Field>
+                        </Fields>
+                    </ListGroupItem>
                 </Repeater>
-            </TableBody>
-        </Table>
-    }
+            </ListGroup>
+        }
     </CardBody>
 </Card>

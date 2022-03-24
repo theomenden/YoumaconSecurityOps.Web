@@ -1,10 +1,12 @@
 ﻿<Bar Breakpoint="Breakpoint.Desktop"
      @bind-Visible="@_isTopbarVisible"
      Background="Background.Dark"
-     ThemeContrast="ThemeContrast.Light"
-     Shadow="Shadow.Default"
-     Border="Border.Dark.OnBottom.RoundedBottom.Is1">
-    <BarMenu>
+     ThemeContrast="ThemeContrast.Dark"
+     Border="Border.Dark.OnBottom.RoundedBottom.Is1"
+     Position="Position.Relative"
+     Width="Width.Is100"
+     Height="Height.Is50">
+    <BarMenu >
         <BarStart>
             <BarItem>
                 <Addons>
@@ -27,24 +29,17 @@
             </BarItem>
         </BarStart>
         <BarEnd>
-            <BarItem>
+            <BarItem Margin="Margin.Is3.FromTop.OnWidescreen.Is3.FromTop.OnMobile">
                 <LoginDisplay />
             </BarItem>
-            <BarItem>
-                <BarDropdown>
+            <BarItem Margin="Margin.Is2.FromTop.Is2.OnX.OnWidescreen.Is3.OnX.OnMobile">
+                <BarDropdown RightAligned>
                     <BarDropdownToggle>
-                        <Paragraph TextColor="TextColor.Light">
+                        <Paragraph TextColor="TextColor.Light" Flex="Flex.InlineFlex.AlignContent.Center.JustifyContent.Between">
                             <Blazorise.Icon Name="IconName.Tint" /> Theme
                         </Paragraph>
                     </BarDropdownToggle>
-                    <BarDropdownMenu Style="padding: 15px; min-width: 550px;" TextAlignment="TextAlignment.End">
-                        <Row>
-                            <Column Margin="Margin.Is2.FromBottom">
-                                <Field>
-                                    <Switch TValue="bool" Checked="@(Theme?.Enabled == true)" CheckedChanged="@ThemeEnabledChanged">Theme enabled</Switch>
-                                </Field>
-                            </Column>
-                        </Row>
+                    <BarDropdownMenu Style="padding: 15px; min-width: 550px;">
                         <Row>
                             <Column Margin="Margin.Is2.FromBottom">
                                 <Field>
@@ -57,7 +52,7 @@
                         </Row>
                         <Row>
                             <Column>
-                                <Container Fluid="true">
+                                <Container Fluid>
                                     <ThemeChangeComponent Value="@(Theme?.ColorOptions?.Primary)" ValueChanged="@ThemeColorChanged"></ThemeChangeComponent>
                                 </Container>
                             </Column>

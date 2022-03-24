@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-
-namespace YoumaconSecurityOps.Web.Client.Components;
+﻿namespace YoumaconSecurityOps.Web.Client.Components;
 
 public partial class ThemeChangeComponent: ComponentBase
 {
@@ -14,7 +11,7 @@ public partial class ThemeChangeComponent: ComponentBase
         get => _value;
         set
         {
-            if (value == _value)
+            if (value.Equals(_value))
             {
                 return;
             }
@@ -22,18 +19,19 @@ public partial class ThemeChangeComponent: ComponentBase
 
             InvokeAsync(StateHasChanged);
 
-            ValueChanged.InvokeAsync(value);
+            ValueChanged.InvokeAsync(_selectedTheme?.Name ?? value);
         }
     }
-
-    private string ClassNames(string value) => $"theme-color-table-cell{(value == Value ? " selected" : "")}";
-
+    
+    private ThemeChoice _selectedTheme;
 
     private string _value;
 
-    private Task OnClick(string value)
+    private Task OnClick(ThemeChoice value)
     {
-        Value = value;
+        _selectedTheme = value;
+        
+        Value = value.Name;
 
         return Task.CompletedTask;
     }

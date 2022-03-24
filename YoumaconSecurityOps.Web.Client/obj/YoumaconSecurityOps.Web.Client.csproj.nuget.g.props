@@ -12,11 +12,21 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\andre\.nuget\packages\" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)nosthy.blazor.dexiewrapper\0.4.4\contentFiles\any\net6.0\package.json" Condition="Exists('$(NuGetPackageRoot)nosthy.blazor.dexiewrapper\0.4.4\contentFiles\any\net6.0\package.json')">
+      <NuGetPackageId>Nosthy.Blazor.DexieWrapper</NuGetPackageId>
+      <NuGetPackageVersion>0.4.4</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>package.json</Link>
+    </Content>
+  </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design\6.0.3\build\net6.0\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design\6.0.3\build\net6.0\Microsoft.EntityFrameworkCore.Design.props')" />
-    <Import Project="$(NuGetPackageRoot)tg.blazor.indexeddb\1.5.0-preview\buildTransitive\TG.Blazor.IndexedDB.props" Condition="Exists('$(NuGetPackageRoot)tg.blazor.indexeddb\1.5.0-preview\buildTransitive\TG.Blazor.IndexedDB.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.apidescription.server\3.0.0\build\Microsoft.Extensions.ApiDescription.Server.props" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.apidescription.server\3.0.0\build\Microsoft.Extensions.ApiDescription.Server.props')" />
     <Import Project="$(NuGetPackageRoot)swashbuckle.aspnetcore\6.3.0\build\Swashbuckle.AspNetCore.props" Condition="Exists('$(NuGetPackageRoot)swashbuckle.aspnetcore\6.3.0\build\Swashbuckle.AspNetCore.props')" />
+    <Import Project="$(NuGetPackageRoot)nosthy.blazor.dexiewrapper\0.4.4\buildTransitive\Nosthy.Blazor.DexieWrapper.props" Condition="Exists('$(NuGetPackageRoot)nosthy.blazor.dexiewrapper\0.4.4\buildTransitive\Nosthy.Blazor.DexieWrapper.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\6.0.3\build\Microsoft.AspNetCore.Identity.UI.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\6.0.3\build\Microsoft.AspNetCore.Identity.UI.props')" />
     <Import Project="$(NuGetPackageRoot)blazorise\1.0.1\buildTransitive\Blazorise.props" Condition="Exists('$(NuGetPackageRoot)blazorise\1.0.1\buildTransitive\Blazorise.props')" />
     <Import Project="$(NuGetPackageRoot)blazorise.spinkit\1.0.1\buildTransitive\Blazorise.SpinKit.props" Condition="Exists('$(NuGetPackageRoot)blazorise.spinkit\1.0.1\buildTransitive\Blazorise.SpinKit.props')" />

@@ -16,8 +16,8 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
 
     [CascadingParameter] protected Theme Theme { get; set; }
 
-    private readonly SessionModel _sessionModel = new ();
-
+    private readonly SessionModel _sessionModel = new();
+    
     private ErrorBoundary? _errorBoundary;
 
     protected override void OnParametersSet()
@@ -40,9 +40,10 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
         SessionData.Add(_sessionModel);
 
         await SelectCulture(CultureInfo.CurrentCulture.Name);
-            
+
         await base.OnInitializedAsync();
     }
+
 
     private Task SelectCulture(string name)
     {
@@ -73,7 +74,7 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
         }
 
         Theme.IsGradient = value;
-        
+
         Theme.ThemeHasChanged();
 
         return Task.CompletedTask;
@@ -93,32 +94,14 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
         return Task.CompletedTask;
     }
 
-    private Task OnThemeColorChanged(string value)
+    private Task OnThemeColorChanged(String value)
     {
-        if (Theme is null)
-        {
-            return Task.CompletedTask;
-        }
+        var themeToUse = ThemeChoice
+                             .GetAll()
+                             .FirstOrDefault(t => t.Name.Equals(value))
+            ?? ThemeChoice.Dark;
 
-        Theme.ColorOptions ??= new ThemeColorOptions();
-
-        Theme.BackgroundOptions ??= new ThemeBackgroundOptions();
-
-        Theme.TextColorOptions ??= new ThemeTextColorOptions();
-
-        Theme.ColorOptions.Primary = value;
-        Theme.BackgroundOptions.Primary = value;
-        Theme.TextColorOptions.Primary = value;
-
-        Theme.InputOptions ??= new ThemeInputOptions();
-
-        //Theme.InputOptions.Color = value;
-        Theme.InputOptions.CheckColor = value;
-        Theme.InputOptions.SliderColor = value;
-
-        Theme.SpinKitOptions ??= new();
-
-        Theme.SpinKitOptions.Color = value;
+        Theme = themeToUse.Theme;
 
         Theme.ThemeHasChanged();
 

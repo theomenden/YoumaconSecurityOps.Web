@@ -341,10 +341,6 @@
             "System.Linq.Async": {
               "target": "Package",
               "version": "[6.0.1, )"
-            },
-            "TG.Blazor.IndexedDB": {
-              "target": "Package",
-              "version": "[1.5.0-preview, )"
             }
           },
           "imports": [
@@ -631,7 +627,7 @@
           "dependencies": {
             "Azure.Core": {
               "target": "Package",
-              "version": "[1.22.0, )"
+              "version": "[1.23.0, )"
             },
             "Azure.Extensions.AspNetCore.Configuration.Secrets": {
               "target": "Package",
@@ -753,6 +749,10 @@
               "target": "Package",
               "version": "[6.0.2, )"
             },
+            "Nosthy.Blazor.DexieWrapper": {
+              "target": "Package",
+              "version": "[0.4.4, )"
+            },
             "NuGet.Versioning": {
               "target": "Package",
               "version": "[6.1.0, )"
@@ -824,10 +824,6 @@
             "System.Linq.Dynamic.Core": {
               "target": "Package",
               "version": "[1.2.18, )"
-            },
-            "TG.Blazor.IndexedDB": {
-              "target": "Package",
-              "version": "[1.5.0-preview, )"
             }
           },
           "imports": [

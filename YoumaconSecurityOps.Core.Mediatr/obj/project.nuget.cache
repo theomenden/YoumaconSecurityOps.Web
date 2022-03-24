@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CIqfasi7EE6ad0ea5V28vSTNKwBDDrzrhVx4iFjrNwS9Njh+4nHU+XqvUvysWZMLQRaWWdFIMwtxO/mEGawlpA==",
+  "dgSpecHash": "fYpwow6kj6z6L8VT5U6tjJB0Kku39KkoGyDXEavGTjRkEqtcnQez79ZW/tXOI3m+mf0+ywZ/T6oV07R3Opu5Lw==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj",
   "expectedPackageFiles": [
@@ -11,12 +11,6 @@
     "C:\\Users\\andre\\.nuget\\packages\\mediatr\\10.0.1\\mediatr.10.0.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\10.0.1\\mediatr.extensions.microsoft.dependencyinjection.10.0.1.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.aspnetcore.authorization\\3.1.0\\microsoft.aspnetcore.authorization.3.1.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.aspnetcore.components\\3.1.0\\microsoft.aspnetcore.components.3.1.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\3.1.0\\microsoft.aspnetcore.components.analyzers.3.1.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.aspnetcore.components.forms\\3.1.0\\microsoft.aspnetcore.components.forms.3.1.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.aspnetcore.components.web\\3.1.0\\microsoft.aspnetcore.components.web.3.1.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.aspnetcore.metadata\\3.1.0\\microsoft.aspnetcore.metadata.3.1.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
@@ -41,7 +35,6 @@
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.8.0\\microsoft.identitymodel.protocols.6.8.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.8.0\\microsoft.identitymodel.protocols.openidconnect.6.8.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.8.0\\microsoft.identitymodel.tokens.6.8.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\microsoft.jsinterop\\3.1.0\\microsoft.jsinterop.3.1.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
@@ -62,8 +55,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\tg.blazor.indexeddb\\1.5.0-preview\\tg.blazor.indexeddb.1.5.0-preview.nupkg.sha512"
+    "C:\\Users\\andre\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }

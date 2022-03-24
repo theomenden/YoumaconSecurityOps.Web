@@ -1,8 +1,8 @@
 ﻿@if (IsLoading)
 {
-    <Span Margin="Margin.Is5.FromTop.OnDesktop" Padding="Padding.IsAuto.OnDesktop">
-        <SpinKit Centered="true" Size="6em" Color="#000" Type="SpinKitType.CircleFade"/>
-    </Span>
+    <Container Fluid>
+        <SpinKit Type="SpinKitType.Chase" Centered Color="#FC9CFB" Size="3em" />
+    </Container>
 }
 else
 {
@@ -10,6 +10,7 @@ else
 }
 
 @code {
-    [Parameter]public Boolean IsLoading { get; set; }
+
+    [Parameter] public Boolean IsLoading { get; set; } = true;
     [Parameter] public RenderFragment ChildContent { get; set; }
 }

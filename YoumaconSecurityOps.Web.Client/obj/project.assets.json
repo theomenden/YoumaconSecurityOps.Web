@@ -27,7 +27,7 @@
           "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "Azure.Core/1.22.0": {
+      "Azure.Core/1.23.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
@@ -3088,6 +3088,31 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "Nosthy.Blazor.DexieWrapper/0.4.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/DexieWrapper.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/DexieWrapper.dll": {}
+        },
+        "contentFiles": {
+          "contentFiles/any/net6.0/package.json": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          }
+        },
+        "build": {
+          "buildTransitive/Nosthy.Blazor.DexieWrapper.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Nosthy.Blazor.DexieWrapper.props": {}
+        }
+      },
       "NuGet.Common/5.11.0": {
         "type": "package",
         "dependencies": {
@@ -5442,25 +5467,6 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "TG.Blazor.IndexedDB/1.5.0-preview": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Components": "3.1.0",
-          "Microsoft.AspNetCore.Components.Web": "3.1.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/TG.Blazor.IndexedDB.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/TG.Blazor.IndexedDB.dll": {}
-        },
-        "build": {
-          "buildTransitive/TG.Blazor.IndexedDB.props": {}
-        },
-        "buildMultiTargeting": {
-          "buildMultiTargeting/TG.Blazor.IndexedDB.props": {}
-        }
-      },
       "YoumaconSecurityOps.Core.AutoMapper/1.0.25": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -5529,7 +5535,6 @@
           "Microsoft.Extensions.Logging": "6.0.0",
           "Serilog": "2.10.0",
           "System.Linq.Async": "6.0.1",
-          "TG.Blazor.IndexedDB": "1.5.0-preview",
           "YoumaconSecurityOps.Core.EventStore": "1.0.25",
           "YoumaconSecurityOps.Core.Shared": "1.0.25"
         },
@@ -5617,16 +5622,16 @@
         "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
       ]
     },
-    "Azure.Core/1.22.0": {
-      "sha512": "ze/xRCHSSDe5TIk5vBDbVrauW1EN7UIbnBvIBfMH8KSt/I9+/7yPAjTBDgNBk0IwG6WBV+BBHp4IUtS/PGAQwQ==",
+    "Azure.Core/1.23.0": {
+      "sha512": "myulcGStD89NN7BUhAjkcfDhIvRj2UUwZHEgjB50pL3vb0LEunrtinxKqUGUuOheQVCHlILKLNoUeCThQ1iCOg==",
       "type": "package",
-      "path": "azure.core/1.22.0",
+      "path": "azure.core/1.23.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "CHANGELOG.md",
         "README.md",
-        "azure.core.1.22.0.nupkg.sha512",
+        "azure.core.1.23.0.nupkg.sha512",
         "azure.core.nuspec",
         "azureicon.png",
         "lib/net461/Azure.Core.dll",
@@ -9914,6 +9919,25 @@
         "newtonsoft.json.13.0.1.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "Nosthy.Blazor.DexieWrapper/0.4.4": {
+      "sha512": "JIZi04UkJajSPDbGdFkFXntWs5RSOsxcy1as2jla5OI2quHwMvh6pPEw6tMr8lMRF+JcLAOLvE/KNtaFN2bZyg==",
+      "type": "package",
+      "path": "nosthy.blazor.dexiewrapper/0.4.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "build/Nosthy.Blazor.DexieWrapper.props",
+        "buildMultiTargeting/Nosthy.Blazor.DexieWrapper.props",
+        "buildTransitive/Nosthy.Blazor.DexieWrapper.props",
+        "content/package.json",
+        "contentFiles/any/net6.0/package.json",
+        "lib/net6.0/DexieWrapper.dll",
+        "nosthy.blazor.dexiewrapper.0.4.4.nupkg.sha512",
+        "nosthy.blazor.dexiewrapper.nuspec",
+        "staticwebassets/scripts/commandExecuter.js"
       ]
     },
     "NuGet.Common/5.11.0": {
@@ -15605,23 +15629,6 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "TG.Blazor.IndexedDB/1.5.0-preview": {
-      "sha512": "wvqdZZqpwOuNJ1gW3KXvEugPlT4UiAhrnhIlGnWv18lf/H9iEaMGPbEZUdy/uzejyYC3541AXsKlX2ZhoW0QUA==",
-      "type": "package",
-      "path": "tg.blazor.indexeddb/1.5.0-preview",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/Microsoft.AspNetCore.StaticWebAssets.props",
-        "build/TG.Blazor.IndexedDB.props",
-        "buildMultiTargeting/TG.Blazor.IndexedDB.props",
-        "buildTransitive/TG.Blazor.IndexedDB.props",
-        "lib/netstandard2.0/TG.Blazor.IndexedDB.dll",
-        "staticwebassets/indexedDb.Blazor.js",
-        "tg.blazor.indexeddb.1.5.0-preview.nupkg.sha512",
-        "tg.blazor.indexeddb.nuspec"
-      ]
-    },
     "YoumaconSecurityOps.Core.AutoMapper/1.0.25": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.AutoMapper/YoumaconSecurityOps.Core.AutoMapper.csproj",
@@ -15655,7 +15662,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Azure.Core >= 1.22.0",
+      "Azure.Core >= 1.23.0",
       "Azure.Extensions.AspNetCore.Configuration.Secrets >= 1.2.1",
       "Azure.Identity >= 1.5.0",
       "Blazored.FluentValidation >= 2.0.3",
@@ -15685,6 +15692,7 @@
       "Microsoft.Identity.Web.MicrosoftGraph >= 1.23.1",
       "Microsoft.Identity.Web.UI >= 1.23.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
+      "Nosthy.Blazor.DexieWrapper >= 0.4.4",
       "NuGet.Versioning >= 6.1.0",
       "Serilog >= 2.10.0",
       "Serilog.AspNetCore >= 5.0.0",
@@ -15703,7 +15711,6 @@
       "System.IdentityModel.Tokens.Jwt >= 6.16.0",
       "System.Linq.Async >= 6.0.1",
       "System.Linq.Dynamic.Core >= 1.2.18",
-      "TG.Blazor.IndexedDB >= 1.5.0-preview",
       "YoumaconSecurityOps.Core.AutoMapper >= 1.0.25",
       "YoumaconSecurityOps.Core.FluentEmailer >= 1.0.25",
       "YoumaconSecurityOps.Core.Mediatr >= 1.0.25",
@@ -15769,7 +15776,7 @@
         "dependencies": {
           "Azure.Core": {
             "target": "Package",
-            "version": "[1.22.0, )"
+            "version": "[1.23.0, )"
           },
           "Azure.Extensions.AspNetCore.Configuration.Secrets": {
             "target": "Package",
@@ -15891,6 +15898,10 @@
             "target": "Package",
             "version": "[6.0.2, )"
           },
+          "Nosthy.Blazor.DexieWrapper": {
+            "target": "Package",
+            "version": "[0.4.4, )"
+          },
           "NuGet.Versioning": {
             "target": "Package",
             "version": "[6.1.0, )"
@@ -15962,10 +15973,6 @@
           "System.Linq.Dynamic.Core": {
             "target": "Package",
             "version": "[1.2.18, )"
-          },
-          "TG.Blazor.IndexedDB": {
-            "target": "Package",
-            "version": "[1.5.0-preview, )"
           }
         },
         "imports": [
