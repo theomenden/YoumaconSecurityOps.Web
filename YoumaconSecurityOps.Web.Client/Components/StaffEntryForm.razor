@@ -3,7 +3,6 @@
 <ChildContent>
     <Container Fluid="true" Margin="Margin.Is4.OnY.OnDesktop">
         <Row>
-
             <Column ColumnSize="ColumnSize.Is5">
                 <Card>
                     <CardBody>
@@ -75,12 +74,29 @@
                     <CardBody>
                         <CardTitle Size="5">Add Contact Information <Blazorise.Icon Name="IconName.IdCard" IconSize="IconSize.Small" IconStyle="IconStyle.Solid" /></CardTitle>
                         <Form>
+                            @if (!_isLoading)
+                            {
+                                <SelectList TItem="@Pronouns"
+                                            TValue="Int32"
+                                            Data="@_pronouns"
+                                            TextField="@(item => item.Name)"
+                                            ValueField="@(item => item.Id)"
+                                            SelectedValue="@_selectedPronoun"
+                                            SelectedValueChanged="@OnSelectedPronounChanged"
+                                            DefaultItemText="Available Pronouns" />
+                            }
+                            else
+                            {
+                                <Span>
+                                    <SpinKit Type="SpinKitType.Chase" Size="3rem" />
+                                </Span>
+                            }
                             <Addons Margin="Margin.Is2.OnY.OnDesktop">
                                 <Addon AddonType="AddonType.Start">
                                     <AddonLabel>First Name</AddonLabel>
                                 </Addon>
                                 <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="First Name" @bind-Text="@_firstName" />
+                                    <TextEdit Placeholder="First Name" @bind-Text="@_firstName"/>
                                 </Addon>
                             </Addons>
                             <Addons Margin="Margin.Is2.OnY.OnDesktop">
@@ -88,7 +104,7 @@
                                     <AddonLabel>Last Name</AddonLabel>
                                 </Addon>
                                 <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Last Name" @bind-Text="@_lastName" />
+                                    <TextEdit Placeholder="Last Name" @bind-Text="@_lastName"/>
                                 </Addon>
                             </Addons>
                             <Addons Margin="Margin.Is2.OnY.OnDesktop">
@@ -96,7 +112,7 @@
                                     <AddonLabel>Preferred Name</AddonLabel>
                                 </Addon>
                                 <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Preferred Name" @bind-Text="@_preferredName" />
+                                    <TextEdit Placeholder="Preferred Name" @bind-Text="@_preferredName"/>
                                 </Addon>
                             </Addons>
                             <Addons Margin="Margin.Is2.OnY.OnDesktop">
@@ -104,7 +120,7 @@
                                     <AddonLabel>Email</AddonLabel>
                                 </Addon>
                                 <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Email" Role="TextRole.Email" @bind-Text="@_email" />
+                                    <TextEdit Placeholder="Email" Role="TextRole.Email" @bind-Text="@_email"/>
                                 </Addon>
                             </Addons>
                             <Addons Margin="Margin.Is2.OnY.OnDesktop">
@@ -112,7 +128,7 @@
                                     <AddonLabel>Phone Number</AddonLabel>
                                 </Addon>
                                 <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Phone Number" Role="TextRole.Telephone" @bind-Text="@_phoneNumber" />
+                                    <TextEdit Placeholder="Phone Number" Role="TextRole.Telephone" @bind-Text="@_phoneNumber"/>
                                 </Addon>
                             </Addons>
                             <Addons Margin="Margin.Is2.OnY.OnDesktop">
@@ -120,7 +136,7 @@
                                     <AddonLabel>Facebook Name</AddonLabel>
                                 </Addon>
                                 <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Facebook Name" @bind-Text="@_facebookName" />
+                                    <TextEdit Placeholder="Facebook Name" @bind-Text="@_facebookName"/>
                                 </Addon>
                             </Addons>
                         </Form>
@@ -147,7 +163,7 @@
                             <Paragraph>Submit Staff Information</Paragraph>
                         </ChildContent>
                     </Button>
-                    <Button Color="Color.Secondary" Type="ButtonType.Link" To="/staff" Margin="Margin.Is2.OnX.OnDesktop">
+                    <Button Color="Color.Secondary" Type="ButtonType.Link" To="/staff" Margin="Margin.Is2.OnX.OnDesktop" Disabled="@IsCancellable()">
                         <Paragraph>Cancel</Paragraph>
                     </Button>
                 </Buttons>

@@ -729,7 +729,7 @@
           }
         }
       },
-      "YoumaconSecurityOps.Core.EventStore/1.0.25": {
+      "YoumaconSecurityOps.Core.EventStore/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -740,7 +740,7 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.3",
           "System.Linq.Async": "6.0.1",
-          "YoumaconSecurityOps.Core.Shared": "1.0.25"
+          "YoumaconSecurityOps.Core.Shared": "1.0.0"
         },
         "compile": {
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
@@ -749,7 +749,7 @@
           "bin/placeholder/YoumaconSecurityOps.Core.EventStore.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.Shared/1.0.25": {
+      "YoumaconSecurityOps.Core.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -2149,12 +2149,12 @@
         "version.txt"
       ]
     },
-    "YoumaconSecurityOps.Core.EventStore/1.0.25": {
+    "YoumaconSecurityOps.Core.EventStore/1.0.0": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.EventStore/YoumaconSecurityOps.Core.EventStore.csproj"
     },
-    "YoumaconSecurityOps.Core.Shared/1.0.25": {
+    "YoumaconSecurityOps.Core.Shared/1.0.0": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
@@ -2171,15 +2171,15 @@
       "Microsoft.Extensions.Logging >= 6.0.0",
       "Serilog >= 2.10.0",
       "System.Linq.Async >= 6.0.1",
-      "YoumaconSecurityOps.Core.EventStore >= 1.0.25",
-      "YoumaconSecurityOps.Core.Shared >= 1.0.25"
+      "YoumaconSecurityOps.Core.EventStore >= 1.0.0",
+      "YoumaconSecurityOps.Core.Shared >= 1.0.0"
     ]
   },
   "packageFolders": {
     "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.25",
+    "version": "1.0.0",
     "restore": {
       "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Mediatr\\YoumaconSecurityOps.Core.Mediatr.csproj",
       "projectName": "YoumaconSecurityOps.Core.Mediatr",

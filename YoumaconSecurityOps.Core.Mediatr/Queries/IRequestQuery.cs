@@ -28,7 +28,7 @@ public interface IQuery
 /// <inheritdoc cref="IRequest{T}"/>
 /// </summary>
 /// <typeparam name="T">Value to be returned </typeparam>
-public interface IQuery<out T>: IQuery ,IRequest<T>
+public interface IRequestQuery<out T>: IQuery ,IRequest<T>
 {
 }
 

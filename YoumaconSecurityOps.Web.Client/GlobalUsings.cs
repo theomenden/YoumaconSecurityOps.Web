@@ -20,7 +20,6 @@ global using System.Reflection;
 global using YoumaconSecurityOps.Core.AutoMapper.Extensions;
 global using YoumaconSecurityOps.Core.EventStore.Events;
 global using YoumaconSecurityOps.Core.EventStore.Extensions;
-global using YoumaconSecurityOps.Core.FluentEmailer.Extensions;
 global using YoumaconSecurityOps.Core.Mediatr.Extensions;
 global using YoumaconSecurityOps.Core.Mediatr.Commands;
 global using YoumaconSecurityOps.Core.Mediatr.Queries;

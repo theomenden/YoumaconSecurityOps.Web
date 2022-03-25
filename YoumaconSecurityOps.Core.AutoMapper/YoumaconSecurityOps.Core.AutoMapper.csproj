@@ -5,10 +5,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
-    <Version>1.0.25</Version>
-    <FileVersion>1.0.25</FileVersion>
-    <AssemblyVersion>1.0.25</AssemblyVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Assembly.cs" Link="Assembly.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />

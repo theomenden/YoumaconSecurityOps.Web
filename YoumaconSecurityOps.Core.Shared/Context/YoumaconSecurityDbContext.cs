@@ -14,6 +14,8 @@ public partial class YoumaconSecurityDbContext : DbContext
 
     public virtual DbSet<LocationReader> Locations { get; set; }
 
+    public virtual DbSet<Pronouns> Pronouns { get; set; }
+
     public virtual DbSet<RadioScheduleReader> RadioSchedules { get; set; }
 
     public virtual DbSet<RoomScheduleReader> RoomSchedules { get; set; }
@@ -36,6 +38,7 @@ public partial class YoumaconSecurityDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ContactConfiguration());
         modelBuilder.ApplyConfiguration(new IncidentConfiguration());
         modelBuilder.ApplyConfiguration(new LocationConfiguration());
+        modelBuilder.ApplyConfiguration(new PronounsConfiguration());
         modelBuilder.ApplyConfiguration(new RadioScheduleConfiguration());
         modelBuilder.ApplyConfiguration(new RoomScheduleConfiguration());
         modelBuilder.ApplyConfiguration(new ShiftConfiguration());

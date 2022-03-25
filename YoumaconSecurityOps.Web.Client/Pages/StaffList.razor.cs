@@ -21,6 +21,8 @@ public partial class StaffList : ComponentBase
 
     private IEnumerable<StaffType> _staffTypes = new List<StaffType>(5);
 
+    private IEnumerable<Pronouns> _pronouns = new List<Pronouns>(14);
+
     private DataGrid<StaffReader> _dataGrid = new();
 
     private Int32 _totalStaffMembers;
@@ -31,6 +33,7 @@ public partial class StaffList : ComponentBase
 
     private StaffReader _selectedStaffMember;
 
+
     private Blazorise.Modal _modalRef = new();
 
     private SpinKit _spinKitRef = new();
@@ -38,6 +41,8 @@ public partial class StaffList : ComponentBase
     private Boolean _isLoading = false;
 
     private Boolean _isBlackShirt;
+
+    private Int32 _selectedPronoun;
 
     private Int32 _selectedStaffRole;
 
@@ -66,7 +71,9 @@ public partial class StaffList : ComponentBase
         _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery(), cancellationToken);
 
         _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery(), cancellationToken);
-        
+
+        _pronouns = await StaffService.GetPronounsAsync(new GetPronounsQuery(), cancellationToken);
+
         StateHasChanged();
     }
 
@@ -140,6 +147,13 @@ public partial class StaffList : ComponentBase
     private void OnSelectedStaffTypeChanged(Int32 staffType)
     {
         _selectedStaffType = staffType;
+
+        StateHasChanged();
+    }
+
+    private void OnPronounsChanged(Int32 pronounId)
+    {
+        _selectedPronoun = pronounId;
 
         StateHasChanged();
     }

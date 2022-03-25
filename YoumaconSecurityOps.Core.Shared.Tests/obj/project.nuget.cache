@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5/gMdLv26eddmjgIGw4GCRY/lhF73Viu+bT44K9SkVNvQjPbxw0oSSEqFzEH3rnEgJc5jA7RjoFeoTDlDcGcww==",
+  "dgSpecHash": "my4gAkqjaq3H3beTHgAks1F/CghUfUQ4ZBIv4ZX4lWreyOyWQVHbyPV0pPv2fPqI+8jta83psz21tYUAzaU0oA==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared.Tests\\YoumaconSecurityOps.Core.Shared.Tests.csproj",
   "expectedPackageFiles": [

@@ -324,5 +324,12 @@ public class StaffService : IStaffService
         return response;
     }
 
+    public async Task<IEnumerable<Pronouns>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default)
+    {
+        var pronouns = await _mediator.Send(pronounsQuery, cancellationToken);
+
+        return pronouns.ToArray();
+    }
+
     #endregion
 }

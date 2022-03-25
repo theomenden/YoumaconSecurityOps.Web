@@ -1,0 +1,17 @@
+﻿@page "/checkInProcedure"
+<Jumbotron Background="Background.Dark"
+           Border="Border.Rounded"
+           TextColor="TextColor.Light"
+           Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+    <JumbotronTitle Size="JumbotronTitleSize.Is2">Floor Staff Member Check-In Procedure</JumbotronTitle>
+    <JumbotronSubtitle>Procedure to get ready for a shift</JumbotronSubtitle>
+</Jumbotron>
+<Container Fluid Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Dark.OnAll.Rounded.Is1" Shadow="Shadow.Default">
+    <Form>
+        <Check TValue="bool" Checked="false" Disabled ReadOnly>Locate floor staff member on the appropriate schedule, often by location</Check>
+        <Check TValue="bool" Checked="false" Disabled ReadOnly>Check Photo ID</Check>
+        <Check TValue="bool" Checked="false" Disabled ReadOnly>Press "Check In" button on their shift - their shift's row will highlight in yellow if they're late</Check>
+        <Check TValue="bool" Checked="false" Disabled ReadOnly>Have them write their name on their badge</Check>
+        <Check TValue="bool" Checked="false" Disabled ReadOnly>Get them an appropriately sized T-Shirt</Check>
+    </Form>
+</Container>

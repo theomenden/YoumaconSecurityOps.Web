@@ -5,8 +5,8 @@
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <returns>Typically a collection of entities of type <typeparamref name="T"/></returns>
-/// <remarks><see cref="IQuery{T}"/></remarks>
-public abstract record QueryBase<T>(String Issuer) : IQuery<T>
+/// <remarks><see cref="IRequestQuery{T}"/></remarks>
+public abstract record QueryBase<T>(String Issuer) : IRequestQuery<T>
 {
     protected QueryBase()
     : this(typeof(T).FullName)

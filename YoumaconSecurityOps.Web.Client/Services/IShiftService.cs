@@ -68,5 +68,15 @@ public interface IShiftService
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Task{TResult}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/> - the shift that was had it's status recently reported</returns>
     Task<ApiResponse<Guid>> ReportIn(ShiftReportInCommandWithReturn commandWithReturn, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Updates a <see cref="ShiftReader"/> with a new <see cref="LocationReader"/>
+    /// </summary>
+    /// <param name="commandWithReturn">The supplied command</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns><see cref="Task{TResult}"/>: <seealso cref="ApiResponse{T}"/>: <seealso cref="Guid"/> - the shift that had its location changed</returns>
+    Task<ApiResponse<Guid>> UpdateShiftLocationAsync(UpdateShiftLocationCommandWithReturn commandWithReturn,
+        CancellationToken cancellationToken = default);
+
     #endregion
 }

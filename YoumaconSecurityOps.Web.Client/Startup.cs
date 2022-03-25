@@ -62,9 +62,7 @@ public class Startup
         services.AddMediatrServices();
 
         services.AddFrontEndDataServices();
-
-        services.AddFluentEmailServices(Configuration);
-
+        
         services.AddResponseCompression(options =>
         {
             options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(

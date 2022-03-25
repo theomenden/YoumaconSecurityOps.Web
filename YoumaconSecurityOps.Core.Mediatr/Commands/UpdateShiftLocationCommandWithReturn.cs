@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Commands;
 
-public record UpdateShiftLocationCommandWithReturn : ICommandWithReturn<ShiftReader>
+public record UpdateShiftLocationCommandWithReturn : ICommandWithReturn<Guid>
 {
     public UpdateShiftLocationCommandWithReturn(Guid shiftId, Guid locationId)
     {

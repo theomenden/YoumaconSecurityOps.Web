@@ -11,8 +11,8 @@
 <Divider />
 <DataGrid @ref="@_dataGrid"
           TItem="ShiftReader"
-          ReadData="@OnReadData"
           Data="@_gridDisplay"
+          ReadData="@OnReadData"
           TotalItems="@_totalShifts"
           Editable
           CommandMode="DataGridCommandMode.Commands"
@@ -41,7 +41,7 @@
     </EmptyTemplate>
     <LoadingTemplate>
         <Span>
-            <SpinKit Type="SpinKitType.Grid"></SpinKit>
+            <SpinKit Type="SpinKitType.Grid" Size="3em"></SpinKit>
         </Span>
     </LoadingTemplate>
     <DataGridAggregates>

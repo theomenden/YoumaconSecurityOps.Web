@@ -15,10 +15,21 @@ public partial class ContactConfiguration : IEntityTypeConfiguration<ContactRead
         entity.Property(e => e.CreatedOn)
             .HasDefaultValueSql("(getdate())");
 
+        entity.Property(e => e.Pronoun_Id)
+            .HasDefaultValueSql("14");
+
         entity.HasOne(d => d.StaffMember)
             .WithOne(p => p.Contact)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_Contacts_Staff_Id");
+
+        entity.HasOne(p => p.Pronouns)
+            .WithMany(p => p.Contacts)
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasConstraintName("FK_Contacts_Pronouns_Id");
+
+        entity.HasIndex(e => e.Pronoun_Id)
+            .HasDatabaseName("IX_Contacts_Pronoun_Id");
 
         OnConfigurePartial(entity);
     }

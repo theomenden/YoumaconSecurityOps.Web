@@ -15,15 +15,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Data.En
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.Shared.Tests", "YoumaconSecurityOps.Core.Shared.Tests\YoumaconSecurityOps.Core.Shared.Tests.csproj", "{D0A82F74-4153-4C78-9A1C-E92705054C1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.FluentEmailer", "YoumaconSecurityOps.Core.FluentEmailer\YoumaconSecurityOps.Core.FluentEmailer.csproj", "{E6A5DEA8-640D-4341-B658-86F4E38D30F6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.EventStore", "YoumaconSecurityOps.Core.EventStore\YoumaconSecurityOps.Core.EventStore.csproj", "{F3F73568-2D2A-4438-81D7-68A8296DAF4A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.AutoMapper", "YoumaconSecurityOps.Core.AutoMapper\YoumaconSecurityOps.Core.AutoMapper.csproj", "{67A6BD84-0650-465E-8ACB-499D13A50C63}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.EventStore.Tests", "YoumaconSecurityOps.Core.EventStore.Tests\YoumaconSecurityOps.Core.EventStore.Tests.csproj", "{72D36006-9DCC-42C3-9111-2B9E9753EFAE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoumaconSecurityOps.Core.FluentTexter", "YoumaconSecurityOps.Core.FluentTexter\YoumaconSecurityOps.Core.FluentTexter.csproj", "{391817ED-9650-4F2E-B3B9-14D83AF87BA5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F944AD6F-7FD1-4FE1-B241-309F2162EA37}"
+	ProjectSection(SolutionItems) = preProject
+		Assembly.cs = Assembly.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +56,6 @@ Global
 		{D0A82F74-4153-4C78-9A1C-E92705054C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A82F74-4153-4C78-9A1C-E92705054C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0A82F74-4153-4C78-9A1C-E92705054C1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6A5DEA8-640D-4341-B658-86F4E38D30F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6A5DEA8-640D-4341-B658-86F4E38D30F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6A5DEA8-640D-4341-B658-86F4E38D30F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6A5DEA8-640D-4341-B658-86F4E38D30F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3F73568-2D2A-4438-81D7-68A8296DAF4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F3F73568-2D2A-4438-81D7-68A8296DAF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3F73568-2D2A-4438-81D7-68A8296DAF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,10 +68,6 @@ Global
 		{72D36006-9DCC-42C3-9111-2B9E9753EFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72D36006-9DCC-42C3-9111-2B9E9753EFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72D36006-9DCC-42C3-9111-2B9E9753EFAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{391817ED-9650-4F2E-B3B9-14D83AF87BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{391817ED-9650-4F2E-B3B9-14D83AF87BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{391817ED-9650-4F2E-B3B9-14D83AF87BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{391817ED-9650-4F2E-B3B9-14D83AF87BA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

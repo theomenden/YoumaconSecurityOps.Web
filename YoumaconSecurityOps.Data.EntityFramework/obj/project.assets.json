@@ -2129,7 +2129,7 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "YoumaconSecurityOps.Core.Shared/1.0.25": {
+      "YoumaconSecurityOps.Core.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
@@ -7284,7 +7284,7 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "YoumaconSecurityOps.Core.Shared/1.0.25": {
+    "YoumaconSecurityOps.Core.Shared/1.0.0": {
       "type": "project",
       "path": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj",
       "msbuildProject": "../YoumaconSecurityOps.Core.Shared/YoumaconSecurityOps.Core.Shared.csproj"
@@ -7304,7 +7304,7 @@
       "Microsoft.Extensions.Logging.Abstractions >= 6.0.1",
       "Microsoft.Extensions.Logging.Console >= 6.0.0",
       "System.Linq.Async >= 6.0.1",
-      "YoumaconSecurityOps.Core.Shared >= 1.0.25"
+      "YoumaconSecurityOps.Core.Shared >= 1.0.0"
     ]
   },
   "packageFolders": {

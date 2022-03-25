@@ -16,6 +16,8 @@ public partial class StaffEntryForm : ComponentBase
 
     private IEnumerable<StaffType> _staffTypes = new List<StaffType>(5);
 
+    private IEnumerable<Pronouns> _pronouns = new List<Pronouns>(14);
+
     private Boolean _isLoading;
     private Boolean _isContactInfoPrepared;
     private Boolean _isStaffInfoPrepared;
@@ -31,6 +33,9 @@ public partial class StaffEntryForm : ComponentBase
     
     //Default to FLOOR
     private Int32 _selectedStaffType = 1;
+
+    //Default to ASK
+    private Int32 _selectedPronoun = 14;
 
     private String _firstName = String.Empty;
     private String _lastName = String.Empty;
@@ -55,6 +60,8 @@ public partial class StaffEntryForm : ComponentBase
 
         _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery());
 
+        _pronouns = await StaffService.GetPronounsAsync(new GetPronounsQuery());
+
         _isLoading = false;
     }
 
@@ -72,10 +79,17 @@ public partial class StaffEntryForm : ComponentBase
         StateHasChanged();
     }
 
+    private void OnSelectedPronounChanged(Int32 pronounId)
+    {
+        _selectedPronoun = pronounId;
+
+        StateHasChanged();
+    }
+
     private async Task SaveContactInformation()
     {
         _isSavingContactInfo = true;
-        _contactWriter = new ContactWriter(_staffWriter.Id, DateTime.Now, _email, _firstName, _lastName, _facebookName, _preferredName, Convert.ToInt64(_phoneNumber));
+        _contactWriter = new ContactWriter(_staffWriter.Id, _selectedPronoun, DateTime.Now, _email, _firstName, _lastName, _facebookName, _preferredName, Convert.ToInt64(_phoneNumber));
 
         var command = new AddContactCommand(_contactWriter);
 
@@ -107,7 +121,7 @@ public partial class StaffEntryForm : ComponentBase
             _apiResponses.Add(savedStaffInformationResponse);
         }
 
-        _isContactInfoPrepared = savedStaffInformationResponse.ResponseCode is ResponseCodes.ApiSuccess;
+        _isStaffInfoPrepared = savedStaffInformationResponse.ResponseCode is ResponseCodes.ApiSuccess;
 
         _isSavingStaffInfo = false;
     }
@@ -128,5 +142,7 @@ public partial class StaffEntryForm : ComponentBase
     }
 
     private bool IsDisabled() => (_isContactInfoPrepared && _isStaffInfoPrepared) is not true;
+
+    private bool IsCancellable() => _isContactInfoPrepared || _isStaffInfoPrepared;
 }
 

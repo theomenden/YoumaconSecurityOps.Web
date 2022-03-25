@@ -19,6 +19,6 @@ internal sealed class ShiftUpdatedEventHandler: INotificationHandler<ShiftUpdate
 
         var previousEvents =  (await _eventStore.GetAllByAggregateIdAsync(context, notification.AggregateId, cancellationToken)).ToList();
 
-        await _eventStore.SaveAsync(context, notification.Id, notification.MajorVersion, nameof(ShiftUpdatedEventHandler) ,previousEvents.AsReadOnly(), notification.Name, cancellationToken);
+        await _eventStore.SaveAsync(context, notification.AggregateId, notification.MajorVersion, nameof(ShiftUpdatedEventHandler) ,previousEvents.AsReadOnly(), notification.Aggregate, cancellationToken);
     }
 }

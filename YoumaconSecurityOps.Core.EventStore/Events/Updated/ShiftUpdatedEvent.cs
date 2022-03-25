@@ -4,7 +4,7 @@ public class ShiftUpdatedEvent: EventBase
 {
     public ShiftUpdatedEvent(ShiftReader updatedShift)
     {
-        UpdatedShift = updatedShift ?? throw new ArgumentNullException(nameof(updatedShift));
+        UpdatedShift = updatedShift;
     }
 
     public ShiftReader UpdatedShift { get; }

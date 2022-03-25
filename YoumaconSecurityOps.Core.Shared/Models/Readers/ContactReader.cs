@@ -7,6 +7,7 @@
 [Table("Contacts")]
 [Index(nameof(LastName), nameof(FirstName), Name = "IX_Contacts_LastName_FirstName")]
 [Index(nameof(Staff_Id), Name = "IX_Contacts_StaffId", IsUnique = true)]
+[Index(nameof(Pronoun_Id), Name="IX_Contacts_Pronoun_Id")]
 public class ContactReader : BaseReader, IEquatable<ContactReader>
 {
     public ContactReader()
@@ -14,6 +15,8 @@ public class ContactReader : BaseReader, IEquatable<ContactReader>
     }
 
     public Guid Staff_Id { get; set; }
+
+    public Int32 Pronoun_Id { get; set; }
 
     [ConcurrencyCheck]
     public DateTime CreatedOn { get; set; }
@@ -42,6 +45,8 @@ public class ContactReader : BaseReader, IEquatable<ContactReader>
     [InverseProperty(nameof(StaffReader.Contact))]
     public virtual StaffReader StaffMember { get; set; }
 
+    [ForeignKey(nameof(Pronoun_Id))]
+    public virtual Pronouns Pronouns { get; set; }
     #region Overrides
     public override bool Equals(object obj)
     {

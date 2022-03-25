@@ -22,7 +22,7 @@ public partial class StaffRole: IEquatable<StaffRole>, IComparable<StaffRole>
     public string Name { get; set; }
         
     [InverseProperty(nameof(StaffTypesRoles.Role))]
-    public virtual ICollection<StaffTypesRoles> StaffTypeRoleMap { get; set; } = new HashSet<StaffTypesRoles>();
+    public virtual ICollection<StaffTypesRoles> StaffTypeRoleMap { get; set; } = new HashSet<StaffTypesRoles>(20);
 
     #region Overrides
     public bool Equals(StaffRole other)

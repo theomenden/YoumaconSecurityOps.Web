@@ -2,7 +2,7 @@
 
 namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal class UpdateShiftLocationCommandWithReturnHandler : IRequestHandler<UpdateShiftLocationCommandWithReturn, ShiftReader>
+internal class UpdateShiftLocationCommandWithReturnHandler : IRequestHandler<UpdateShiftLocationCommandWithReturn, Guid>
 {
     private readonly IMediator _mediator;
 
@@ -17,7 +17,7 @@ internal class UpdateShiftLocationCommandWithReturnHandler : IRequestHandler<Upd
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<ShiftReader> Handle(UpdateShiftLocationCommandWithReturn request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(UpdateShiftLocationCommandWithReturn request, CancellationToken cancellationToken)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
@@ -25,12 +25,17 @@ internal class UpdateShiftLocationCommandWithReturnHandler : IRequestHandler<Upd
 
         await RaiseShiftUpdatedEvent(updateResult);
 
-        return updateResult;
+        return updateResult.Id;
     }
 
     private async Task RaiseShiftUpdatedEvent(ShiftReader reader)
     {
-        var e = new ShiftUpdatedEvent(reader);
+        var e = new ShiftUpdatedEvent(reader)
+        {
+            Aggregate = $"{reader.Id}-{reader.StaffMember.Contact.PreferredName}",
+            AggregateId = reader.Id,
+            Name= nameof(RaiseShiftUpdatedEvent)
+        };
 
         await _mediator.Publish(e);
     }

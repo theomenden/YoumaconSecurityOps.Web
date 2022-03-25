@@ -58,6 +58,21 @@
                         <Button Color="Color.Default" Display="Display.None"></Button>
                     </DeleteCommandTemplate>
                 </DataGridCommandColumn>
+                <DataGridColumn TItem="StaffReader" Field="Contact.Pronouns" Caption="Pronouns" Filterable Sortable Editable>
+                    <DisplayTemplate>
+                        @(context.Contact?.Pronouns.Name)
+                    </DisplayTemplate>
+                    <EditTemplate>
+                        <SelectList TItem="Pronouns"
+                                    TValue="int"
+                                    Data="@_pronouns"
+                                    TextField="@((item)=>item.Name)"
+                                    ValueField="@((item)=>item.Id)"
+                                    SelectedValue="@_selectedPronoun"
+                                    SelectedValueChanged="@OnPronounsChanged"
+                                    DefaultItemText="Pronouns/Identifiers" />
+                    </EditTemplate>
+                </DataGridColumn>
                 <DataGridColumn TItem="StaffReader" Field="Contact.PreferredName" Caption="Preferred Name" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
                         @(context.Contact?.PreferredName)

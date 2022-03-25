@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using YoumaconSecurityOps.Core.Shared.Models;
+﻿
 
 namespace YoumaconSecurityOps.Core.AutoMapper.Extensions
 {

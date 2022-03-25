@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using YoumaconSecurityOps.Core.AutoMapper.Profiles;
-
-namespace YoumaconSecurityOps.Core.AutoMapper.Extensions
+﻿namespace YoumaconSecurityOps.Core.AutoMapper.Extensions
 {
     public static class IServiceCollectionExtensions
     {

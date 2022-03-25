@@ -33,10 +33,10 @@ public partial class FooterNav: ComponentBase
         get
         {
             var attributes = Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
+                .GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false);
             return attributes.Length == 0 ?
-                "" :
-                ((AssemblyInformationalVersionAttribute)attributes[0]).InformationalVersion;
+                String.Empty :
+                ((AssemblyFileVersionAttribute)attributes[0]).Version;
         }
     }
 
@@ -47,7 +47,7 @@ public partial class FooterNav: ComponentBase
             var attributes = Assembly.GetExecutingAssembly()
                 .GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
             return attributes.Length == 0 ?
-                "" :
+                String.Empty :
                 ((AssemblyCompanyAttribute)attributes[0]).Company;
         }
     }

@@ -112,7 +112,7 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 
         return addResult;
     }
-    
+
     public async Task<ShiftReader> CheckIn(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = default)
     {
         var shift = await dbContext.Shifts.AsQueryable().SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
@@ -163,14 +163,11 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     public async Task<ShiftReader> UpdateCurrentLocation(YoumaconSecurityDbContext dbContext, Guid shiftId, Guid locationId,
         CancellationToken cancellationToken = default)
     {
-        var locationChangeResult = false;
-
-        var shiftToUpdate = await dbContext.Shifts.SingleOrDefaultAsync(sh => sh.Id == shiftId, cancellationToken);
+        var shiftToUpdate = await WithIdAsync(dbContext, shiftId, cancellationToken);
 
         if (shiftToUpdate is not null)
         {
             shiftToUpdate.CurrentLocationId = locationId;
-            locationChangeResult = true;
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);

@@ -20,6 +20,7 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
     {
         var staff = dbContext.StaffMembers
             .Include(st => st.Contact)
+                .ThenInclude(c => c.Pronouns)
             .Include(st => st.StaffTypeRoleMaps)
                 .ThenInclude(str => str.Role)
             .Include(st => st.StaffTypeRoleMaps)
@@ -45,6 +46,14 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 
         return staffMember;
     }
+
+    public async Task<IEnumerable<Pronouns>> GetAllPronounsAsync(YoumaconSecurityDbContext context, CancellationToken cancellationToken = default)
+    {
+        var pronouns = await context.Pronouns.ToArrayAsync(cancellationToken);
+
+        return pronouns;
+    }
+
     #endregion
 
     public IAsyncEnumerator<StaffReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())
