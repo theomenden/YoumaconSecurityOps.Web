@@ -1,3 +1,5 @@
+using YoumaconSecurityOps.Web.Client.UrlHashing;
+
 namespace YoumaconSecurityOps.Web.Client;
 
 public class Startup
@@ -74,6 +76,7 @@ public class Startup
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "YoumaconSecurityOps.Api", Version = "v1" });
         });
 
+        services.AddTransient<IUrlHasher, UrlHasher>();
         services.AddSingleton<SessionDetails>();
         services.AddScoped<CircuitHandler>(sp => new TrackingCircuitHandler(sp.GetRequiredService<SessionDetails>()));
 

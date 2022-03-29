@@ -11,6 +11,10 @@ public partial class IncidentConfiguration : IEntityTypeConfiguration<IncidentRe
 
         entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
 
+        entity.Property(e => e.Severity)
+            .HasConversion(s => (int)s, val => (Severity)val)
+            .HasColumnName("Severity");
+
         entity.HasOne(d => d.Location)
             .WithMany(p => p.Incidents)
             .HasForeignKey(d => d.LocationId)

@@ -95,7 +95,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public IAsyncEnumerable<IncidentReader> GetBySeverity(YoumaconSecurityDbContext dbContext, Severity severityToSearch, CancellationToken cancellationToken = new())
     {
         var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
-            .Where(i => Enum.IsDefined(typeof(Severity), i.Severity) && i.Severity ==(int)severityToSearch);
+            .Where(i => Enum.IsDefined(typeof(Severity), i.Severity) && i.Severity == severityToSearch);
 
         return incidentsUnderShift;
     }
@@ -160,7 +160,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
 
             var incident = await context.Incidents.AsQueryable().SingleOrDefaultAsync(i => i.Id == incidentToUpdate, cancellationToken);
 
-            incident.Severity = (int)updatedSeverity;
+            incident.Severity = updatedSeverity;
 
             await context.SaveChangesAsync(cancellationToken);
 
@@ -186,7 +186,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
 
             var incident = await context.Incidents.AsQueryable().SingleOrDefaultAsync(i => i.Id == incidentToResolve, cancellationToken);
 
-            incident.Severity = (int)Severity.Resolved;
+            incident.Severity = Severity.Resolved;
 
             await context.SaveChangesAsync(cancellationToken);
 

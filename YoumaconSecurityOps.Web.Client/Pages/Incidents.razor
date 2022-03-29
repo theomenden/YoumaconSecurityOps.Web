@@ -97,7 +97,7 @@
                         </DatePicker>
                     </EditTemplate>
                 </DataGridDateColumn>
-                <DataGridColumn TItem="IncidentReader" Field="ReportedBy.Contact.PreferredName" Caption="Reporting Staff Member" Editable="true">
+                <DataGridColumn TItem="IncidentReader" Field="ReportedBy.Contact.PreferredName" Caption="Reporting Staff Member" Editable>
                     <DisplayTemplate>
                         @(_staffMembers.FirstOrDefault(st => st.Id == context.ReportedBy?.Id)?.Contact.PreferredName ?? String.Empty)
                     </DisplayTemplate>
@@ -116,6 +116,6 @@
         </DataGrid>
     </ChildContent>
     <ErrorContent>
-        <ErrorComponent ApiError="@_apiResponse" />
+        <ErrorComponent  ApiErrors="@(new List<ApiResponse>{_apiResponse})" />
     </ErrorContent>
 </ErrorBoundary>

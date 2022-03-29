@@ -22,7 +22,7 @@ public partial class IncidentReader: BaseReader
     [Column("Location_Id")]
     public Guid LocationId { get; set; }
 
-    public int Severity { get; set; }
+    public Severity Severity { get; set; }
 
     public DateTime RecordedOn { get; set; }
 

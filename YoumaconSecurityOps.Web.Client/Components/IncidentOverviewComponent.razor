@@ -1,0 +1,9 @@
+﻿<ListGroup>
+    <Repeater TItem="IncidentReader" Items="Incidents" Context="incidentContext">
+        <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center" Background="Background.Dark" TextColor="TextColor.Light">
+            @incidentContext.Title
+            <Button Color="Color.Info" Type="ButtonType.Link" To="">Details</Button>
+            <Badge Color="@GetBadgeColor(incidentContext.Severity)" Pill></Badge>
+        </ListGroupItem>
+    </Repeater>
+</ListGroup>

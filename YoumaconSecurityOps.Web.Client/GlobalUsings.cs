@@ -1,6 +1,8 @@
 ﻿global using Azure.Identity;
 global using Blazorise;
 global using Blazorise.Bootstrap5;
+global using Blazorise.Charts;
+global using Blazorise.Charts.Streaming;
 global using Blazorise.DataGrid;
 global using Blazorise.Icons.FontAwesome;
 global using MediatR;

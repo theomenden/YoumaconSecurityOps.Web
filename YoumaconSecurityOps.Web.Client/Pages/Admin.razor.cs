@@ -11,6 +11,8 @@ public partial class Admin : ComponentBase
     
     [Inject] public IStaffService StaffService { get; init; }
 
+    [Inject] public IIncidentService IncidentService { get; init; }
+
     [Inject] public INotificationService NotificationService { get; init; }
 
     private IEnumerable<LocationReader> _locations = new List<LocationReader>(20);
@@ -20,6 +22,8 @@ public partial class Admin : ComponentBase
     private IEnumerable<StaffReader> _staff = new List<StaffReader>(50);
 
     private IEnumerable<DropItem> _dropItems = new List<DropItem>(50);
+
+    private IEnumerable<IncidentReader> _incidents = new List<IncidentReader>(50);
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,6 +68,8 @@ public partial class Admin : ComponentBase
 
         _staff = await StaffService.GetStaffMembersAsync(new GetStaffQuery());
 
+        _incidents = await IncidentService.GetIncidentsAsync(new GetIncidentsQuery());
+
         _dropItems =
             from member in _staff
             join shift in _shifts on member.Id equals shift.StaffId into gj
@@ -78,6 +84,7 @@ public partial class Admin : ComponentBase
             };
 
         _locations = await LocationService.GetLocationsAsync(new GetLocationsQuery());
+        
     }
 }
 

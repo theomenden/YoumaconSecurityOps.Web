@@ -8,39 +8,64 @@
 else
 {
     <Container Fluid>
-        <Row>
-            <Column ColumnSize="ColumnSize.Is8">
-                <DropContainer TItem="DropItem" Items="@_dropItems" ItemsFilter="@((item, dropZone) =>  item.LocationName.Equals(dropZone))" ItemDropped="@OnItemDropped" Flex="Flex.Wrap.Grow.Is1">
-                    <ChildContent>
-                        <Repeater TItem="LocationReader" Items="_locations" Context="locationsContext">
-                            <DropZone TItem="DropItem" Name="@locationsContext.Name" DropAllowed="(c) => c.LocationId != locationsContext.Id" Border="Border.Rounded" Background="Background.Light" Padding="Padding.Is3" Margin="Margin.Is3" Flex="Flex.Grow.Is1">
-                                <Heading Size="HeadingSize.Is4">@locationsContext.Name</Heading>
+        <CardDeck>
+            <Card Background="Background.Dark" TextColor="TextColor.Light">
+                <CardBody>
+                    <DropContainer TItem="DropItem" Items="@_dropItems" ItemsFilter="@((item, dropZone) => item.LocationName.Equals(dropZone))" ItemDropped="@OnItemDropped" Flex="Flex.Wrap.Grow.Is1">
+                        <ChildContent>
+                            <Repeater TItem="LocationReader" Items="_locations" Context="locationsContext">
+                                <DropZone Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Light.OnAll.Rounded.Is1" TItem="DropItem" Name="@locationsContext.Name" DropAllowed="(c) => c.LocationId != locationsContext.Id" Padding="Padding.Is3" Margin="Margin.Is3" Flex="Flex.Grow.Is1">
+                                    <Heading Size="HeadingSize.Is4">@locationsContext.Name</Heading>
+                                </DropZone>
+                            </Repeater>
+                            <DropZone TItem="DropItem" Name="Awaiting Assignment" DropAllowed="(c) => c.LocationId != Guid.Empty">
+                                <Heading Size="HeadingSize.Is4">Awaiting Assignment</Heading>
                             </DropZone>
+                        </ChildContent>
+                        <ItemTemplate>
+                            <Card Shadow="Shadow.Default" Margin="Margin.Is3.OnY">
+                                <CardBody TextColor="TextColor.Dark">
+                                    <Blazorise.Icon Name="IconName.UserTie" IconSize="IconSize.x3" IconStyle="IconStyle.Regular" Style="width: 48px; height: 48px;" />
+                                    @context.MemberName
+                                </CardBody>
+                            </Card>
+                        </ItemTemplate>
+                    </DropContainer>
+                </CardBody>
+            </Card>
+            <Card Background="Background.Dark"
+                  TextColor="TextColor.Light"
+                  Margin="Margin.Is2.OnAll.OnWidescreen.Is3.OnAll.OnMobile">
+                <CardHeader>
+                    <CardTitle>Count of Shifts in their locations</CardTitle>
+                </CardHeader>
+                <CardBody>
+                    <ListGroup Flush>
+                        <Repeater TItem="LocationReader" Items="_locations" Context="locationContext">
+                            <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center" Background="Background.Dark" TextColor="TextColor.Light">
+                                @locationContext.Name
+                                <Badge Color="Color.Primary" Pill>@_shifts.Count(sh => sh.CurrentLocationId == locationContext.Id)</Badge>
+                            </ListGroupItem>
                         </Repeater>
-                        <DropZone TItem="DropItem" Name="Awaiting Assignment" DropAllowed="(c) => c.LocationId != Guid.Empty">
-                            <Heading Size="HeadingSize.Is4">Awaiting Assignment</Heading>
-                        </DropZone>
-                    </ChildContent>
-                    <ItemTemplate>
-                        <Card Shadow="Shadow.Default" Margin="Margin.Is3.OnY">
-                            <CardBody>
-                                <Blazorise.Icon Name="IconName.UserTie" IconSize="IconSize.x3" IconStyle="IconStyle.Regular" Style="width:48px;height:48px;" />
-                                @context.MemberName
-                            </CardBody>
-                        </Card>
-                    </ItemTemplate>
-                </DropContainer>
-            </Column>
-            <Column ColumnSize="ColumnSize.IsThird">
-                <ListGroup Flush>
-                    <Repeater TItem="LocationReader" Items="_locations" Context="locationContext">
-                        <ListGroupItem Flex="Flex.JustifyContent.Between.AlignItems.Center">
-                            @locationContext.Name
-                            <Badge Color="Color.Primary" Pill>@_shifts.Count(sh => sh.CurrentLocationId == locationContext.Id)</Badge>
-                        </ListGroupItem>
-                    </Repeater>
-                </ListGroup>
-            </Column>
-        </Row>
+                    </ListGroup>
+                </CardBody>
+                <CardBody>
+                    <PieChartComponent Shifts="_shifts" />
+                </CardBody>
+                <CardFooter>
+                    <Paragraph Italic TextTransform="TextTransform.Capitalize" TextWeight="TextWeight.Light">
+                        total shifts: @_shifts.Count()
+                    </Paragraph>
+                </CardFooter>
+            </Card>
+            <Card>
+                <CardTitle>
+                    Current Incidents and Status
+                </CardTitle>
+                <CardBody>
+                    <IncidentOverviewComponent Incidents="_incidents" />
+                </CardBody>
+            </Card>
+        </CardDeck>
     </Container>
 }

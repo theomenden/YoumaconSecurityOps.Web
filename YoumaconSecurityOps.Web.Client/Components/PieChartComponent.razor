@@ -1,0 +1,16 @@
+﻿@if (Shifts is not null)
+{
+    <Container Fluid>
+        <Row>
+            <Button Color="Color.Primary" Outline Clicked="@(async () => await HandleChartRedraw(_pieChartRef, GetPieChartDataset))">Redraw</Button>
+        </Row>
+        <Divider />
+        <Row>
+            <PieChart 
+                @ref="_pieChartRef" 
+                TItem="PieChartDataModel" 
+                Options="@_pieChartOptions" 
+                Type="ChartType.Pie"/>
+        </Row>
+    </Container>
+}

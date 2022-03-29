@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "a0/X957PIxz9DyZF+NM6LO1J5KO5TvAgg+inh2YbcIef3ILwF8eWzKnYaESjq9n8+XQIn11jMZS0/tmRTR7wAA==",
+  "dgSpecHash": "+GPBhC/Uv8DaK+xLDYTLTy5kJT+KnHdnX1wctScgw1usHeM3bJpQFnHPlfJoKSDxwvUT+4sioWy/7tRLqSdhgw==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
   "expectedPackageFiles": [
@@ -174,7 +174,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\murmurhash\\1.0.3\\murmurhash.1.0.3.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\andre\\.nuget\\packages\\nosthy.blazor.dexiewrapper\\0.4.4\\nosthy.blazor.dexiewrapper.0.4.4.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\nosthy.blazor.dexiewrapper\\0.4.5\\nosthy.blazor.dexiewrapper.0.4.5.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\nuget.common\\5.11.0\\nuget.common.5.11.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\nuget.configuration\\5.11.0\\nuget.configuration.5.11.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\nuget.dependencyresolver.core\\5.11.0\\nuget.dependencyresolver.core.5.11.0.nupkg.sha512",

@@ -2984,7 +2984,7 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "Nosthy.Blazor.DexieWrapper/0.4.4": {
+      "Nosthy.Blazor.DexieWrapper/0.4.5": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "6.0.0"
@@ -9468,10 +9468,10 @@
         "packageIcon.png"
       ]
     },
-    "Nosthy.Blazor.DexieWrapper/0.4.4": {
-      "sha512": "JIZi04UkJajSPDbGdFkFXntWs5RSOsxcy1as2jla5OI2quHwMvh6pPEw6tMr8lMRF+JcLAOLvE/KNtaFN2bZyg==",
+    "Nosthy.Blazor.DexieWrapper/0.4.5": {
+      "sha512": "n87HmNEfjt8Jn24aVyitWgXBOFAew03fe6wYZNwxjT+qrEMyMp3wsBhlahLZYSFnAD9Zz/hcfNJ7DjcS0AaJPQ==",
       "type": "package",
-      "path": "nosthy.blazor.dexiewrapper/0.4.4",
+      "path": "nosthy.blazor.dexiewrapper/0.4.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -9482,7 +9482,7 @@
         "content/package.json",
         "contentFiles/any/net6.0/package.json",
         "lib/net6.0/DexieWrapper.dll",
-        "nosthy.blazor.dexiewrapper.0.4.4.nupkg.sha512",
+        "nosthy.blazor.dexiewrapper.0.4.5.nupkg.sha512",
         "nosthy.blazor.dexiewrapper.nuspec",
         "staticwebassets/scripts/commandExecuter.js"
       ]
@@ -14947,7 +14947,7 @@
       "Microsoft.Identity.Web.MicrosoftGraph >= 1.23.1",
       "Microsoft.Identity.Web.UI >= 1.23.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
-      "Nosthy.Blazor.DexieWrapper >= 0.4.4",
+      "Nosthy.Blazor.DexieWrapper >= 0.4.5",
       "NuGet.Versioning >= 6.1.0",
       "Serilog >= 2.10.0",
       "Serilog.AspNetCore >= 5.0.0",
@@ -15151,7 +15151,7 @@
           },
           "Nosthy.Blazor.DexieWrapper": {
             "target": "Package",
-            "version": "[0.4.4, )"
+            "version": "[0.4.5, )"
           },
           "NuGet.Versioning": {
             "target": "Package",
