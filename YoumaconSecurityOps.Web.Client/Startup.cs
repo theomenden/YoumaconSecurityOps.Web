@@ -1,3 +1,6 @@
+using Nosthy.Blazor.DexieWrapper.JsModule;
+using YoumaconSecurityOps.Web.Client.IndexedDb.Context;
+using YoumaconSecurityOps.Web.Client.IndexedDb.Repositories;
 using YoumaconSecurityOps.Web.Client.UrlHashing;
 
 namespace YoumaconSecurityOps.Web.Client;
@@ -79,6 +82,8 @@ public class Startup
         services.AddTransient<IUrlHasher, UrlHasher>();
         services.AddSingleton<SessionDetails>();
         services.AddScoped<CircuitHandler>(sp => new TrackingCircuitHandler(sp.GetRequiredService<SessionDetails>()));
+
+        services.AddIndexedDbServices();
 
         services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))

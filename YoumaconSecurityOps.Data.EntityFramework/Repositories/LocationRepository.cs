@@ -16,8 +16,8 @@ internal sealed class LocationRepository : ILocationAccessor, ILocationRepositor
     public IAsyncEnumerable<LocationReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var locations = dbContext.Locations
-            .AsAsyncEnumerable()
-            .OrderBy(l => l.Name);
+            .OrderBy(l => l.Name)
+            .AsAsyncEnumerable();
 
         return locations;
     }
@@ -32,7 +32,8 @@ internal sealed class LocationRepository : ILocationAccessor, ILocationRepositor
 
     public async Task<LocationReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new())
     {
-        var location = await dbContext.Locations.AsQueryable().SingleOrDefaultAsync(l => l.Id == entityId, cancellationToken);
+        var location = await dbContext.Locations.AsQueryable()
+            .SingleOrDefaultAsync(l => l.Id == entityId, cancellationToken);
 
         return location;
     }

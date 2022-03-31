@@ -1,19 +1,30 @@
-﻿using YoumaconSecurityOps.Core.Shared.Responses;
-
+﻿
 namespace YoumaconSecurityOps.Web.Client.Services;
 
 public class StaffService : IStaffService
 {
+    private readonly YSecServiceOptions _configuration;
+
     private readonly IMediator _mediator;
 
     private readonly ILogger<StaffService> _logger;
 
-    public StaffService(ILogger<StaffService> logger, IMediator mediator)
-    {
-        _logger = logger ?? throw new ArgumentException(@"Could not be injected", nameof(logger));
+    private readonly PronounsIndexedDbRepository _pronounsIndexedDbRepository;
 
-        _mediator = mediator ?? throw new ArgumentException(@"Could not be injected", nameof(mediator));
+    private readonly StaffTypesIndexedDbRepository _staffTypesIndexedDbRepository;
+
+    private readonly StaffRolesIndexedDbRepository _rolesIndexedDbRepository;
+
+    public StaffService(YSecServiceOptions configuration, IMediator mediator, ILogger<StaffService> logger, PronounsIndexedDbRepository pronounsIndexedDbRepository, StaffTypesIndexedDbRepository staffTypesIndexedDbRepository, StaffRolesIndexedDbRepository rolesIndexedDbRepository)
+    {
+        _configuration = configuration;
+        _mediator = mediator;
+        _logger = logger;
+        _pronounsIndexedDbRepository = pronounsIndexedDbRepository;
+        _staffTypesIndexedDbRepository = staffTypesIndexedDbRepository;
+        _rolesIndexedDbRepository = rolesIndexedDbRepository;
     }
+
 
     #region Query Methods
     public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffQuery staffQuery, CancellationToken cancellationToken = default)
@@ -51,12 +62,32 @@ public class StaffService : IStaffService
     }
     public async Task<List<StaffRole>> GetStaffRolesAsync(GetStaffRolesQuery rolesQuery, CancellationToken cancellationToken = default)
     {
-        return await _mediator.CreateStream(rolesQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (await IsRolesStoreInvalidatedAsync(cancellationToken))
+        {
+            await PurgeInvalidRolesStoreAsync(cancellationToken);
+
+            var staffRoles =
+                await _mediator.CreateStream(rolesQuery, cancellationToken).ToArrayAsync(cancellationToken);
+
+            await _rolesIndexedDbRepository.CreateOrUpdateMultipleAsync(staffRoles, cancellationToken);
+        }
+
+        return await _rolesIndexedDbRepository.GetAllAsync(cancellationToken);
     }
 
     public async Task<List<StaffType>> GetStaffTypesAsync(GetStaffTypesQuery typesQuery, CancellationToken cancellationToken = default)
     {
-        return await _mediator.CreateStream(typesQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
+        if (await IsStaffTypesStoreInvalidatedAsync(cancellationToken))
+        {
+            await PurgeInvalidStaffTypesStoreAsync(cancellationToken);
+
+            var staffTypes =
+                await _mediator.CreateStream(typesQuery, cancellationToken).ToArrayAsync(cancellationToken);
+
+            await _staffTypesIndexedDbRepository.CreateOrUpdateMultipleAsync(staffTypes, cancellationToken);
+        }
+
+        return await _staffTypesIndexedDbRepository.GetAllAsync(cancellationToken);
     }
 
     public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffWithParametersQuery staffQuery, CancellationToken cancellationToken = default)
@@ -326,9 +357,62 @@ public class StaffService : IStaffService
 
     public async Task<IEnumerable<Pronouns>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default)
     {
-        var pronouns = await _mediator.Send(pronounsQuery, cancellationToken);
+        if (await IsPronounsStoreInvalidatedAsync(cancellationToken))
+        {
+            await PurgeInvalidPronounsStoreAsync(cancellationToken);
 
-        return pronouns.ToArray();
+            var pronouns = (await _mediator.Send(pronounsQuery, cancellationToken)).ToArray();
+
+            await _pronounsIndexedDbRepository.CreateOrUpdateMultipleAsync(pronouns, cancellationToken);
+        }
+
+        return await _pronounsIndexedDbRepository.GetAllAsync(cancellationToken);
+    }
+
+    #endregion
+
+    #region Invalidation Methods
+    private async Task<Boolean> IsPronounsStoreInvalidatedAsync(CancellationToken cancellationToken = default)
+    {
+        var isStoreEmpty = await _pronounsIndexedDbRepository.IsEmptyAsync(cancellationToken);
+
+        var isSlidingWindowExpired = DateTime.Now > _configuration.GetSlidingWindowRelativeToNow() ||
+            DateTime.Now >= _configuration.GetAbsoluteWindowRelativeToNow();
+
+        return isStoreEmpty || isSlidingWindowExpired;
+    }
+
+    private async Task PurgeInvalidPronounsStoreAsync(CancellationToken cancellationToken = default)
+    {
+        await _pronounsIndexedDbRepository.ClearAsync(cancellationToken);
+    }
+    private async Task<Boolean> IsStaffTypesStoreInvalidatedAsync(CancellationToken cancellationToken = default)
+    {
+        var isStoreEmpty = await _staffTypesIndexedDbRepository.IsEmptyAsync(cancellationToken);
+
+        var isSlidingWindowExpired = DateTime.Now > _configuration.GetSlidingWindowRelativeToNow() ||
+                                     DateTime.Now >= _configuration.GetAbsoluteWindowRelativeToNow();
+
+        return isStoreEmpty || isSlidingWindowExpired;
+    }
+
+    private async Task PurgeInvalidStaffTypesStoreAsync(CancellationToken cancellationToken = default)
+    {
+        await _staffTypesIndexedDbRepository.ClearAsync(cancellationToken);
+    }
+    private async Task<Boolean> IsRolesStoreInvalidatedAsync(CancellationToken cancellationToken = default)
+    {
+        var isStoreEmpty = await _rolesIndexedDbRepository.IsEmptyAsync(cancellationToken);
+
+        var isSlidingWindowExpired = DateTime.Now > _configuration.GetSlidingWindowRelativeToNow() ||
+                                     DateTime.Now >= _configuration.GetAbsoluteWindowRelativeToNow();
+
+        return isStoreEmpty || isSlidingWindowExpired;
+    }
+
+    private async Task PurgeInvalidRolesStoreAsync(CancellationToken cancellationToken = default)
+    {
+        await _rolesIndexedDbRepository.ClearAsync(cancellationToken);
     }
 
     #endregion

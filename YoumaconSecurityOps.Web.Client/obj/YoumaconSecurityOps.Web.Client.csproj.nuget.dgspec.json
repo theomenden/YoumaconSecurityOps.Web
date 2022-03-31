@@ -563,47 +563,47 @@
             },
             "Blazorise": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Animate": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Bootstrap5": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Charts": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Charts.Streaming": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Components": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.DataGrid": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Sidebar": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.Snackbar": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Blazorise.SpinKit": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.2, )"
             },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",

@@ -3,21 +3,13 @@
 internal sealed class GetLocationsQueryHandler : IStreamRequestHandler<GetLocationsQuery, LocationReader>
 {
     private readonly ILocationAccessor _locations;
-
-    private readonly ILogger<GetLocationsQueryHandler> _logger;
-
-    private readonly IMapper _mapper;
-
-    private readonly IMediator _mediator;
+    
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
 
-    public GetLocationsQueryHandler(ILocationAccessor locations, ILogger<GetLocationsQueryHandler> logger, IMapper mapper, IMediator mediator, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
+    public GetLocationsQueryHandler(ILocationAccessor locations, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
     {
         _locations = locations;
-        _logger = logger;
-        _mapper = mapper;
-        _mediator = mediator;
         _dbContextFactory = dbContextFactory;   
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace YoumaconSecurityOps.Web.Client.Services;
 
@@ -58,7 +59,7 @@ public interface IStaffService
     /// </summary>
     /// <param name="pronounsQuery">Provided parameterless query</param>
     /// <param name="cancellationToken"></param>
-    /// <returns><see cref="Task{T}"/>: <see cref="List{T}"/>: <see cref="StaffType"/></returns>
+    /// <returns><see cref="Task{T}"/>: <see cref="List{T}"/>: <see cref="Pronouns"/></returns>
     Task<IEnumerable<Pronouns>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default);
     #endregion
     #region Add Methods

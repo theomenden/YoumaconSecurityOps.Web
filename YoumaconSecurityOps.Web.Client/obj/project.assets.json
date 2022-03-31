@@ -133,7 +133,7 @@
           "lib/net6.0/Blazored.LocalStorage.dll": {}
         }
       },
-      "Blazorise/1.0.1": {
+      "Blazorise/1.0.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Components": "6.0.0",
@@ -153,10 +153,10 @@
           "buildMultiTargeting/Blazorise.props": {}
         }
       },
-      "Blazorise.Animate/1.0.1": {
+      "Blazorise.Animate/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -174,10 +174,10 @@
           "buildMultiTargeting/Blazorise.Animate.props": {}
         }
       },
-      "Blazorise.Bootstrap5/1.0.1": {
+      "Blazorise.Bootstrap5/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -195,10 +195,10 @@
           "buildMultiTargeting/Blazorise.Bootstrap5.props": {}
         }
       },
-      "Blazorise.Charts/1.0.1": {
+      "Blazorise.Charts/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Lambda2Js": "3.1.3",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
@@ -217,11 +217,11 @@
           "buildMultiTargeting/Blazorise.Charts.props": {}
         }
       },
-      "Blazorise.Charts.Streaming/1.0.1": {
+      "Blazorise.Charts.Streaming/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
-          "Blazorise.Charts": "1.0.1",
+          "Blazorise": "1.0.2",
+          "Blazorise.Charts": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -239,11 +239,11 @@
           "buildMultiTargeting/Blazorise.Charts.Streaming.props": {}
         }
       },
-      "Blazorise.Components/1.0.1": {
+      "Blazorise.Components/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
-          "Blazorise.Snackbar": "1.0.1",
+          "Blazorise": "1.0.2",
+          "Blazorise.Snackbar": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -255,10 +255,10 @@
           "lib/net6.0/Blazorise.Components.dll": {}
         }
       },
-      "Blazorise.DataGrid/1.0.1": {
+      "Blazorise.DataGrid/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -276,10 +276,10 @@
           "buildMultiTargeting/Blazorise.DataGrid.props": {}
         }
       },
-      "Blazorise.Icons.FontAwesome/1.0.1": {
+      "Blazorise.Icons.FontAwesome/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -291,10 +291,10 @@
           "lib/net6.0/Blazorise.Icons.FontAwesome.dll": {}
         }
       },
-      "Blazorise.Sidebar/1.0.1": {
+      "Blazorise.Sidebar/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -312,10 +312,10 @@
           "buildMultiTargeting/Blazorise.Sidebar.props": {}
         }
       },
-      "Blazorise.Snackbar/1.0.1": {
+      "Blazorise.Snackbar/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -333,10 +333,10 @@
           "buildMultiTargeting/Blazorise.Snackbar.props": {}
         }
       },
-      "Blazorise.SpinKit/1.0.1": {
+      "Blazorise.SpinKit/1.0.2": {
         "type": "package",
         "dependencies": {
-          "Blazorise": "1.0.1",
+          "Blazorise": "1.0.2",
           "Microsoft.AspNetCore.Components": "6.0.0",
           "Microsoft.AspNetCore.Components.Web": "6.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.1"
@@ -5447,16 +5447,16 @@
         "lib/netstandard2.1/Blazored.LocalStorage.dll"
       ]
     },
-    "Blazorise/1.0.1": {
-      "sha512": "/kEHtewxNg9wSRNOVFQcCP55lwCgJaenplhpVqheBA/mmWk/Qt8QntlQoo2RQq4e9uX7nWdrittB50LabYFkQw==",
+    "Blazorise/1.0.2": {
+      "sha512": "nIdXGRrgRCBjW5Xvc9svMSFiTPItTv2rWnfSfJaPNt/NB1lofSIMCJihffj+gOMjR0cZwjdiURIinvCHIzpO5g==",
       "type": "package",
-      "path": "blazorise/1.0.1",
+      "path": "blazorise/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.1.0.1.nupkg.sha512",
+        "blazorise.1.0.2.nupkg.sha512",
         "blazorise.nuspec",
         "build/Blazorise.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5471,11 +5471,13 @@
         "staticwebassets/colorPicker.js",
         "staticwebassets/datePicker.js",
         "staticwebassets/dragDrop.js",
+        "staticwebassets/dropdown.js",
         "staticwebassets/fileEdit.js",
         "staticwebassets/inputMask.js",
         "staticwebassets/io.js",
         "staticwebassets/memoEdit.js",
         "staticwebassets/numericPicker.js",
+        "staticwebassets/popper.js",
         "staticwebassets/select.js",
         "staticwebassets/table.js",
         "staticwebassets/textEdit.js",
@@ -5494,16 +5496,16 @@
         "staticwebassets/vendors/inputmask.js"
       ]
     },
-    "Blazorise.Animate/1.0.1": {
-      "sha512": "Iw9nz3FmGo58p7/2KNRSPGi65q4l8NEqMVPpJWn+q7viYTTfaLI3TOmIsfbRYb+aTVRudcjcfIyupjH68dCnBw==",
+    "Blazorise.Animate/1.0.2": {
+      "sha512": "N2bccTX+NHPv8L7+6OPLEi8+KqOUhXKIBC+o3QH4J03bgblsfbXztJ7LERLwC0tAStHtHYVEjYn3H6Ohl/ge7Q==",
       "type": "package",
-      "path": "blazorise.animate/1.0.1",
+      "path": "blazorise.animate/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.animate.1.0.1.nupkg.sha512",
+        "blazorise.animate.1.0.2.nupkg.sha512",
         "blazorise.animate.nuspec",
         "build/Blazorise.Animate.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5515,16 +5517,16 @@
         "staticwebassets/blazorise.animate.js"
       ]
     },
-    "Blazorise.Bootstrap5/1.0.1": {
-      "sha512": "KtqA4cPvRTRuLJ2HpqGCvvCdOTlDV82K6MAxPXVk9ES5fYz8OVjd669t/CV1jeBpOGHIhrNH6SGFwqmknrDH/A==",
+    "Blazorise.Bootstrap5/1.0.2": {
+      "sha512": "xEoranOKdNNN8ZfC+R9El0HlrPUjVq+SwGulh8fdcw56EZsP7pCNNdcLcoE6An7qhkooad2meoQU4MvZ1DkSDQ==",
       "type": "package",
-      "path": "blazorise.bootstrap5/1.0.1",
+      "path": "blazorise.bootstrap5/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.bootstrap5.1.0.1.nupkg.sha512",
+        "blazorise.bootstrap5.1.0.2.nupkg.sha512",
         "blazorise.bootstrap5.nuspec",
         "build/Blazorise.Bootstrap5.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5537,16 +5539,16 @@
         "staticwebassets/tooltip.js"
       ]
     },
-    "Blazorise.Charts/1.0.1": {
-      "sha512": "0nzQIIhv2+h1cm6erDVkqqEk/AGbzG9DZg4N7IBHKaKXnUauWRb+Dj3oGJxhQunzaKdBqFuzFPOl9NRlYDWw2w==",
+    "Blazorise.Charts/1.0.2": {
+      "sha512": "jWkHak93CK2ntkC4ycn53ppRSnsQPrqOMG548T/eG0QwvZPzceT4VFIQHfkyj/BWjhvnhyP8kOxiyx/w7ZIjOQ==",
       "type": "package",
-      "path": "blazorise.charts/1.0.1",
+      "path": "blazorise.charts/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.charts.1.0.1.nupkg.sha512",
+        "blazorise.charts.1.0.2.nupkg.sha512",
         "blazorise.charts.nuspec",
         "build/Blazorise.Charts.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5558,16 +5560,16 @@
         "staticwebassets/utilities.js"
       ]
     },
-    "Blazorise.Charts.Streaming/1.0.1": {
-      "sha512": "ork4DGRuqkfeUvmnh2+q9tYHSv7KOlb09Ds6YUkCjZ+ZnYoYiybcMYQIGqzwSpqhBWfYgfdpPG1ZOV76bjuwNw==",
+    "Blazorise.Charts.Streaming/1.0.2": {
+      "sha512": "wv5AAz7QRIL55FZT74XZZbyNgnK/tVvUZdesxtVR1GMaSTVSr5ersIIasQH2oEk3X6rFfRjt48KYgoVdNqFdyQ==",
       "type": "package",
-      "path": "blazorise.charts.streaming/1.0.1",
+      "path": "blazorise.charts.streaming/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.charts.streaming.1.0.1.nupkg.sha512",
+        "blazorise.charts.streaming.1.0.2.nupkg.sha512",
         "blazorise.charts.streaming.nuspec",
         "build/Blazorise.Charts.Streaming.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5578,31 +5580,31 @@
         "staticwebassets/charts.streaming.js"
       ]
     },
-    "Blazorise.Components/1.0.1": {
-      "sha512": "fyy2krMgpsPIN8sX7qWl/zty4RdcX6/zFDLAlYWCj+6DYISsFmhgjmoOE6Vmqe03MWnZQANVi7JlokXFOlEZMQ==",
+    "Blazorise.Components/1.0.2": {
+      "sha512": "s/q90Wej17+xF5LMRbHxqfaHgQf1zZC0SS26JUU4pvH7/RjTNLmZY6rfS5Et0sxiPahV6jsLQWwFUttZiw4J2Q==",
       "type": "package",
-      "path": "blazorise.components/1.0.1",
+      "path": "blazorise.components/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.components.1.0.1.nupkg.sha512",
+        "blazorise.components.1.0.2.nupkg.sha512",
         "blazorise.components.nuspec",
         "lib/net6.0/Blazorise.Components.dll",
         "lib/net6.0/Blazorise.Components.xml"
       ]
     },
-    "Blazorise.DataGrid/1.0.1": {
-      "sha512": "rfudTaJcV/n0sKTGw+qi9QAXjpn2HHpmAw29N195/QADhzzYNzvp6YfyljyEMbuc7aAyFalgHzW8mijJtCk10g==",
+    "Blazorise.DataGrid/1.0.2": {
+      "sha512": "RARIoMfmGlgt6/E/e8sASVWyxiy550w/qhvWfgcCVhOXl6WnUdhYBFjp8ZdRY/oU7diQfkjg+j3+CPTebTY2tw==",
       "type": "package",
-      "path": "blazorise.datagrid/1.0.1",
+      "path": "blazorise.datagrid/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.datagrid.1.0.1.nupkg.sha512",
+        "blazorise.datagrid.1.0.2.nupkg.sha512",
         "blazorise.datagrid.nuspec",
         "build/Blazorise.DataGrid.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5613,30 +5615,30 @@
         "staticwebassets/datagrid.js"
       ]
     },
-    "Blazorise.Icons.FontAwesome/1.0.1": {
-      "sha512": "bM43rZGgOhgSa1WGmn1c/rkBWWOT98K2yZDpHz0Fla6J7WXt0BuAXmaZKePUiVzoruch9e/VORemFaw5eSKgwA==",
+    "Blazorise.Icons.FontAwesome/1.0.2": {
+      "sha512": "bML5UJP2YzXENeRTB3i1muxBayZF73P9dwaMrPxW8VYMSmhhpN1oQ7F0UEd3WTOYFeufjgi+RqUDhVCbsm4P5w==",
       "type": "package",
-      "path": "blazorise.icons.fontawesome/1.0.1",
+      "path": "blazorise.icons.fontawesome/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.icons.fontawesome.1.0.1.nupkg.sha512",
+        "blazorise.icons.fontawesome.1.0.2.nupkg.sha512",
         "blazorise.icons.fontawesome.nuspec",
         "lib/net6.0/Blazorise.Icons.FontAwesome.dll"
       ]
     },
-    "Blazorise.Sidebar/1.0.1": {
-      "sha512": "PDt9fkkJZwN1t/HwsCUm5ghXhQcmC+/pHjg/K+BR2FfWS10Z+79+gRX+rdL20mU6OrVL4eL8MydU89TJVeoVfQ==",
+    "Blazorise.Sidebar/1.0.2": {
+      "sha512": "ou57+SL0gwR0uCrQbuOHfVJSXT+RaNFz4AujEwqWJykPcF6crmNgpk8YwAJKSxGkdBbk9Eu7aWGYYfr6Zx4x2Q==",
       "type": "package",
-      "path": "blazorise.sidebar/1.0.1",
+      "path": "blazorise.sidebar/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.sidebar.1.0.1.nupkg.sha512",
+        "blazorise.sidebar.1.0.2.nupkg.sha512",
         "blazorise.sidebar.nuspec",
         "build/Blazorise.Sidebar.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5647,16 +5649,16 @@
         "staticwebassets/blazorise.sidebar.css"
       ]
     },
-    "Blazorise.Snackbar/1.0.1": {
-      "sha512": "B0UTQ2q7rWsJpvEnYmnh8WPsig5M5kT3zTh+mHMPDJw0otb+ATJxE6tG885C2JdOrOJTIjQUlVPJm2iESQAE6Q==",
+    "Blazorise.Snackbar/1.0.2": {
+      "sha512": "Shz2SZv64I1CfH4LM+Ib5QnZ6GNHMHToZs2jJGZlpL8sVPgfvS3Ucu8L5fFQOYKagDWpLvadpADKQj7bLN4GOg==",
       "type": "package",
-      "path": "blazorise.snackbar/1.0.1",
+      "path": "blazorise.snackbar/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.snackbar.1.0.1.nupkg.sha512",
+        "blazorise.snackbar.1.0.2.nupkg.sha512",
         "blazorise.snackbar.nuspec",
         "build/Blazorise.Snackbar.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -5667,16 +5669,16 @@
         "staticwebassets/blazorise.snackbar.css"
       ]
     },
-    "Blazorise.SpinKit/1.0.1": {
-      "sha512": "FUEiXP19Xfb4Jl7Rm63QQTUELkX/ttLObAvLOAmpyrI+LxQ3Ap4vnYqbbu+tbJXytDrqhPIqFnBRG64A4WNOrg==",
+    "Blazorise.SpinKit/1.0.2": {
+      "sha512": "6ejKMT8TnC/Z9M9hEkNqsGugAUykLPb3dbxZVsTEPrKVsxvnkegDSKxVAOMBm5h7dQ+kYjv4qRBk29CCFMP2cw==",
       "type": "package",
-      "path": "blazorise.spinkit/1.0.1",
+      "path": "blazorise.spinkit/1.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Blazorise.png",
         "LICENSE.md",
-        "blazorise.spinkit.1.0.1.nupkg.sha512",
+        "blazorise.spinkit.1.0.2.nupkg.sha512",
         "blazorise.spinkit.nuspec",
         "build/Blazorise.SpinKit.props",
         "build/Microsoft.AspNetCore.StaticWebAssets.props",
@@ -14922,17 +14924,17 @@
       "Azure.Identity >= 1.5.0",
       "Blazored.FluentValidation >= 2.0.3",
       "Blazored.LocalStorage >= 4.2.0",
-      "Blazorise >= 1.0.1",
-      "Blazorise.Animate >= 1.0.1",
-      "Blazorise.Bootstrap5 >= 1.0.1",
-      "Blazorise.Charts >= 1.0.1",
-      "Blazorise.Charts.Streaming >= 1.0.1",
-      "Blazorise.Components >= 1.0.1",
-      "Blazorise.DataGrid >= 1.0.1",
-      "Blazorise.Icons.FontAwesome >= 1.0.1",
-      "Blazorise.Sidebar >= 1.0.1",
-      "Blazorise.Snackbar >= 1.0.1",
-      "Blazorise.SpinKit >= 1.0.1",
+      "Blazorise >= 1.0.2",
+      "Blazorise.Animate >= 1.0.2",
+      "Blazorise.Bootstrap5 >= 1.0.2",
+      "Blazorise.Charts >= 1.0.2",
+      "Blazorise.Charts.Streaming >= 1.0.2",
+      "Blazorise.Components >= 1.0.2",
+      "Blazorise.DataGrid >= 1.0.2",
+      "Blazorise.Icons.FontAwesome >= 1.0.2",
+      "Blazorise.Sidebar >= 1.0.2",
+      "Blazorise.Snackbar >= 1.0.2",
+      "Blazorise.SpinKit >= 1.0.2",
       "Microsoft.ApplicationInsights.AspNetCore >= 2.20.0",
       "Microsoft.AspNetCore.Authentication.OpenIdConnect >= 6.0.3",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.3",
@@ -15047,47 +15049,47 @@
           },
           "Blazorise": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Animate": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Bootstrap5": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Charts": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Charts.Streaming": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Components": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.DataGrid": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Icons.FontAwesome": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Sidebar": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.Snackbar": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Blazorise.SpinKit": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.2, )"
           },
           "Microsoft.ApplicationInsights.AspNetCore": {
             "target": "Package",

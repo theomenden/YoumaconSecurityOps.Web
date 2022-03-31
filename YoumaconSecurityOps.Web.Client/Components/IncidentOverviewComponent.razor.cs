@@ -11,7 +11,7 @@ public partial class IncidentOverviewComponent : ComponentBase
         Incidents ??= await IncidentService.GetIncidentsAsync(new GetIncidentsQuery());
     }
 
-    private Blazorise.Color GetBadgeColor(Severity severity) =>
+    private static Color GetBadgeColor(Severity severity) =>
         severity switch
         {
             Severity.Adh => Color.Primary,

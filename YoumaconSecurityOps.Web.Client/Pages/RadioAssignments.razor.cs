@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Blazorise;
-using Blazorise.DataGrid;
-using Microsoft.AspNetCore.Components;
-using YoumaconSecurityOps.Core.Mediatr.Queries;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Web.Client.Services;
-using Modal = Blazorise.Bootstrap5.Modal;
+﻿using Modal = Blazorise.Bootstrap5.Modal;
 
 namespace YoumaconSecurityOps.Web.Client.Pages;
 

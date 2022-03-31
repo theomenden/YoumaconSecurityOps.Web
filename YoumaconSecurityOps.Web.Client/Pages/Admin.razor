@@ -66,6 +66,36 @@ else
                     <IncidentOverviewComponent Incidents="_incidents" />
                 </CardBody>
             </Card>
+            <Card>
+                <CardHeader>
+                </CardHeader>
+                Testing the autocomplete
+                <CardTitle>
+                    Locations
+                </CardTitle>
+                <CardBody>
+                    <Autocomplete TItem="LocationReader"
+                                      TValue="Guid"
+                                      Data="@_locations"
+                                      TextField="@( item  => item.Name)"
+                                      ValueField="@( item  => item.Id)"
+                                      @bind-SelectedValue="@_selectedSearchValue"
+                                      @bind-SelectedText="@_selectedAutoCompleteText"
+                                      Placeholder="Search..."
+                                      Filter="@AutocompleteFilter.StartsWith"
+                                      FreeTyping
+                                      CustomFilter="@(( item, searchValue ) => item.Name.IndexOf( searchValue, 0, StringComparison.CurrentCultureIgnoreCase ) >= 0 )">
+                    <NotFoundContent> Sorry... @context was not found! :( </NotFoundContent>
+                    <ItemContent>
+                        <Div Flex="Flex.InlineFlex.JustifyContent.Between" Width="Width.Is100">
+                            <Heading Margin="Margin.Is2.FromBottom">@context.Item.Name</Heading>
+                            <Small>@context.Value</Small>
+                        </Div>
+                        <Paragraph Margin="Margin.Is2.FromBottom">@context.Text</Paragraph>
+                    </ItemContent>
+                    </Autocomplete>
+                </CardBody>
+            </Card>
         </CardDeck>
     </Container>
 }

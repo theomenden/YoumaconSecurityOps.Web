@@ -25,6 +25,10 @@ public partial class Admin : ComponentBase
 
     private IEnumerable<IncidentReader> _incidents = new List<IncidentReader>(50);
 
+    private Guid _selectedSearchValue = Guid.Empty;
+
+    private string _selectedAutoCompleteText = String.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         await LoadInitialData();
@@ -70,21 +74,22 @@ public partial class Admin : ComponentBase
 
         _incidents = await IncidentService.GetIncidentsAsync(new GetIncidentsQuery());
 
-        _dropItems =
-            from member in _staff
-            join shift in _shifts on member.Id equals shift.StaffId into gj
-            from s in gj.DefaultIfEmpty() 
-            select new DropItem
-            {
-                LocationId = s?.CurrentLocationId ?? Guid.Empty,
-                LocationName = s?.CurrentLocation?.Name ?? "Awaiting Assignment",
-                StaffId = member.Id,
-                MemberName = member.Contact.PreferredName,
-                ShiftId = s?.Id ?? Guid.Empty
-            };
+        _dropItems = _staff
+            .GroupJoin(_shifts, 
+                member => member.Id, 
+                shift => shift.StaffId,
+                (member, gj) => new { member, gj })
+            .SelectMany(groupResult => groupResult.gj.DefaultIfEmpty(),
+                (groupResult, shift) => new DropItem
+                {
+                    LocationId = shift?.CurrentLocationId ?? Guid.Empty,
+                    LocationName = shift?.CurrentLocation?.Name ?? "Awaiting Assignment",
+                    StaffId = groupResult.member.Id,
+                    MemberName = groupResult.member.Contact.PreferredName,
+                    ShiftId = shift?.Id ?? Guid.Empty
+                });
 
         _locations = await LocationService.GetLocationsAsync(new GetLocationsQuery());
-        
     }
 }
 

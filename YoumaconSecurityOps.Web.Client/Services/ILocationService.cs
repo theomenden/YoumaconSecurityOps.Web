@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace YoumaconSecurityOps.Web.Client.Services;
+﻿namespace YoumaconSecurityOps.Web.Client.Services;
 
 public interface ILocationService
 {

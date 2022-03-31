@@ -19,10 +19,10 @@ internal sealed class ContactRepository : IContactAccessor, IContactRepository
     public IAsyncEnumerable<ContactReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var contacts = dbContext.Contacts
-            .AsAsyncEnumerable()
-            .OrderBy(c => c.LastName)
-            .ThenBy(c => c.PreferredName)
-            .ThenBy(c => c.CreatedOn);
+                .OrderBy(c => c.LastName)
+                .ThenBy(c => c.PreferredName)
+                .ThenBy(c => c.CreatedOn)
+            .AsAsyncEnumerable();
 
         return contacts;
     }
