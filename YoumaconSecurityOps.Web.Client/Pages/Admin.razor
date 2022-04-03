@@ -8,13 +8,13 @@
 else
 {
     <Container Fluid>
-        <CardDeck>
+        <CardDeck Height="Height.Is100">
             <Card Background="Background.Dark" TextColor="TextColor.Light">
                 <CardBody>
                     <DropContainer TItem="DropItem" Items="@_dropItems" ItemsFilter="@((item, dropZone) => item.LocationName.Equals(dropZone))" ItemDropped="@OnItemDropped" Flex="Flex.Wrap.Grow.Is1">
                         <ChildContent>
                             <Repeater TItem="LocationReader" Items="_locations" Context="locationsContext">
-                                <DropZone Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Light.OnAll.Rounded.Is1" TItem="DropItem" Name="@locationsContext.Name" DropAllowed="(c) => c.LocationId != locationsContext.Id" Padding="Padding.Is3" Margin="Margin.Is3" Flex="Flex.Grow.Is1">
+                                <DropZone Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Is2.Light.OnAll.Rounded" TItem="DropItem" Name="@locationsContext.Name" DropAllowed="(c) => c.LocationId != locationsContext.Id" Padding="Padding.Is3" Margin="Margin.Is3" Flex="Flex.Grow.Is1">
                                     <Heading Size="HeadingSize.Is4">@locationsContext.Name</Heading>
                                 </DropZone>
                             </Repeater>
@@ -24,7 +24,7 @@ else
                         </ChildContent>
                         <ItemTemplate>
                             <Card Shadow="Shadow.Default" Margin="Margin.Is3.OnY">
-                                <CardBody TextColor="TextColor.Dark">
+                                <CardBody TextColor="TextColor.Dark" Border="Border.Is2.Dark.OnAll.Rounded">
                                     <Blazorise.Icon Name="IconName.UserTie" IconSize="IconSize.x3" IconStyle="IconStyle.Regular" Style="width: 48px; height: 48px;" />
                                     @context.MemberName
                                 </CardBody>
@@ -50,7 +50,17 @@ else
                     </ListGroup>
                 </CardBody>
                 <CardBody>
-                    <PieChartComponent Shifts="_shifts" />
+                    <Button Color="Color.Primary" 
+                            Outline 
+                            Clicked="@(async () => await HandleChartRedraw(_pieChartRef, GetPieChartDataset))">Redraw</Button>
+                    <Divider />
+                </CardBody>
+                <CardBody>
+                    <Chart 
+                        @ref="@_pieChartRef" 
+                        TItem="double" 
+                        Options="@_pieChartOptions" 
+                        Type="ChartType.Pie" />
                 </CardBody>
                 <CardFooter>
                     <Paragraph Italic TextTransform="TextTransform.Capitalize" TextWeight="TextWeight.Light">
@@ -58,7 +68,7 @@ else
                     </Paragraph>
                 </CardFooter>
             </Card>
-            <Card>
+            <Card Background="Background.Dark" TextColor="TextColor.Light">
                 <CardTitle>
                     Current Incidents and Status
                 </CardTitle>
@@ -66,34 +76,20 @@ else
                     <IncidentOverviewComponent Incidents="_incidents" />
                 </CardBody>
             </Card>
-            <Card>
+            <Card Background="Background.Dark" TextColor="TextColor.Light">
                 <CardHeader>
+                    Staff Members On Break vs Those Not on Break (Live)
                 </CardHeader>
-                Testing the autocomplete
-                <CardTitle>
-                    Locations
-                </CardTitle>
                 <CardBody>
-                    <Autocomplete TItem="LocationReader"
-                                      TValue="Guid"
-                                      Data="@_locations"
-                                      TextField="@( item  => item.Name)"
-                                      ValueField="@( item  => item.Id)"
-                                      @bind-SelectedValue="@_selectedSearchValue"
-                                      @bind-SelectedText="@_selectedAutoCompleteText"
-                                      Placeholder="Search..."
-                                      Filter="@AutocompleteFilter.StartsWith"
-                                      FreeTyping
-                                      CustomFilter="@(( item, searchValue ) => item.Name.IndexOf( searchValue, 0, StringComparison.CurrentCultureIgnoreCase ) >= 0 )">
-                    <NotFoundContent> Sorry... @context was not found! :( </NotFoundContent>
-                    <ItemContent>
-                        <Div Flex="Flex.InlineFlex.JustifyContent.Between" Width="Width.Is100">
-                            <Heading Margin="Margin.Is2.FromBottom">@context.Item.Name</Heading>
-                            <Small>@context.Value</Small>
-                        </Div>
-                        <Paragraph Margin="Margin.Is2.FromBottom">@context.Text</Paragraph>
-                    </ItemContent>
-                    </Autocomplete>
+                    <LineChart 
+                        TItem="LiveDataPoint"
+                        @ref="_liveUpdateLineChart"
+                        OptionsObject="@_liveUpdateChartOptions">
+                        <ChartStreaming 
+                            TItem="LiveDataPoint" 
+                            Options="@(new ChartStreamingOptions {Delay = 2000})"
+                            Refreshed="@OnLiveUpdateChartRefreshed" />
+                    </LineChart>
                 </CardBody>
             </Card>
         </CardDeck>

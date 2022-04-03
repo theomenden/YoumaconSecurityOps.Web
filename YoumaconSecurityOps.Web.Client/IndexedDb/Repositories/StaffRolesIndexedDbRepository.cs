@@ -1,6 +1,5 @@
-﻿
+﻿namespace YoumaconSecurityOps.Web.Client.IndexedDb.Repositories;
 
-namespace YoumaconSecurityOps.Web.Client.IndexedDb.Repositories;
 public class StaffRolesIndexedDbRepository: IIndexedDbRepository<StaffRole>
 {
     private readonly YsecIndexedDbContext _indexedDbContext;

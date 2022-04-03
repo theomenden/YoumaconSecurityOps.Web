@@ -4,7 +4,7 @@
     <JumbotronSubtitle>
         Welcome to Sec Ops!
     </JumbotronSubtitle>
-    <Divider></Divider>
+    <Divider />
     <Paragraph>
         Pick any navigation on the side-menu to get started
     </Paragraph>
@@ -20,7 +20,7 @@
     @if (!_isLoading && _shiftsForStaffMember?.Any() == true)
     {
         <ListGroup Flush Flex="Flex.InlineFlex.JustifyContent.Between" TextOverflow="TextOverflow.NoWrap">
-            <ListGroupItem Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Dark.OnAll.Is1" Shadow="Shadow.Default">
+            <ListGroupItem Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Is2.Dark.OnBottom.RoundedBottom" Shadow="Shadow.Default">
                 <Fields>
                     <Field>
                         <Heading Size="HeadingSize.Is2">Starts At</Heading>
@@ -34,7 +34,7 @@
                 </Fields>
             </ListGroupItem>
             <Repeater TItem="ShiftReader" Items="_shiftsForStaffMember">
-                <ListGroupItem Background="Background.Dark" TextColor="TextColor.Light" Margin="Margin.Is2.OnY.OnWidescreen.Is3.OnY.OnMobile" Border="Border.Dark.OnAll.Is1" Shadow="Shadow.Default">
+                <ListGroupItem Background="Background.Dark" TextColor="TextColor.Light" Margin="Margin.Is2.OnY.OnWidescreen.Is3.OnY.OnMobile" Border="Border.Is2.Light.OnAll.Rounded" Shadow="Shadow.Default">
                     <Fields>
                         <Field>
                             <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize" TextOverflow="TextOverflow.Wrap">@context.StartAt.ToString("f")</Paragraph>

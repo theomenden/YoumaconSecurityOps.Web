@@ -35,15 +35,16 @@ public partial class StaffEntryForm : ComponentBase
     private Int32 _selectedStaffType = 1;
 
     //Default to ASK
-    private Int32 _selectedPronoun = 14;
+    private Int32 _selectedPronoun;
+    private Int64 _phoneNumber = 0L;
 
     private String _firstName = String.Empty;
     private String _lastName = String.Empty;
     private String _preferredName = String.Empty;
     private String _facebookName = String.Empty;
     private String _email = String.Empty;
-    private String _phoneNumber = String.Empty;
     private String _shirtSize = String.Empty;
+    private string selectedStep = "step1";
 
     private List<ApiResponse> _apiResponses = new (3);
 
@@ -144,5 +145,12 @@ public partial class StaffEntryForm : ComponentBase
     private bool IsDisabled() => (_isContactInfoPrepared && _isStaffInfoPrepared) is not true;
 
     private bool IsCancellable() => _isContactInfoPrepared || _isStaffInfoPrepared;
+
+    private Task OnSelectedStepChanged(string name)
+    {
+        selectedStep = name;
+
+        return Task.CompletedTask;
+    }
 }
 

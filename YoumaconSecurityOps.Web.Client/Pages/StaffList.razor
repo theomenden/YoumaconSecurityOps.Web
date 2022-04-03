@@ -16,7 +16,8 @@
                   TotalItems="@_totalStaffMembers"
                   Editable
                   CommandMode="DataGridCommandMode.Commands"
-                  Class="styled-table"
+                  Class="table table-dark styled-table border-dark border-1 rounded rounded-2 shadow-lg"
+                  HeaderThemeContrast="ThemeContrast.Light"
                   Responsive
                   Sortable
                   Hoverable
@@ -177,6 +178,10 @@
                     <DataGrid TItem="StaffReader"
                           Data="new List<StaffReader>{context}"
                           Sortable="false"
+                          HeaderThemeContrast="ThemeContrast.Dark"
+                          Class="table table-dark text-light"
+                          Narrow
+                          Responsive
                               ShowCaptions>
                         <DataGridCommandColumn TItem="StaffReader" />
                         <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.Id)" Caption="Actions">

@@ -3,6 +3,6 @@ public class PieChartDataModel
 {
     public String Location { get; set; }
     
-    public Int32 Shifts { get; set; }
+    public Double Shifts { get; set; }
 }
 

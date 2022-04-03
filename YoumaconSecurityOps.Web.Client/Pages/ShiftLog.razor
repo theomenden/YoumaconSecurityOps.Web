@@ -14,6 +14,8 @@
           Data="@_gridDisplay"
           ReadData="@OnReadData"
           TotalItems="@_totalShifts"
+          Class="table table-dark styled-table border-dark border-1 rounded rounded-2 shadow-lg"
+          HeaderThemeContrast="ThemeContrast.Light"
           Editable
           CommandMode="DataGridCommandMode.Commands"
           Responsive
@@ -127,7 +129,11 @@
             <DataGrid TItem="ShiftReader"
                   Data="new List<ShiftReader> { shiftDetailInformation }"
                   Sortable="false"
-                      ShowCaptions>
+                  HeaderThemeContrast="ThemeContrast.Dark"
+                  Class="table table-dark text-light"
+                  Narrow
+                  Responsive
+                  ShowCaptions>
                 <DataGridColumn TItem="ShiftReader" Field="@nameof(ShiftReader.Id)" Caption="Actions">
                     <DisplayTemplate Context="shiftDetailContext">
                         <Buttons Role="ButtonsRole.Toolbar">
@@ -172,38 +178,3 @@
         }
     </DetailRowTemplate>
 </DataGrid>
-
-@if (_selectedShift is not null)
-{
-    <Blazorise.Bootstrap5.Modal @ref="_modalRef">
-        <ModalContent Size="ModalSize.Default" Centered="true">
-            <ModalHeader>
-                <ModalTitle>
-                    <Blazorise.Icon Name="IconName.Edit" IconSize="IconSize.Small"></Blazorise.Icon>
-                    Edit Shift
-                </ModalTitle>
-                <CloseButton />
-            </ModalHeader>
-            <ModalBody>
-                <Field>
-                    <FieldLabel>Staff Assigned: </FieldLabel>
-                    <TextEdit Autofocus="false" ReadOnly="true" Placeholder="@_selectedShift.StaffMember.Contact.PreferredName" />
-                </Field>
-                <Field>
-                    <SelectList TItem="@LocationReader"
-                            TValue="Guid"
-                            Data="@_locations"
-                            TextField="@(item => item.Name)"
-                            ValueField="@(item => item.Id)"
-                            SelectedValue="@_selectedStartingLocation"
-                            SelectedValueChanged="@OnSelectedStartingLocationChanged"
-                            DefaultItemText="@_selectedShift.CurrentLocation.Name" />
-                </Field>
-            </ModalBody>
-            <ModalFooter>
-                <Button Color="Color.Secondary" Clicked="@HideModal">Close</Button>
-                <Button Color="Color.Primary" Clicked="@(async () => await OnReportingIn(_selectedShift.Id))">Save Changes</Button>
-            </ModalFooter>
-        </ModalContent>
-    </Blazorise.Bootstrap5.Modal>
-}

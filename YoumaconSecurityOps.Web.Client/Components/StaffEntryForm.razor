@@ -1,177 +1,271 @@
 ﻿@page "/staff/add"
-<ErrorBoundary>
-<ChildContent>
-    <Container Fluid="true" Margin="Margin.Is4.OnY.OnDesktop">
-        <Row>
-            <Column ColumnSize="ColumnSize.Is5">
-                <Card>
-                    <CardBody>
-                        <CardTitle Size="5">Add Staff Information <Blazorise.Icon Name="IconName.UserCheck" IconSize="IconSize.Small" IconStyle="IconStyle.Solid" /></CardTitle>
-                        <Form Width="Width.Is100">
-                            @if (!_isLoading)
-                            {
-                                <SelectList TItem="@StaffType"
-                                            TValue="Int32"
-                                            Data="@_staffTypes"
-                                            TextField="@(item => item.Title)"
-                                            ValueField="@(item => item.Id)"
-                                            SelectedValue="@_selectedStaffType"
-                                            SelectedValueChanged="@OnSelectedStaffTypeChanged"
-                                            DefaultItemText="@_staffTypes.Single(st => st.Id == 1).Title" />
-                            }
-                            else
-                            {
-                                <Span>
-                                    <SpinKit Type="SpinKitType.Chase" Size="3rem" />
-                                </Span>
-                            }
-
-                            @if (!_isLoading)
-                            {
-                                <SelectList TItem="@StaffRole"
-                                            TValue="Int32"
+<Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" >
+    <Items>
+        <Step TextColor="TextColor.Dark" Name="step1">Staff Rankings</Step>
+        <Step TextColor="TextColor.Dark" Name="step2">Contact Information</Step>
+        <Step TextColor="TextColor.Dark" Name="step3">Review</Step>
+        <Step TextColor="TextColor.Dark" Name="step4">
+            <Marker>
+                <Blazorise.Icon Name="IconName.Flag" />
+            </Marker>
+            <Caption>
+                Submit
+            </Caption>
+        </Step>
+    </Items>
+    <Content>
+        <StepPanel Name="step1">
+            <Card Margin="Margin.Is4.FromBottom" Background="Background.Dark" WhiteText Border="Border.Is2.Dark.OnAll.Rounded" Shadow="Shadow.Default">
+                <CardTitle>
+                    First enter staff information
+                </CardTitle>
+                <CardBody>
+                    <Form>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Role</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <SelectList TItem="StaffRole"
+                                            TValue="int"
                                             Data="@_staffRoles"
                                             TextField="@(item => item.Name)"
                                             ValueField="@(item => item.Id)"
                                             SelectedValue="@_selectedStaffRole"
                                             SelectedValueChanged="@OnSelectedStaffRoleChanged"
-                                            DefaultItemText="@_staffRoles.Single(sr => sr.Id == 5).Name" />
-                            }
-                            else
-                            {
-                                <Span>
-                                    <SpinKit Type="SpinKitType.Chase" Size="3rem" />
-                                </Span>
-                            }
-                            <Switch TValue="bool" @bind-Checked="@_needCrashSpace">Needs Crash Space</Switch>
-                            <Switch TValue="bool" @bind-Checked="@_isBlackShirt">Is Black Shirt</Switch>
-                            <Switch TValue="bool" @bind-Checked="@_isRaveApproved">Is Rave Approved</Switch>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Shirt Size</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Size" @bind-Text="@_shirtSize" />
-                                </Addon>
-                            </Addons>
-                        </Form>
-                        <Button Color="Color.Primary" Clicked="@SaveStaffInformation" Loading="@_isSavingStaffInfo">
-                            <LoadingTemplate>
-                                Saving Staff Info
-                            </LoadingTemplate>
-                            <ChildContent>
-                                Save Staff Information
-                            </ChildContent>
-                        </Button>
-                    </CardBody>
-                </Card>
-            </Column>
-            <Column ColumnSize="ColumnSize.Is2">
-                <Blazorise.Icon Name="IconName.ArrowRight" IconSize="IconSize.x8" IconStyle="IconStyle.DuoTone" Margin="Margin.Is2.OnX.OnDesktop" />
-            </Column>
-            <Column ColumnSize="ColumnSize.Is5">
-                <Card>
-                    <CardBody>
-                        <CardTitle Size="5">Add Contact Information <Blazorise.Icon Name="IconName.IdCard" IconSize="IconSize.Small" IconStyle="IconStyle.Solid" /></CardTitle>
-                        <Form>
-                            @if (!_isLoading)
-                            {
-                                <SelectList TItem="@Pronouns"
-                                            TValue="Int32"
+                                            DefaultItemText="Choose their role" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Type</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <SelectList TItem="StaffType"
+                                            TValue="int"
+                                            Data="@_staffTypes"
+                                            TextField="@(item => item.Title)"
+                                            ValueField="@(item => item.Id)"
+                                            SelectedValue="@_selectedStaffType"
+                                            SelectedValueChanged="@OnSelectedStaffTypeChanged"
+                                            DefaultItemText="Choose their staff type" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Needs crash space?</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <RadioGroup TValue="bool" Name="rdCrashSpace" @bind-CheckedValue="@_needCrashSpace">
+                                <Radio Value="@true">Yes</Radio>
+                                <Radio Value="@false">No</Radio>
+                                </RadioGroup>
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is a black shirt?</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <RadioGroup TValue="bool" Name="rdBlackShirt" @bind-CheckedValue="@_isBlackShirt">
+                                    <Radio Value="@true">Yes</Radio>
+                                    <Radio Value="@false">No</Radio>
+                                </RadioGroup>
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is rave approved?</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <RadioGroup TValue="bool" Name="rdRaveApproved" @bind-CheckedValue="@_isRaveApproved">
+                                    <Radio Value="@true">Yes</Radio>
+                                    <Radio Value="@false">No</Radio>
+                                </RadioGroup>
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">T-Shirt Size</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Their T-Shirt Size" />
+                            </FieldBody>
+                        </Field>
+                    </Form>
+                </CardBody>
+            </Card>
+        </StepPanel>
+        <StepPanel Name="step2">
+            <Card Margin="Margin.Is4.FromBottom" Background="Background.Dark" WhiteText Border="Border.Is2.Dark.OnAll.Rounded" Shadow="Shadow.Default">
+                <CardTitle>
+                    Add their personal and contact information
+                </CardTitle>
+                <CardBody>
+                    <Form>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Pronouns</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <SelectList TItem="Pronouns"
+                                            TValue="int"
                                             Data="@_pronouns"
                                             TextField="@(item => item.Name)"
                                             ValueField="@(item => item.Id)"
                                             SelectedValue="@_selectedPronoun"
                                             SelectedValueChanged="@OnSelectedPronounChanged"
-                                            DefaultItemText="Available Pronouns" />
-                            }
-                            else
-                            {
-                                <Span>
-                                    <SpinKit Type="SpinKitType.Chase" Size="3rem" />
-                                </Span>
-                            }
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>First Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="First Name" @bind-Text="@_firstName"/>
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Last Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Last Name" @bind-Text="@_lastName"/>
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Preferred Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Preferred Name" @bind-Text="@_preferredName"/>
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Email</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Email" Role="TextRole.Email" @bind-Text="@_email"/>
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Phone Number</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Phone Number" Role="TextRole.Telephone" @bind-Text="@_phoneNumber"/>
-                                </Addon>
-                            </Addons>
-                            <Addons Margin="Margin.Is2.OnY.OnDesktop">
-                                <Addon AddonType="AddonType.Start">
-                                    <AddonLabel>Facebook Name</AddonLabel>
-                                </Addon>
-                                <Addon AddonType="AddonType.Body">
-                                    <TextEdit Placeholder="Facebook Name" @bind-Text="@_facebookName"/>
-                                </Addon>
-                            </Addons>
-                        </Form>
-                        <Button Color="Color.Primary" Clicked="@SaveContactInformation" Loading="@_isSavingContactInfo">
-                            <LoadingTemplate>
-                                Saving Contact Info
-                            </LoadingTemplate>
-                            <ChildContent>
-                                Save Contact Information
-                            </ChildContent>
-                        </Button>
-                    </CardBody>
-                </Card>
-            </Column>
-        </Row>
-        <Row Flex="Flex.AlignItems.Center.AlignContent.Between.OnDesktop">
-            <Column>
-                <Buttons>
-                    <Button Type="ButtonType.Submit" Color="Color.Primary" Loading="@_isSubmitting" Margin="Margin.Is2.OnX.OnDesktop" Disabled="@IsDisabled()" Clicked="@OnSubmit">
-                        <LoadingTemplate>
-                            Saving Staff Member.
-                        </LoadingTemplate>
-                        <ChildContent>
-                            <Paragraph>Submit Staff Information</Paragraph>
-                        </ChildContent>
-                    </Button>
-                    <Button Color="Color.Secondary" Type="ButtonType.Link" To="/staff" Margin="Margin.Is2.OnX.OnDesktop" Disabled="@IsCancellable()">
-                        <Paragraph>Cancel</Paragraph>
-                    </Button>
-                </Buttons>
-            </Column>
-        </Row>
-    </Container>
-</ChildContent>
-<ErrorContent>
-    <ErrorComponent ApiErrors="@_apiResponses" />
-</ErrorContent>
-</ErrorBoundary>
+                                            DefaultItemText="Ask their pronouns" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">First Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="First Name" @bind-Value="_firstName" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Last Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Last Name" @bind-Value="_lastName" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="The name they will go by" @bind-Value="@_preferredName" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Facebook Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Their name on Facebook" @bind-Value="@_facebookName" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Email Address</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Their email" @bind-Value="@_email" />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Phone Number</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <NumericPicker Placeholder="Their Phone Number" TValue="Int64" @bind-Value="_phoneNumber"/>
+                            </FieldBody>
+                        </Field>
+                    </Form>
+                </CardBody>
+            </Card>
+        </StepPanel>
+        <StepPanel Name="step3">
+            <Card Margin="Margin.Is4.FromBottom" Background="Background.Dark" WhiteText Border="Border.Is2.Dark.OnAll.Rounded" Shadow="Shadow.Default">
+                <CardTitle>
+                    Review For submission
+                </CardTitle>
+                <CardBody>
+                    <Form>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Role</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <SelectList TItem="StaffRole"
+                                            TValue="int"
+                                            Data="@_staffRoles"
+                                            TextField="@(item => item.Name)"
+                                            ValueField="@(item => item.Id)"
+                                            SelectedValue="@_selectedStaffRole"
+                                            SelectedValueChanged="@OnSelectedStaffRoleChanged"
+                                            DefaultItemText="Choose their role"
+                                            Disabled />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Type</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <SelectList TItem="StaffType"
+                                            TValue="int"
+                                            Data="@_staffTypes"
+                                            TextField="@(item => item.Title)"
+                                            ValueField="@(item => item.Id)"
+                                            SelectedValue="@_selectedStaffType"
+                                            SelectedValueChanged="@OnSelectedStaffTypeChanged"
+                                            DefaultItemText="Choose their staff type" Disabled />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Needs crash space?</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <Switch TValue="bool" @bind-Checked="_needCrashSpace" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is a black shirt?</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <Switch TValue="bool" @bind-Checked="_isBlackShirt" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is rave approved?</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <Switch TValue="bool" @bind-Checked="_isRaveApproved" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">T-Shirt Size</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Their T-Shirt Size" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Pronouns</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <SelectList TItem="Pronouns"
+                                            TValue="int"
+                                            Data="@_pronouns"
+                                            TextField="@(item => item.Name)"
+                                            ValueField="@(item => item.Id)"
+                                            SelectedValue="@_selectedPronoun"
+                                            SelectedValueChanged="@OnSelectedPronounChanged"
+                                            DefaultItemText="Ask their pronouns" Disabled />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">First Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="First Name" @bind-Value="_firstName" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Last Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Last Name" @bind-Value="_lastName" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="The name they will go by" @bind-Value="@_preferredName" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Facebook Name</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Placeholder="Their name on Facebook" @bind-Value="@_facebookName" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Email Address</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Role="TextRole.Email" Placeholder="Their email" @bind-Value="@_email" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Phone Number</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                <TextEdit Role="TextRole.Telephone" Placeholder="Their Phone Number" @bind-Value="_phoneNumber" Disabled ReadOnly />
+                            </FieldBody>
+                        </Field>
+                    </Form>
+                </CardBody>
+            </Card>
+        </StepPanel>
+        <StepPanel Name="step4">
+            <Card Margin="Margin.Is4.FromBottom" Background="Background.Dark" WhiteText Border="Border.Is2.Dark.OnAll.Rounded" Shadow="Shadow.Default">
+                <CardTitle>
+                    Submit their information
+                </CardTitle>
+                <CardBody>
+                    <Form>
+                    </Form>
+                </CardBody>
+            </Card>
+        </StepPanel>
+    </Content>
+</Steps>
