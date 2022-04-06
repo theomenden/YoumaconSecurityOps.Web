@@ -1,6 +1,6 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers;
 
-internal class GetPronounsQueryHandler : IRequestHandler<GetPronounsQuery, IEnumerable<Pronouns>>
+internal class GetPronounsQueryHandler : IRequestHandler<GetPronounsQuery, IEnumerable<Pronoun>>
 {
     private readonly IStaffAccessor _staffInformation;
 
@@ -12,7 +12,7 @@ internal class GetPronounsQueryHandler : IRequestHandler<GetPronounsQuery, IEnum
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<IEnumerable<Pronouns>> Handle(GetPronounsQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Pronoun>> Handle(GetPronounsQuery request, CancellationToken cancellationToken)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 

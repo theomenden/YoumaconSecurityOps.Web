@@ -1,6 +1,9 @@
 ﻿@page "/shiftlog"
 
-<Jumbotron Background="Background.Dark" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+<Jumbotron Background="Background.Dark" 
+           Border="Border.Is2.Rounded.Light.OnAll" 
+           Shadow="Shadow.Default" 
+           Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
     <DisplayHeading Casing="CharacterCasing.Title" Size="DisplayHeadingSize.Is2">View Shift Log</DisplayHeading>
     <Divider />
     <Paragraph>
@@ -14,7 +17,7 @@
           Data="@_gridDisplay"
           ReadData="@OnReadData"
           TotalItems="@_totalShifts"
-          Class="table table-dark styled-table border-dark border-1 rounded rounded-2 shadow-lg"
+          Class="table table-dark styled-table border-light border-2 rounded rounded-2 shadow-lg"
           HeaderThemeContrast="ThemeContrast.Light"
           Editable
           CommandMode="DataGridCommandMode.Commands"
@@ -66,17 +69,17 @@
                 <Button Color="Color.Danger" Border="Border.Dark.OnAll.Is1.Rounded" Shadow="Shadow.Default" Clicked="@context.Clicked">@context.LocalizationString</Button>
             </DeleteCommandTemplate>
         </DataGridCommandColumn>
-        <DataGridColumn TItem="ShiftReader" Field="StaffMember.Contact.PreferredName" Caption="Staff Member Assigned" Sortable="true" Editable="true">
+        <DataGridColumn TItem="ShiftReader" Field="StaffMember.ContactInformation.PreferredName" Caption="Staff Member Assigned" Sortable="true" Editable="true">
             <DisplayTemplate>
-                <Tooltip Text="@($"Working as {context.StaffMember.Role?.Name} for {context.StaffMember.StaffType?.Title}")" Placement="TooltipPlacement.RightStart">
-                    @(_staffMembers.FirstOrDefault(st => st.Id == context.StaffMember?.Id)?.Contact.PreferredName ?? String.Empty)
+                <Tooltip Text="@($"Working as {context.StaffMember.StaffRole?.Name} for {context.StaffMember.StaffType?.Title}")" Placement="TooltipPlacement.RightStart">
+                    @(_staffMembers.FirstOrDefault(st => st.Id == context.StaffMember?.Id)?.ContactInformation.PreferredName ?? String.Empty)
                 </Tooltip>
             </DisplayTemplate>
             <EditTemplate>
                 <SelectList TItem="@StaffReader"
                             TValue="Guid"
                             Data="@_staffMembers"
-                            TextField="@(item=>$"{item.Contact.LastName}, {item.Contact.PreferredName}")"
+                            TextField="@(item=>$"{item.ContactInformation.LastName}, {item.ContactInformation.PreferredName}")"
                             ValueField="@(item=> item.Id)"
                             SelectedValue="@_selectedStaffMember"
                             SelectedValueChanged="@OnSelectedStaffMemberChanged"
@@ -101,9 +104,9 @@
                 </DatePicker>
             </EditTemplate>
         </DataGridDateColumn>
-        <DataGridColumn TItem="ShiftReader" Field="StartingLocationNavigation.Name" Caption="Starting Location" Sortable="true" Editable="true">
+        <DataGridColumn TItem="ShiftReader" Field="StartingLocation.Name" Caption="Starting Location" Sortable="true" Editable="true">
             <DisplayTemplate>
-                @(_locations.FirstOrDefault(l => l.Id == context.StartingLocationNavigation?.Id)?.Name ?? String.Empty)
+                @(_locations.FirstOrDefault(l => l.Id == context.StartingLocation?.Id)?.Name ?? String.Empty)
             </DisplayTemplate>
             <EditTemplate>
                 <SelectList TItem="@LocationReader"

@@ -63,10 +63,10 @@ public static class StreamCachingServiceCollectionExtensions
     /// </summary>
     /// <typeparam name="TModule">Where this is registered</typeparam>
     /// <param name="services"></param>
-    public static void RegisterBuiltStreamingCaches(this IServiceCollection services)
+    public static void RegisterBuiltStreamingCaches(this IServiceCollection services, Type containingType)
     {
-        var cacheConfigurations = Assembly
-            .GetExecutingAssembly()
+        var cacheConfigurations = containingType
+            .Assembly
             .GetTypes()
             .Where(t => !t.IsGenericType && t.GetInterfaces().Contains(typeof(IStreamingCacheConfiguration)))
             .ToArray();

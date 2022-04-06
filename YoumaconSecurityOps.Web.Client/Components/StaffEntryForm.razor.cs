@@ -1,6 +1,4 @@
-﻿using YoumaconSecurityOps.Core.Shared.Responses;
-
-namespace YoumaconSecurityOps.Web.Client.Components;
+﻿namespace YoumaconSecurityOps.Web.Client.Components;
 
 public partial class StaffEntryForm : ComponentBase
 {
@@ -16,7 +14,7 @@ public partial class StaffEntryForm : ComponentBase
 
     private IEnumerable<StaffType> _staffTypes = new List<StaffType>(5);
 
-    private IEnumerable<Pronouns> _pronouns = new List<Pronouns>(14);
+    private IEnumerable<Pronoun> _pronouns = new List<Pronoun>(14);
 
     private Boolean _isLoading;
     private Boolean _isContactInfoPrepared;
@@ -36,7 +34,7 @@ public partial class StaffEntryForm : ComponentBase
 
     //Default to ASK
     private Int32 _selectedPronoun;
-    private Int64 _phoneNumber = 0L;
+    private String _phoneNumber;
 
     private String _firstName = String.Empty;
     private String _lastName = String.Empty;
@@ -90,7 +88,10 @@ public partial class StaffEntryForm : ComponentBase
     private async Task SaveContactInformation()
     {
         _isSavingContactInfo = true;
-        _contactWriter = new ContactWriter(_staffWriter.Id, _selectedPronoun, DateTime.Now, _email, _firstName, _lastName, _facebookName, _preferredName, Convert.ToInt64(_phoneNumber));
+
+        var phoneNumberForStorage = Convert.ToInt64(_phoneNumber);
+
+        _contactWriter = new ContactWriter(_staffWriter.Id, _selectedPronoun, DateTime.Now, _email, _firstName, _lastName, _facebookName, _preferredName, phoneNumberForStorage);
 
         var command = new AddContactCommand(_contactWriter);
 
@@ -115,8 +116,7 @@ public partial class StaffEntryForm : ComponentBase
         var command = new AddStaffCommand(_staffWriter);
 
         var savedStaffInformationResponse = await StaffService.AddNewStaffMemberAsync(command);
-
-
+        
         if (savedStaffInformationResponse.Outcome.IsError)
         {
             _apiResponses.Add(savedStaffInformationResponse);
@@ -130,6 +130,10 @@ public partial class StaffEntryForm : ComponentBase
     private async Task OnSubmit()
     {
         _isSubmitting = true;
+        
+        await SaveStaffInformation();
+
+        await SaveContactInformation();
 
         var staffRoleMapWriter = new StaffTypeRoleMapWriter(_staffWriter.Id, _selectedStaffType, _selectedStaffRole);
 
@@ -142,15 +146,41 @@ public partial class StaffEntryForm : ComponentBase
         NavigationManager.NavigateTo("/staff");
     }
 
-    private bool IsDisabled() => (_isContactInfoPrepared && _isStaffInfoPrepared) is not true;
-
-    private bool IsCancellable() => _isContactInfoPrepared || _isStaffInfoPrepared;
-
     private Task OnSelectedStepChanged(string name)
     {
         selectedStep = name;
 
         return Task.CompletedTask;
     }
+
+    private Task OnPreviousButtonClicked()
+    {
+        if (selectedStep.Equals("step2"))
+        {
+            selectedStep = "step1";
+        }
+
+        if (selectedStep.Equals("step3"))
+        {
+            selectedStep = "step2";
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private Task OnNextButtonClicked()
+    {
+        if (selectedStep.Equals("step2"))
+        {
+            selectedStep = "step3";
+        }
+
+        if (selectedStep.Equals("step1"))
+        {
+            selectedStep = "step2";
+        }
+        return Task.CompletedTask;
+    }
+
 }
 

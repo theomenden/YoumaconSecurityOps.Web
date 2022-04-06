@@ -21,7 +21,7 @@ public partial class StaffList : ComponentBase
 
     private IEnumerable<StaffType> _staffTypes = new List<StaffType>(5);
 
-    private IEnumerable<Pronouns> _pronouns = new List<Pronouns>(14);
+    private IEnumerable<Pronoun> _pronouns = new List<Pronoun>(14);
 
     private DataGrid<StaffReader> _dataGrid = new();
 
@@ -51,8 +51,7 @@ public partial class StaffList : ComponentBase
     private Int32 _selectedTypeFilter = 0;
 
     private Int32 _selectedRoleFilter = 0;
-
-
+    
     private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5 };
     #endregion
 
@@ -107,8 +106,8 @@ public partial class StaffList : ComponentBase
 
     private static void OnStaffNewItemDefaultSetter(StaffReader member)
     {
-        member.Contact = new ContactReader();
-        member.StaffTypeRoleMaps = new List<StaffTypesRoles>(1);
+        member.ContactInformation = new ContactReader();
+        member.StaffTypesRoles = new List<StaffTypesRole>(1);
     }
 
     private static string SetPopupTitle(PopupTitleContext<StaffReader> context)
@@ -117,7 +116,7 @@ public partial class StaffList : ComponentBase
 
         if (context.EditState is DataGridEditState.Edit)
         {
-            popupTitle += $" {context.Item.Contact.PreferredName ?? context.Item.Contact.FirstName}";
+            popupTitle += $" {context.Item.ContactInformation.PreferredName ?? context.Item.ContactInformation.FirstName}";
         }
 
         return popupTitle;
@@ -171,11 +170,11 @@ public partial class StaffList : ComponentBase
 
         if (status.Data == Guid.Empty)
         {
-            await NotificationService.Error(response, $"Error with sending {memberToSendOnBreak.Contact.PreferredName} on break!");
+            await NotificationService.Error(response, $"Error with sending {memberToSendOnBreak.ContactInformation.PreferredName} on break!");
             return;
         }
 
-        await NotificationService.Success(response, $"{memberToSendOnBreak.Contact.PreferredName} Sent on break");
+        await NotificationService.Success(response, $"{memberToSendOnBreak.ContactInformation.PreferredName} Sent on break");
 
         StateHasChanged();
     }
@@ -192,11 +191,11 @@ public partial class StaffList : ComponentBase
 
         if (status.Data == Guid.Empty)
         {
-            await NotificationService.Error(response, $"Error with returning {memberToReturn.Contact.PreferredName} from break!");
+            await NotificationService.Error(response, $"Error with returning {memberToReturn.ContactInformation.PreferredName} from break!");
             return;
         }
 
-        await NotificationService.Success(response, $"{memberToReturn.Contact.PreferredName} returned from their break");
+        await NotificationService.Success(response, $"{memberToReturn.ContactInformation.PreferredName} returned from their break");
 
         StateHasChanged();
     }

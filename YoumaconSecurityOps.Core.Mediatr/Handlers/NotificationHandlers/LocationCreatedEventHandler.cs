@@ -1,6 +1,4 @@
-﻿
-
-namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
+﻿namespace YoumaconSecurityOps.Core.Mediatr.Handlers.NotificationHandlers;
 
 internal sealed class LocationCreatedEventHandler: INotificationHandler<LocationCreatedEvent>
 {
@@ -14,16 +12,13 @@ internal sealed class LocationCreatedEventHandler: INotificationHandler<Location
 
     private readonly IMediator _mediator;
 
-    private readonly ILogger<LocationCreatedEventHandler> _logger;
-
-    public LocationCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IEventStoreRepository eventStore, IMapper mapper, ILocationRepository locations, IMediator mediator, ILogger<LocationCreatedEventHandler> logger)
+    public LocationCreatedEventHandler(IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IEventStoreRepository eventStore, IMapper mapper, ILocationRepository locations, IMediator mediator)
     {
         _dbContextFactory = dbContextFactory;
         _eventStore = eventStore;
         _mapper = mapper;
         _locations = locations;
         _mediator = mediator;
-        _logger = logger;   
     }
 
     public async Task Handle(LocationCreatedEvent notification, CancellationToken cancellationToken)
@@ -42,7 +37,7 @@ internal sealed class LocationCreatedEventHandler: INotificationHandler<Location
         var e = new LocationAddedEvent(locationAdded)
         {
             Aggregate = createdLocation.Aggregate,
-            DataAsJson = locationAdded.ToJson(),
+            DataAsJson = JsonSerializer.Serialize(locationAdded),
             MajorVersion = createdLocation.MajorVersion,
             MinorVersion = ++createdLocation.MinorVersion,
             Name = createdLocation.Name

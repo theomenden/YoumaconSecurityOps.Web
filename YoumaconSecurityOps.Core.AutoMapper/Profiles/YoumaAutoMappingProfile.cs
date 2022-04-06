@@ -13,7 +13,7 @@ namespace YoumaconSecurityOps.Core.AutoMapper.Profiles
 
             CreateMap<StaffWriter, StaffReader>();
 
-            CreateMap<StaffTypeRoleMapWriter, StaffTypesRoles>()
+            CreateMap<StaffTypeRoleMapWriter, StaffTypesRole>()
                 .ForMember(str => str.Staff, opt => opt.Ignore());
 
             CreateMap<ShiftWriter, ShiftReader>()
@@ -21,8 +21,8 @@ namespace YoumaconSecurityOps.Core.AutoMapper.Profiles
                 .ForMember(sr => sr.StaffId, opt => opt.MapFrom(src => src.StaffMemberId));
 
             CreateMap<RadioWriter, RadioScheduleReader>()
-                .ForMember(r => r.LastStaffToHaveId, opt => opt.MapFrom(rw => rw.LastStaffToHaveId))
-                .ForMember(r => r.LocationId, opt => opt.MapFrom(rw => rw.LocationId));
+                .ForMember(r => r.LastStaffToHave_Id, opt => opt.MapFrom(rw => rw.LastStaffToHaveId))
+                .ForMember(r => r.Location_Id, opt => opt.MapFrom(rw => rw.LocationId));
 
             //"The Opt part is important" The_Faid 2021-05-08
             CreateMap<EventBase, EventReader>()

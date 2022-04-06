@@ -2,7 +2,7 @@
 
 public class StaffTypeRoleMapAddedEvent : EventBase
 {
-    public StaffTypeRoleMapAddedEvent(StaffTypesRoles staffTypeRoleMap)
+    public StaffTypeRoleMapAddedEvent(StaffTypesRole staffTypeRoleMap)
     {
         StaffTypeRoleMap = staffTypeRoleMap;
         DataAsJson = JsonSerializer.Serialize(staffTypeRoleMap, new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
@@ -10,6 +10,6 @@ public class StaffTypeRoleMapAddedEvent : EventBase
         AggregateId = staffTypeRoleMap.Id;
     }
 
-    public StaffTypesRoles StaffTypeRoleMap { get; }
+    public StaffTypesRole StaffTypeRoleMap { get; }
 }
 

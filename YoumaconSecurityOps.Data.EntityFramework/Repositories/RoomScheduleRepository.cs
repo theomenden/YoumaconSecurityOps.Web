@@ -17,12 +17,6 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public IAsyncEnumerable<RoomScheduleReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default)
     {
         var rooms = dbContext.RoomSchedules
-            .Include(rs => rs.LastStaffInRoom)
-                .ThenInclude(sm => sm.StaffTypeRoleMaps)
-                    .ThenInclude(smt => smt.Role)
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.StaffTypeNavigation)
             .AsAsyncEnumerable();
 
         return rooms;
@@ -32,12 +26,6 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public IAsyncEnumerable<RoomScheduleReader> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<RoomScheduleReader, bool>> predicate, CancellationToken cancellationToken = default)
     {
         var rooms = dbContext.RoomSchedules
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.Role)
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.StaffTypeNavigation)
             .Where(predicate)
             .AsAsyncEnumerable();
 
@@ -47,13 +35,7 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public IAsyncEnumerable<RoomScheduleReader> GetAvailableRoomsAsync(YoumaconSecurityDbContext context, CancellationToken cancellationToken = default)
     {
 
-        var rooms = context.RoomSchedules
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.Role)
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.StaffTypeNavigation)
+        var rooms = context.RoomSchedules 
             .Where(rm => rm.IsCurrentlyOccupied == false)
             .AsAsyncEnumerable();
 
@@ -63,13 +45,6 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public IAsyncEnumerable<RoomScheduleReader> GetRoomsByStaffIdAsync(YoumaconSecurityDbContext context, Guid staffId, CancellationToken cancellationToken = default)
     {
         var rooms = context.RoomSchedules
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.Role)
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.StaffTypeNavigation)
-            .Where(rm => rm.LastStaffInRoomId == staffId)
             .AsAsyncEnumerable();
 
         return rooms;
@@ -78,12 +53,6 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public async Task<RoomScheduleReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = default)
     {
         var room = await dbContext.RoomSchedules
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.Role)
-            .Include(rs => rs.LastStaffInRoom)
-            .ThenInclude(sm => sm.StaffTypeRoleMaps)
-            .ThenInclude(smt => smt.StaffTypeNavigation)
             .AsQueryable()
             .FirstOrDefaultAsync(rm => rm.Id == entityId, cancellationToken);
 

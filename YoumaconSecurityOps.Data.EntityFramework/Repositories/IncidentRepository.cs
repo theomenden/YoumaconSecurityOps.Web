@@ -19,19 +19,19 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     {
         var incidents = dbContext.Incidents
             .Include(i => i.Location)
-            .Include(i => i.ReportedBy)
-                .ThenInclude(s => s.Contact)
-            .Include(i => i.ReportedBy)
-                .ThenInclude(s => s.StaffTypeRoleMaps)
-            .Include(i => i.ReportedBy)
-                .ThenInclude(s => s.StaffTypeRoleMaps)
             .Include(i => i.RecordedBy)
-                .ThenInclude(s => s.Contact)
+                .ThenInclude(s => s.ContactInformation)
+            .Include(i => i.OpsManager)
+                .ThenInclude(s => s.StaffTypesRoles)
             .Include(i => i.RecordedBy)
-                .ThenInclude(s => s.StaffTypeRoleMaps)
+                .ThenInclude(s => s.StaffTypesRoles)
             .Include(i => i.RecordedBy)
-                .ThenInclude(s => s.StaffTypeRoleMaps)
-            .Include(i => i.Shift)
+                .ThenInclude(s => s.ContactInformation)
+            .Include(i => i.RecordedBy)
+                .ThenInclude(s => s.StaffTypesRoles)
+            .Include(i => i.RecordedBy)
+                .ThenInclude(s => s.StaffTypesRoles)
+            .Include(i => i.ShiftReader)
             .AsAsyncEnumerable();
 
         return incidents;
@@ -41,20 +41,21 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
         CancellationToken cancellationToken = default)
     {
         var incidents = dbContext.Incidents
+
             .Include(i => i.Location)
-            .Include(i => i.ReportedBy)
-            .ThenInclude(s => s.Contact)
-            .Include(i => i.ReportedBy)
-            .ThenInclude(s => s.Role)
-            .Include(i => i.ReportedBy)
-            .ThenInclude(s => s.StaffType)
             .Include(i => i.RecordedBy)
-            .ThenInclude(s => s.Contact)
+            .ThenInclude(s => s.ContactInformation)
+            .Include(i => i.OpsManager)
+            .ThenInclude(s => s.StaffTypesRoles)
             .Include(i => i.RecordedBy)
-            .ThenInclude(s => s.Role)
+            .ThenInclude(s => s.StaffTypesRoles)
             .Include(i => i.RecordedBy)
-            .ThenInclude(s => s.StaffType)
-            .Include(i => i.Shift)
+            .ThenInclude(s => s.ContactInformation)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.StaffTypesRoles)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.StaffTypesRoles)
+            .Include(i => i.ShiftReader)
             .Where(predicate)
             .AsAsyncEnumerable();
 
@@ -64,20 +65,21 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public async Task<IncidentReader> WithIdAsync(YoumaconSecurityDbContext dbContext, Guid entityId, CancellationToken cancellationToken = new ())
     {
         var incident = await dbContext.Incidents
+
             .Include(i => i.Location)
-            .Include(i => i.ReportedBy)
-            .ThenInclude(s => s.Contact)
-            .Include(i => i.ReportedBy)
-            .ThenInclude(s => s.Role)
-            .Include(i => i.ReportedBy)
-            .ThenInclude(s => s.StaffType)
             .Include(i => i.RecordedBy)
-            .ThenInclude(s => s.Contact)
+            .ThenInclude(s => s.ContactInformation)
+            .Include(i => i.OpsManager)
+            .ThenInclude(s => s.StaffTypesRoles)
             .Include(i => i.RecordedBy)
-            .ThenInclude(s => s.Role)
+            .ThenInclude(s => s.StaffTypesRoles)
             .Include(i => i.RecordedBy)
-            .ThenInclude(s => s.StaffType)
-            .Include(i => i.Shift)
+            .ThenInclude(s => s.ContactInformation)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.StaffTypesRoles)
+            .Include(i => i.RecordedBy)
+            .ThenInclude(s => s.StaffTypesRoles)
+            .Include(i => i.ShiftReader)
             .AsQueryable()
             .SingleOrDefaultAsync(i => i.Id == entityId, cancellationToken);
 
@@ -87,7 +89,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public IAsyncEnumerable<IncidentReader> GetByShiftId(YoumaconSecurityDbContext dbContext, Guid shiftId, CancellationToken cancellationToken = new())
     {
         var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
-            .Where(i => i.ShiftId == shiftId);
+            .Where(i => i.Shift_Id == shiftId);
 
         return incidentsUnderShift;
     }
@@ -103,7 +105,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public IAsyncEnumerable<IncidentReader> GetByReportedStaffMember(YoumaconSecurityDbContext dbContext, Guid reportingStaffId, CancellationToken cancellationToken = new())
     {
         var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
-            .Where(i => i.ReportedById == reportingStaffId);
+            .Where(i => i.RecordedBy_Id == reportingStaffId);
 
         return incidentsUnderShift;
     }
@@ -111,7 +113,7 @@ internal sealed class IncidentRepository: IIncidentAccessor, IIncidentRepository
     public IAsyncEnumerable<IncidentReader> GetByRecordedStaffMember(YoumaconSecurityDbContext dbContext, Guid recordingStaffId, CancellationToken cancellationToken = new())
     {
         var incidentsUnderShift = GetAllAsync(dbContext, cancellationToken)
-            .Where(i => i.RecordedById == recordingStaffId);
+            .Where(i => i.OpsManager_Id == recordingStaffId);
 
         return incidentsUnderShift;
     }

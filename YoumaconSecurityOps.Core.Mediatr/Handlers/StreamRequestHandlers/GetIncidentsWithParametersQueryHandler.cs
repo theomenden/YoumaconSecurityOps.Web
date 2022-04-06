@@ -32,8 +32,8 @@ internal sealed class GetIncidentsWithParametersQueryHandler : IStreamRequestHan
     {
         return incidents
             .Where(i => i.Title.Equals(parameters.Title))
-            .Where(i => parameters.StaffIds.Contains(i.ReportedById))
-            .Where(i => parameters.StaffIds.Contains(i.RecordedById))
+            .Where(i => parameters.StaffIds.Contains(i.OpsManager_Id))
+            .Where(i => parameters.StaffIds.Contains(i.RecordedBy_Id))
             .Where(i => i.Severity == parameters.Severity);
     }
 }

@@ -209,7 +209,7 @@ public partial class Admin : ComponentBase
                     LocationId = shift?.CurrentLocationId ?? Guid.Empty,
                     LocationName = shift?.CurrentLocation?.Name ?? "Awaiting Assignment",
                     StaffId = groupResult.member.Id,
-                    MemberName = groupResult.member.Contact.PreferredName,
+                    MemberName = groupResult.member.ContactInformation.PreferredName,
                     ShiftId = shift?.Id ?? Guid.Empty
                 });
 

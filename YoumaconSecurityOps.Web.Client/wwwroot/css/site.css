@@ -1,33 +1,26 @@
-﻿html, body {
+﻿@import url("https://fonts.googleapis.com/css?family=Exo:400,700");
+html, body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
   color: #4089a6;
-  background-color: darkgray;
+  background: linear-gradient(-45deg, #8C1BAB, #B210FF, #F761A1, #EECE13);
   -webkit-font-smoothing: antialiased;
+  animation: gradient 15s ease infinite;
 }
 
-body:before, body:after {
-  content: "";
-  height: 50vh;
-  width: 100%;
-  position: fixed;
-  left: 0;
-  background: #1c2020;
-  z-index: 1;
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
-body:before {
-  top: 0;
-  transform: translateY(-100%);
-}
-
-body:after {
-  bottom: 0;
-  transform: translateY(100%);
-}
-
 main {
   height: 100vh;
   /* padding: 10px; */

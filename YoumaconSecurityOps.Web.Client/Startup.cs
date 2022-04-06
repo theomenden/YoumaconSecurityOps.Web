@@ -1,6 +1,4 @@
-using Nosthy.Blazor.DexieWrapper.JsModule;
-using YoumaconSecurityOps.Web.Client.IndexedDb.Context;
-using YoumaconSecurityOps.Web.Client.IndexedDb.Repositories;
+using YoumaconSecurityOps.Core.Shared.Models;
 using YoumaconSecurityOps.Web.Client.UrlHashing;
 
 namespace YoumaconSecurityOps.Web.Client;
@@ -60,11 +58,9 @@ public class Startup
 
         services.AddEventStoreServices(appSettings.EventStoreConnectionString);
 
-        services.AddMediatR(typeof(Program));
-
         services.AddAutoMappingServices();
 
-        services.AddMediatrServices();
+        services.AddMediatrServices(typeof(Program));
 
         services.AddFrontEndDataServices();
         
@@ -102,6 +98,10 @@ public class Startup
         services.AddSignalR();
         
         services.AddServerSideBlazor()
+            .AddHubOptions(options =>
+            {
+                options.MaximumReceiveMessageSize = 104_857_600;
+            })
             .AddMicrosoftIdentityConsentHandler();
 
         services.AddRazorPages();
@@ -141,7 +141,7 @@ public class Startup
         var assemblies = new Dictionary<String, Assembly>(StringComparer.Ordinal)
         {
             {StartUp.Executing, typeof(Startup).GetTypeInfo().Assembly},
-            {StartUp.Domain, typeof(BaseReader).GetTypeInfo().Assembly},
+            {StartUp.Domain, typeof(IEntity).GetTypeInfo().Assembly},
         };
 
         return assemblies;

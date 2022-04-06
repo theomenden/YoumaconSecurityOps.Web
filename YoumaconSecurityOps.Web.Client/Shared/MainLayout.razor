@@ -1,53 +1,52 @@
 ﻿@layout RootLayout
 @inherits LayoutComponentBase
 <Layout Sider>
-    <LayoutSider>
-        <LayoutSiderContent>
-            <NavMenu />
-        </LayoutSiderContent>
-    </LayoutSider>
-    <Layout>
-        <LayoutHeader Fixed>
-            <NavBarHeader ThemeEnabledChanged="@OnThemeEnabledChanged"
-                          ThemeGradientChanged="@OnThemeGradientChanged"
-                          ThemeRoundedChanged="@OnThemeRoundedChanged"
-                          ThemeColorChanged="@OnThemeColorChanged"/>
-        </LayoutHeader>
+    <LayoutSider >
+            <LayoutSiderContent>
+                <NavMenu />
+            </LayoutSiderContent>
+        </LayoutSider>
         <Layout>
-            <LayoutContent Class="-content -index">
-                <ErrorBoundary @ref="@_errorBoundary">
-                    <ChildContent>
-                    <Container Fluid>
-                        @Body
-                    </Container>
-                    </ChildContent>
-                    <ErrorContent>
-                        <Card Background="Background.Dark" WhiteText Margin="Margin.Is3.FromTop.Is2.OnX.OnDesktop" Shadow="Shadow.Default" Border="Border.Dark.OnAll.Is1.Rounded">
-                            <CardHeader>
-                                An Error Has Occurred <Blazorise.Icon IconStyle="IconStyle.Solid" TextColor="TextColor.Danger" Name="IconName.ExclamationTriangle" />
-                            </CardHeader>
-                            <CardBody>
-                                <CardTitle>
-                                    Error Status Code: 500
-                                </CardTitle>
-                                <CardSubtitle>
-                                    Correlation Id: Global Error
-                                </CardSubtitle>
-                                <CardText>
-                                    An unrecognized error has occurred
-                                </CardText>
-                            </CardBody>
-                            <CardFooter TextColor="TextColor.Muted">
-                                <Text Italic>Give the Status Code and Correlation Id to an IT member for them to review</Text>
-                            </CardFooter>
-                        </Card>
-                    </ErrorContent>
-                </ErrorBoundary>
-            </LayoutContent>
+            <LayoutHeader Fixed Border="Border.Is2.RoundedBottom.Light.OnBottom">
+                <NavBarHeader ThemeEnabledChanged="@OnThemeEnabledChanged"
+                              ThemeGradientChanged="@OnThemeGradientChanged"
+                              ThemeRoundedChanged="@OnThemeRoundedChanged"
+                              ThemeColorChanged="@OnThemeColorChanged" />
+            </LayoutHeader>
+            <Layout>
+                <LayoutContent Class="-content -index">
+                    <ErrorBoundary @ref="@_errorBoundary">
+                        <ChildContent>
+                            <Container Fluid>
+                                @Body
+                            </Container>
+                        </ChildContent>
+                        <ErrorContent>
+                            <Card Background="Background.Dark" WhiteText Margin="Margin.Is3.FromTop.Is2.OnX.OnDesktop" Shadow="Shadow.Default" Border="Border.Dark.OnAll.Is1.Rounded">
+                                <CardHeader>
+                                    An Error Has Occurred <Blazorise.Icon IconStyle="IconStyle.Solid" TextColor="TextColor.Danger" Name="IconName.ExclamationTriangle" />
+                                </CardHeader>
+                                <CardBody>
+                                    <CardTitle>
+                                        Error Status Code: 500
+                                    </CardTitle>
+                                    <CardSubtitle>
+                                        Correlation Id: Global Error
+                                    </CardSubtitle>
+                                    <CardText>
+                                        An unrecognized error has occurred
+                                    </CardText>
+                                </CardBody>
+                                <CardFooter TextColor="TextColor.Muted">
+                                    <Text Italic>Give the Status Code and Correlation Id to an IT member for them to review</Text>
+                                </CardFooter>
+                            </Card>
+                        </ErrorContent>
+                    </ErrorBoundary>
+                </LayoutContent>
+            </Layout>
+            <LayoutFooter Fixed Class="new_footer_area" Border="Border.Is2.RoundedTop.Light.OnTop">
+                <FooterNav ThemeColorChanged="@OnThemeColorChanged" />
+            </LayoutFooter>
         </Layout>
-        <LayoutFooter Fixed Class="new_footer_area">
-            <FooterNav ThemeColorChanged="@OnThemeColorChanged" />
-        </LayoutFooter>
-    </Layout>
-
 </Layout>

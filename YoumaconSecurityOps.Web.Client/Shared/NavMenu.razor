@@ -1,4 +1,5 @@
-﻿<Bar Breakpoint="Breakpoint.Desktop"
+﻿
+    <Bar Breakpoint="Breakpoint.Desktop"
      NavigationBreakpoint="Breakpoint.Tablet"
      ThemeContrast="ThemeContrast.Dark"
      Mode="BarMode.VerticalInline"
@@ -6,117 +7,118 @@
      TextColor="TextColor.White"
      Flex="Flex.Column.AlignContent.Center"
      Margin="Margin.Is0.FromStart.Is0.FromTop"
-     Border="Border.Is1.Dark.OnEnd"
+     Background="Background.Dark"
+     Border="Border.Is2.RoundedEnd.Light.OnEnd"
      Shadow="Shadow.Default">
-    <BarToggler />
-    <BarBrand>
-        <BarItem>
-            <BarLink To="">
-                <BarIcon IconName="@_ysecIcon" />
-            </BarLink>
-        </BarItem>
-    </BarBrand>
-    <BarMenu>
-        <BarStart>
-            <Container Class="list-hover-slide">
-                <BarItem>
-                    <Divider />
-                    <BarLink To="">
-                        <BarIcon IconName="IconName.Dashboard" />
-                        Home
-                    </BarLink>
-                </BarItem>
-                <Divider />
-                <BarItem>
-                    <BarLink To="/staff">
-                        <BarIcon IconName="IconName.Users" />
-                        Staff
-                    </BarLink>
-                </BarItem>
-                <Divider />
-                <BarItem>
-                    <BarLink To="/admin">
-                        <BarIcon IconName="IconName.UserPlus" />
-                        Admin Actions
-                    </BarLink>
-                    <Divider />
-                </BarItem>
-                <BarItem>
-                    <BarLink To="/shiftlog">
-                        <BarIcon IconName="IconName.CalendarWeek" />
-                        Shifts
-                    </BarLink>
-                    <Divider />
-                </BarItem>
-                <BarItem>
-                    <BarLink To="/incidents">
-                        <BarIcon IconName="IconName.Rss" />
-                        Incidents
-                    </BarLink>
-                    <Divider />
-                </BarItem>
-                <BarItem>
-                    <BarLink To="/radio-schedule">
-                        <BarIcon IconName="IconName.Headset" />
-                        Radio Assignments
-                    </BarLink>
-                    <Divider />
-                </BarItem>
-                <BarItem>
-                    <BarLink To="/room-schedule">
-                        <BarIcon IconName="IconName.Hotel" />
-                        Room Schedule
-                    </BarLink>
-                    <Divider />
-                </BarItem>
-            </Container>
-            <BarItem Class="vertical-nav">
-                <BarDropdown Class="hover-menu">
-                    <BarDropdownToggle>
-                        <BarIcon IconStyle="IconStyle.Solid" IconName="IconName.QuestionCircle" />
-                        Help
-                    </BarDropdownToggle>
-                    <BarDropdownMenu>
-                        <BarDropdownItem>
-                            <BarLink To="/checkInProcedure">Check In Procedure</BarLink>
-                        </BarDropdownItem>
-                        <BarDropdownDivider />
-                        <BarDropdownItem>
-                            <BarLink To="#">Term &amp; conditions</BarLink>
-                        </BarDropdownItem>
-                        <BarDropdownDivider />
-                        <BarDropdownItem>
-                            <BarLink To="/codeOfConduct">Code Of Conduct</BarLink>
-                        </BarDropdownItem>
-                        <BarDropdownDivider />
-                        <BarDropdownItem>
-                            <BarLink To="/usePolicy">Security &amp; Use Policy</BarLink>
-                        </BarDropdownItem>
-                        <BarDropdownDivider />
-                        <BarDropdownItem>
-                            <BarLink To="#">Privacy Policy</BarLink>
-                        </BarDropdownItem>
-                    </BarDropdownMenu>
-                </BarDropdown>
+        <BarToggler />
+        <BarBrand>
+            <BarItem>
+                <BarLink To="">
+                    <BarIcon IconName="@_ysecIcon" />
+                </BarLink>
             </BarItem>
-        </BarStart>
-        <BarEnd Class="social-links">
-            <BarItem Flex="Flex.InlineFlex.AlignItems.Center.AlignContent.Start.JustifyContent.Center">
-                <Blazorise.Link To="">
-                    <BarIcon IconName="_facebookIcon" />
-                </Blazorise.Link>
-                <Blazorise.Link To="">
-                    <BarIcon IconName="_discordIcon" />
-                </Blazorise.Link>
-            </BarItem>
-        </BarEnd>
-    </BarMenu>
-</Bar>
+        </BarBrand>
+        <BarMenu>
+            <BarStart>
+                <Container Class="list-hover-slide">
+                    <BarItem>
+                        <Divider />
+                        <BarLink To="">
+                            <BarIcon IconName="IconName.Dashboard" />
+                            Home
+                        </BarLink>
+                    </BarItem>
+                    <Divider />
+                    <BarItem>
+                        <BarLink To="/staff">
+                            <BarIcon IconName="IconName.Users" />
+                            Staff
+                        </BarLink>
+                    </BarItem>
+                    <Divider />
+                    <BarItem>
+                        <BarLink To="/admin">
+                            <BarIcon IconName="IconName.UserPlus" />
+                            Admin Actions
+                        </BarLink>
+                        <Divider />
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/shiftlog">
+                            <BarIcon IconName="IconName.CalendarWeek" />
+                            Shifts
+                        </BarLink>
+                        <Divider />
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/incidents">
+                            <BarIcon IconName="IconName.Rss" />
+                            Incidents
+                        </BarLink>
+                        <Divider />
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/radio-schedule">
+                            <BarIcon IconName="IconName.Headset" />
+                            Radio Assignments
+                        </BarLink>
+                        <Divider />
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/room-schedule">
+                            <BarIcon IconName="IconName.Hotel" />
+                            Room Schedule
+                        </BarLink>
+                        <Divider />
+                    </BarItem>
+                </Container>
+                <BarItem Class="vertical-nav">
+                    <BarDropdown Class="hover-menu">
+                        <BarDropdownToggle>
+                            <BarIcon IconStyle="IconStyle.Solid" IconName="IconName.QuestionCircle" />
+                            Help
+                        </BarDropdownToggle>
+                        <BarDropdownMenu>
+                            <BarDropdownItem>
+                                <BarLink To="/checkInProcedure">Check In Procedure</BarLink>
+                            </BarDropdownItem>
+                            <BarDropdownDivider />
+                            <BarDropdownItem>
+                                <BarLink To="#">Term &amp; conditions</BarLink>
+                            </BarDropdownItem>
+                            <BarDropdownDivider />
+                            <BarDropdownItem>
+                                <BarLink To="/codeOfConduct">Code Of Conduct</BarLink>
+                            </BarDropdownItem>
+                            <BarDropdownDivider />
+                            <BarDropdownItem>
+                                <BarLink To="/usePolicy">Security &amp; Use Policy</BarLink>
+                            </BarDropdownItem>
+                            <BarDropdownDivider />
+                            <BarDropdownItem>
+                                <BarLink To="#">Privacy Policy</BarLink>
+                            </BarDropdownItem>
+                        </BarDropdownMenu>
+                    </BarDropdown>
+                </BarItem>
+            </BarStart>
+            <BarEnd Class="social-links">
+                <BarItem Flex="Flex.InlineFlex.AlignItems.Center.AlignContent.Start.JustifyContent.Center">
+                    <Blazorise.Link To="">
+                        <BarIcon IconName="_facebookIcon" TextColor="TextColor.Primary" Margin="Margin.Is1.FromEnd.OnMobile"/>
+                    </Blazorise.Link>
+                    <Blazorise.Link To="">
+                        <BarIcon IconName="_discordIcon"/>
+                    </Blazorise.Link>
+                </BarItem>
+            </BarEnd>
+        </BarMenu>
+    </Bar>
 @code
 {
     private RenderFragment _ysecIcon =@<img data-src="/ysecShield.svg" width="64" height="64" data-sizes="auto" alt="Ysec Shield Emblem" class="img-fluid lazyload" />;
 
-    private RenderFragment _discordIcon =@<i class="fab fa-discord"></i>;
+    private RenderFragment _discordIcon =@<i class="fab fa-discord" style="color:#7289da"></i>;
 
     private RenderFragment _facebookIcon =@<i class="fab fa-facebook-square"></i>;
 }

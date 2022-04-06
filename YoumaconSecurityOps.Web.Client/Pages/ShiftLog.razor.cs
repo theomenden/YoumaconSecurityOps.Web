@@ -102,7 +102,7 @@ public partial class ShiftLog : ComponentBase
 
         if (context.EditState is DataGridEditState.Edit)
         {
-            popupTitle += $"for {context.Item.StaffMember.Contact.PreferredName} {context.Item.StaffMember.Contact.LastName}";
+            popupTitle += $"for {context.Item.StaffMember.ContactInformation.PreferredName} {context.Item.StaffMember.ContactInformation.LastName}";
         }
 
         return popupTitle;
@@ -146,7 +146,7 @@ public partial class ShiftLog : ComponentBase
         var startingLocation = _locations.First(l => l.Id == (_selectedStartingLocation));
 
         var addShiftCommand = new AddShiftCommandWithReturn(_selectedStartDate.GetValueOrDefault(DateTime.Now), _selectedEndDate.GetValueOrDefault(DateTime.Now),
-            staffMemberAssigned.Id, staffMemberAssigned.Contact.PreferredName, startingLocation.Id);
+            staffMemberAssigned.Id, staffMemberAssigned.ContactInformation.PreferredName, startingLocation.Id);
 
         var addedEntityResponse = await ShiftService.AddShiftAsync(addShiftCommand);
 
@@ -159,8 +159,8 @@ public partial class ShiftLog : ComponentBase
 
         newShift.Item.Id = addedEntityResponse.Data;
         newShift.Item.StaffMember = staffMemberAssigned;
-        newShift.Item.StaffMember.Contact = staffMemberAssigned.Contact;
-        newShift.Item.StartingLocationNavigation = startingLocation;
+        newShift.Item.StaffMember.ContactInformation = staffMemberAssigned.ContactInformation;
+        newShift.Item.StartingLocation = startingLocation;
         newShift.Item.CurrentLocation = startingLocation;
         newShift.Item.StartAt = _selectedStartDate.GetValueOrDefault();
         newShift.Item.EndAt = _selectedEndDate.GetValueOrDefault();
@@ -201,7 +201,7 @@ public partial class ShiftLog : ComponentBase
     {
         _isLoading = true;
 
-        if (await MessageService.Confirm($"This will checkout {shiftToCheckOut.StaffMember.Contact.PreferredName} from their shift", "Are you sure?"))
+        if (await MessageService.Confirm($"This will checkout {shiftToCheckOut.StaffMember.ContactInformation.PreferredName} from their shift", "Are you sure?"))
         {
             var checkedOutCommand = new ShiftCheckoutCommandWithReturn(shiftToCheckOut.Id);
 

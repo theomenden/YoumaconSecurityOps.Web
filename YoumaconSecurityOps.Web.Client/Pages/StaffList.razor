@@ -8,7 +8,7 @@
                 <Heading Size="HeadingSize.Is6" TextColor="TextColor.Danger">Staff Members in Red are on a break</Heading>
             </Paragraph>
         </Jumbotron>
-        <Divider />
+        <Divider TextColor="TextColor.White50" />
         <DataGrid @ref="@_dataGrid"
                   TItem="StaffReader"
                   ReadData="@OnReadData"
@@ -16,7 +16,7 @@
                   TotalItems="@_totalStaffMembers"
                   Editable
                   CommandMode="DataGridCommandMode.Commands"
-                  Class="table table-dark styled-table border-dark border-1 rounded rounded-2 shadow-lg"
+                  Class="table table-dark styled-table border-light border-2 rounded-2 shadow-lg"
                   HeaderThemeContrast="ThemeContrast.Light"
                   Responsive
                   Sortable
@@ -32,7 +32,20 @@
                   Virtualize
                   VirtualizeOptions="_virtualizeOptions"
                   DetailRowTrigger="@(context => context.Item.Id == _selectedStaffMember?.Id)">
-            <PopupTitleTemplate>
+        <LoadingTemplate>
+            <Div Display="Display.InlineBlock">
+                <SpinKit @ref="_spinKitRef" Size="4em" Type="SpinKitType.Grid" Color="#ab3ed8" />
+                <Paragraph>Loading Staff Members</Paragraph>
+            </Div>
+        </LoadingTemplate>
+        <EmptyTemplate>
+            <Div Display="Display.InlineBlock">
+                <Paragraph>
+                    <Heading Size="HeadingSize.Is5" TextColor="TextColor.Danger">No Staff members found!</Heading>
+                </Paragraph>
+            </Div>
+        </EmptyTemplate>
+        <PopupTitleTemplate>
                 @SetPopupTitle(context)
             </PopupTitleTemplate>
             <DataGridColumns>
@@ -59,12 +72,12 @@
                         <Button Color="Color.Default" Display="Display.None"></Button>
                     </DeleteCommandTemplate>
                 </DataGridCommandColumn>
-                <DataGridColumn TItem="StaffReader" Field="Contact.Pronouns" Caption="Pronouns" Filterable Sortable Editable>
+                <DataGridColumn TItem="StaffReader" Field="ContactInformation.Pronouns" Caption="Pronouns" Filterable Sortable Editable>
                     <DisplayTemplate>
-                        @(context.Contact?.Pronouns.Name)
+                        @(context.ContactInformation?.Pronoun.Name)
                     </DisplayTemplate>
                     <EditTemplate>
-                        <SelectList TItem="Pronouns"
+                        <SelectList TItem="Pronoun"
                                     TValue="int"
                                     Data="@_pronouns"
                                     TextField="@((item)=>item.Name)"
@@ -76,18 +89,18 @@
                 </DataGridColumn>
                 <DataGridColumn TItem="StaffReader" Field="Contact.PreferredName" Caption="Preferred Name" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
-                        @(context.Contact?.PreferredName)
+                        @(context.ContactInformation?.PreferredName)
                     </DisplayTemplate>
                     <EditTemplate>
-                        <TextEdit Text="@(context.Item.Contact?.PreferredName)" TextChanged="s => context.CellValue = s"></TextEdit>
+                        <TextEdit Text="@(context.Item.ContactInformation?.PreferredName)" TextChanged="s => context.CellValue = s"></TextEdit>
                     </EditTemplate>
                 </DataGridColumn>
                 <DataGridColumn TItem="StaffReader" Field="Contact.LastName" Caption="Last Name" Filterable Sortable Editable>
                     <DisplayTemplate>
-                        @(context.Contact?.LastName)
+                        @(context.ContactInformation?.LastName)
                     </DisplayTemplate>
                     <EditTemplate>
-                        <TextEdit Text="@(context.Item.Contact?.LastName)"></TextEdit>
+                        <TextEdit Text="@(context.Item.ContactInformation?.LastName)"></TextEdit>
                     </EditTemplate>
                 </DataGridColumn>
                 <DataGridSelectColumn TItem="StaffReader" Field="StaffType.Title" Caption="Type" Sortable Editable CustomFilter="@OnStaffTypeFilter">
@@ -125,8 +138,8 @@
                         </Select>
                     </FilterTemplate>
                     <DisplayTemplate>
-                        <Tooltip Text="@(context.Role?.Name)" Placement="TooltipPlacement.Right">
-                            @(context.Role?.Name)
+                        <Tooltip Text="@(context.StaffRole?.Name)" Placement="TooltipPlacement.Right">
+                            @(context.StaffRole?.Name)
                         </Tooltip>
                     </DisplayTemplate>
                     <EditTemplate>
@@ -142,10 +155,10 @@
                 </DataGridSelectColumn>
                 <DataGridColumn TItem="StaffReader" Field="Contact.Email" Caption="Email" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
-                        <Blazorise.Link To="@($"mailto:{context.Contact?.Email}")"> @context.Contact?.Email</Blazorise.Link>
+                        <Blazorise.Link To="@($"mailto:{context.ContactInformation?.Email}")"> @context.ContactInformation?.Email</Blazorise.Link>
                     </DisplayTemplate>
                     <EditTemplate>
-                        <TextEdit Text="@(context.Item.Contact?.Email)" TextChanged="s => context.CellValue = s"></TextEdit>
+                        <TextEdit Text="@(context.Item.ContactInformation?.Email)" TextChanged="s => context.CellValue = s"></TextEdit>
                     </EditTemplate>
                 </DataGridColumn>
                 <DataGridColumn TItem="StaffReader" Field="@nameof(StaffReader.IsBlackShirt)" Caption="Black Shirt?" ShowCaption="false" Displayable="false" Editable>
@@ -165,7 +178,7 @@
                 </DataGridColumn>
                 <DataGridColumn TItem="StaffReader" Field="Contact.PhoneNumber" Caption="Phone Number" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
-                        <Blazorise.Link To="@($"tel:+{context.Contact?.PhoneNumber}")">@($"{context.Contact?.PhoneNumber:(###) ###-####}")</Blazorise.Link>
+                        <Blazorise.Link To="@($"tel:+{context.ContactInformation?.PhoneNumber}")">@($"{context.ContactInformation?.PhoneNumber:(###) ###-####}")</Blazorise.Link>
                     </DisplayTemplate>
                     <EditTemplate>
                         <NumericPicker TValue="long" Value="@(Convert.ToInt64(context.CellValue))" ValueChanged="@( v => context.CellValue = v)"></NumericPicker>
@@ -235,19 +248,6 @@
                     </DataGrid>
                 }
             </DetailRowTemplate>
-            <EmptyTemplate>
-                <Div Display="Display.InlineBlock">
-                    <Paragraph>
-                        <Heading Size="HeadingSize.Is5" TextColor="TextColor.Danger">No Staff members found!</Heading>
-                    </Paragraph>
-                </Div>
-            </EmptyTemplate>
-            <LoadingTemplate>
-                <Div Display="Display.InlineBlock">
-                    <SpinKit @ref="_spinKitRef" Size="4em" Type="SpinKitType.Grid" Color="#ab3ed8" />
-                    <Paragraph>Loading Staff Members</Paragraph>
-                </Div>
-            </LoadingTemplate>
         </DataGrid>
     </ChildContent>
     <ErrorContent>

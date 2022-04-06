@@ -1,22 +1,27 @@
 ﻿@page "/"
-<Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
+<Jumbotron Background="Background.Dark" Border="Border.Is2.Rounded.Light.OnAll" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnWidescreen.Is1.FromTop.OnMobile">
     <JumbotronTitle Size="JumbotronTitleSize.Is4">Hello, Security Staff!</JumbotronTitle>
     <JumbotronSubtitle>
         Welcome to Sec Ops!
     </JumbotronSubtitle>
-    <Divider />
+    <Divider TextColor="TextColor.White50" />
     <Paragraph>
         Pick any navigation on the side-menu to get started
     </Paragraph>
 </Jumbotron>
 <Container Fluid
            Flex="Flex.Column.JustifyContent.Center.OnWidescreen"
-           Margin="Margin.Is2.OnY.Is3.OnX.OnDesktop"
            Background="Background.Dark"
+           Border="Border.Is2.Rounded.Light.OnAll"
+           Shadow="Shadow.Default"
+           Margin="Margin.Is2.OnAll.OnWidescreen.Is1.OnAll.OnMobile"
            TextColor="TextColor.Light">
-    <Heading Size="HeadingSize.Is6" TextColor="TextColor.White50" Italic>
+    <Heading Size="HeadingSize.Is6"
+             TextColor="TextColor.White50"
+             Italic>
         Your upcoming shifts are
     </Heading>
+
     @if (!_isLoading && _shiftsForStaffMember?.Any() == true)
     {
         <ListGroup Flush Flex="Flex.InlineFlex.JustifyContent.Between" TextOverflow="TextOverflow.NoWrap">
@@ -40,11 +45,11 @@
                             <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize" TextOverflow="TextOverflow.Wrap">@context.StartAt.ToString("f")</Paragraph>
                         </Field>
                         <Field>
-                            <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">@context.StartingLocationNavigation.Name</Paragraph>
+                            <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">@context.StartingLocation.Name</Paragraph>
                         </Field>
                         <Field>
-                            <Tooltip Text="@($"{context.StaffMember.StaffType?.Description}{Environment.NewLine}{context.StaffMember.Role?.Name}")" Inline Placement="TooltipPlacement.TopEnd">
-                                <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">@context.StaffMember.StaffType?.Title : @context.StaffMember.Role?.Name</Paragraph>
+                            <Tooltip Text="@($"{context.StaffMember.StaffType?.Description}{Environment.NewLine}{context.StaffMember.StaffRole?.Name}")" Inline Placement="TooltipPlacement.TopEnd">
+                                <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">@context.StaffMember.StaffType?.Title : @context.StaffMember.StaffRole?.Name</Paragraph>
                             </Tooltip>
                         </Field>
                     </Fields>

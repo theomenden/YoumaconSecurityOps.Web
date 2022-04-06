@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace YoumaconSecurityOps.Core.Mediatr.Caching.Configurations.Request;
-internal class GetPronounsQueryCache : CacheConfiguration<GetPronounsQuery, IEnumerable<Pronouns>>
+internal class GetPronounsQueryCache : CacheConfiguration<GetPronounsQuery, IEnumerable<Pronoun>>
 {
     protected override CachingOptions<GetPronounsQuery> ConfigureCaching()
     {
@@ -20,7 +20,7 @@ internal class GetPronounsQueryCache : CacheConfiguration<GetPronounsQuery, IEnu
     {
         return new[]
         {
-          RegisterInvalidator<GetPronounsQuery, IEnumerable<Pronouns>>()
+          RegisterInvalidator<GetPronounsQuery, IEnumerable<Pronoun>>()
         };
     }
 }

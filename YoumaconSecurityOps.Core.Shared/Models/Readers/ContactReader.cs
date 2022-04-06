@@ -1,86 +1,32 @@
 ﻿namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
 
-/// <summary>
-/// <para>Contact information for a particular staff member</para>
-/// <inheritdoc cref="IEquatable{T}"/>
-/// </summary>
-[Table("Contacts")]
 [Index(nameof(LastName), nameof(FirstName), Name = "IX_Contacts_LastName_FirstName")]
-[Index(nameof(Staff_Id), Name = "IX_Contacts_StaffId", IsUnique = true)]
-[Index(nameof(Pronoun_Id), Name="IX_Contacts_Pronoun_Id")]
-public class ContactReader : BaseReader, IEquatable<ContactReader>
+[Index(nameof(Pronoun_Id), Name = "IX_Contacts_Pronoun_Id")]
+[Index(nameof(Staff_Id), Name = "IX_Contacts_StaffId")]
+public partial class ContactReader : IEntity
 {
-    public ContactReader()
-    {
-    }
-
+    [Key]
+    public Guid Id { get; set; }
     public Guid Staff_Id { get; set; }
-
-    public Int32 Pronoun_Id { get; set; }
-
-    [ConcurrencyCheck]
     public DateTime CreatedOn { get; set; }
-
-    [Required]
+    public int Pronoun_Id { get; set; }
     [StringLength(100)]
-    public string FirstName { get; set; } = default!;
-
-    [Required]
+    public string FirstName { get; set; } = null!;
     [StringLength(100)]
-    public string LastName { get; set; } = default!;
-
+    public string LastName { get; set; } = null!;
     public long PhoneNumber { get; set; }
-
-    [Required]
     [StringLength(50)]
-    public string Email { get; set; } = default!;
-
+    public string Email { get; set; } = null!;
     [StringLength(100)]
-    public string FacebookName { get; set; }
-
+    public string? FacebookName { get; set; }
     [StringLength(100)]
-    public string PreferredName { get; set; }
-
-    [ForeignKey(nameof(Staff_Id))]
-    [InverseProperty(nameof(StaffReader.Contact))]
-    public virtual StaffReader StaffMember { get; set; }
+    public string? PreferredName { get; set; }
 
     [ForeignKey(nameof(Pronoun_Id))]
-    public virtual Pronouns Pronouns { get; set; }
-    #region Overrides
-    public override bool Equals(object obj)
-    {
-        if (obj is null)
-        {
-            return false;
-        }
-
-        return obj is ContactReader other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return 37 * Id.GetHashCode();
-    }
-
-    public bool Equals(ContactReader other)
-    {
-        return other is not null
-               && (
-                   PhoneNumber == other.PhoneNumber
-                   || (!String.IsNullOrWhiteSpace(other.Email) && other.Email.Equals(Email))
-                   || Id == other.Id
-               );
-    }
-
-    public static bool operator ==(ContactReader lhs, ContactReader rhs)
-    {
-        return lhs?.Equals(rhs) ?? rhs is null;
-    }
-
-    public static bool operator !=(ContactReader lhs, ContactReader rhs)
-    {
-        return !(lhs == rhs);
-    }
-    #endregion
+    [InverseProperty("Contacts")]
+    public virtual Pronoun Pronoun { get; set; } = null!;
+    
+    [ForeignKey(nameof(Staff_Id))]
+    [InverseProperty("ContactInformation")]
+    public virtual StaffReader Staff { get; set; } = null!;
 }

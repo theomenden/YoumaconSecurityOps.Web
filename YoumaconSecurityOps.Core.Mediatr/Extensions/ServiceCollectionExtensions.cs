@@ -7,9 +7,9 @@ namespace YoumaconSecurityOps.Core.Mediatr.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMediatrServices(this IServiceCollection services)
+    public static IServiceCollection AddMediatrServices(this IServiceCollection services, Type containingType)
     {
-        services.AddMediatR(typeof(ServiceCollectionExtensions).GetTypeInfo().Assembly);
+        services.AddMediatR(typeof(ServiceCollectionExtensions));
 
         var writer = new WrappingWriter(Console.Out);
 
@@ -27,8 +27,8 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped(typeof(IRequestPreProcessor<>), typeof(EmptyRequestPreProcessor<>));
         services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(EmptyRequestPostProcessor<,>));
-        services.RegisterBuiltCaches();
-        services.RegisterBuiltStreamingCaches();
+        services.RegisterBuiltCaches(containingType);
+        services.RegisterBuiltStreamingCaches(containingType);
 
         return services;
     }

@@ -1,4 +1,4 @@
 ﻿namespace YoumaconSecurityOps.Core.Mediatr.Queries;
 
-public sealed record GetPronounsQuery : QueryBase<IEnumerable<Pronouns>>;
+public sealed record GetPronounsQuery : QueryBase<IEnumerable<Pronoun>>;
 

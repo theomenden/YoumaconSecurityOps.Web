@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<YSecServiceOptions>();
 
         services
-            .AddScoped<IContactService, ContactReaderService>()
+            .AddScoped<IContactService, ContactService>()
             .AddScoped<IEventReaderService, EventReaderService>()
             .AddScoped<IIncidentService, IncidentService>()
             .AddScoped<ILocationService, LocationService>()

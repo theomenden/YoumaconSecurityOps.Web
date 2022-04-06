@@ -1,5 +1,5 @@
-﻿
-namespace YoumaconSecurityOps.Core.Shared.Accessors;
+﻿namespace YoumaconSecurityOps.Core.Shared.Accessors;
+
 public interface IRoomScheduleAccessor: IAccessor<RoomScheduleReader>
 {
     IAsyncEnumerable<RoomScheduleReader> GetRoomsByStaffIdAsync(YoumaconSecurityDbContext context, Guid staffId,

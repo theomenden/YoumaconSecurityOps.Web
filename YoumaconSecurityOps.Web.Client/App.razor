@@ -1,5 +1,5 @@
 <CascadingAuthenticationState>
-    <Blazorise.ThemeProvider Theme="@_theme">
+    <Blazorise.ThemeProvider Theme="@_theme" WriteVariables>
         <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -18,7 +18,7 @@
 
 @code
 {
-    private Theme _theme = new()
+    private readonly Theme _theme = new()
     {
         BarOptions = new()
         {
@@ -27,39 +27,14 @@
         BreakpointOptions = new()
         {
         },
-    //SpacingOptions = new()
-    //{
-    //},
         ColorOptions = new()
         {
             Primary = "#0288D1",
-    //Secondary = "#A65529",
-    //Success = "#23C02E",
-    //Info = "#9BD8FE",
-    //Warning = "#F8B86C",
-    //Danger = "#F95741",
-    //Light = "#F0F0F0",
-    //Dark = "#535353",
+
         },
-    //ButtonOptions = new ThemeButtonOptions { },
-    //DropdownOptions = new ThemeDropdownOptions { },
         InputOptions = new()
         {
             CheckColor = "#0288D1",
-        },
-    //CardOptions = new ThemeCardOptions { },
-    //ModalOptions = new ThemeModalOptions { },
-    //TabsOptions = new ThemeTabsOptions { },
-    //ProgressOptions = new ThemeProgressOptions { },
-    //AlertOptions = new ThemeAlertOptions { },
-    //BreadcrumbOptions = new ThemeBreadcrumbOptions { },
-    //BadgeOptions = new ThemeBadgeOptions { },
-    //PaginationOptions = new ThemePaginationOptions { },
-    //TooltipOptions = new ThemeTooltipOptions
-    //{
-    //    BackgroundColor = "#22c8ce",
-    //    BackgroundOpacity = .7f,
-    //    Color = "#ff0000",
-    //},
+        }
     };
 }

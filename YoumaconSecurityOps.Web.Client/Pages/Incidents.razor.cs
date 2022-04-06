@@ -156,7 +156,7 @@ public partial class Incidents : ComponentBase
     private async Task OnRowInserting(CancellableRowChange<IncidentReader, Dictionary<string, object>> newIncident)
     {
         var recordingStaffMember = _staffMembers.First(st => st.Id == _selectedRecordingStaffMember);
-        var reportingStaffMember = _staffMembers.First(st => st.Id == _selectedRecordingStaffMember);
+        var opsManager = _staffMembers.First(st => st.Id == _selectedRecordingStaffMember);
 
         var shiftReportedUnder = _shifts.First(sh => sh.Id == _selectedShift);
 
@@ -165,7 +165,7 @@ public partial class Incidents : ComponentBase
         var addIncidentCommand = new AddIncidentCommandWithReturn
         {
             RecordedById = recordingStaffMember.Id,
-            ReportedById = reportingStaffMember.Id,
+            ReportedById = opsManager.Id,
             Description = newIncident.Values["Description"].ToString(),
             LocationId = locationOccurredAt.Id,
             Severity = (Severity)_selectedSeverity,
@@ -183,7 +183,7 @@ public partial class Incidents : ComponentBase
         }
 
         newIncident.Item.Id = addedEntityResponse.Data;
-        newIncident.Item.ReportedBy = reportingStaffMember;
+        newIncident.Item.OpsManager = opsManager;
         newIncident.Item.RecordedBy = recordingStaffMember;
         newIncident.Item.Location = locationOccurredAt;
         newIncident.Item.RecordedOn = _selectedRecordedDate.GetValueOrDefault();

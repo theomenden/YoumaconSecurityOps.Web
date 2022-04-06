@@ -26,7 +26,7 @@ global using YoumaconSecurityOps.Core.Mediatr.Commands;
 global using YoumaconSecurityOps.Core.Mediatr.Extensions;
 global using YoumaconSecurityOps.Core.Mediatr.Queries;
 global using YoumaconSecurityOps.Core.Shared.Accessors;
-global using YoumaconSecurityOps.Core.Shared.Context;
+global using YoumaconSecurityOps.Core.Shared.Contexts;
 global using YoumaconSecurityOps.Core.Shared.Enumerations;
 global using YoumaconSecurityOps.Core.Shared.Extensions;
 global using YoumaconSecurityOps.Core.Shared.Models.Readers;

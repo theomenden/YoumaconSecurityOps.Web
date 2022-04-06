@@ -1,15 +1,19 @@
 ﻿@page "/staff/add"
-<Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged" >
+<Steps SelectedStep="@selectedStep"
+       SelectedStepChanged="@OnSelectedStepChanged"
+       Background="Background.Dark"
+       Margin="Margin.Is3.FromTop.OnWidescreen.Is4.FromTop.OnMobile"
+       Border="Border.Is2.Rounded.Light.OnAll"
+       Shadow="Shadow.Default">
     <Items>
-        <Step TextColor="TextColor.Dark" Name="step1">Staff Rankings</Step>
-        <Step TextColor="TextColor.Dark" Name="step2">Contact Information</Step>
-        <Step TextColor="TextColor.Dark" Name="step3">Review</Step>
-        <Step TextColor="TextColor.Dark" Name="step4">
+        <Step TextColor="TextColor.Light" Name="step1">Staff Rankings</Step>
+        <Step TextColor="TextColor.Light" Name="step2">Contact Information</Step>
+        <Step TextColor="TextColor.Light" Name="step3">
             <Marker>
                 <Blazorise.Icon Name="IconName.Flag" />
             </Marker>
             <Caption>
-                Submit
+                Review &amp; Submit
             </Caption>
         </Step>
     </Items>
@@ -51,8 +55,8 @@
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Needs crash space?</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
                                 <RadioGroup TValue="bool" Name="rdCrashSpace" @bind-CheckedValue="@_needCrashSpace">
-                                <Radio Value="@true">Yes</Radio>
-                                <Radio Value="@false">No</Radio>
+                                    <Radio Value="@true">Yes</Radio>
+                                    <Radio Value="@false">No</Radio>
                                 </RadioGroup>
                             </FieldBody>
                         </Field>
@@ -77,11 +81,17 @@
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">T-Shirt Size</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their T-Shirt Size" />
+                                <TextEdit Placeholder="Their T-Shirt Size" @bind-Text="@_shirtSize" />
                             </FieldBody>
                         </Field>
                     </Form>
                 </CardBody>
+                <CardFooter>
+                    <Button Color="Color.Secondary" Border="Border.Is1.Rounded.Light.OnAll" Clicked="OnNextButtonClicked">
+                        <Text TextColor="TextColor.Light"><u>Next</u></Text>
+                        <Blazorise.Icon Name="IconName.ArrowRight" IconSize="IconSize.x5" IconStyle="IconStyle.Solid" TextColor="TextColor.Success" />
+                    </Button>
+                </CardFooter>
             </Card>
         </StepPanel>
         <StepPanel Name="step2">
@@ -94,7 +104,7 @@
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Pronouns</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <SelectList TItem="Pronouns"
+                                <SelectList TItem="Pronoun"
                                             TValue="int"
                                             Data="@_pronouns"
                                             TextField="@(item => item.Name)"
@@ -107,42 +117,52 @@
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">First Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="First Name" @bind-Value="_firstName" />
+                                <TextEdit Placeholder="First Name" @bind-Text="_firstName" />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Last Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Last Name" @bind-Value="_lastName" />
+                                <TextEdit Placeholder="Last Name" @bind-Text="_lastName" />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="The name they will go by" @bind-Value="@_preferredName" />
+                                <TextEdit Placeholder="The name they will go by" @bind-Text="@_preferredName" />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Facebook Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their name on Facebook" @bind-Value="@_facebookName" />
+                                <TextEdit Placeholder="Their name on Facebook" @bind-Text="@_facebookName" />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Email Address</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their email" @bind-Value="@_email" />
+                                <TextEdit Placeholder="Their email" @bind-Text="@_email" />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
 
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Phone Number</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <NumericPicker Placeholder="Their Phone Number" TValue="Int64" @bind-Value="_phoneNumber"/>
+                                <TextEdit Placeholder="Their Phone Number" @bind-Text="_phoneNumber" />
                             </FieldBody>
                         </Field>
                     </Form>
                 </CardBody>
+                <CardFooter>
+                    <Button Color="Color.Secondary" Border="Border.Is1.Rounded.Light.OnAll" Clicked="OnPreviousButtonClicked">
+                        <Blazorise.Icon Name="IconName.ArrowLeft" IconSize="IconSize.x5" IconStyle="IconStyle.Solid" TextColor="TextColor.Danger" />
+                        <Text TextColor="TextColor.Light"><u>Previous</u></Text>
+                    </Button>
+                    <Button Color="Color.Secondary" Border="Border.Is1.Rounded.Light.OnAll" Clicked="OnNextButtonClicked">
+                        <Text TextColor="TextColor.Light"><u>Next</u></Text>
+                        <Blazorise.Icon Name="IconName.ArrowRight" IconSize="IconSize.x5" IconStyle="IconStyle.Solid" TextColor="TextColor.Success" />
+                    </Button>
+                </CardFooter>
             </Card>
         </StepPanel>
         <StepPanel Name="step3">
@@ -182,31 +202,31 @@
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Needs crash space?</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <Switch TValue="bool" @bind-Checked="_needCrashSpace" Disabled ReadOnly />
+                                <Switch TValue="bool" Checked="_needCrashSpace" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is a black shirt?</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <Switch TValue="bool" @bind-Checked="_isBlackShirt" Disabled ReadOnly />
+                                <Switch TValue="bool" Checked="_isBlackShirt" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is rave approved?</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <Switch TValue="bool" @bind-Checked="_isRaveApproved" Disabled ReadOnly />
+                                <Switch TValue="bool" Checked="_isRaveApproved" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">T-Shirt Size</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their T-Shirt Size" Disabled ReadOnly />
+                                <TextEdit Placeholder="Their T-Shirt Size" Disabled @bind-Text="@_shirtSize" />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Pronouns</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <SelectList TItem="Pronouns"
+                                <SelectList TItem="Pronoun"
                                             TValue="int"
                                             Data="@_pronouns"
                                             TextField="@(item => item.Name)"
@@ -219,50 +239,52 @@
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">First Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="First Name" @bind-Value="_firstName" Disabled ReadOnly />
+                                <TextEdit Placeholder="First Name" @bind-Text="@_firstName" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Last Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Last Name" @bind-Value="_lastName" Disabled ReadOnly />
+                                <TextEdit Placeholder="Last Name" @bind-Text="@_lastName" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="The name they will go by" @bind-Value="@_preferredName" Disabled ReadOnly />
+                                <TextEdit Placeholder="The name they will go by" @bind-Text="@_preferredName" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Facebook Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their name on Facebook" @bind-Value="@_facebookName" Disabled ReadOnly />
+                                <TextEdit Placeholder="Their name on Facebook" @bind-Text="@_facebookName" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Email Address</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Role="TextRole.Email" Placeholder="Their email" @bind-Value="@_email" Disabled ReadOnly />
+                                <TextEdit Role="TextRole.Email" Placeholder="Their email" @bind-Text="@_email" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Phone Number</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Role="TextRole.Telephone" Placeholder="Their Phone Number" @bind-Value="_phoneNumber" Disabled ReadOnly />
+                                <TextEdit Role="TextRole.Telephone" Placeholder="Their Phone Number" @bind-Text="@_phoneNumber" Disabled />
                             </FieldBody>
                         </Field>
-                    </Form>
-                </CardBody>
-            </Card>
-        </StepPanel>
-        <StepPanel Name="step4">
-            <Card Margin="Margin.Is4.FromBottom" Background="Background.Dark" WhiteText Border="Border.Is2.Dark.OnAll.Rounded" Shadow="Shadow.Default">
-                <CardTitle>
-                    Submit their information
-                </CardTitle>
-                <CardBody>
-                    <Form>
+                        <Button Color="Color.Secondary" Border="Border.Is2.Rounded.Light.OnAll" Clicked="@OnPreviousButtonClicked">
+                            <Blazorise.Icon Name="IconName.ArrowLeft" IconSize="IconSize.x5" IconStyle="IconStyle.Solid" TextColor="TextColor.Danger" />
+                            <Text TextColor="TextColor.Light"><u>Previous</u></Text>
+
+                        </Button>
+                        <Blazorise.Bootstrap5.Button Type="ButtonType.Submit" Color="Color.Primary" Clicked="OnSubmit" Loading="_isSubmitting">
+                            <LoadingTemplate>
+                                <SpinKit Type="SpinKitType.Chase" Color="#ff4a3d" />
+                            </LoadingTemplate>
+                            <ChildContent>
+                                Submit
+                            </ChildContent>
+                        </Blazorise.Bootstrap5.Button>
                     </Form>
                 </CardBody>
             </Card>

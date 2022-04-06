@@ -33,7 +33,7 @@ internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffT
         {
             await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-            var staffTypeRoleMap = _mapper.Map<StaffTypesRoles>(notification.StaffTypeRoleMapWriter);
+            var staffTypeRoleMap = _mapper.Map<StaffTypesRole>(notification.StaffTypeRoleMapWriter);
 
             await _staffRoleMaps.AddAsync(context, staffTypeRoleMap, cancellationToken);
 
@@ -53,7 +53,7 @@ internal class StaffTypeRoleMapCreatedEventHandler : INotificationHandler<StaffT
         await _mediator.Publish(e, cancellationToken);
     }
 
-    private async Task RaiseStaffTypeRoleMapAddedEvent(StaffTypeRoleMapCreatedEvent previousEvent, StaffTypesRoles staffTypeRoleMap,
+    private async Task RaiseStaffTypeRoleMapAddedEvent(StaffTypeRoleMapCreatedEvent previousEvent, StaffTypesRole staffTypeRoleMap,
         CancellationToken cancellationToken)
     {
         var e = new StaffTypeRoleMapAddedEvent(staffTypeRoleMap)

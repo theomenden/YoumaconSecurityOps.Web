@@ -10,7 +10,7 @@ namespace YoumaconSecurityOps.Web.Client.IndexedDb.Context
 
         public Store<LocationReader, Guid> Locations { get; set; } = new(nameof(LocationReader.Id));
 
-        public Store<Pronouns, Int32> StoredPronouns { get; set; } = new(nameof(Pronouns.Id));
+        public Store<Pronoun, Int32> StoredPronouns { get; set; } = new(nameof(Pronoun.Id));
 
         public YsecIndexedDbContext(IModuleFactory moduleFactory)
             : base("YsecOpsDb", 2, new DbVersion[] {new YsecIndexedDbVersion() }, moduleFactory)

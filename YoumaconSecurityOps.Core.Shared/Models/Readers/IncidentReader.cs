@@ -1,54 +1,66 @@
 ﻿namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
 
-/// <summary>
-/// Represents an incident row in the database. 
-/// </summary>
-/// <remarks>Type of: <see cref="BaseReader"/></remarks>
 [Table("Incidents")]
-[Index(nameof(RecordedById), Name = "IX_Incidents_RecordedBy")]
-[Index(nameof(ReportedById), Name = "IX_Incidents_ReportedBy")]
+[Index(nameof(OpsManager_Id), Name = "IX_Incidents_OpsManagerId")]
+[Index(nameof(RecordedBy_Id), Name = "IX_Incidents_RecordedBy")]
 [Index(nameof(RecordedOn), nameof(Severity), Name = "IX_Incidents_Severity")]
-public partial class IncidentReader: BaseReader
+public partial class IncidentReader : IEntity
 {
-    [Column("RecordedBy_Id")]
-    public Guid RecordedById { get; set; }
+    public IncidentReader()
+    {
+        NonStaffPeoples = new HashSet<NonStaffPeople>();
+    }
 
-    [Column("ReportedBy_Id")]
-    public Guid ReportedById { get; set; }
-
-    [Column("Shift_Id")]
-    public Guid ShiftId { get; set; }
-
-    [Column("Location_Id")]
-    public Guid LocationId { get; set; }
-
+    [Key]
+    public Guid Id { get; set; }
+    
+    public Guid RecordedBy_Id { get; set; }
+    
+    public Guid OpsManager_Id { get; set; }
+    
+    public Guid Shift_Id { get; set; }
+    
+    public Guid Location_Id { get; set; }
+    
     public Severity Severity { get; set; }
-
+    
     public DateTime RecordedOn { get; set; }
-
-    [Required]
-    [StringLength(100)]
-    public string Title { get; set; } = default!;
-
-    [Required]
+    
     [StringLength(1000)]
-    public string Description { get; set; } = default!;
-
+    public string Title { get; set; } = null!;
+    
+    [StringLength(1000)]
+    public string Description { get; set; } = null!;
+    
+    [StringLength(500)]
+    public string Keywords { get; set; } = null!;
+    
+    public bool IsFollowUpRequired { get; set; }
+    
+    [StringLength(1000)]
+    public string? FollowUpResponse { get; set; }
+    
+    [StringLength(1000)]
+    public string? Injuries { get; set; }
+    
     public DateTime? ResolvedAt { get; set; }
 
-    [ForeignKey(nameof(LocationId))]
+    [ForeignKey(nameof(Location_Id))]
     [InverseProperty("Incidents")]
-    public virtual LocationReader Location { get; set; } = default!;
-
-    [ForeignKey(nameof(RecordedById))]
-    [InverseProperty(nameof(StaffReader.IncidentRecordedBy))]
-    public virtual StaffReader RecordedBy { get; set; } = default!;
-
-    [ForeignKey(nameof(ReportedById))]
-    [InverseProperty(nameof(StaffReader.IncidentReportedBy))]
-    public virtual StaffReader ReportedBy { get; set; } = default!;
-
-    [ForeignKey(nameof(ShiftId))]
+    public virtual LocationReader Location { get; set; } = null!;
+    
+    [ForeignKey(nameof(OpsManager_Id))]
+    [InverseProperty(nameof(StaffReader.IncidentOpsManagers))]
+    public virtual StaffReader OpsManager { get; set; } = null!;
+    
+    [ForeignKey(nameof(RecordedBy_Id))]
+    [InverseProperty(nameof(StaffReader.IncidentRecordedBies))]
+    public virtual StaffReader RecordedBy { get; set; } = null!;
+    
+    [ForeignKey(nameof(Shift_Id))]
     [InverseProperty("Incidents")]
-    public virtual ShiftReader Shift { get; set; } = default!;
+    public virtual ShiftReader ShiftReader { get; set; } = null!;
+    
+    [InverseProperty(nameof(NonStaffPeople.IncidentReader))]
+    public virtual ICollection<NonStaffPeople> NonStaffPeoples { get; set; }
 }

@@ -17,7 +17,9 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
     [CascadingParameter] protected Theme Theme { get; set; }
 
     private readonly SessionModel _sessionModel = new();
-    
+
+    private bool _isLoading;
+
     private ErrorBoundary? _errorBoundary;
 
     protected override void OnParametersSet()
@@ -27,6 +29,7 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
 
     protected override async Task OnInitializedAsync()
     {
+        _isLoading = true;
         var circuitId = String.Empty;
 
         if (CircuitHandler is TrackingCircuitHandler circuitHandler)
@@ -41,7 +44,7 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
 
         await SelectCulture(CultureInfo.CurrentCulture.Name);
 
-        await base.OnInitializedAsync();
+        _isLoading = false;
     }
 
 

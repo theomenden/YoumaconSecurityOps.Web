@@ -62,10 +62,11 @@ public static class CachingServiceCollectionExtensions
     /// 
     /// </summary>
     /// <param name="services"></param>
-    public static void RegisterBuiltCaches(this IServiceCollection services)
+    public static void RegisterBuiltCaches(this IServiceCollection services, Type containerType)
     {
-        var cacheConfigurations = Assembly
-            .GetExecutingAssembly()
+        var cacheConfigurations = containerType
+            .GetTypeInfo()
+            .Assembly
             .GetTypes()
             .Where(t => !t.IsGenericType && t.GetInterfaces().Contains(typeof(ICacheConfiguration)))
             .ToArray();

@@ -1,33 +1,33 @@
 ﻿namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 [Table("Locations")]
-public partial class LocationReader: BaseReader
+public partial class LocationReader: IEntity
 {
     public LocationReader()
     {
+        Incidents = new HashSet<IncidentReader>();
+        RadioSchedules = new HashSet<RadioScheduleReader>();
+        ShiftCurrentLocations = new HashSet<ShiftReader>();
+        AssociatedShifts = new HashSet<ShiftReader>();
     }
 
-    /// <value>
-    /// The Location's Name
-    /// </value>
-    public string Name { get; set; }
-
-    /// <value>
-    /// Flag that determines if the location is also a hotel
-    /// </value>
+    [Key]
+    public Guid Id { get; set; }
+    
+    [StringLength(100)]
+    public string Name { get; set; } = null!;
+    
     public bool IsHotel { get; set; }
 
-    #region NavigationProperties
     [InverseProperty(nameof(IncidentReader.Location))]
-    public virtual ICollection<IncidentReader> Incidents { get; set; } = new HashSet<IncidentReader>();
-
+    public virtual ICollection<IncidentReader> Incidents { get; set; }
+    
     [InverseProperty(nameof(RadioScheduleReader.Location))]
-    public virtual ICollection<RadioScheduleReader> RadioSchedule { get; set; } = new HashSet<RadioScheduleReader>();
-        
-    public virtual ICollection<ShiftReader> ShiftCurrentLocation { get; set; } = new HashSet<ShiftReader>();
+    public virtual ICollection<RadioScheduleReader> RadioSchedules { get; set; }
+    
+    [InverseProperty(nameof(ShiftReader.CurrentLocation))]
+    public virtual ICollection<ShiftReader> ShiftCurrentLocations { get; set; }
 
-    [InverseProperty(nameof(ShiftReader.StartingLocationNavigation))]
-    public virtual ICollection<ShiftReader> ShiftStartingLocationNavigation { get; set; } = new HashSet<ShiftReader>();
-
-    #endregion
+    [InverseProperty(nameof(ShiftReader.StartingLocation))]
+    public virtual ICollection<ShiftReader> AssociatedShifts { get; set; }
 }

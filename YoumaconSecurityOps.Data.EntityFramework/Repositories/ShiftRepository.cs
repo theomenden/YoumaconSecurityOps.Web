@@ -25,15 +25,15 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     {
         var shifts = dbContext.Shifts
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.Contact)
+                .ThenInclude(st => st.ContactInformation)
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.StaffTypeRoleMaps)
-                    .ThenInclude(sr => sr.Role)
+                .ThenInclude(st => st.StaffTypesRoles)
+                    .ThenInclude(sr => sr.StaffRole)
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.StaffTypeRoleMaps)
-                    .ThenInclude(str => str.StaffTypeNavigation)
+                .ThenInclude(st => st.StaffTypesRoles)
+                    .ThenInclude(str => str.StaffType)
             .Include(sh => sh.CurrentLocation)
-            .Include(sh => sh.StartingLocationNavigation)
+            .Include(sh => sh.StartingLocation)
             .AsAsyncEnumerable();
 
         return shifts;
@@ -44,15 +44,15 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     {
         var shifts = dbContext.Shifts
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.Contact)
+                .ThenInclude(st => st.ContactInformation)
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.StaffTypeRoleMaps)
-                    .ThenInclude(sr => sr.Role)
+                .ThenInclude(st => st.StaffTypesRoles)
+                    .ThenInclude(sr => sr.StaffRole)
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.StaffTypeRoleMaps)
-                    .ThenInclude(str => str.StaffTypeNavigation)
+                .ThenInclude(st => st.StaffTypesRoles)
+                    .ThenInclude(str => str.StaffType)
             .Include(sh => sh.CurrentLocation)
-            .Include(sh => sh.StartingLocationNavigation)
+            .Include(sh => sh.StartingLocation)
             .Where(predicate)
             .AsAsyncEnumerable();
 
@@ -63,15 +63,15 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     {
         var shift = await dbContext.Shifts
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.Contact)
+                .ThenInclude(st => st.ContactInformation)
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.StaffTypeRoleMaps)
-                    .ThenInclude(sr => sr.Role)
+                .ThenInclude(st => st.StaffTypesRoles)
+                    .ThenInclude(sr => sr.StaffRole)
             .Include(sh => sh.StaffMember)
-                .ThenInclude(st => st.StaffTypeRoleMaps)
-                    .ThenInclude(str => str.StaffTypeNavigation)
+                .ThenInclude(st => st.StaffTypesRoles)
+                    .ThenInclude(str => str.StaffType)
             .Include(sh => sh.CurrentLocation)
-            .Include(sh => sh.StartingLocationNavigation)
+            .Include(sh => sh.StartingLocation)
             .AsQueryable()
             .SingleOrDefaultAsync(s => s.Id == entityId, cancellationToken);
 

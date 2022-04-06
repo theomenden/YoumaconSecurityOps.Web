@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace YoumaconSecurityOps.Web.Client.Services;
+﻿namespace YoumaconSecurityOps.Web.Client.Services;
 
 /// <summary>
 /// Contains methods relating to <see cref="StaffReader"/> Retrieval and storage
@@ -60,7 +57,7 @@ public interface IStaffService
     /// <param name="pronounsQuery">Provided parameterless query</param>
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Task{T}"/>: <see cref="List{T}"/>: <see cref="Pronouns"/></returns>
-    Task<IEnumerable<Pronouns>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Pronoun>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default);
     #endregion
     #region Add Methods
     /// <summary>

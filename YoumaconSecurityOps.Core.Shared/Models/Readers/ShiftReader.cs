@@ -1,137 +1,54 @@
-﻿namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿using System.Reflection.Metadata.Ecma335;
 
-/// <summary>
-/// <para>The read only representation for a shift</para>
-/// <para>This class reflects how a Shift is stored in the Database</para>
-/// <para>And also how a shift is read/serialized in JSON</para>
-/// <inheritdoc cref="BaseReader"/>
-/// </summary>
-[Table("Shifts")]
-public partial class ShiftReader: BaseReader, IComparable<ShiftReader>
+namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
+
+[Index(nameof(CheckedInAt), nameof(CheckedOutAt), Name = "IX_Shifts_CheckedInAt_CheckedOutAt")]
+[Index(nameof(StaffId), Name = "IX_Shifts_StaffId")]
+[Index(nameof(StartAt), nameof(EndAt), Name = "IX_Shifts_StartAt_EndAt")]
+public partial class ShiftReader : IEntity
 {
-    #region Basic Properties
-    /// <value>
-    /// Id for the <see cref="StaffReader"/> who owns this shift
-    /// </value>
+    public ShiftReader()
+    {
+        Incidents = new HashSet<IncidentReader>();
+    }
+
+    [Key]
+    public Guid Id { get; set; }
+    
     public Guid StaffId { get; set; }
-
-    /// <value>
-    /// Created Date - Made By Database for History Table
-    /// </value>
-    public DateTime SysStart { get; set; }
-
-    /// <value>
-    /// Ending Record Date - Made by Database for history table
-    /// </value>
-    public DateTime SysEnd { get; set; }
-
-    /// <value>
-    /// Date and Time the shift is scheduled to end
-    /// </value>
+    
     public DateTime EndAt { get; set; }
-
-    /// <value>
-    /// Date and Time the shift is scheduled to begin
-    /// </value>
+    
     public DateTime StartAt { get; set; }
-
-    /// <value>
-    /// ID of the location where the shift is supposed to start
-    /// </value>
+    
     public Guid StartingLocationId { get; set; }
-
-    /// <value>
-    /// ID of the location where the shift is currently
-    /// </value>
+    
     public Guid CurrentLocationId { get; set; }
-
-    /// <value>
-    /// Time the staff member checked in to this shift
-    /// </value>
+    
     public DateTime? CheckedInAt { get; set; }
-
-    /// <value>
-    /// Time the staff member checked out from this shift
-    /// </value>
+    
     public DateTime? CheckedOutAt { get; set; }
-
-    /// <value>
-    /// Time the staff member last reported their status to this shift
-    /// </value>
+    
     public DateTime? LastReportedAt { get; set; }
 
-    /// <value>
-    /// Any remaining notes on this shift
-    /// </value>
-    public string Notes { get; set; }
-    #endregion
-
-    #region NavigationProperties
-    /// <value>
-    /// Reference to where the shift is currently
-    /// </value>
-    public virtual LocationReader CurrentLocation { get; set; }
-
-    /// <value>
-    /// Reference to the Staff Member associated with this shift
-    /// </value>
-    public virtual StaffReader StaffMember { get; set; }
-        
-    /// <value>
-    /// Reference to the location where the shift was to start
-    /// </value>
-    public virtual LocationReader StartingLocationNavigation { get; set; }
-        
-    /// <value>
-    /// Reference to any amount of incidents that have happened during the shift
-    /// </value>
-    /// <remarks>This is a collection - <see cref="IEnumerable{T}"/>: <seealso cref="IncidentReader"/></remarks>
-    public virtual IEnumerable<IncidentReader> Incidents { get; set; }
-    #endregion
-
-    #region WorkingShiftInformation
-    /// <value>
-    /// Late flag for the staff member
-    /// </value>
-    /// <returns><code>true</code> if the Staff member is more than 5 minutes late <code>false</code> if they were on time or early</returns>
     [NotMapped]
-    public Boolean IsLate => CheckIfMemberWasLate();
+    public Boolean IsLate => CheckedInAt.HasValue && CheckedInAt.Value >= StartAt.AddMinutes(15);
 
-    /// <value>
-    /// The current amount of the shift that has been worked for display purposes
-    /// </value>
-    /// <returns><see cref="TimeSpan"/></returns>
-    [NotMapped]
-    public TimeSpan WorkedTimeSoFar => WorkedShiftDuration();
-    #endregion
+    [StringLength(500)]
+    public string? Notes { get; set; }
 
-    #region PrivateFunctions
-
-    private Boolean CheckIfMemberWasLate()
-    {
-        var isLate = false;
-
-        if (CheckedInAt.HasValue)
-        {
-            isLate = CheckedInAt.Value >= StartAt.AddMinutes(5);
-        }
-
-        return isLate;
-    }
-
-    private TimeSpan TotalShiftDuration()
-    {
-        return EndAt - StartAt;
-    }
-
-    private TimeSpan WorkedShiftDuration()
-    {
-        var currentTime = DateTime.Now;
-
-        return currentTime - CheckedInAt.GetValueOrDefault(currentTime);
-    }
-
-    #endregion
-
-    public int CompareTo(ShiftReader? other) => other is null ? 1 : StartAt.CompareTo(other.StartAt);
+    [ForeignKey(nameof(CurrentLocationId))]
+    [InverseProperty(nameof(LocationReader.ShiftCurrentLocations))]
+    public virtual LocationReader CurrentLocation { get; set; } = null!;
+    
+    [ForeignKey(nameof(StaffId))]
+    [InverseProperty("Shifts")]
+    public virtual StaffReader StaffMember { get; set; } = null!;
+    
+    [ForeignKey(nameof(StartingLocationId))]
+    [InverseProperty(nameof(LocationReader.AssociatedShifts))]
+    public virtual LocationReader StartingLocation { get; set; } = null!;
+    
+    [InverseProperty(nameof(IncidentReader.ShiftReader))]
+    public virtual ICollection<IncidentReader> Incidents { get; set; }
 }

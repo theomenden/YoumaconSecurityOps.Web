@@ -1,16 +1,7 @@
-﻿@if (IsLoading)
-{
-    <Container Fluid>
-        <SpinKit Type="SpinKitType.Chase" Centered Color="#FC9CFB" Size="3em" />
-    </Container>
-}
-else
-{
-    @ChildContent
-}
-
-@code {
-
-    [Parameter] public Boolean IsLoading { get; set; } = true;
-    [Parameter] public RenderFragment ChildContent { get; set; }
-}
+﻿<Div Class="area">
+    <ListGroup Class="circles">
+        <Repeater TItem="int" Items="Enumerable.Range(1, 10).ToList()">
+            <ListGroupItem />
+        </Repeater>
+    </ListGroup>
+</Div>

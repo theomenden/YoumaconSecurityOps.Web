@@ -1,9 +1,14 @@
-﻿$color: #0cf;
+﻿@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+$color: #0cf;
 $orange: #DF4500;
 $gray: #35302D;
 $gray-shine: #3C3735;
 $white-off: #DFDBD9;
 $sans: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+
+:root{
+
+}
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -11,28 +16,23 @@ html, body {
 
 body {
     color: #4089a6;
-    background-color: darkgray;
+    background: linear-gradient(-45deg, #8C1BAB, #B210FF, #F761A1, #EECE13);
     -webkit-font-smoothing: antialiased;
+    animation: gradient 15s ease infinite;
 }
 
-body:before, body:after {
-    content: "";
-    height: 50vh;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    background: #1c2020;
-    z-index: 1;
-}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
 
-body:before {
-    top: 0;
-    transform: translateY(-100%);
-}
+    50% {
+        background-position: 100% 50%;
+    }
 
-body:after {
-    bottom: 0;
-    transform: translateY(100%);
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 main {
@@ -98,7 +98,6 @@ main {
     right: 0.75rem;
     top: 0.5rem;
 }
-
 /* ScrollBar */
 #section {
     padding: 1rem;
@@ -124,7 +123,6 @@ main {
     border-right: 0;
     background-color: #8070d4;
 }
-
 //List Hover action
 .list-hover-slide {
 
@@ -162,7 +160,6 @@ main {
         }
     }
 }
-
 //Social Icon Actions
 .social-links {
     border-bottom: solid 1px $gray-shine;
@@ -188,7 +185,6 @@ main {
         }
     }
 }
-
 //SideNav
 .sidenav {
     display: flex;

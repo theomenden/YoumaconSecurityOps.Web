@@ -12,7 +12,7 @@ internal sealed class StaffTypeRoleMapRepository: IStaffRoleMapRepository
         _logger = logger;
     }
 
-    public IAsyncEnumerator<StaffTypesRoles> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+    public IAsyncEnumerator<StaffTypesRole> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
     {
         using var context = _dbContextFactory.CreateDbContext();
 
@@ -21,7 +21,7 @@ internal sealed class StaffTypeRoleMapRepository: IStaffRoleMapRepository
         return staffRoleMapEnumerator;
     }
 
-    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, StaffTypesRoles entity,
+    public async Task<bool> AddAsync(YoumaconSecurityDbContext dbContext, StaffTypesRole entity,
         CancellationToken cancellationToken = default)
     {
         var successfulAddResult = false;

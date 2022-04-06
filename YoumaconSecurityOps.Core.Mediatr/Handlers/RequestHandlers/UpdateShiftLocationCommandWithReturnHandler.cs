@@ -32,7 +32,7 @@ internal class UpdateShiftLocationCommandWithReturnHandler : IRequestHandler<Upd
     {
         var e = new ShiftUpdatedEvent(reader)
         {
-            Aggregate = $"{reader.Id}-{reader.StaffMember.Contact.PreferredName}",
+            Aggregate = $"{reader.Id}-{reader.StaffMember.ContactInformation.PreferredName}",
             AggregateId = reader.Id,
             Name= nameof(RaiseShiftUpdatedEvent)
         };

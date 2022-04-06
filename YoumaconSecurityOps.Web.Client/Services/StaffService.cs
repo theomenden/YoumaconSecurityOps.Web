@@ -355,7 +355,7 @@ public class StaffService : IStaffService
         return response;
     }
 
-    public async Task<IEnumerable<Pronouns>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Pronoun>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default)
     {
         if (await IsPronounsStoreInvalidatedAsync(cancellationToken))
         {

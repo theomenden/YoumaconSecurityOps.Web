@@ -13,7 +13,7 @@ namespace YoumaconSecurityOps.Core.EventStore.Storage
     {
         public static void BuildModel(EntityTypeBuilder<EventReader> entity)
         {
-            entity.ToTable("Events");
+            entity.ToTable("Events", "Diagnostics");
 
             entity.HasKey(e => e.Id)
                 .HasName("PK_Events_Id")

@@ -16,7 +16,7 @@ public partial class ThemeChangeComponent: ComponentBase
                 return;
             }
             _value = value;
-
+            
             InvokeAsync(StateHasChanged);
 
             ValueChanged.InvokeAsync(_selectedTheme?.Name ?? value);
