@@ -4,6 +4,8 @@
     {
         public static IApplicationBuilder UseEnvironmentMiddleware(this IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseCaching();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

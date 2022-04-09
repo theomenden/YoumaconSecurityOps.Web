@@ -62,8 +62,7 @@ internal sealed class EventStoreRepository : IEventStoreRepository
 
         return eventsWithMatchedAggregateId;
     }
-
-
+    
     public async Task SaveAsync(EventStoreDbContext dbContext, Guid aggregateId, int originatingVersion, string callerName, IReadOnlyCollection<EventReader> events, string aggregateName = "Aggregate Name", CancellationToken cancellationToken = default)
     {
         if (!events.Any())
@@ -81,12 +80,20 @@ internal sealed class EventStoreRepository : IEventStoreRepository
             MinorVersion = ++originatingVersion,
             MajorVersion = ev.MajorVersion
         });
-        
-        dbContext.Events.AddRange(listOfEvents);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            dbContext.Events.AddRange(listOfEvents);
+
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Exception while trying to store event: {@ex}", ex);
+            throw;
+        }
     }
-    public async Task SaveAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default)
+    public async Task ApplyInitialEventAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default): Attempting to add: {@initialEvent}", initialEvent);
             
@@ -96,4 +103,27 @@ internal sealed class EventStoreRepository : IEventStoreRepository
 
         _logger.LogInformation("Aggregate for {initialEvent} added", initialEvent.Id);
     }
+
+    public async Task ApplyNextEventAsync(EventStoreDbContext dbContext, EventReader nextEvent, CancellationToken cancellationToken = default)
+    {
+        var previousEvents = await dbContext.Events
+            .Where(e => e.AggregateId == nextEvent.AggregateId)
+            .AsQueryable()
+            .ToListAsync(cancellationToken);
+        
+        if (!previousEvents.Any())
+        {
+            await ApplyInitialEventAsync(dbContext, nextEvent, cancellationToken).ConfigureAwait(false);
+            return;
+        }
+
+        await SaveAsync(dbContext, 
+            nextEvent.AggregateId,
+            previousEvents.MaxBy(ev => ev?.MajorVersion)?.MinorVersion ?? 1,
+            nextEvent.Name,
+            previousEvents.AsReadOnly(),
+            nextEvent.Aggregate,
+            cancellationToken).ConfigureAwait(false);
+    }
+
 }

@@ -14,9 +14,7 @@ internal sealed class ContactCreatedEventHandler : INotificationHandler<ContactC
 
     private readonly IMediator _mediator;
 
-    private readonly ILogger<ContactCreatedEventHandler> _logger;
-
-    public ContactCreatedEventHandler(IContactRepository contacts, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator, ILogger<ContactCreatedEventHandler> logger)
+    public ContactCreatedEventHandler(IContactRepository contacts, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory, IDbContextFactory<EventStoreDbContext> eventStoreDbContextFactory, IEventStoreRepository eventStore, IMapper mapper, IMediator mediator)
     {
         _contacts = contacts;
         _dbContextFactory = dbContextFactory;
@@ -24,7 +22,6 @@ internal sealed class ContactCreatedEventHandler : INotificationHandler<ContactC
         _eventStore = eventStore;
         _mapper = mapper;
         _mediator = mediator;
-        _logger = logger;
     }
 
     public async Task Handle(ContactCreatedEvent notification, CancellationToken cancellationToken)

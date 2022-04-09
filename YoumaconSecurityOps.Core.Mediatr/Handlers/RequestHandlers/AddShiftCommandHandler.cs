@@ -41,7 +41,7 @@ internal sealed class AddShiftCommandHandler: IRequestHandler<AddShiftCommandWit
 
         var eventReader = _mapper.Map<EventReader>(e);
 
-        await _eventStore.SaveAsync(context, eventReader , cancellationToken).ConfigureAwait(false);
+        await _eventStore.ApplyInitialEventAsync(context, eventReader , cancellationToken).ConfigureAwait(false);
         
         await _mediator.Publish(e, cancellationToken).ConfigureAwait(false);
     }

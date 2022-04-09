@@ -6,24 +6,26 @@ internal sealed class AddFullStaffRequestCommandHandler : IRequestHandler<AddFul
 
     private readonly ILogger<AddFullStaffRequestCommandHandler> _logger;
 
-    public AddFullStaffRequestCommandHandler(IMediator mediator, ILogger<AddFullStaffRequestCommandHandler> logger)
+    private readonly IDbContextFactory<EventStoreDbContext> _dbContextFactory;
+
+    private readonly IEventStoreRepository _eventStore;
+
+    private readonly IMapper _mapper;
+
+    public AddFullStaffRequestCommandHandler(IMediator mediator, ILogger<AddFullStaffRequestCommandHandler> logger, IDbContextFactory<EventStoreDbContext> dbContextFactory, IEventStoreRepository eventStore, IMapper mapper)
     {
         _mediator = mediator;
         _logger = logger;
+        _dbContextFactory = dbContextFactory;
+        _eventStore = eventStore;
+        _mapper = mapper;
     }
 
     public async Task<Guid> Handle(AddFullStaffEntryCommandWithReturn request, CancellationToken cancellationToken)
     {
         try
         {
-            await RaiseStaffCreatedEvent(request.StaffWriter, cancellationToken);
-
-            var staffTypeRoleMap = new StaffTypeRoleMapWriter(request.StaffWriter.Id, request.StaffWriter.StaffTypeId,
-                request.StaffWriter.RoleId);
-
-            await RaiseStaffTypeRoleMapCreatedEvent(staffTypeRoleMap, cancellationToken);
-
-            await RaiseContactCreatedEvent(request.ContactWriter, cancellationToken);
+            await RaiseStaffCreatedEvent(request.FullStaffWriter, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -31,34 +33,22 @@ internal sealed class AddFullStaffRequestCommandHandler : IRequestHandler<AddFul
             throw;
         }
 
-        return request.StaffWriter.Id;
+        return request.FullStaffWriter.Id;
     }
 
-    private async Task RaiseStaffTypeRoleMapCreatedEvent(StaffTypeRoleMapWriter staffTypeRoleMapWriter, CancellationToken cancellationToken)
+    private Task RaiseStaffCreatedEvent(FullStaffWriter fullStaffWriter, CancellationToken cancellationToken)
     {
-        var e = new StaffTypeRoleMapCreatedEvent(staffTypeRoleMapWriter);
+        var e = new StaffCreatedEvent(fullStaffWriter)
+        {
+            Name = nameof(AddFullStaffRequestCommandHandler)
+        };
 
-        await _mediator.Publish(e, cancellationToken);
-    }
+        using var context = _dbContextFactory.CreateDbContext();
 
-    private async Task RaiseStaffCreatedEvent(StaffWriter staffWriter, CancellationToken cancellationToken)
-    {
-        var e = new StaffCreatedEvent(staffWriter);
+        _eventStore.ApplyInitialEventAsync(context, _mapper.Map<EventReader>(e), cancellationToken);
 
-        await _mediator.Publish(e, cancellationToken);
-    }
+        _mediator.Publish(e, cancellationToken);
 
-    private async Task RaiseContactCreatedEvent(ContactWriter contactWriter, CancellationToken cancellationToken)
-    {
-        var e = new ContactCreatedEvent(contactWriter);
-
-        await _mediator.Publish(e, cancellationToken);
-    }
-
-    private async Task RaiseFailedToCreateEntityEvent(AddFullStaffEntryCommandWithReturn request, CancellationToken cancellationToken)
-    {
-        var e = new FailedToAddEntityEvent(request.Id, typeof(AddFullStaffEntryCommandWithReturn));
-
-        await _mediator.Publish(e, cancellationToken);
+        return Task.CompletedTask;
     }
 }

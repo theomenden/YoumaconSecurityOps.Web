@@ -36,10 +36,10 @@ public partial class StaffReader : IEntity
     public Guid? RoomId { get; set; }
 
     [NotMapped]
-    public StaffRole? StaffRole => StaffTypesRoles.Select(str => str.StaffRole).Max();
+    public StaffRole? StaffRole => StaffTypesRoles.Max()?.StaffRole;
 
     [NotMapped]
-    public StaffType? StaffType => StaffTypesRoles.Select(str => str.StaffType).Max();
+    public StaffType? StaffType => StaffTypesRoles.Max()?.StaffType;
 
     [InverseProperty(nameof(ContactReader.Staff))]
     public virtual ContactReader ContactInformation { get; set; }
@@ -55,4 +55,6 @@ public partial class StaffReader : IEntity
     
     [InverseProperty(nameof(StaffTypesRole.Staff))]
     public virtual ICollection<StaffTypesRole> StaffTypesRoles { get; set; }
+
+  
 }

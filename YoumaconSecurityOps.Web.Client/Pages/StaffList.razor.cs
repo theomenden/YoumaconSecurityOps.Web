@@ -52,7 +52,7 @@ public partial class StaffList : ComponentBase
 
     private Int32 _selectedRoleFilter = 0;
     
-    private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5 };
+    private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5, DataGridHeight = "36em", DataGridMaxHeight  = "40em"};
     #endregion
 
     protected override void OnParametersSet()

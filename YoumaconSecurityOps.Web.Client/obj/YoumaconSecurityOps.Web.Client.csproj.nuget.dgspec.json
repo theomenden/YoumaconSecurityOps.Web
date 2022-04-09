@@ -157,6 +157,10 @@
               "target": "Package",
               "version": "[6.0.3, )"
             },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "System.Linq.Async": {
               "target": "Package",
               "version": "[6.0.1, )"
@@ -252,6 +256,14 @@
             "Microsoft.Extensions.Logging": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Scrutor.AspNetCore": {
+              "target": "Package",
+              "version": "[3.3.0, )"
             },
             "Serilog": {
               "target": "Package",
@@ -543,15 +555,15 @@
           "dependencies": {
             "Azure.Core": {
               "target": "Package",
-              "version": "[1.23.0, )"
+              "version": "[1.24.0, )"
             },
             "Azure.Extensions.AspNetCore.Configuration.Secrets": {
               "target": "Package",
-              "version": "[1.2.1, )"
+              "version": "[1.2.2, )"
             },
             "Azure.Identity": {
               "target": "Package",
-              "version": "[1.5.0, )"
+              "version": "[1.6.0, )"
             },
             "Blazored.FluentValidation": {
               "target": "Package",
@@ -627,7 +639,7 @@
             },
             "Microsoft.Azure.SignalR": {
               "target": "Package",
-              "version": "[1.16.0, )"
+              "version": "[1.16.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -649,9 +661,25 @@
               "target": "Package",
               "version": "[6.0.3, )"
             },
+            "Microsoft.Extensions.Caching.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.Caching.Redis": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Microsoft.Extensions.Localization": {
               "target": "Package",
@@ -743,7 +771,7 @@
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[6.16.0, )"
+              "version": "[6.17.0, )"
             },
             "System.Linq.Async": {
               "target": "Package",

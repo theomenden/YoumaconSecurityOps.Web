@@ -42,7 +42,7 @@ internal class AddRoomCommandHandler : IRequestHandler<AddRoomCommandWithReturn,
             Name = $"{nameof(AddRoomCommandHandler)}"
         };
 
-        await _eventStore.SaveAsync(context, mappedEvent, cancellationToken);
+        await _eventStore.ApplyInitialEventAsync(context, mappedEvent, cancellationToken);
     }
 }
 

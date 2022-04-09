@@ -72,7 +72,7 @@
                         <Button Color="Color.Default" Display="Display.None"></Button>
                     </DeleteCommandTemplate>
                 </DataGridCommandColumn>
-                <DataGridColumn TItem="StaffReader" Field="ContactInformation.Pronouns" Caption="Pronouns" Filterable Sortable Editable>
+                <DataGridColumn TItem="StaffReader" Field="ContactInformation.Pronoun" Caption="Pronouns" Filterable Sortable Editable>
                     <DisplayTemplate>
                         @(context.ContactInformation?.Pronoun.Name)
                     </DisplayTemplate>
@@ -87,7 +87,7 @@
                                     DefaultItemText="Pronouns/Identifiers" />
                     </EditTemplate>
                 </DataGridColumn>
-                <DataGridColumn TItem="StaffReader" Field="Contact.PreferredName" Caption="Preferred Name" Filterable="false" Sortable="false" Editable>
+                <DataGridColumn TItem="StaffReader" Field="ContactInformation.PreferredName" Caption="Preferred Name" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
                         @(context.ContactInformation?.PreferredName)
                     </DisplayTemplate>
@@ -95,7 +95,7 @@
                         <TextEdit Text="@(context.Item.ContactInformation?.PreferredName)" TextChanged="s => context.CellValue = s"></TextEdit>
                     </EditTemplate>
                 </DataGridColumn>
-                <DataGridColumn TItem="StaffReader" Field="Contact.LastName" Caption="Last Name" Filterable Sortable Editable>
+                <DataGridColumn TItem="StaffReader" Field="ContactInformation.LastName" Caption="Last Name" Filterable Sortable Editable>
                     <DisplayTemplate>
                         @(context.ContactInformation?.LastName)
                     </DisplayTemplate>
@@ -128,7 +128,7 @@
                                     DefaultItemText="@_staffTypes.Single(st => st.Id == 1).Title" />
                     </EditTemplate>
                 </DataGridSelectColumn>
-                <DataGridSelectColumn TItem="StaffReader" Field="Role.Name" Caption="Role" Sortable Editable CustomFilter="@OnStaffRoleFilter">
+                <DataGridSelectColumn TItem="StaffReader" Field="StaffRole.Name" Caption="Role" Sortable Editable CustomFilter="@OnStaffRoleFilter">
                     <FilterTemplate>
                         <Select TValue="Int32" SelectedValue="@_selectedRoleFilter" SelectedValueChanged="@(value => { _selectedRoleFilter = value; context.TriggerFilterChange( _selectedTypeFilter ); })">
                             <SelectItem TValue="Int32" Value="0">All</SelectItem>
@@ -153,7 +153,7 @@
                                     DefaultItemText="@_staffRoles.Single(sr => sr.Id == 5).Name" />
                     </EditTemplate>
                 </DataGridSelectColumn>
-                <DataGridColumn TItem="StaffReader" Field="Contact.Email" Caption="Email" Filterable="false" Sortable="false" Editable>
+                <DataGridColumn TItem="StaffReader" Field="ContactInformation.Email" Caption="Email" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
                         <Blazorise.Link To="@($"mailto:{context.ContactInformation?.Email}")"> @context.ContactInformation?.Email</Blazorise.Link>
                     </DisplayTemplate>
@@ -176,7 +176,7 @@
                         <Switch TValue="bool" Checked="context.Item.IsRaveApproved" />
                     </EditTemplate>
                 </DataGridColumn>
-                <DataGridColumn TItem="StaffReader" Field="Contact.PhoneNumber" Caption="Phone Number" Filterable="false" Sortable="false" Editable>
+                <DataGridColumn TItem="StaffReader" Field="ContactInformation.PhoneNumber" Caption="Phone Number" Filterable="false" Sortable="false" Editable>
                     <DisplayTemplate>
                         <Blazorise.Link To="@($"tel:+{context.ContactInformation?.PhoneNumber}")">@($"{context.ContactInformation?.PhoneNumber:(###) ###-####}")</Blazorise.Link>
                     </DisplayTemplate>

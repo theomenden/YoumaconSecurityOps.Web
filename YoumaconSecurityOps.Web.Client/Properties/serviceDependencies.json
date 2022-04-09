@@ -35,6 +35,10 @@
     "mssql4": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:YSecITSecurity"
+    },
+    "redis1": {
+      "type": "redis",
+      "connectionId": "CacheConnection"
     }
   }
 }

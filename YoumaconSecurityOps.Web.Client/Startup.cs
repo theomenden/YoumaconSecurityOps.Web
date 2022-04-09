@@ -59,11 +59,13 @@ public class Startup
         services.AddEventStoreServices(appSettings.EventStoreConnectionString);
 
         services.AddAutoMappingServices();
-
-        services.AddMediatrServices(typeof(Program));
-
-        services.AddFrontEndDataServices();
         
+        services.AddFrontEndDataServices();
+
+        services.AddMediatR(typeof(Startup));
+
+        services.AddMediatrServices<Startup>();
+
         services.AddResponseCompression(options =>
         {
             options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -96,13 +98,20 @@ public class Startup
         });
 
         services.AddSignalR();
-        
+
+        services.AddDistributedRedisCache(setUp =>
+        {
+            setUp.Configuration = Configuration["CacheConnection"];
+            setUp.InstanceName = "YsecRedisCache";
+        });
+
         services.AddServerSideBlazor()
             .AddHubOptions(options =>
             {
                 options.MaximumReceiveMessageSize = 104_857_600;
             })
             .AddMicrosoftIdentityConsentHandler();
+            
 
         services.AddRazorPages();
     }

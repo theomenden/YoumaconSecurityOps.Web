@@ -1,15 +1,11 @@
-﻿using Nosthy.Blazor.DexieWrapper.JsModule;
-using YoumaconSecurityOps.Web.Client.IndexedDb.Context;
-using YoumaconSecurityOps.Web.Client.IndexedDb.Repositories;
-
-namespace YoumaconSecurityOps.Web.Client.Extensions;
+﻿namespace YoumaconSecurityOps.Web.Client.Extensions;
 
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddFrontEndDataServices(this IServiceCollection services)
     {
         services.AddSingleton<YSecServiceOptions>();
-
+        
         services
             .AddScoped<IContactService, ContactService>()
             .AddScoped<IEventReaderService, EventReaderService>()

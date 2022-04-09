@@ -199,7 +199,8 @@ public partial class Admin : ComponentBase
         _incidents = await IncidentService.GetIncidentsAsync(new GetIncidentsQuery());
 
         _dropItems = _staff
-            .GroupJoin(_shifts,
+            .Where(st => !st.IsOnBreak)
+            .GroupJoin(_shifts.Where(shift => shift.CheckedInAt.HasValue && !shift.CheckedOutAt.HasValue),
                 member => member.Id,
                 shift => shift.StaffId,
                 (member, gj) => new { member, gj })

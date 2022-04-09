@@ -31,7 +31,7 @@ internal sealed class StaffCreatedEventHandler : INotificationHandler<StaffCreat
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-        var staffMember = _mapper.Map<StaffReader>(notification.StaffWriter);
+        var staffMember = notification.StaffWriter.FromFullStaff();
         
         if(!(await _staff.AddAsync(context, staffMember, cancellationToken)))
         {
@@ -40,23 +40,19 @@ internal sealed class StaffCreatedEventHandler : INotificationHandler<StaffCreat
             return;
         }
         
-        await RaiseStaffListUpdatedEvent(notification, staffMember, cancellationToken);
+        await RaiseStaffListUpdatedEvent(staffMember, cancellationToken);
     }
 
-    private async Task RaiseStaffListUpdatedEvent(StaffCreatedEvent previousEvent,StaffReader staffReader, CancellationToken cancellationToken)
+    private async Task RaiseStaffListUpdatedEvent(StaffReader staffReader, CancellationToken cancellationToken)
     {
         var e = new StaffListUpdatedEvent(staffReader)
         {
             Name = nameof(StaffListUpdatedEvent)
         };
 
-        await using var context = await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
-
-        var previousEvents = (await _eventStore.GetAllByAggregateIdAsync(context, previousEvent.AggregateId, cancellationToken)).ToList();
-
-        await _eventStore.SaveAsync(context, previousEvent.AggregateId, previousEvent.MinorVersion,
-            nameof(RaiseStaffListUpdatedEvent), previousEvents.AsReadOnly(),
-            previousEvent.Aggregate, cancellationToken);
+        await using var context = await _eventStoreDbContextFactory.CreateDbContextAsync(cancellationToken);
+        
+        await _eventStore.ApplyNextEventAsync(context, _mapper.Map<EventReader>(e), cancellationToken);
 
         await _mediator.Publish(e, cancellationToken);
     }

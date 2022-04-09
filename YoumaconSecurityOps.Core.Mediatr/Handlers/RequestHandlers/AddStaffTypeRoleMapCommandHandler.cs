@@ -43,7 +43,7 @@ namespace YoumaconSecurityOps.Core.Mediatr.Handlers.RequestHandlers
             await using var context =
                 await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
 
-            await _eventStore.SaveAsync(context, mappedEvent, cancellationToken);
+            await _eventStore.ApplyInitialEventAsync(context, mappedEvent, cancellationToken);
 
             await _mediator.Publish(e, cancellationToken);
         }

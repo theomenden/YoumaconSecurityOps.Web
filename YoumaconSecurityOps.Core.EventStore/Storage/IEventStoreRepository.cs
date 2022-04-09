@@ -62,9 +62,18 @@ public interface IEventStoreRepository : IAsyncEnumerable<EventReader>
     /// <para><paramref name="initialEvent"/> reflects the information created for this first event</para>
     /// </summary>
     /// <param name="dbContext">The supplied <see cref="EventStoreDbContext"/></param>
-    /// <param name="initialEvent"></param>
+    /// <param name="initialEvent">The first event we're applying</param>
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Task"/></returns>
-    Task SaveAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default);
+    Task ApplyInitialEventAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Applies the next event in sequence
+    /// </summary>
+    /// <param name="dbContext">The supplied <see cref="EventStoreDbContext"/></param>
+    /// <param name="nextEvent">The next event to apply</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task ApplyNextEventAsync(EventStoreDbContext dbContext, EventReader nextEvent, CancellationToken cancellationToken = default);
 }
 

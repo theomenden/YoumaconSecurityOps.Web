@@ -16,11 +16,13 @@ try
 {
     var builder = WebApplication.CreateBuilder();
 
-    builder.Host.ConfigureAppConfiguration((context, config) =>
+    builder.Host
+        .ConfigureAppConfiguration((context, config) =>
         {
             var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
             config.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
         })
+        .UseDefaultServiceProvider(options => options.ValidateScopes = false)
         .UseSerilog((context, services, configuration) => configuration
             .ReadFrom.Configuration(context.Configuration)
             .ReadFrom.Services(services));

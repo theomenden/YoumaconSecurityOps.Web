@@ -38,7 +38,7 @@ internal sealed class AddContactCommandHandler: IRequestHandler<AddContactComman
 
         var mappedEvent = _mapper.Map<EventReader>(e);
 
-        await _eventStore.SaveAsync(context, mappedEvent, cancellationToken).ConfigureAwait(false);
+        await _eventStore.ApplyInitialEventAsync(context, mappedEvent, cancellationToken).ConfigureAwait(false);
 
         await _mediator.Publish(e, cancellationToken);
     }

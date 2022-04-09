@@ -44,6 +44,12 @@
       "secretStore": "AzureKeyVault",
       "type": "mssql.onprem",
       "connectionId": "ConnectionStrings:YSecITSecurity"
+    },
+    "redis1": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Cache/Redis/ysecops",
+      "type": "redis.azure",
+      "connectionId": "CacheConnection"
     }
   }
 }

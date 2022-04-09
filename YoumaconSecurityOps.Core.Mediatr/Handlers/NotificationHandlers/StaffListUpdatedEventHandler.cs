@@ -6,21 +6,22 @@ internal class StaffListUpdatedEventHandler: INotificationHandler<StaffListUpdat
     
     private readonly IDbContextFactory<EventStoreDbContext> _dbContextFactory;
 
-    public StaffListUpdatedEventHandler(IEventStoreRepository eventStore, IDbContextFactory<EventStoreDbContext> dbContextFactory)
+    private readonly IMapper _mapper;
+
+    public StaffListUpdatedEventHandler(IEventStoreRepository eventStore, IDbContextFactory<EventStoreDbContext> dbContextFactory, IMapper mapper)
     {
         _eventStore = eventStore;
         _dbContextFactory = dbContextFactory;
+        _mapper = mapper;
     }
 
     public async Task Handle(StaffListUpdatedEvent notification, CancellationToken cancellationToken)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        
+        var e = _mapper.Map<EventReader>(notification);
 
-        var previousEvents = (await _eventStore.GetAllByAggregateIdAsync(context, notification.AggregateId, cancellationToken))
-            .ToList();
-
-        await _eventStore.SaveAsync(context, notification.AggregateId, notification.MinorVersion,
-            nameof(StaffListUpdatedEvent), previousEvents, notification.Aggregate, cancellationToken);
+        await _eventStore.ApplyNextEventAsync(context, e, cancellationToken);
     }
 }
 

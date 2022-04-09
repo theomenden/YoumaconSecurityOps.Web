@@ -53,35 +53,66 @@
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Needs crash space?</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <RadioGroup TValue="bool" Name="rdCrashSpace" @bind-CheckedValue="@_needCrashSpace">
-                                    <Radio Value="@true">Yes</Radio>
-                                    <Radio Value="@false">No</Radio>
-                                </RadioGroup>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop" Flex="Flex.Row.AlignContent.Start">
+                                <Validation Validator="ValidationRule.IsSelected">
+                                    <RadioGroup TValue="bool" Name="rdCrashSpace" @bind-CheckedValue="@_needCrashSpace">
+                                        <ChildContent>
+                                            <Radio Value="@true">Yes</Radio>
+                                            <Radio Value="@false">No</Radio>
+                                        </ChildContent>
+                                        <Feedback>
+                                            <ValidationError>Please Indicate if the Staff Member needs Crash Space</ValidationError>
+                                            <ValidationSuccess />
+                                        </Feedback>
+                                    </RadioGroup>
+                                </Validation>
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is a black shirt?</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <RadioGroup TValue="bool" Name="rdBlackShirt" @bind-CheckedValue="@_isBlackShirt">
-                                    <Radio Value="@true">Yes</Radio>
-                                    <Radio Value="@false">No</Radio>
-                                </RadioGroup>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop" Flex="Flex.Row.AlignContent.Start">
+                                <Validation Validator="ValidationRule.IsSelected">
+                                    <RadioGroup TValue="bool" Name="rdBlackShirt" @bind-CheckedValue="@_isBlackShirt">
+                                        <ChildContent>
+                                            <Radio Value="@true">Yes</Radio>
+                                            <Radio Value="@false">No</Radio>
+                                        </ChildContent>
+                                        <Feedback>
+                                            <ValidationError>Please Indicate if the Staff Member is a Black Shirt/Captain </ValidationError>
+                                            <ValidationSuccess />
+                                        </Feedback>
+                                    </RadioGroup>
+                                </Validation>
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Is rave approved?</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <RadioGroup TValue="bool" Name="rdRaveApproved" @bind-CheckedValue="@_isRaveApproved">
-                                    <Radio Value="@true">Yes</Radio>
-                                    <Radio Value="@false">No</Radio>
-                                </RadioGroup>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop" Flex="Flex.Row.AlignContent.Start">
+                                <Validation Validator="ValidationRule.IsSelected">
+                                    <RadioGroup TValue="bool" Name="rdRaveApproved" @bind-CheckedValue="@_isRaveApproved">
+                                        <ChildContent>
+                                            <Radio Value="@true">Yes</Radio>
+                                            <Radio Value="@false">No</Radio>
+                                        </ChildContent>
+                                        <Feedback>
+                                            <ValidationError>Please Indicate if the Staff Member is approved to work the Rave</ValidationError>
+                                            <ValidationSuccess />
+                                        </Feedback>
+                                    </RadioGroup>
+                                </Validation>
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">T-Shirt Size</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their T-Shirt Size" @bind-Text="@_shirtSize" />
+                                <Validation Validator="@ValidationRule.IsNotEmpty">
+                                    <TextEdit Placeholder="Their T-Shirt Size" @bind-Text="@_shirtSize">
+                                        <Feedback>
+                                            <ValidationError>Please Enter their shirt size</ValidationError>
+                                            <ValidationSuccess>Thank you</ValidationSuccess>
+                                        </Feedback>
+                                    </TextEdit>
+                                </Validation>
                             </FieldBody>
                         </Field>
                     </Form>
@@ -101,56 +132,95 @@
                 </CardTitle>
                 <CardBody>
                     <Form>
-                        <Field Horizontal>
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Pronouns</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <SelectList TItem="Pronoun"
-                                            TValue="int"
-                                            Data="@_pronouns"
-                                            TextField="@(item => item.Name)"
-                                            ValueField="@(item => item.Id)"
-                                            SelectedValue="@_selectedPronoun"
-                                            SelectedValueChanged="@OnSelectedPronounChanged"
-                                            DefaultItemText="Ask their pronouns" />
-                            </FieldBody>
-                        </Field>
-                        <Field Horizontal>
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">First Name</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="First Name" @bind-Text="_firstName" />
-                            </FieldBody>
-                        </Field>
-                        <Field Horizontal>
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Last Name</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Last Name" @bind-Text="_lastName" />
-                            </FieldBody>
-                        </Field>
-                        <Field Horizontal>
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="The name they will go by" @bind-Text="@_preferredName" />
-                            </FieldBody>
-                        </Field>
-                        <Field Horizontal>
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Facebook Name</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their name on Facebook" @bind-Text="@_facebookName" />
-                            </FieldBody>
-                        </Field>
-                        <Field Horizontal>
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Email Address</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their email" @bind-Text="@_email" />
-                            </FieldBody>
-                        </Field>
-                        <Field Horizontal>
+                        <Validations Mode="ValidationMode.Auto">
+                            <Field Horizontal>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Pronouns</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <SelectList TItem="Pronoun"
+                                                TValue="int"
+                                                Data="@_pronouns"
+                                                TextField="@(item => item.Name)"
+                                                ValueField="@(item => item.Id)"
+                                                SelectedValue="@_selectedPronoun"
+                                                SelectedValueChanged="@OnSelectedPronounChanged"
+                                                DefaultItemText="Ask their pronouns" />
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">First Name</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <Validation Validator="ValidationRule.IsNotEmpty">
+                                        <TextEdit Placeholder="First Name" @bind-Text="_firstName">
+                                            <Feedback>
+                                                <ValidationError>Please Enter the Staff Member's' First Name</ValidationError>
+                                                <ValidationSuccess>Thank you</ValidationSuccess>
+                                            </Feedback>
+                                        </TextEdit>
+                                    </Validation>
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Last Name</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <Validation Validator="ValidationRule.IsNotEmpty">
+                                        <TextEdit Placeholder="Last Name" @bind-Text="_lastName">
+                                            <Feedback>
+                                                <ValidationError>Please Enter the Staff Member's Last Name</ValidationError>
+                                                <ValidationSuccess>Thank you</ValidationSuccess>
+                                            </Feedback>
+                                        </TextEdit>
+                                    </Validation>
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <Validation Validator="ValidationRule.IsNotEmpty">
+                                        <TextEdit Placeholder="The name they will go by" @bind-Text="@_preferredName">
+                                            <Feedback>
+                                                <ValidationError>Please Enter the Staff Member's Preferred Name</ValidationError>
+                                                <ValidationSuccess>Thank you</ValidationSuccess>
+                                            </Feedback>
+                                        </TextEdit>
+                                    </Validation>
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Facebook Name</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <TextEdit Placeholder="Their name on Facebook" @bind-Text="@_facebookName" />
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Email Address</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <Validation Validator="ValidationRule.IsEmail">
+                                        <TextEdit Placeholder="Their email" @bind-Text="@_email">
+                                            <Feedback>
+                                                <ValidationError>Please enter a valid email address</ValidationError>
+                                                <ValidationSuccess>Thank you!</ValidationSuccess>
+                                            </Feedback>
+                                        </TextEdit>
+                                    </Validation>
+                                </FieldBody>
+                            </Field>
+                            <Field Horizontal>
 
-                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Phone Number</FieldLabel>
-                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="Their Phone Number" @bind-Text="_phoneNumber" />
-                            </FieldBody>
-                        </Field>
+                                <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Phone Number</FieldLabel>
+                                <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
+                                    <Validation UsePattern>
+                                        <TextEdit Pattern="@(@"^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$")" 
+                                                  Placeholder="Their Phone Number" 
+                                                  @bind-Text="_phoneNumber">
+                                            <Feedback>
+                                                <ValidationError>Please enter a valid Phone Number</ValidationError>
+                                                <ValidationSuccess>Thank you!</ValidationSuccess>
+                                            </Feedback>
+                                        </TextEdit>
+                                    </Validation>
+                                </FieldBody>
+                            </Field>
+                        </Validations>
                     </Form>
                 </CardBody>
                 <CardFooter>
@@ -251,7 +321,7 @@
                         <Field Horizontal>
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">Preferred Name</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
-                                <TextEdit Placeholder="The name they will go by" @bind-Text="@_preferredName" Disabled />
+                                <TextEdit Placeholder="@(String.IsNullOrWhiteSpace(_firstName) ? "The name they will go by" : _firstName)" @bind-Text="@_preferredName" Disabled />
                             </FieldBody>
                         </Field>
                         <Field Horizontal>
