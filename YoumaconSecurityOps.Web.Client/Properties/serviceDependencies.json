@@ -20,10 +20,6 @@
       "type": "secrets",
       "connectionId": "VaultUri"
     },
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:YSecOpsDb"
-    },
     "mssql3": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:YoumaEventStore"
@@ -31,10 +27,6 @@
     "mssql4": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:YSecITSecurity"
-    },
-    "redis1": {
-      "type": "redis",
-      "connectionId": "CacheConnection"
     },
     "compute.appService1": {
       "group": "connections",
@@ -44,6 +36,14 @@
     "mssql5": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:YoumaconSecurityOpsDb"
+    },
+    "redis1": {
+      "type": "redis",
+      "connectionId": "CacheConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:YSecOpsDb"
     },
     "mssql6": {
       "type": "mssql",

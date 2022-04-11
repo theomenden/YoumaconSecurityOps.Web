@@ -1,5 +1,7 @@
 using YoumaconSecurityOps.Core.Shared.Models;
 using YoumaconSecurityOps.Web.Client.UrlHashing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace YoumaconSecurityOps.Web.Client;
 

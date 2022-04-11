@@ -17,6 +17,24 @@
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/YSecOpsAK",
       "type": "secrets.keyVault",
       "connectionId": "VaultUri"
+    },
+    "redis1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Cache/Redis/ysecops",
+      "type": "redis.azure",
+      "connectionId": "CacheConnection"
+    },
+    "mssql2": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/ysecit/databases/youmaconsecurityops",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:YSecOpsDb"
+    },
+    "mssql6": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/ysecit/databases/ysec.eventstore",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Ysec.EventStore"
     }
   }
 }
