@@ -16,6 +16,6 @@ public class GetPronounsCache : DistributedCache<GetPronounsQuery, IEnumerable<P
 
     protected override string GetCacheKeyIdentifier(GetPronounsQuery request)
     {
-        return String.Empty;
+        return request.Issuer;
     }
 }

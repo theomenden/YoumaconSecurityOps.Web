@@ -23,17 +23,18 @@ public partial class YoumaconSecurityDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new Configurations.BannedListConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.ContactConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.IncidentConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.LocationConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.NonStaffPeopleConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.RadioScheduleConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.RoomScheduleConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.ShiftConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.StaffConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.StaffTypesRoleConfiguration());
-        modelBuilder.ApplyConfiguration(new Configurations.WatchListConfiguration());
+        modelBuilder.ApplyConfiguration(new BannedListConfiguration());
+        modelBuilder.ApplyConfiguration(new ContactConfiguration());
+        modelBuilder.ApplyConfiguration(new IncidentConfiguration());
+        modelBuilder.ApplyConfiguration(new LocationConfiguration());
+        modelBuilder.ApplyConfiguration(new NonStaffPeopleConfiguration());
+        modelBuilder.ApplyConfiguration(new PronounConfiguration());
+        modelBuilder.ApplyConfiguration(new RadioScheduleConfiguration());
+        modelBuilder.ApplyConfiguration(new RoomScheduleConfiguration());
+        modelBuilder.ApplyConfiguration(new ShiftConfiguration());
+        modelBuilder.ApplyConfiguration(new StaffConfiguration());
+        modelBuilder.ApplyConfiguration(new StaffTypesRoleConfiguration());
+        modelBuilder.ApplyConfiguration(new WatchListConfiguration());
 
         OnModelCreatingPartial(modelBuilder);
     }

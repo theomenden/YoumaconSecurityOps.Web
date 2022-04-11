@@ -1,4 +1,7 @@
-﻿namespace YoumaconSecurityOps.Core.Mediatr.Extensions;
+﻿using MediatR.Pipeline;
+using YoumaconSecurityOps.Core.Mediatr.Processors;
+
+namespace YoumaconSecurityOps.Core.Mediatr.Extensions;
 
 public static class CachingServiceCollectionExtensions
 {
@@ -53,6 +56,32 @@ public static class CachingServiceCollectionExtensions
 
             return new MediatorCacheInvalidationBehavior<TCache, TCacheResult, TTrigger, TTriggerResult>(cache, logger,
                 cachePrefix);
+        });
+
+        return services;
+    }
+
+    /// <summary>
+    /// Adds a cache invalidation trigger for query to query.
+    /// </summary>
+    /// <typeparam name="TCache">Query we want to invalidate</typeparam>
+    /// <typeparam name="TCacheResult">Result of the invalidated query</typeparam>
+    /// <typeparam name="TTrigger">Query to trigger invalidation</typeparam>
+    /// <typeparam name="TTriggerResult">Result of query to trigger invalidation</typeparam>
+    /// <param name="services">Services registered in the app</param>
+    /// <param name="cachePrefix">Used for invalidation. Defaults to query type namespace.name</param>
+    /// <returns><see cref="IServiceCollection"/> for further chaining</returns>
+    public static IServiceCollection RegisterCachingInvalidationForRequest<TCache, TCacheResult, TTrigger>(
+        this IServiceCollection services,
+        string cachePrefix = null)
+        where TCache : IRequest<TCacheResult>
+        where TTrigger : IRequest
+    {
+        services.AddTransient<IRequestPreProcessor<TTrigger>>(config =>
+        {
+            var cache = config.GetRequiredService<CacheAccessor<TCache, TCacheResult>>();
+            
+            return new MediatorCacheInvalidationPreProcessor<TTrigger, TCache, TCacheResult>(cache,cachePrefix);
         });
 
         return services;

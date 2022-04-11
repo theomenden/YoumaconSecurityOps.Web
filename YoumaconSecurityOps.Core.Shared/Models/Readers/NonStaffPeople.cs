@@ -23,6 +23,7 @@ public partial class NonStaffPeople : IEntity
     [ForeignKey(nameof(IncidentId))]
     [InverseProperty("NonStaffPeoples")]
     public virtual IncidentReader IncidentReader { get; set; } = null!;
+    
     [ForeignKey(nameof(PronounId))]
     [InverseProperty("NonStaffPeoples")]
     public virtual Pronoun Pronoun { get; set; } = null!;

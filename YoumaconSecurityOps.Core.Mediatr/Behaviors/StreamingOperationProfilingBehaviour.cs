@@ -12,16 +12,16 @@ where TRequest : IStreamRequest<TResponse>
         _logger = logger;
     }
     
-    public async IAsyncEnumerable<TResponse> Handle(TRequest request, [EnumeratorCancellation] CancellationToken cancellationToken, StreamHandlerDelegate<TResponse> next)
+    public IAsyncEnumerable<TResponse> Handle(TRequest request,CancellationToken cancellationToken, StreamHandlerDelegate<TResponse> next)
     {
         var stopwatch = Stopwatch.StartNew();
 
-        await foreach (var response in next().WithCancellation(cancellationToken).ConfigureAwait(false))
-        {
-            _logger.TraceMessageProfiling(stopwatch.ElapsedMilliseconds);
-            yield return response;
-        }
+        var response = next();
+        
+        _logger.TraceMessageProfiling(stopwatch.ElapsedMilliseconds);
 
         stopwatch.Stop();
+
+        return response;
     }
 }

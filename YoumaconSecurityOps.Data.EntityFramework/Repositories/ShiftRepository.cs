@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using YoumaconSecurityOps.Core.Shared.Extensions;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
@@ -24,6 +25,8 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
     public IAsyncEnumerable<ShiftReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new())
     {
         var shifts = dbContext.Shifts
+            .Include(sh => sh.CurrentLocation)
+            .Include(sh => sh.StartingLocation)
             .Include(sh => sh.StaffMember)
                 .ThenInclude(st => st.ContactInformation)
             .Include(sh => sh.StaffMember)
@@ -32,8 +35,6 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
             .Include(sh => sh.StaffMember)
                 .ThenInclude(st => st.StaffTypesRoles)
                     .ThenInclude(str => str.StaffType)
-            .Include(sh => sh.CurrentLocation)
-            .Include(sh => sh.StartingLocation)
             .AsAsyncEnumerable();
 
         return shifts;
@@ -77,6 +78,7 @@ internal sealed class ShiftRepository : IShiftAccessor, IShiftRepository
 
         return shift;
     }
+
     #endregion
 
     public IAsyncEnumerator<ShiftReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())

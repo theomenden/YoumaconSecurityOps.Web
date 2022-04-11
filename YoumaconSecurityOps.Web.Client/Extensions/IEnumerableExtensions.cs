@@ -51,9 +51,13 @@ namespace YoumaconSecurityOps.Web.Client.Extensions;
             return source.ToList();
         }
 
-        public static IEnumerable<IEnumerable<T>> Paging<T>(this IEnumerable<T> source, DataGridReadDataEventArgs<T> columnInfo)
+        public static IEnumerable<T> Paging<T>(this IEnumerable<T> source, DataGridReadDataEventArgs<T> columnInfo)
         {
-            return source.Chunk(columnInfo.PageSize).ToList();
+            return source
+                .Chunk(columnInfo.PageSize)
+                .ToArray()
+                [columnInfo.Page - 1]
+                .ToList();
         }
 
         private static IQueryable<T> SortBy<T>(this IQueryable<T> source, ColumnState columnState)

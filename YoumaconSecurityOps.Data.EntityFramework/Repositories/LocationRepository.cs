@@ -47,6 +47,16 @@ internal sealed class LocationRepository : ILocationAccessor, ILocationRepositor
         return hotels;
     }
 
+    public async Task<IEnumerable<LocationReader>> GetAllLocationsAsync(YoumaconSecurityDbContext dbContext,
+        CancellationToken cancellationToken = new CancellationToken())
+    {
+        var locations = dbContext.Locations
+            .OrderBy(l => l.Name)
+            .AsQueryable();
+
+        return await locations.ToListAsync(cancellationToken);
+    }
+
     #endregion
 
     public IAsyncEnumerator<LocationReader> GetAsyncEnumerator(CancellationToken cancellationToken = new())

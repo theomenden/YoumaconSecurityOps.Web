@@ -15,13 +15,5 @@ internal class GetPronounsQueryCache : CacheConfiguration<GetPronounsQuery, IEnu
             SlidingDuration = TimeSpan.FromHours(1)
         };
     }
-
-    protected override Action<IServiceCollection>[] ConfigureCacheInvalidation()
-    {
-        return new[]
-        {
-          RegisterInvalidator<GetPronounsQuery, IEnumerable<Pronoun>>()
-        };
-    }
 }
 

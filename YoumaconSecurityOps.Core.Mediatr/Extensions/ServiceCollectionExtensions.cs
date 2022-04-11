@@ -32,23 +32,22 @@ public static class ServiceCollectionExtensions
         services.AddScoped(typeof(IRequestPreProcessor<>), typeof(EmptyRequestPreProcessor<>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamingLoggingBehavior<,>));
-
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCacheInvalidationBehavior<,>));
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCachingBehavior<,>));
-
 #if DEBUG
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(OperationProfilingBehaviour<,>));
         services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamingOperationProfilingBehaviour<,>));
 #endif
-        services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(EmptyRequestPostProcessor<,>));
 
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCacheInvalidationBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCachingBehavior<,>));
+        
         services.RegisterBuiltCaches(containingType);
-        services.RegisterBuiltStreamingCaches(containingType);
 
         services.Scan(scan => scan
             .FromAssembliesOf(typeof(IMediator), containingType)
             .AddClasses()
             .AsImplementedInterfaces());
+
+        services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(EmptyRequestPostProcessor<,>));
 
         return services;
     }

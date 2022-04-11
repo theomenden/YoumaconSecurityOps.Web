@@ -16,17 +16,21 @@
       "type": "secrets",
       "connectionId": "VaultUri"
     },
-    "secrets2": {
-      "type": "secrets",
-      "connectionId": "VaultUri"
+    "mssql4": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:YSecITSecurity"
+    },
+    "redis1": {
+      "type": "redis",
+      "connectionId": "CacheConnection"
     },
     "mssql3": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:YoumaEventStore"
     },
-    "mssql4": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:YSecITSecurity"
+    "secrets2": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
     },
     "compute.appService1": {
       "group": "connections",

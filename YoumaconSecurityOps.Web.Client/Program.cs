@@ -1,5 +1,6 @@
+using Azure.Identity;
 Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
             .Enrich.FromLogContext()
             .Enrich.WithThreadId()
             .Enrich.WithMachineName()

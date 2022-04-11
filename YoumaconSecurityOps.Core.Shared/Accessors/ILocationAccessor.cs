@@ -9,4 +9,6 @@ public interface ILocationAccessor : IAccessor<LocationReader>
     /// <param name="cancellationToken"></param>
     /// <returns>An <see cref="IAsyncEnumerable{T}"/> where <c>T</c> is <seealso cref="LocationReader"/></returns>
     IAsyncEnumerable<LocationReader> GetHotels(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new());
+
+    Task<IEnumerable<LocationReader>> GetAllLocationsAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new());
 }

@@ -4,8 +4,6 @@ public partial class Pronoun
 {
     public Pronoun()
     {
-        Contacts = new HashSet<ContactReader>();
-        NonStaffPeoples = new HashSet<NonStaffPeople>();
     }
 
     [Key]
@@ -14,7 +12,8 @@ public partial class Pronoun
     public string Name { get; set; } = null!;
 
     [InverseProperty(nameof(ContactReader.Pronoun))]
-    public virtual ICollection<ContactReader> Contacts { get; set; }
+    public virtual ICollection<ContactReader> Contacts { get; set; } = new HashSet<ContactReader>(5);
+
     [InverseProperty(nameof(NonStaffPeople.Pronoun))]
-    public virtual ICollection<NonStaffPeople> NonStaffPeoples { get; set; }
+    public virtual ICollection<NonStaffPeople> NonStaffPeoples { get; set; } = new HashSet<NonStaffPeople>(5);
 }

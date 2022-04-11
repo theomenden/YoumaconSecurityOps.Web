@@ -32,5 +32,12 @@
             return builder =>
                 builder.RegisterCachingInvalidation<TCache, TResult, TTrigger, TTriggerResult>(cachePrefix);
         }
+
+        public Action<IServiceCollection> RegisterInvalidatorFromRequest<TTrigger>(string cachePrefix = null)
+            where TTrigger : IRequest
+        {
+            return builder =>
+                builder.RegisterCachingInvalidationForRequest<TCache, TResult, TTrigger>(cachePrefix);
+        }
     }
 }

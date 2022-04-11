@@ -63,20 +63,13 @@ public class Startup
         services.AddAutoMappingServices();
         
         services.AddFrontEndDataServices();
-
-        services.AddMediatR(typeof(Startup));
-
+        
         services.AddMediatrServices<Startup>();
 
         services.AddResponseCompression(options =>
         {
             options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                 new[] { MediaTypeNames.Application.Octet });
-        });
-
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "YoumaconSecurityOps.Api", Version = "v1" });
         });
 
         services.AddTransient<IUrlHasher, UrlHasher>();

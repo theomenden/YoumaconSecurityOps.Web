@@ -10,17 +10,14 @@ public class StreamingLoggingBehavior<TRequest, TResponse> : IStreamPipelineBeha
         _logger = logger;
     }
 
-    public async IAsyncEnumerable<TResponse> Handle(TRequest request, [EnumeratorCancellation] CancellationToken cancellationToken, StreamHandlerDelegate<TResponse> next)
+    public IAsyncEnumerable<TResponse> Handle(TRequest request, CancellationToken cancellationToken, StreamHandlerDelegate<TResponse> next)
     {
         _logger.LogInformation("Handling {requestType}", typeof(TRequest).FullName);
+        
+        var response = next();
 
-        _logger.LogInformation("Request Contents: {@request}", request);
-
-        await foreach (var response in next().WithCancellation(cancellationToken).ConfigureAwait(false))
-        {
-            yield return response;
-            _logger.LogInformation("Handled {tResponse}", typeof(TResponse).FullName);
-            _logger.LogInformation("Response Contents {@response}", response);
-        }
+        _logger.LogInformation("Handled {tResponse}", typeof(TResponse).FullName);
+        
+        return response;
     }
 }

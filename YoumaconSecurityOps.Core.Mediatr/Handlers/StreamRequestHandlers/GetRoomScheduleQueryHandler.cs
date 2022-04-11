@@ -23,9 +23,9 @@ internal class GetRoomScheduleQueryHandler: IStreamRequestHandler<GetRoomSchedul
 
     public async IAsyncEnumerable<RoomScheduleReader> Handle(GetRoomScheduleQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        await foreach (var room in _rooms.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        await foreach (var room in _rooms.GetAllAsync(context, cancellationToken))
         {
             yield return room;
         }

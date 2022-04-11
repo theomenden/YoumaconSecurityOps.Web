@@ -24,10 +24,9 @@ public class LocationService: ILocationService
         {
             await PurgeInvalidStoreAsync(cancellationToken);
 
-            var locations = await _mediator.CreateStream(locationsQuery, cancellationToken)
-                .ToArrayAsync(cancellationToken);
+            var locations = await _mediator.Send(locationsQuery, cancellationToken);
 
-            await _locationsIndexedDbRepository.CreateOrUpdateMultipleAsync(locations, cancellationToken);
+            await _locationsIndexedDbRepository.CreateOrUpdateMultipleAsync(locations.ToArray(), cancellationToken);
         }
 
         return await _locationsIndexedDbRepository.GetAllAsync(cancellationToken);

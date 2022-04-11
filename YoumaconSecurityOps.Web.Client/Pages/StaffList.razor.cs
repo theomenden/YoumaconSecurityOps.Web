@@ -29,8 +29,6 @@ public partial class StaffList : ComponentBase
 
     private ErrorBoundary? _errorBoundary;
 
-    private ApiResponse<List<StaffReader>> _apiResponse;
-
     private StaffReader _selectedStaffMember;
 
 
@@ -39,6 +37,8 @@ public partial class StaffList : ComponentBase
     private SpinKit _spinKitRef = new();
 
     private Boolean _isLoading = false;
+
+    private Boolean? _isRaveApproved;
 
     private Boolean _isBlackShirt;
 
@@ -52,7 +52,7 @@ public partial class StaffList : ComponentBase
 
     private Int32 _selectedRoleFilter = 0;
     
-    private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5, DataGridHeight = "36em", DataGridMaxHeight  = "40em"};
+    private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5};
     #endregion
 
     protected override void OnParametersSet()
@@ -63,10 +63,8 @@ public partial class StaffList : ComponentBase
     #region DataGrid Configuration Methods
     private async Task LoadStaffModels(CancellationToken cancellationToken = default)
     {
-        _apiResponse = await StaffService.GetStaffMembersWithResponseAsync(new GetStaffQuery(), cancellationToken);
-
-        _staffMembers = _apiResponse.Data;
-
+        _staffMembers = await StaffService.GetStaffMembersAsStreamAsync(new GetStaffQuery(), cancellationToken).ToListAsync(cancellationToken);
+        
         _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery(), cancellationToken);
 
         _staffTypes = await StaffService.GetStaffTypesAsync(new GetStaffTypesQuery(), cancellationToken);
@@ -89,15 +87,15 @@ public partial class StaffList : ComponentBase
         {
             var sortDeterminant = new DataGridHelpers<StaffReader>(e);
 
-            var columnToSort =
+            var columnInformation =
                 sortDeterminant.ColumnStates.Where(cs =>
                     cs.SortDirection is not SortDirection.Default).ToList();
 
             _totalStaffMembers = _staffMembers.Count();
 
             _gridDisplay = _staffMembers
-                .DynamicFilter(columnToSort)
-                .DynamicSort(columnToSort)
+                .DynamicFilter(columnInformation)
+                .DynamicSort(columnInformation)
                 .ToList();
         }
 
@@ -202,21 +200,29 @@ public partial class StaffList : ComponentBase
     #endregion
     #region Filtering Methods
 
-    private static bool OnStaffTypeFilter(object itemValue, object searchValue)
+    private bool OnStaffTypeFilter(object itemValue, object searchValue)
     {
+        var itemId = _staffTypes
+            .FirstOrDefault(s => !String.IsNullOrWhiteSpace(s?.Title) && s.Title.Equals(itemValue.ToString()))
+            ?.Id ?? 0;
+
         if (searchValue is int typeFilter)
         {
-            return typeFilter == 0 || typeFilter == Convert.ToInt32(itemValue);
+            return typeFilter == 0 || typeFilter == itemId;
         }
 
         return true;
     }
 
-    private static bool OnStaffRoleFilter(object itemValue, object searchValue)
+    private bool OnStaffRoleFilter(object itemValue, object searchValue)
     {
+        var itemId = _staffRoles
+            .FirstOrDefault(s => !String.IsNullOrWhiteSpace(s?.Name) && s.Name.Equals(itemValue.ToString()))
+            ?.Id ?? 0;
+
         if (searchValue is int roleFilter)
         {
-            return roleFilter == 0 || roleFilter == Convert.ToInt32(itemValue);
+            return roleFilter == 0 || roleFilter == Convert.ToInt32(itemId);
         }
 
         return true;
@@ -232,11 +238,11 @@ public partial class StaffList : ComponentBase
         return true;
     }
 
-    private static bool IsRaveApprovedFilter(object itemValue, object searchValue)
+    private bool IsRaveApprovedFilter(object itemValue, object searchValue)
     {
         if (searchValue is bool isRaveApprovedFilter)
         {
-            return isRaveApprovedFilter || false == Convert.ToBoolean(itemValue);
+            return isRaveApprovedFilter || false == Convert.ToBoolean(_isRaveApproved);
         }
 
         return true;

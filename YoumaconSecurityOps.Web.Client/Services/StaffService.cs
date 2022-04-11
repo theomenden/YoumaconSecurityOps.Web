@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.CompilerServices;
+
 namespace YoumaconSecurityOps.Web.Client.Services;
 
 public class StaffService : IStaffService
@@ -32,6 +34,14 @@ public class StaffService : IStaffService
         return await _mediator.CreateStream(staffQuery, cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    public async IAsyncEnumerable<StaffReader> GetStaffMembersAsStreamAsync(GetStaffQuery staffQuery, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        await foreach (var member in _mediator.CreateStream(staffQuery, cancellationToken))
+        {
+            yield return member;
+        }
+    }
+
     public async Task<ApiResponse<List<StaffReader>>> GetStaffMembersWithResponseAsync(GetStaffQuery staffQuery,
         CancellationToken cancellationToken = default)
     {
@@ -60,16 +70,16 @@ public class StaffService : IStaffService
 
         return responseObject;
     }
+
     public async Task<List<StaffRole>> GetStaffRolesAsync(GetStaffRolesQuery rolesQuery, CancellationToken cancellationToken = default)
     {
         if (await IsRolesStoreInvalidatedAsync(cancellationToken))
         {
             await PurgeInvalidRolesStoreAsync(cancellationToken);
 
-            var staffRoles =
-                await _mediator.CreateStream(rolesQuery, cancellationToken).ToArrayAsync(cancellationToken);
+            var staffRoles = await _mediator.Send(rolesQuery, cancellationToken);
 
-            await _rolesIndexedDbRepository.CreateOrUpdateMultipleAsync(staffRoles, cancellationToken);
+            await _rolesIndexedDbRepository.CreateOrUpdateMultipleAsync(staffRoles.ToArray(), cancellationToken);
         }
 
         return await _rolesIndexedDbRepository.GetAllAsync(cancellationToken);
@@ -81,10 +91,9 @@ public class StaffService : IStaffService
         {
             await PurgeInvalidStaffTypesStoreAsync(cancellationToken);
 
-            var staffTypes =
-                await _mediator.CreateStream(typesQuery, cancellationToken).ToArrayAsync(cancellationToken);
+            var staffTypes = await _mediator.Send(typesQuery, cancellationToken);
 
-            await _staffTypesIndexedDbRepository.CreateOrUpdateMultipleAsync(staffTypes, cancellationToken);
+            await _staffTypesIndexedDbRepository.CreateOrUpdateMultipleAsync(staffTypes.ToArray(), cancellationToken);
         }
 
         return await _staffTypesIndexedDbRepository.GetAllAsync(cancellationToken);

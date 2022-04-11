@@ -15,9 +15,9 @@ internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftLi
 
     public async IAsyncEnumerable<ShiftReader> Handle(GetShiftListQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        await foreach (var shift in _shifts.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        await foreach (var shift in _shifts.GetAllAsync(context, cancellationToken))
         {
             yield return shift;
         }
@@ -25,10 +25,9 @@ internal sealed class GetShiftListQueryHandler: IStreamRequestHandler<GetShiftLi
 
     public async IAsyncEnumerable<ShiftReader> Handle(GetShiftListWithParametersQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        await foreach (var shift in _shifts.GetAllThatMatchAsync(context,
-                           sh => request.Parameters.StaffIds.Contains(sh.StaffMember.Id), cancellationToken))
+        await foreach (var shift in _shifts.GetAllAsync(context, cancellationToken))
         {
             yield return shift;
         }

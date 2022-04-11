@@ -6,7 +6,7 @@ public partial class Index : ComponentBase
 {
     [Inject]
     public IShiftService ShiftService { get; init; }
-
+    
     private string _selectedSlide = "1";
 
     private bool _isLoading;

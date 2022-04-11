@@ -1,4 +1,6 @@
-﻿namespace YoumaconSecurityOps.Web.Client.Pages;
+﻿using Blazorise.DataGrid.Configuration;
+
+namespace YoumaconSecurityOps.Web.Client.Pages;
 
 public partial class Rooms : ComponentBase
 {
@@ -16,6 +18,11 @@ public partial class Rooms : ComponentBase
 
     private DataGrid<RoomScheduleReader> _dataGrid = new();
 
+    private static readonly VirtualizeOptions VirtualizeOptions = new ()
+    {
+        OverscanCount = 15
+    };
+
     private async Task LoadRooms(CancellationToken cancellationToken = default)
     {
         _gridDisplay = await RoomService.GetRoomScheduleAsync(new GetRoomScheduleQuery(), cancellationToken);
@@ -25,7 +32,6 @@ public partial class Rooms : ComponentBase
 
     private static void OnRowStyling(RoomScheduleReader room, DataGridRowStyling styling)
     {
-
         if (room is not null && room.IsCurrentlyOccupied)
         {
             styling.Background = Background.Warning;

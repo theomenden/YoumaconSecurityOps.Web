@@ -1,4 +1,6 @@
-﻿namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿using System.Collections;
+
+namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal sealed class StaffTypeRepository: IStaffTypeAccessor
 {
@@ -12,12 +14,13 @@ internal sealed class StaffTypeRepository: IStaffTypeAccessor
         _logger = logger;   
     }
 
-    public IAsyncEnumerable<StaffType> GetAll(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new CancellationToken())
-    {
-        var staffTypes = dbContext.StaffTypes.AsAsyncEnumerable()
-            .OrderBy(t => t.Id);
 
-        return staffTypes;
+    public async Task<IEnumerable<StaffType>> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default)
+    {
+        var staffTypes = dbContext.StaffTypes
+            .OrderByDescending(st => st.Id);
+
+        return await staffTypes.ToListAsync(cancellationToken);
     }
 
     public async Task<StaffType> WithId(YoumaconSecurityDbContext dbContext, Int32 staffTypeId, CancellationToken cancellationToken = new CancellationToken())
@@ -26,13 +29,18 @@ internal sealed class StaffTypeRepository: IStaffTypeAccessor
 
         return typeToFind;
     }
-
-    public IAsyncEnumerator<StaffType> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+    
+    public IEnumerator<StaffType> GetEnumerator()
     {
         using var context = _dbContext.CreateDbContext();
 
-        var staffTypeEnumerator = GetAll(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
+        var staffTypeEnumerator = GetAllAsync(context).Result.GetEnumerator();
 
         return staffTypeEnumerator;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

@@ -1,14 +1,17 @@
-﻿namespace YoumaconSecurityOps.Core.Shared.Accessors;
+﻿using System.Collections.Generic;
 
-public interface IStaffTypeAccessor: IAsyncEnumerable<StaffType>
+namespace YoumaconSecurityOps.Core.Shared.Accessors;
+
+public interface IStaffTypeAccessor: IEnumerable<StaffType>
 {
     /// <summary>
-    /// Retrieves the <see cref="StaffType"/>s in the database as an asynchronous stream
+    /// Retrieves the <see cref="StaffType"/>s in the database as a single operation, asynchronously
     /// </summary>
     /// <param name="dbContext">The caller supplied <see cref="DbContext"/></param>
     /// <param name="cancellationToken"></param>
-    /// <returns><see cref="IAsyncEnumerable{T}"/> where <c>T</c> is <seealso cref="StaffType"/></returns>
-    IAsyncEnumerable<StaffType> GetAll(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default);
+    /// <returns><see cref="Task{T}"/> where <c>T</c> is <seealso cref="IEnumerable{T}"/> : <seealso cref="StaffType"/></returns>
+    Task<IEnumerable<StaffType>> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default);
+
 
     /// <summary>
     /// Retrieves a single <see cref="StaffType"/> specified by the <param name="staffTypeId"></param> from the database

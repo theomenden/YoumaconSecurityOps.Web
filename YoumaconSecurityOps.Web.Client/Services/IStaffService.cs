@@ -33,6 +33,9 @@ public interface IStaffService
     Task<List<StaffReader>> GetStaffMembersAsync(GetStaffWithParametersQuery staffQuery,
         CancellationToken cancellationToken = default);
 
+    IAsyncEnumerable<StaffReader> GetStaffMembersAsStreamAsync(GetStaffQuery staffQuery,
+        CancellationToken cancellationToken = default);
+
     Task<StaffReader> GetStaffMemberAsync(Guid staffId, CancellationToken cancellationToken = default);
 
     /// <summary>

@@ -12,14 +12,13 @@ internal sealed class GetStaffQueryHandler: IStreamRequestHandler<GetStaffQuery,
         _dbContextFactory = dbContextFactory;
     }
 
-    public async IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request, [EnumeratorCancellation]CancellationToken cancellationToken)
+    public async IAsyncEnumerable<StaffReader> Handle(GetStaffQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        await foreach (var member in _staff.GetAllAsync(context, cancellationToken).ConfigureAwait(false))
+        await foreach (var member in _staff.GetAllAsync(context, cancellationToken))
         {
             yield return member;
         }
     }
-    
 }

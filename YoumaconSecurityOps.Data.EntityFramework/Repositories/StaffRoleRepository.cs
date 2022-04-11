@@ -1,4 +1,6 @@
 ﻿
+using System.Collections;
+
 namespace YoumaconSecurityOps.Data.EntityFramework.Repositories;
 
 internal class StaffRoleRepository : IStaffRoleAccessor
@@ -11,12 +13,11 @@ internal class StaffRoleRepository : IStaffRoleAccessor
     }
 
 
-    public IAsyncEnumerable<StaffRole> GetAll(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<StaffRole>> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default)
     {
-        var staffRoles = dbContext.StaffRoles.AsAsyncEnumerable()
-            .OrderBy(sr => sr.Id);
+        var staffRoles = dbContext.StaffRoles.OrderBy(sr => sr.Id);
             
-        return staffRoles;
+        return await staffRoles.ToListAsync(cancellationToken);
     }
     public Task<StaffRole> WithId(YoumaconSecurityDbContext dbContext, int staffRoleId, CancellationToken cancellationToken = default)
     {
@@ -25,10 +26,17 @@ internal class StaffRoleRepository : IStaffRoleAccessor
         return Task.FromResult(role);
     }
 
-    public IAsyncEnumerator<StaffRole> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+    public IEnumerator<StaffRole> GetEnumerator()
     {
-        using var context = _dbContext.CreateDbContext();
+        var context = _dbContext.CreateDbContext();
 
-        return GetAll(context, cancellationToken).GetAsyncEnumerator(cancellationToken);
+        var staffRoleAsyncEnumerator = GetAllAsync(context).Result.GetEnumerator();
+
+        return staffRoleAsyncEnumerator;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

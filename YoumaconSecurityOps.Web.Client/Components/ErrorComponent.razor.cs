@@ -12,7 +12,7 @@ public partial class ErrorComponent : ComponentBase
 
         sb.AppendLine("Errors are as follows");
         
-            sb.AppendJoin(Environment.NewLine, ApiErrors?.Select(ae => ae.ResponseMessage) ?? Array.Empty<String>());
+            sb.AppendJoin(Environment.NewLine, ApiErrors?.Select(ae => ae?.ResponseMessage) ?? Array.Empty<String>());
         
         return sb.ToString();
     }
@@ -24,7 +24,7 @@ public partial class ErrorComponent : ComponentBase
         sb.Append("Response Codes: ");
         
         sb.AppendJoin(' ',
-            ApiErrors?.GroupBy(ae => ae.ResponseCode).Select(r => $"{r.Key} {r.Count()}") ?? Array.Empty<String>());
+            ApiErrors?.GroupBy(ae => ae?.ResponseCode).Select(r => $"{r?.Key} {r?.Count()}") ?? Array.Empty<String>());
 
         return sb.ToString();
     }
@@ -35,7 +35,7 @@ public partial class ErrorComponent : ComponentBase
 
         sb.Append("Correlation Ids: ");
         
-        sb.AppendJoin(Environment.NewLine, ApiErrors?.Select(ae => ae.Outcome.CorrelationId) ?? Array.Empty<String>());
+        sb.AppendJoin(Environment.NewLine, ApiErrors?.Select(ae => ae?.Outcome.CorrelationId) ?? Array.Empty<String>());
 
         return sb.ToString();
     }
