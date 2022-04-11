@@ -35,8 +35,8 @@ public class Startup
 
         var appSettings = new AppSettings
         {
-            YoumaDbConnectionString = Configuration.GetConnectionString("YSecOpsDb"),
-            EventStoreConnectionString = Configuration.GetConnectionString("YoumaEventStore"),
+            YoumaDbConnectionString = WebHostEnvironment.IsDevelopmentOrStaging() ? Configuration.GetConnectionString("YSecOpsDb") : Configuration.GetConnectionString("YoumaconSecurityOpsDb"),
+            EventStoreConnectionString = WebHostEnvironment.IsDevelopmentOrStaging() ? Configuration.GetConnectionString("YoumaEventStore") : Configuration.GetConnectionString("Ysec.EventStore"),
             YSecItAuthConnectionString = Configuration.GetConnectionString("YSecITSecurity")
         };
         

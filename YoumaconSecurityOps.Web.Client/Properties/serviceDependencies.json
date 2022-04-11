@@ -4,10 +4,6 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:YSecItContextConnection"
     },
-    "compute.appService1": {
-      "group": "connections",
-      "type": "compute.appService"
-    },
     "signalr1": {
       "type": "signalr",
       "connectionId": "Azure:SignalR:ConnectionString"
@@ -39,6 +35,19 @@
     "redis1": {
       "type": "redis",
       "connectionId": "CacheConnection"
+    },
+    "compute.appService1": {
+      "group": "connections",
+      "type": "compute.appService",
+      "connectionId": null
+    },
+    "mssql5": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:YoumaconSecurityOpsDb"
+    },
+    "mssql6": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Ysec.EventStore"
     }
   }
 }
