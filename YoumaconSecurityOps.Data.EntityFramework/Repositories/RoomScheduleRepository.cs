@@ -17,6 +17,8 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public IAsyncEnumerable<RoomScheduleReader> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = default)
     {
         var rooms = dbContext.RoomSchedules
+            .OrderBy(r => r.Number)
+            .ThenBy(r => r.Floor)
             .AsAsyncEnumerable();
 
         return rooms;
@@ -27,6 +29,8 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     {
         var rooms = dbContext.RoomSchedules
             .Where(predicate)
+            .OrderBy(r => r.Number)
+            .ThenBy(r => r.Floor)
             .AsAsyncEnumerable();
 
         return rooms;
@@ -37,6 +41,8 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
 
         var rooms = context.RoomSchedules 
             .Where(rm => rm.IsCurrentlyOccupied == false)
+            .OrderBy(r => r.Number)
+            .ThenBy(r => r.Floor)
             .AsAsyncEnumerable();
 
         return rooms;
@@ -45,6 +51,8 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
     public IAsyncEnumerable<RoomScheduleReader> GetRoomsByStaffIdAsync(YoumaconSecurityDbContext context, Guid staffId, CancellationToken cancellationToken = default)
     {
         var rooms = context.RoomSchedules
+            .OrderBy(r => r.Number)
+            .ThenBy(r => r.Floor)
             .AsAsyncEnumerable();
 
         return rooms;
@@ -82,7 +90,7 @@ internal sealed class RoomScheduleRepository : IRoomScheduleAccessor, IRoomSched
         }
         catch (Exception ex)
         {
-            _logger.LogError("An exception occured while trying to add Room {roomNumber}: {@ex}", entity.RoomNumber, ex);
+            _logger.LogError("An exception occurred while trying to add Room {roomNumber}: {@ex}", entity.Number, ex);
             addResult = false;
         }
 

@@ -4,21 +4,13 @@ internal class GetRoomScheduleQueryHandler: IStreamRequestHandler<GetRoomSchedul
 {
     private readonly IRoomScheduleAccessor _rooms;
 
-    private readonly ILogger<GetRoomScheduleQueryHandler> _logger;
-
-    private readonly IMapper _mapper;
-
-    private readonly IMediator _mediator;
-
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContextFactory;
-    
-    public GetRoomScheduleQueryHandler(IRoomScheduleAccessor rooms, ILogger<GetRoomScheduleQueryHandler> logger, IMapper mapper, IMediator mediator, IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
+
+    public GetRoomScheduleQueryHandler(IRoomScheduleAccessor rooms,
+        IDbContextFactory<YoumaconSecurityDbContext> dbContextFactory)
     {
         _rooms = rooms;
-        _logger = logger;
-        _mapper = mapper;
-        _mediator = mediator;
-        _dbContextFactory = dbContextFactory;   
+        _dbContextFactory = dbContextFactory;
     }
 
     public async IAsyncEnumerable<RoomScheduleReader> Handle(GetRoomScheduleQuery request, [EnumeratorCancellation] CancellationToken cancellationToken)

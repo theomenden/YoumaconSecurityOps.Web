@@ -55,7 +55,7 @@
 </head>
 <body>
     <app>
-        @(await Html.RenderComponentAsync<App>(RenderMode.Server))
+        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>
 
     <div id="blazor-error-ui">
@@ -74,7 +74,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/luxon@1.27.0" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0" defer></script>
-    <script type="text/javascript" src="js/lazysizes/plugins/rias/ls.rias.min.js" defer></script>
     <script type="text/javascript" src="js/gsap/gsap.min.js" defer></script>
     <script type="text/javascript" src="js/gsap/CSSRulePlugin.min.js" defer></script>
     <script type="text/javascript" src="js/gsap/CustomEase.min.js" defer></script>

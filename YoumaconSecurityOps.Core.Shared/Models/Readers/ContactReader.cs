@@ -7,18 +7,27 @@ public partial class ContactReader : IEntity
 {
     [Key]
     public Guid Id { get; set; }
+    
     public Guid Staff_Id { get; set; }
+    
     public DateTime CreatedOn { get; set; }
+    
     public int Pronoun_Id { get; set; }
+
     [StringLength(100)]
     public string FirstName { get; set; } = null!;
+    
     [StringLength(100)]
     public string LastName { get; set; } = null!;
+    
     public long PhoneNumber { get; set; }
+    
     [StringLength(50)]
     public string Email { get; set; } = null!;
+    
     [StringLength(100)]
     public string? FacebookName { get; set; }
+    
     [StringLength(100)]
     public string? PreferredName { get; set; }
 

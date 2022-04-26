@@ -17,7 +17,6 @@ global using YoumaconSecurityOps.Core.EventStore.Events;
 global using YoumaconSecurityOps.Core.EventStore.Events.Added;
 global using YoumaconSecurityOps.Core.EventStore.Events.Created;
 global using YoumaconSecurityOps.Core.EventStore.Events.Failed;
-global using YoumaconSecurityOps.Core.EventStore.Events.Queried;
 global using YoumaconSecurityOps.Core.EventStore.Events.Updated;
 global using YoumaconSecurityOps.Core.EventStore.Storage;
 global using YoumaconSecurityOps.Core.Mediatr.Behaviors;

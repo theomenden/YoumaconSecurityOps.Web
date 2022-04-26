@@ -1,6 +1,4 @@
-﻿using Serilog.Configuration;
-using YoumaconSecurityOps.Core.Shared.Logging;
-
+﻿
 namespace YoumaconSecurityOps.Web.Client.Extensions;
 
 public static class EnvironmentLoggerConfigurationExtensions

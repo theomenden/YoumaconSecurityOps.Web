@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing.Constraints;
-
-namespace YoumaconSecurityOps.Web.Client.Extensions;
+﻿namespace YoumaconSecurityOps.Web.Client.Extensions;
 public static class ReadOnlySpanExtensions
 {
     public static bool Any<T>(this ReadOnlySpan<T> source, Func<T,bool> predicate)

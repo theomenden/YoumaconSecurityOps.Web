@@ -2,7 +2,6 @@
 
 public class TrackingCircuitHandler : CircuitHandler
 {
-
     public TrackingCircuitHandler(SessionDetails sessionData)
     {
         SessionData = sessionData;

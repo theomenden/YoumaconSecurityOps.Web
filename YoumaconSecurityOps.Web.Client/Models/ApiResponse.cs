@@ -1,8 +1,4 @@
-﻿using System;
-using YoumaconSecurityOps.Core.Shared.Enumerations;
-using YoumaconSecurityOps.Core.Shared.Responses;
-
-namespace YoumaconSecurityOps.Web.Client.Models;
+﻿namespace YoumaconSecurityOps.Web.Client.Models;
 
 /// <summary>
 /// A container for responses that we get from the backend

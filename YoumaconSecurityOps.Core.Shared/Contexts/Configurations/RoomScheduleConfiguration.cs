@@ -18,11 +18,32 @@ public partial class RoomScheduleConfiguration : IEntityTypeConfiguration<RoomSc
         .HasColumnName("SysEnd");
 }
 ));
+        entity.Property(e => e.Id)
+            .HasDefaultValueSql("(newsequentialid())");
 
-        entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
+        entity.Property(e => e.Keys)
+            .HasDefaultValueSql("((1))");
 
-        entity.Property(e => e.NumberOfKeys).HasDefaultValueSql("((1))");
+        entity.Property(e => e.ProvidedKeys)
+            .HasDefaultValueSql("((4))");
 
+        entity.Property(e => e.Floor)
+            .IsRequired();
+
+        entity.Property(e => e.Number)
+            .IsRequired();
+
+        entity.Property(e => e.Name)
+            .IsRequired();
+
+        entity.HasIndex(e => e.Location_Id)
+            .HasDatabaseName("IX_RoomSchedule_Location")
+            .IncludeProperties(e => new { e.Name, e.Keys, e.ProvidedKeys, e.IsCurrentlyOccupied });
+
+        entity.HasIndex(e => new { e.Floor, e.Number })
+            .HasDatabaseName("IX_RoomSchedule_Floor_Number")
+            .IncludeProperties(e => new { e.Name, e.Keys, e.ProvidedKeys, e.IsCurrentlyOccupied });
+           
         OnConfigurePartial(entity);
     }
 

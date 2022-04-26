@@ -61,6 +61,22 @@ public interface IStaffService
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Task{T}"/>: <see cref="List{T}"/>: <see cref="Pronouns"/></returns>
     Task<IEnumerable<Pronoun>> GetPronounsAsync(GetPronounsQuery pronounsQuery, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Retrieves the total count of staff members in the database
+    /// </summary>
+    /// <param name="getStaffMemberCount">Empty Query just to activate MediatR pipeline</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>The total number of staff members</returns>
+    Task<Int32> GetStaffCountAsync(GetStaffMemberCount getStaffMemberCount, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Retrieves the total count of staff members in the database that match the provided <paramref name="getFilteredStaffCount"/>
+    /// </summary>
+    /// <param name="getFilteredStaffCount">A query with filters that activates the MediatR pipeline</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>The number of staffmembers specified by the filters</returns>
+    Task<Int32> GetStaffCountAsync(GetFilteredStaffCount getFilteredStaffCount, CancellationToken cancellationToken = default);
     #endregion
     #region Add Methods
     /// <summary>

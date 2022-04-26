@@ -13,7 +13,7 @@ public partial class StaffList : ComponentBase
     
     #endregion
     #region Private Fields
-    private IEnumerable<StaffReader> _staffMembers = new List<StaffReader>(50);
+    private IList<StaffReader> _staffMembers = new List<StaffReader>(50);
 
     private IEnumerable<StaffReader> _gridDisplay = new List<StaffReader>(50);
 
@@ -51,8 +51,6 @@ public partial class StaffList : ComponentBase
     private Int32 _selectedTypeFilter = 0;
 
     private Int32 _selectedRoleFilter = 0;
-    
-    private readonly VirtualizeOptions _virtualizeOptions = new() { OverscanCount = 5};
     #endregion
 
     protected override void OnParametersSet()
@@ -60,10 +58,15 @@ public partial class StaffList : ComponentBase
         _errorBoundary?.Recover();
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStaffModels();
+    }
+
     #region DataGrid Configuration Methods
     private async Task LoadStaffModels(CancellationToken cancellationToken = default)
     {
-        _staffMembers = await StaffService.GetStaffMembersAsStreamAsync(new GetStaffQuery(), cancellationToken).ToListAsync(cancellationToken);
+        _staffMembers = await StaffService.GetStaffMembersAsync(new GetStaffQuery(), cancellationToken);
         
         _staffRoles = await StaffService.GetStaffRolesAsync(new GetStaffRolesQuery(), cancellationToken);
 
@@ -71,12 +74,7 @@ public partial class StaffList : ComponentBase
 
         _pronouns = await StaffService.GetPronounsAsync(new GetPronounsQuery(), cancellationToken);
 
-        StateHasChanged();
-    }
-
-    private static String DetermineDisplayIcon(Boolean statusCheck)
-    {
-        return statusCheck ? " fa-check-circle text-success" : " fa-times-circle text-danger";
+        _totalStaffMembers = await GetStaffMemberCount();
     }
 
     private async Task OnReadData(DataGridReadDataEventArgs<StaffReader> e)
@@ -91,16 +89,14 @@ public partial class StaffList : ComponentBase
                 sortDeterminant.ColumnStates.Where(cs =>
                     cs.SortDirection is not SortDirection.Default).ToList();
 
-            _totalStaffMembers = _staffMembers.Count();
+            _totalStaffMembers = _staffMembers.Count;
 
             _gridDisplay = _staffMembers
-                .DynamicFilter(columnInformation)
-                .DynamicSort(columnInformation)
                 .ToList();
         }
-
-        StateHasChanged();
     }
+
+    private Task<Int32> GetStaffMemberCount() => StaffService.GetStaffCountAsync(new GetStaffMemberCount());
 
     private static void OnStaffNewItemDefaultSetter(StaffReader member)
     {
@@ -266,6 +262,12 @@ public partial class StaffList : ComponentBase
         }
 
         return false;
+    }
+
+    private void OnClearFilterClicked()
+    {
+        _selectedRoleFilter = 0;
+        _selectedStaffType = 0;
     }
     #endregion
     #region Edit Form Methods

@@ -1,14 +1,10 @@
-﻿using Blazorise.DataGrid.Configuration;
-
-namespace YoumaconSecurityOps.Web.Client.Pages;
+﻿namespace YoumaconSecurityOps.Web.Client.Pages;
 
 public partial class Rooms : ComponentBase
 {
-    [Inject]
-    public IRoomService RoomService { get; init; }
+    [Inject] public IRoomService RoomService { get; init; }
 
-    [Inject]
-    public IStaffService StaffService { get; init; }
+    [Inject] public IStaffService StaffService { get; init; }
 
     private Int32 _totalRooms = 0;
 
@@ -17,12 +13,7 @@ public partial class Rooms : ComponentBase
     private RoomScheduleReader _selectedRoom;
 
     private DataGrid<RoomScheduleReader> _dataGrid = new();
-
-    private static readonly VirtualizeOptions VirtualizeOptions = new ()
-    {
-        OverscanCount = 15
-    };
-
+    
     private async Task LoadRooms(CancellationToken cancellationToken = default)
     {
         _gridDisplay = await RoomService.GetRoomScheduleAsync(new GetRoomScheduleQuery(), cancellationToken);
@@ -50,16 +41,15 @@ public partial class Rooms : ComponentBase
 
     private static string SetPopupTitle(PopupTitleContext<RoomScheduleReader> context)
     {
-        var popupTitle = context.LocalizationString + " Room ";
+        var popupTitle = context.LocalizationString;
 
         if (context.EditState is DataGridEditState.Edit)
         {
-            popupTitle += context.Item.RoomNumber;
+            popupTitle += $" Floor {context.Item.Floor} : Number {context.Item.Number}";
         }
 
         return popupTitle;
     }
-
 
     private async Task OnReadData(DataGridReadDataEventArgs<RoomScheduleReader> e)
     {

@@ -5,10 +5,15 @@
 /// </summary>
 public class SessionModel
 {
+    public SessionModel()
+    {
+        Id = Guid.NewGuid();
+    }
+
     /// <value>
     /// The unique Id for this session
     /// </value>
-    public Guid Id => Guid.NewGuid();
+    public Guid Id { get; }
 
     /// <value>
     /// The name associated with the session

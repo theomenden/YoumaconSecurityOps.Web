@@ -1,9 +1,8 @@
 ﻿using System.Net;
-using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using YoumaconSecurityOps.Core.Shared.Extensions;
 using YoumaconSecurityOps.Core.Shared.Logging;
-using YoumaconSecurityOps.Core.Shared.Responses;
-using YoumaconSecurityOps.Web.Client.Bootstrapping;
+
 namespace YoumaconSecurityOps.Web.Client.Middleware;
 
 public class ExceptionLogger
@@ -30,7 +29,6 @@ public class ExceptionLogger
         catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex, _options);
-            //navigationManager.NavigateTo("/appError");
         }
     }
 
@@ -43,8 +41,8 @@ public class ExceptionLogger
         outcome.Message = String.Format(Errors.UnhandledError, correlationId);
 
         options.AddResponseDetails?.Invoke(context, exception, outcome);
-
-        var resolvedExceptionMessage = GetInnermostExceptionMessage(exception);
+        
+        var resolvedExceptionMessage = exception.GetInnermostExceptionMessage();
 
         var level = _options.DetermineLogLevel?.Invoke(exception) ?? LogLevel.Error;
 
@@ -69,22 +67,5 @@ public class ExceptionLogger
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         await context.Response.WriteAsync(result);
         context.Response.Redirect("/appError");
-    }
-
-    private static string GetInnermostExceptionMessage(Exception exception)
-    {
-        var exceptionToCheck = exception;
-
-        while (exceptionToCheck.InnerException is not null)
-        {
-            if (exception.InnerException is null)
-            {
-                break;
-            }
-
-            exceptionToCheck = exceptionToCheck.InnerException;
-        }
-
-        return exceptionToCheck.Message;
     }
 }

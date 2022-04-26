@@ -2,19 +2,19 @@
 public class ColumnState
 {
     /// <value>
-    /// The Field to sort on
+    /// The Column to sort on
     /// </value>
-    public string Field { get; set; }
+    public string Field { get; init; }
 
     /// <value>
     /// The direction of the sort <c>asc</c>/<c>desc</c>
     /// </value>
-    public SortDirection SortDirection { get; set; }
+    public SortDirection SortDirection { get; init; }
     
     /// <value>
-    /// 
+    /// The value that the caller is searching for
     /// </value>
-    public String SearchValue { get; set; }
+    public String SearchValue { get; init; }
 
     /// <summary>
     /// Determines the direction for sorting on a column
@@ -24,8 +24,8 @@ public class ColumnState
     public String GetSortDirection() =>
         SortDirection switch
         {
-            SortDirection.Ascending => "asc",
-            SortDirection.Descending => "desc",
+            SortDirection.Ascending => DynamicSortingLabels.Ascending,
+            SortDirection.Descending => DynamicSortingLabels.Descending,
             _ => String.Empty
         };
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
-using YoumaconSecurityOps.Core.Shared.Responses;
 
 namespace YoumaconSecurityOps.Web.Client.Middleware;
 

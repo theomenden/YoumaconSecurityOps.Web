@@ -1,5 +1,4 @@
 ﻿
-using System.Runtime.CompilerServices;
 
 namespace YoumaconSecurityOps.Web.Client.Services;
 
@@ -26,7 +25,6 @@ public class StaffService : IStaffService
         _staffTypesIndexedDbRepository = staffTypesIndexedDbRepository;
         _rolesIndexedDbRepository = rolesIndexedDbRepository;
     }
-
 
     #region Query Methods
     public async Task<List<StaffReader>> GetStaffMembersAsync(GetStaffQuery staffQuery, CancellationToken cancellationToken = default)
@@ -109,6 +107,17 @@ public class StaffService : IStaffService
         throw new NotImplementedException();
     }
 
+    public Task<Int32> GetStaffCountAsync(GetStaffMemberCount getStaffMemberCount,
+        CancellationToken cancellationToken = default)
+    {
+        return _mediator.Send(getStaffMemberCount, cancellationToken);
+    }
+
+    public Task<Int32> GetStaffCountAsync(GetFilteredStaffCount getFilteredStaffCount,
+        CancellationToken cancellationToken = default)
+    {
+        return _mediator.Send(getFilteredStaffCount, cancellationToken);
+    }
     #endregion
 
     #region Adding Methods

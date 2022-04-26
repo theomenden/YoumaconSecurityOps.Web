@@ -1,9 +1,7 @@
-﻿#nullable enable
-using Microsoft.Extensions.Logging;
-
+﻿#nullable disable
 namespace YoumaconSecurityOps.Web.Client.Models;
 
-public sealed class SessionDetails: IDisposable
+public sealed class SessionDetails : IDisposable, IAsyncDisposable
 {
     private readonly List<SessionModel> _sessions = new(30);
 
@@ -14,8 +12,6 @@ public sealed class SessionDetails: IDisposable
         _logger = logger;
     }
 
-    public IEnumerable<SessionModel> Sessions => _sessions;
-
     public void Add(SessionModel session)
     {
         if (_sessions.Contains(session))
@@ -24,7 +20,7 @@ public sealed class SessionDetails: IDisposable
         }
 
         session.CreatedAt = DateTime.Now;
-           
+
         _sessions.Add(session);
 
         _logger.LogInformation("Successfully Added Session with Id {session}", session.Id);
@@ -32,50 +28,50 @@ public sealed class SessionDetails: IDisposable
 
     public void Delete(Guid sessionId)
     {
-        try
+        if (sessionId == Guid.Empty)
         {
-            _sessions.RemoveAll(session => session.Id.Equals(sessionId));
+
+            _logger.LogError("Could not remove session");
+            return;
         }
-        catch (ArgumentNullException ex)
-        {
-            _logger.LogError("Could not remove session(s) with Id {sessionId}: {@ex}", sessionId, ex);
-        }
+
+        _sessions.RemoveAll(session => session.Id.Equals(sessionId));
     }
 
     public void Delete(String? circuitId)
     {
-        try
+        if (String.IsNullOrWhiteSpace(circuitId))
         {
-            _sessions.RemoveAll(session => session.CircuitId?.Equals(circuitId) == true);
+            _logger.LogError("Circuit Id was not specified");
+            return;
         }
-        catch (ArgumentNullException ex)
+
+        if (_sessions.RemoveAll(session => session.CircuitId?.Equals(circuitId) == true) == 0)
         {
-            _logger.LogError("Could not remove session(s) due to: {@ex}", ex);
-        }
-        catch (NullReferenceException ex)
-        {
-            _logger.LogError("Unable to perform session removal for session with Id: {circuitId}: {@ex}", circuitId,
-                ex);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Unintelligible response created while trying to remove {circuitId}: {@ex}", circuitId, ex);
+            _logger.LogError("Session with circuitId {CircuitId} Could not be found", circuitId);
         }
     }
 
     public SessionModel Get(Guid sessionId)
     {
-        return _sessions.FirstOrDefault(session => session.Id == sessionId);
+        return _sessions.First(session => session.Id == sessionId);
     }
 
     public SessionModel Get(String circuitId)
     {
-        return _sessions.FirstOrDefault(session => session.CircuitId.Equals(circuitId));
+        return _sessions.First(session => session.CircuitId.Equals(circuitId));
     }
 
     public void Dispose()
     {
         _sessions.Clear();
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        _sessions.Clear();
+
+        return ValueTask.CompletedTask;
     }
 }
 

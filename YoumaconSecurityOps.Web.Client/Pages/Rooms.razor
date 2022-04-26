@@ -1,5 +1,4 @@
 ﻿@page "/room-schedule"
-@using Blazorise.DataGrid.Configuration
 <Jumbotron Background="Background.Dark" Border="Border.Rounded" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
     <JumbotronTitle Casing="CharacterCasing.Title" Size="JumbotronTitleSize.Is4">
         Room Schedule
@@ -24,21 +23,26 @@
           Striped
           FixedHeader
           @bind-SelectedRow="@_selectedRoom"
-          Class="table table-dark styled-table border-light border-2 rounded-2 shadow-lg vh-100"
+          Class="table-dark styled-table border-light border-2 rounded-2 shadow-lg"
           HeaderThemeContrast="ThemeContrast.Light"
+          FixedHeaderDataGridHeight ="70%"
+          FixedHeaderDataGridMaxHeight="80vh"
           DetailRowTrigger="@(context => context.Item.Id == _selectedRoom?.Id)"
           ReadData="OnReadData"
           Data="_gridDisplay"
           TItem="RoomScheduleReader"
-          Virtualize
-          VirtualizeOptions="@VirtualizeOptions"
+          ShowPager
+          ShowPageSizes
+          PagerPosition="DataGridPagerPosition.TopAndBottom"
+          CurrentPage="1"
+          PageSize="10"
           TotalItems="_totalRooms">
     <PopupTitleTemplate>
         @SetPopupTitle(context);
     </PopupTitleTemplate>
     <LoadingTemplate>
         <Div>
-            <SpinKit Type="SpinKitType.Grid" Color="#ab3ed8" />
+            <SpinKit Type="SpinKitType.Grid" Color="#ab3ed8" Size="3em"/>
         </Div>
     </LoadingTemplate>
     <EmptyTemplate>
@@ -66,15 +70,51 @@
                 <Button Color="Color.Default" Display="Display.None"></Button>
             </DeleteCommandTemplate>
         </DataGridCommandColumn>
-        <DataGridColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.RoomNumber)" Caption="Room Number" Sortable Editable>
+        <DataGridNumericColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.Number)" Caption="Room Number" Sortable Editable>
             <DisplayTemplate>
-                @context.RoomNumber
+                Floor @context.Floor : Room Number  @context.Number
             </DisplayTemplate>
-        </DataGridColumn>
-        <DataGridNumericColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.NumberOfKeys)" Caption="Keys" Sortable Editable>
+            <EditTemplate>
+                <Row Border="Border.Is1.Rounded.Dark.OnAll" Margin="Margin.Is2.OnY.OnWidescreen.Is3.OnY.OnMobile">
+                    <Column Flex="Flex.Column.JustifyContent.Between">
+                        <Field>
+                            <FieldLabel>Floor</FieldLabel>
+                            <NumericPicker TValue="Int32?" />
+                        </Field>
+                        <Field>
+                            <FieldLabel>Number</FieldLabel>
+                            <NumericPicker TValue="Int32?" />
+                        </Field>
+                    </Column>
+                </Row>
+            </EditTemplate>
+        </DataGridNumericColumn>
+        <DataGridNumericColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.Keys)" Caption="Keys given out" Sortable Editable>
             <DisplayTemplate>
-                @context.NumberOfKeys
+                @context.Keys
             </DisplayTemplate>
+            <EditTemplate>
+                <NumericPicker TValue="Int32?" />
+            </EditTemplate>
+        </DataGridNumericColumn>
+        <DataGridNumericColumn TItem="RoomScheduleReader" Field="@nameof(RoomScheduleReader.ProvidedKeys)" Caption="Provided Keys" Editable>
+            <DisplayTemplate>
+                @context.ProvidedKeys
+            </DisplayTemplate>
+            <EditTemplate>
+                <NumericPicker TValue="Int32?" />
+            </EditTemplate>
         </DataGridNumericColumn>
     </DataGridColumns>
+    <PageButtonTemplate>
+        <Span TextColor="TextColor.Light">
+            @context.PageNumer
+        </Span>
+    </PageButtonTemplate>
+    <NextPageButtonTemplate><Icon Name="IconName.StepForward" TextColor="TextColor.Light" /></NextPageButtonTemplate>
+    <PreviousPageButtonTemplate><Icon Name="IconName.StepBackward" TextColor="TextColor.Light" /></PreviousPageButtonTemplate>
+    <LastPageButtonTemplate><Icon Name="IconName.Forward" TextColor="TextColor.Light" /></LastPageButtonTemplate>
+    <FirstPageButtonTemplate><Icon Name="IconName.Backward" TextColor="TextColor.Light" /></FirstPageButtonTemplate>
+    <TotalItemsTemplate><Badge Color="Color.Success">@context.TotalItems Rooms</Badge></TotalItemsTemplate>
+    <ItemsPerPageTemplate></ItemsPerPageTemplate>
 </DataGrid>
