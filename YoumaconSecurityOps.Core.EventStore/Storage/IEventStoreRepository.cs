@@ -18,6 +18,7 @@ public interface IEventStoreRepository : IAsyncEnumerable<EventReader>
     /// <summary>
     /// Retrieval method for all events as a single operation rather than a stream from <see cref="EventStoreDbContext"/>
     /// </summary>
+    /// <param name="dbContext"></param>
     /// <param name="cancellationToken"></param>
     /// <returns><see cref="Task{T}"/>: <seealso cref="IEnumerable{T}"/> : <see cref="EventReader"/></returns>
     Task<IEnumerable<EventReader>> GetAllAsync(EventStoreDbContext dbContext, CancellationToken cancellationToken = default);
@@ -50,6 +51,7 @@ public interface IEventStoreRepository : IAsyncEnumerable<EventReader>
     /// <param name="dbContext">The supplied <see cref="EventStoreDbContext"/></param>
     /// <param name="aggregateId"></param>
     /// <param name="originatingVersion"></param>
+    /// <param name="callerName"></param>
     /// <param name="events"></param>
     /// <param name="aggregateName"></param>
     /// <param name="cancellationToken"></param>

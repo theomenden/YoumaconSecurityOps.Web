@@ -104,3 +104,11 @@ public abstract class EventBase: IEvent, IEquatable<EventBase>, IComparable<Even
 
 
 }
+
+public abstract record EventBase<T>(T Data, Guid AggregateId, Int32 MajorVersion, Int32 MinorVersion, String Aggregate, String Name) : IEvent<T>
+    where T : class
+{
+    public Guid Id { get; } = Guid.NewGuid();
+    
+    public DateTime CreatedAt { get; } = DateTime.Now;
+}

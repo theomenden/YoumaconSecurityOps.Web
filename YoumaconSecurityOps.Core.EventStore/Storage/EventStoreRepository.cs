@@ -95,13 +95,9 @@ internal sealed class EventStoreRepository : IEventStoreRepository
     }
     public async Task ApplyInitialEventAsync(EventStoreDbContext dbContext, EventReader initialEvent, CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("SaveAsync(EventReader initialEvent, CancellationToken cancellationToken = default): Attempting to add: {@initialEvent}", initialEvent);
-            
         dbContext.Events.Add(initialEvent);
 
         await dbContext.SaveChangesAsync(cancellationToken);
-
-        _logger.LogInformation("Aggregate for {initialEvent} added", initialEvent.Id);
     }
 
     public async Task ApplyNextEventAsync(EventStoreDbContext dbContext, EventReader nextEvent, CancellationToken cancellationToken = default)

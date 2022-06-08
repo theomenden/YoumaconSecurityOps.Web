@@ -107,3 +107,6 @@ public class EventReader : IEntity, IEquatable<EventReader>, IComparable<EventRe
     }
     #endregion
 }
+
+public record ImmutableEventReader<T>(T Data, Guid AggregateId, Int32 MajorVersion, Int32 MinorVersion, String Aggregate, String Name) : EventBase<T>(Data, AggregateId, MajorVersion, MinorVersion, Aggregate, Name)
+    where T: class;
