@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Blazored.FluentValidation" Version="2.0.1" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.1.5" />
-    <PackageReference Include="Blazorise" Version="0.9.4.4" />
+    <PackageReference Include="Blazorise" Version="0.9.5.7" />
     <PackageReference Include="Blazorise.Animate" Version="0.9.4.4" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.7" />
     <PackageReference Include="Blazorise.Charts" Version="0.9.4.4" />
