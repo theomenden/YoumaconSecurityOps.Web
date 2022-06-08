@@ -1,6 +1,13 @@
 {
   "extends": [
     "config:base",
-    ":preserveSemverRanges"
+    ":preserveSemverRanges"    
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["blazorise"],
+      "allowedVersions": ">=1.0.3",
+      "groupName": "blazorise packages"
+    }
   ]
 }

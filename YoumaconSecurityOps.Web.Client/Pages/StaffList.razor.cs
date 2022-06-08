@@ -48,9 +48,9 @@ public partial class StaffList : ComponentBase
 
     private Int32 _selectedStaffType;
 
-    private Int32 _selectedTypeFilter = 0;
+    private Int32 _selectedTypeFilter;
 
-    private Int32 _selectedRoleFilter = 0;
+    private Int32 _selectedRoleFilter;
     #endregion
 
     protected override void OnParametersSet()
