@@ -1,0 +1,12 @@
+﻿global using Exceptionless;
+global using Microsoft.EntityFrameworkCore;
+global using GenFu;
+global using Shouldly;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System.Threading.Tasks;
+global using Xunit;
+global using YoumaconSecurityOps.Core.Shared.Models.Readers;
+global using YoumaconSecurityOps.Data.EntityFramework.Repositories;

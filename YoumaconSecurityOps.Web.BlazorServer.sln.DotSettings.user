@@ -2,6 +2,15 @@
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e4bbff06_002D8911_002D405f_002D8590_002Dc6b3975e7258/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="WithId_ShouldReturnSpecificLocationUsingSuppliedId" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net5.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.LocationRepositoryTests.WithId_ShouldReturnSpecificLocationUsingSuppliedId&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.ContactRepositoryTests.GetAll_ShouldReturnAllContactsInDatabase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.LocationRepositoryTests.GetAll_ShouldReturnAllLocationsInDatabase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.LocationRepositoryTests.WithId_ShouldReturnSpecificLocationUsingSuppliedId&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.LocationRepositoryTests.GetHotels_ShouldReturnAllLocationsThatAreHotels&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.LocationRepositoryTests.Add_ShouldAddANewLocationToTheContext&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.StaffRepositoryTests.GetAll_ShouldReturnAllContactsInDatabase&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.StaffRepositoryTests.AddAsync_ShouldAddANewContactToTheDataContext&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.ContactRepositoryTests.WithId_ShouldReturnASingleContactThatMatchesSuppliedId&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.ContactRepositoryTests.AddAsync_ShouldAddANewContactToTheDataContext&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9911D8E9-369C-44AC-AE76-C5A9258D91F9::net6.0::YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories.StaffRepositoryTests.WithId_ShouldReturnASingleContactThatMatchesSuppliedId&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

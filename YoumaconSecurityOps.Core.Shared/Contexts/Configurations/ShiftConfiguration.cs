@@ -8,18 +8,6 @@ public partial class ShiftConfiguration : IEntityTypeConfiguration<ShiftReader>
 {
     public void Configure(EntityTypeBuilder<ShiftReader> entity)
     {
-        entity.ToTable(tb => tb.IsTemporal(ttb =>
-            {
-                ttb.UseHistoryTable("Shifts_History", "dbo");
-                ttb
-                    .HasPeriodStart("SysStart")
-                    .HasColumnName("SysStart");
-                ttb
-                    .HasPeriodEnd("SysEnd")
-                    .HasColumnName("SysEnd");
-            }
-        ));
-
         entity.Property(e => e.Id).HasDefaultValueSql("(newsequentialid())");
 
         entity.HasOne(d => d.CurrentLocation)

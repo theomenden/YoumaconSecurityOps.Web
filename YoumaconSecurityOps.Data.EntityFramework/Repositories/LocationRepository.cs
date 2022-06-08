@@ -7,6 +7,10 @@ internal sealed class LocationRepository : ILocationAccessor, ILocationRepositor
 {
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContext;
 
+    internal LocationRepository()
+    {
+    }
+
     public LocationRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext)
     {
         _dbContext = dbContext ?? throw new ArgumentException("Could not register DbContext: ", nameof(dbContext));

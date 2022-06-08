@@ -23,6 +23,7 @@ public partial class RadioScheduleReader : IEntity
     [ForeignKey(nameof(LastStaffToHave_Id))]
     [InverseProperty(nameof(StaffReader.RadioSchedules))]
     public virtual StaffReader LastStaffToHave { get; set; } = null!;
+    
     [ForeignKey(nameof(Location_Id))]
     [InverseProperty("RadioSchedules")]
     public virtual LocationReader Location { get; set; } = null!;

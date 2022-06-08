@@ -5,15 +5,6 @@
 [Index(nameof(RoomId), Name = "IX_Staff_RoomId")]
 public partial class StaffReader : IEntity
 {
-    public StaffReader()
-    {
-        IncidentOpsManagers = new HashSet<IncidentReader>();
-        IncidentRecordedBies = new HashSet<IncidentReader>();
-        RadioSchedules = new HashSet<RadioScheduleReader>();
-        Shifts = new HashSet<ShiftReader>();
-        StaffTypesRoles = new HashSet<StaffTypesRole>();
-    }
-
     [Key]
     public Guid Id { get; set; }
     
@@ -45,16 +36,17 @@ public partial class StaffReader : IEntity
     public virtual ContactReader ContactInformation { get; set; }
     
     [InverseProperty(nameof(IncidentReader.OpsManager))]
-    public virtual ICollection<IncidentReader> IncidentOpsManagers { get; set; }
-    [InverseProperty(nameof(IncidentReader.RecordedBy))]
-    public virtual ICollection<IncidentReader> IncidentRecordedBies { get; set; }
-    [InverseProperty(nameof(RadioScheduleReader.LastStaffToHave))]
-    public virtual ICollection<RadioScheduleReader> RadioSchedules { get; set; }
-    [InverseProperty(nameof(ShiftReader.StaffMember))]
-    public virtual ICollection<ShiftReader> Shifts { get; set; }
-    
-    [InverseProperty(nameof(StaffTypesRole.Staff))]
-    public virtual ICollection<StaffTypesRole> StaffTypesRoles { get; set; }
+    public virtual ICollection<IncidentReader> IncidentOpsManagers { get; set; } = new HashSet<IncidentReader>();
 
-  
+    [InverseProperty(nameof(IncidentReader.RecordedBy))]
+    public virtual ICollection<IncidentReader> IncidentRecordedBies { get; set; } = new HashSet<IncidentReader>();
+
+    [InverseProperty(nameof(RadioScheduleReader.LastStaffToHave))]
+    public virtual ICollection<RadioScheduleReader> RadioSchedules { get; set; } = new HashSet<RadioScheduleReader>();
+
+    [InverseProperty(nameof(ShiftReader.StaffMember))]
+    public virtual ICollection<ShiftReader> Shifts { get; set; } = new HashSet<ShiftReader>();
+
+    [InverseProperty(nameof(StaffTypesRole.Staff))]
+    public virtual ICollection<StaffTypesRole> StaffTypesRoles { get; set; } = new HashSet<StaffTypesRole>();
 }

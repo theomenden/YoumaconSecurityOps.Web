@@ -3,8 +3,7 @@
 public class EventReaderService: IEventReaderService
 {
     private readonly IMediator _mediator;
-
-
+    
     public EventReaderService(IMediator mediator)
     {
         _mediator = mediator;

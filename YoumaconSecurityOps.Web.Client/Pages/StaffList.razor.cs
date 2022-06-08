@@ -1,5 +1,4 @@
-﻿using Blazorise.DataGrid.Configuration;
-using Blazorise.SpinKit;
+﻿using Blazorise.SpinKit;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace YoumaconSecurityOps.Web.Client.Pages;
@@ -30,8 +29,7 @@ public partial class StaffList : ComponentBase
     private ErrorBoundary? _errorBoundary;
 
     private StaffReader _selectedStaffMember;
-
-
+    
     private Blazorise.Modal _modalRef = new();
 
     private SpinKit _spinKitRef = new();

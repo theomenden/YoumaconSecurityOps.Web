@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using YoumaconSecurityOps.Core.Shared.Context;
+﻿using YoumaconSecurityOps.Core.Shared.Contexts;
 
 namespace YoumaconSecurityOps.Data.EntityFramework.Tests;
 
@@ -10,6 +8,7 @@ public sealed class YoumaconTestDbContext : YoumaconSecurityDbContext
         : base(Options())
     {
     }
+
     private static DbContextOptions<YoumaconSecurityDbContext> Options()
     {
         return new DbContextOptionsBuilder<YoumaconSecurityDbContext>()

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using YoumaconSecurityOps.Core.Shared.Responses;
-
-namespace YoumaconSecurityOps.Web.Client.Middleware;
+﻿namespace YoumaconSecurityOps.Web.Client.Middleware;
 
 public class ApiExceptionOptions
 {

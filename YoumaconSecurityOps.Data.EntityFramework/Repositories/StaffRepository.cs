@@ -9,6 +9,10 @@ internal sealed class StaffRepository : IStaffAccessor, IStaffRepository
 
     private readonly ILogger<StaffRepository> _logger;
 
+    internal StaffRepository()
+    {
+    }
+
     public StaffRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext, ILogger<StaffRepository> logger)
     {
         _dbContext = dbContext;

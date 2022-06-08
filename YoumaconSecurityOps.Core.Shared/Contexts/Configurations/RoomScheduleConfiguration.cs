@@ -7,17 +7,6 @@ public partial class RoomScheduleConfiguration : IEntityTypeConfiguration<RoomSc
 {
     public void Configure(EntityTypeBuilder<RoomScheduleReader> entity)
     {
-        entity.ToTable(tb => tb.IsTemporal(ttb =>
-{
-    ttb.UseHistoryTable("RoomSchedule_HISTORY", "dbo");
-    ttb
-        .HasPeriodStart("SysStart")
-        .HasColumnName("SysStart");
-    ttb
-        .HasPeriodEnd("SysEnd")
-        .HasColumnName("SysEnd");
-}
-));
         entity.Property(e => e.Id)
             .HasDefaultValueSql("(newsequentialid())");
 

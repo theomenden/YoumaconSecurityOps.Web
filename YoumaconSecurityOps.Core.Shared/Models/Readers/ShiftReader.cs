@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
+﻿namespace YoumaconSecurityOps.Core.Shared.Models.Readers;
 
 [Index(nameof(CheckedInAt), nameof(CheckedOutAt), Name = "IX_Shifts_CheckedInAt_CheckedOutAt")]
 [Index(nameof(StaffId), Name = "IX_Shifts_StaffId")]

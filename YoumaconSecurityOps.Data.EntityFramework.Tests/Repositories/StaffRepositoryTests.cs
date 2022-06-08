@@ -1,51 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exceptionless;
-using GenFu;
-using Xunit;
-using YoumaconSecurityOps.Core.Shared.Models.Readers;
-using YoumaconSecurityOps.Data.EntityFramework.Repositories;
+﻿
 
-namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories
+namespace YoumaconSecurityOps.Data.EntityFramework.Tests.Repositories;
+
+public class StaffRepositoryTests
 {
-    public class StaffRepositoryTests
+    private readonly YoumaconTestDbContext _testDbContext;
+
+    private readonly IEnumerable<StaffReader> _staffMembers;
+
+    private readonly StaffRepository _testRepository;
+
+    public StaffRepositoryTests()
     {
-        private readonly YoumaconTestDbContext _testDbContext;
+        _staffMembers = new List<StaffReader>(50);
 
-        private readonly IEnumerable<StaffReader> _staffMembers;
+        _staffMembers = GenerateStaffMembers();
 
-        private readonly StaffRepository _staff;
+        _testDbContext = new YoumaconTestDbContext();
 
-        public StaffRepositoryTests()
-        {
-            _testDbContext = new YoumaconTestDbContext();
+        _testDbContext.StaffMembers.AddRange(_staffMembers);
 
-            _staffMembers = new List<StaffReader>(50);
+        _testDbContext.SaveChanges();
 
-            _staffMembers = GenerateStaffMembers();
-        }
+        _testRepository = new StaffRepository();
+    }
 
-        private static IEnumerable<StaffReader> GenerateStaffMembers()
-        {
-            var membersToGenerate = RandomData.GetInt(2,50);
+    [Fact]
+    public async Task GetAll_ShouldReturnAllContactsInDatabase()
+    {
+        //ARRANGE
+        var countOfContacts = _staffMembers.Count();
 
-            A.Configure<ContactReader>()
-                .Fill(a => a.LastName).AsLastName()
-                .Fill(b => b.FirstName).AsFirstName()
-                .Fill(c => c.FacebookName).AsMusicArtistName()
-                .Fill(d => d.PhoneNumber, RandomData.GetLong(1111111111, 9999999999))
-                .Fill(e => e.Email).AsEmailAddress();
-
-            var contactInformation = A.ListOf<ContactReader>(membersToGenerate);
-
-            A.Configure<StaffReader>()
-                .Fill(a => a.ContactId, contactInformation.Random().Id);
+        //ACT
+        var result = await _testRepository.GetAllAsync(_testDbContext).ToListAsync();
 
 
-            return A.ListOf<StaffReader>(membersToGenerate);
-        }
+        //ASSERT
+        result.ShouldSatisfyAllConditions(
+            () => result.ShouldNotBeEmpty(),
+            () => result.Count.ShouldBe(countOfContacts),
+            () => result.ShouldContain(_staffMembers.Random())
+        );
+    }
+
+    [Fact]
+    public async Task WithId_ShouldReturnASingleContactThatMatchesSuppliedId()
+    {
+        //ARRANGE
+        var contactToRetrieve = _staffMembers.Random();
+
+        //ACT
+        var result = await _testRepository.WithIdAsync(_testDbContext, contactToRetrieve.Id);
+
+
+        //ASSERT
+        result.ShouldSatisfyAllConditions(
+            () => result.ShouldNotBeNull(),
+            () => result.ShouldBe(contactToRetrieve)
+        );
+    }
+
+    [Fact]
+    public async Task AddAsync_ShouldAddANewContactToTheDataContext()
+    {
+        //ARRANGE
+        var countOfContacts = _staffMembers.Count();
+
+        var staffMemberToAdd = A.New<StaffReader>();
+
+        //ACT
+        var result = await _testRepository.AddAsync(_testDbContext, staffMemberToAdd);
+
+        //ASSERT
+        result.ShouldSatisfyAllConditions(
+            () => result.ShouldBeTrue(),
+            () => _testDbContext.StaffMembers.Count().ShouldBe(++countOfContacts)
+        );
+    }
+
+    private static IEnumerable<StaffReader> GenerateStaffMembers()
+    {
+        var membersToGenerate = RandomData.GetInt(2,50);
+
+        return A.ListOf<StaffReader>(membersToGenerate);
     }
 }

@@ -9,6 +9,10 @@ internal sealed class ContactRepository : IContactAccessor, IContactRepository
 
     private readonly IDbContextFactory<YoumaconSecurityDbContext> _dbContext;
 
+    internal ContactRepository()
+    {
+    }
+
     public ContactRepository(IDbContextFactory<YoumaconSecurityDbContext> dbContext, ILogger<ContactRepository> logger)
     {
         _dbContext = dbContext;
