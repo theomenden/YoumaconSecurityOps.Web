@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj" />
-    <ProjectReference Include="..\YoumaconSecurityOps.Data.EntityFramework\YoumaconSecurityOps.Data.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

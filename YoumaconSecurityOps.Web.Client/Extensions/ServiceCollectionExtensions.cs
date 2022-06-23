@@ -10,15 +10,8 @@ public static class ServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/> for further registration chaining</returns>
     public static IServiceCollection AddApplicationRegistrations(this IServiceCollection services, AppSettings appSettings)
     {
-        services.AddDataAccessServices(appSettings.YoumaDbConnectionString);
-
-        services.AddEventStoreServices(appSettings.EventStoreConnectionString);
-
-        services.AddAutoMappingServices();
 
         services.AddFrontEndDataServices();
-
-        services.AddMediatrServices<Program>();
 
         services.AddIndexedDbServices();
 

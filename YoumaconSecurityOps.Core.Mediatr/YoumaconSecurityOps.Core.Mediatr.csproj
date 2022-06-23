@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YoumaconSecurityOps.Core.EventStore\YoumaconSecurityOps.Core.EventStore.csproj" />
     <ProjectReference Include="..\YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj" />
   </ItemGroup>
 

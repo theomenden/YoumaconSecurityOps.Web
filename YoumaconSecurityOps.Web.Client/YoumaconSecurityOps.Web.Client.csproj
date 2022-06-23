@@ -29,6 +29,12 @@
 		<WriteLinesToFile File="Properties\VersionInfo.cs" Lines="$(AssemblyFileVersionAttribute)" Overwrite="true">
 		</WriteLinesToFile>
 	</Target>
+	<ItemGroup>
+	  <Compile Remove="Exceptions\**" />
+	  <Content Remove="Exceptions\**" />
+	  <EmbeddedResource Remove="Exceptions\**" />
+	  <None Remove="Exceptions\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
@@ -111,7 +117,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Exceptions\" />
 		<Folder Include="wwwroot\css\" />
 	</ItemGroup>
 
@@ -130,10 +135,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\YoumaconSecurityOps.Core.AutoMapper\YoumaconSecurityOps.Core.AutoMapper.csproj" />
-		<ProjectReference Include="..\YoumaconSecurityOps.Core.Mediatr\YoumaconSecurityOps.Core.Mediatr.csproj" />
 		<ProjectReference Include="..\YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj" />
-		<ProjectReference Include="..\YoumaconSecurityOps.Data.EntityFramework\YoumaconSecurityOps.Data.EntityFramework.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

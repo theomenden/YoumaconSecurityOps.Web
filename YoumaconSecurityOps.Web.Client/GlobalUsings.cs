@@ -7,7 +7,6 @@ global using Blazorise.Charts.Streaming;
 global using Blazorise.DataGrid;
 global using Blazorise.Icons.FontAwesome;
 #endregion
-global using MediatR;
 #region Microsoft Usings
 global using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 global using Microsoft.AspNetCore.Components;

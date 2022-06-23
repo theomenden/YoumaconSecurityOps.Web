@@ -30,8 +30,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\YoumaconSecurityOps.Core.EventStore\YoumaconSecurityOps.Core.EventStore.csproj" />
-  </ItemGroup>
-
 </Project>
