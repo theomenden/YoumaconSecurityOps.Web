@@ -21,46 +21,4 @@
              Italic>
         Your upcoming shifts are
     </Heading>
-
-    @if (!_isLoading && _shiftsForStaffMember?.Any() == true)
-    {
-        <ListGroup Flush Flex="Flex.InlineFlex.JustifyContent.Between" TextOverflow="TextOverflow.NoWrap">
-            <ListGroupItem Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Is2.RoundedBottom.Light.OnBottom" Shadow="Shadow.Default">
-                <Fields>
-                    <Field>
-                        <Heading Size="HeadingSize.Is2">Starts At</Heading>
-                    </Field>
-                    <Field>
-                        <Heading Size="HeadingSize.Is2">Location</Heading>
-                    </Field>
-                    <Field>
-                        <Heading Size="HeadingSize.Is2">Type & Role</Heading>
-                    </Field>
-                </Fields>
-            </ListGroupItem>
-            <Repeater TItem="ShiftReader" Items="_shiftsForStaffMember">
-                <ListGroupItem Background="Background.Dark" TextColor="TextColor.Light" Margin="Margin.Is2.OnY.OnWidescreen.Is3.OnY.OnMobile" Border="Border.Is2.Light.OnAll.Rounded" Shadow="Shadow.Default">
-                    <Fields>
-                        <Field>
-                            <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize" TextOverflow="TextOverflow.Wrap">
-                                @context.StartAt.ToString("f")
-                            </Paragraph>
-                        </Field>
-                        <Field>
-                            <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">
-                                @context.StartingLocation.Name
-                            </Paragraph>
-                        </Field>
-                        <Field>
-                            <Tooltip Text="@($"{context.StaffMember.StaffType?.Description}{Environment.NewLine}{context.StaffMember.StaffRole?.Name}")" Inline Placement="TooltipPlacement.TopEnd">
-                                <Paragraph TextWeight="TextWeight.Bold" TextTransform="TextTransform.Capitalize">
-                                    @context.StaffMember.StaffType?.Title : @context.StaffMember.StaffRole?.Name
-                                </Paragraph>
-                            </Tooltip>
-                        </Field>
-                    </Fields>
-                </ListGroupItem>
-            </Repeater>
-        </ListGroup>
-    }
 </Container>

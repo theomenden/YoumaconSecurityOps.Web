@@ -69,18 +69,6 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddFrontEndDataServices(this IServiceCollection services)
     {
-        services.AddSingleton<YSecServiceOptions>();
-        
-        services
-            .AddScoped<IContactService, ContactService>()
-            .AddScoped<IEventReaderService, EventReaderService>()
-            .AddScoped<IIncidentService, IncidentService>()
-            .AddScoped<ILocationService, LocationService>()
-            .AddScoped<IRadioScheduleService, RadioScheduleService>()
-            .AddScoped<IRoomService, RoomService>()
-            .AddScoped<IStaffService, StaffService>()
-            .AddScoped<IShiftService, ShiftService>();
-
         return services;
     }
 
@@ -88,11 +76,7 @@ public static class ServiceCollectionExtensions
     {
         services
             .AddScoped<IModuleFactory, EsModuleFactory>()
-            .AddScoped<YsecIndexedDbContext>()
-            .AddScoped<PronounsIndexedDbRepository>()
-            .AddScoped<LocationsIndexedDbRepository>()
-            .AddScoped<StaffRolesIndexedDbRepository>()
-            .AddScoped<StaffTypesIndexedDbRepository>();
+            .AddScoped<YsecIndexedDbContext>();
         
         return services;
     }

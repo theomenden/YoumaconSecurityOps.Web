@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="IsHistoricalQuery"><see cref="Boolean"/> to notify if the caller wants to query the underlying history table</param>
 /// <remarks><see cref="IEntity"/></remarks>
-public abstract record QueryStringParameters(bool IsHistoricalQuery = false) : IEntity
+public abstract record QueryStringParameters(bool IsHistoricalQuery = false)
 {
     protected QueryStringParameters()
         : this(false)

@@ -15,7 +15,7 @@ public interface IAccessor<T>
     /// <param name="dbContext">The Caller Supplied DbContext</param>
     /// <param name="cancellationToken"></param>
     /// <returns>An asynchronous stream of the entities (<see cref="IAsyncEnumerable{T}"/>) of type <typeparamref name="T"/></returns>
-    IAsyncEnumerable<T> GetAllAsync(YoumaconSecurityDbContext dbContext, CancellationToken cancellationToken = new ());
+    IAsyncEnumerable<T> GetAllAsync(CancellationToken cancellationToken = new ());
 
     /// <summary>
     /// Retrieves all entities of type <typeparam name="T"></typeparam> that match the given <param name="predicate"></param>
@@ -24,7 +24,7 @@ public interface IAccessor<T>
     /// <param name="predicate">A list of conditions to match against</param>
     /// <param name="cancellationToken"></param>
     /// <returns>An asynchronous stream of the entities (<see cref="IAsyncEnumerable{T}"/>) of type <typeparamref name="T"/></returns>
-    IAsyncEnumerable<T> GetAllThatMatchAsync(YoumaconSecurityDbContext dbContext, Expression<Func<T,bool>> predicate, CancellationToken cancellationToken = default);
+    IAsyncEnumerable<T> GetAllThatMatchAsync(Expression<Func<T,bool>> predicate, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a single entity of Type <c>T</c> from it's respective table in the database
@@ -33,5 +33,5 @@ public interface IAccessor<T>
     /// <param name="entityId">The supplied Id for lookup</param>
     /// <param name="cancellationToken"></param>
     /// <returns>A <see cref="Task{T}"/> of <typeparamref name="T"/></returns>
-    Task<T> WithIdAsync(YoumaconSecurityDbContext dbContext,Guid entityId, CancellationToken cancellationToken = new());
+    Task<T> WithIdAsync(Guid entityId, CancellationToken cancellationToken = new());
 }
