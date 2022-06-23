@@ -21,9 +21,7 @@ try
     builder.Host
         .ConfigureAppConfiguration((context, config) =>
         {
-            var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri") ?? String.Empty);
-            config.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential())
-                .AddJsonFile("appsettings.json", true, true)
+            config.AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
         })
@@ -47,8 +45,8 @@ try
 
     var appSettings = new AppSettings
     {
-        YoumaDbConnectionString = webHostEnvironment.IsDevelopmentOrStaging() ? configurationManager.GetConnectionString("YSecOpsDb") : configurationManager.GetConnectionString("YoumaconSecurityOpsDb"),
-        EventStoreConnectionString = webHostEnvironment.IsDevelopmentOrStaging() ? configurationManager.GetConnectionString("YoumaEventStore") : configurationManager.GetConnectionString("Ysec.EventStore"),
+        YoumaDbConnectionString = configurationManager.GetConnectionString("YSecOpsDb"),
+        EventStoreConnectionString = configurationManager.GetConnectionString("YoumaEventStore"),
         YSecItAuthConnectionString = configurationManager.GetConnectionString("YSecITSecurity")
     };
 
@@ -56,6 +54,7 @@ try
         .AddBlazorise(options =>
         {
             options.Immediate = true; // optional
+            options.ShowNumericStepButtons = true;
         })
         .AddBootstrap5Providers()
         .AddBootstrap5Components()

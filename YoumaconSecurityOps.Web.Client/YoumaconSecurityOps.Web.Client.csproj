@@ -91,12 +91,12 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.6" />
-		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.0" />
-		<PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.25.0" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
+		<PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.25.1" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" />
 		<PackageReference Include="Nosthy.Blazor.DexieWrapper" Version="0.4.5" />
-		<PackageReference Include="NuGet.Versioning" Version="6.2.0" />
+		<PackageReference Include="NuGet.Versioning" Version="6.2.1" />
 		<PackageReference Include="Serilog" Version="2.11.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 		<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
@@ -106,12 +106,12 @@
 		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
 		<PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
-		<PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="3.1.0" />
+		<PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.19.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.18" />
 	</ItemGroup>
@@ -136,6 +136,9 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj" />
+		<ProjectReference Include="..\YsecOps.Core.Mediator\YsecOps.Core.Mediator.csproj" />
+		<ProjectReference Include="..\YSecOps.Data.EfCore\YSecOps.Data.EfCore.csproj" />
+		<ProjectReference Include="..\YSecOps.Events.EfCore\YSecOps.Events.EfCore.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

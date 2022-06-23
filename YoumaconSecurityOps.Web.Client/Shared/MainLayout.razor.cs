@@ -30,6 +30,7 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
     protected override async Task OnInitializedAsync()
     {
         _isLoading = true;
+        
         var circuitId = String.Empty;
 
         if (CircuitHandler is TrackingCircuitHandler circuitHandler)
@@ -46,8 +47,7 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
 
         _isLoading = false;
     }
-
-
+    
     private Task SelectCulture(string name)
     {
         LocalizationService.ChangeLanguage(name);

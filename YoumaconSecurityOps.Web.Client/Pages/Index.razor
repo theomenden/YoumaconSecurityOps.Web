@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 <Jumbotron Background="Background.Dark" Border="Border.Is2.Rounded.Light.OnAll" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnWidescreen.Is1.FromTop.OnMobile">
     <JumbotronTitle Size="JumbotronTitleSize.Is4">Hello, Security Staff!</JumbotronTitle>
     <JumbotronSubtitle>
@@ -21,4 +22,11 @@
              Italic>
         Your upcoming shifts are
     </Heading>
+        <UnorderedList>
+            <Repeater Items="@_pronouns" TItem="Pronoun">
+            <UnorderedListItem>
+                Pronoun: @context.Name
+            </UnorderedListItem>
+            </Repeater>
+        </UnorderedList>
 </Container>

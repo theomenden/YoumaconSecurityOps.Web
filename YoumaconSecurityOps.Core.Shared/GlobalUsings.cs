@@ -17,4 +17,3 @@ global using System.Threading.Tasks;
 global using Microsoft.Data.SqlClient;
 global using YoumaconSecurityOps.Core.Shared.Enumerations;
 global using YoumaconSecurityOps.Core.Shared.Extensions;
-global using YoumaconSecurityOps.Shared.Models.Procedures;

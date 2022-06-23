@@ -1,7 +1,5 @@
 ﻿using System.Buffers;
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using MessagePack.Formatters;
 
 namespace YoumaconSecurityOps.Web.Client.UrlHashing;
 public partial class UrlHasher : IUrlHasher

@@ -1,4 +1,8 @@
-﻿namespace YoumaconSecurityOps.Web.Client.Extensions;
+﻿using YsecOps.Core.Mediator.Extensions;
+using YSecOps.Data.EfCore.Extensions;
+using YSecOps.Events.EfCore.Extensions;
+
+namespace YoumaconSecurityOps.Web.Client.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -8,15 +12,12 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Provided service collection</param>
     /// <param name="appSettings">Provided configurations</param>
     /// <returns><see cref="IServiceCollection"/> for further registration chaining</returns>
-    public static IServiceCollection AddApplicationRegistrations(this IServiceCollection services, AppSettings appSettings)
-    {
-
-        services.AddFrontEndDataServices();
-
-        services.AddIndexedDbServices();
-
-        return services;
-    }
+    public static IServiceCollection AddApplicationRegistrations(this IServiceCollection services, AppSettings appSettings) =>
+        services
+            .AddYSecEventStoreServices(appSettings.EventStoreConnectionString)
+            .AddYSecDataServices(appSettings.YoumaDbConnectionString)
+            .AddYsecMediatorServices<Program>()
+            .AddIndexedDbServices();
 
     /// <summary>
     /// Registers Azure dependent services in our <paramref name="services"/>
@@ -26,36 +27,15 @@ public static class ServiceCollectionExtensions
     /// <returns><see cref="IServiceCollection"/> for further registration chaining</returns>
     public static IServiceCollection RegisterAzureDataServices(this IServiceCollection services, IConfiguration configurationManager)
     {
-        var initialScopes = configurationManager.GetValue<String>("DownstreamApi:Scopes")?.Split(' ');
-
         services.AddResponseCompression(options =>
         {
             options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                 new[] { MediaTypeNames.Application.Octet });
         });
 
-        services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApp(configurationManager.GetSection("AzureAd"))
-            .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
-            .AddMicrosoftGraph(configurationManager.GetSection("DownstreamApi"))
-            .AddInMemoryTokenCaches();
+        services.AddControllersWithViews();
 
-        services.AddControllersWithViews()
-            .AddMicrosoftIdentityUI();
-
-        services.AddAuthorization(options =>
-        {
-            options.FallbackPolicy = options.DefaultPolicy;
-        });
-
-        services.AddSignalR()
-            .AddAzureSignalR(configurationManager["Azure:SignalR:ConnectionString"]);
-
-        services.AddDistributedRedisCache(setUp =>
-        {
-            setUp.Configuration = configurationManager["CacheConnection"];
-            setUp.InstanceName = "YsecRedisCache";
-        });
+        services.AddSignalR(options => options.MaximumReceiveMessageSize = 104_857_600);
 
         services.AddServerSideBlazor()
             .AddHubOptions(options =>
@@ -64,11 +44,6 @@ public static class ServiceCollectionExtensions
             })
             .AddMicrosoftIdentityConsentHandler();
 
-        return services;
-    }
-
-    private static IServiceCollection AddFrontEndDataServices(this IServiceCollection services)
-    {
         return services;
     }
 
