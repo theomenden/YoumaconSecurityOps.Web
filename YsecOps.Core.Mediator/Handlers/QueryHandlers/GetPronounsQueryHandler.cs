@@ -19,12 +19,12 @@ internal sealed class GetPronounsQueryHandler : IRequestHandler<GetPronounsQuery
         _dbContextFactory = dbContextFactory;
     }
 
-    public Task<List<Pronoun>> Handle(GetPronounsQuery request, CancellationToken cancellationToken)
+    public async Task<List<Pronoun>> Handle(GetPronounsQuery request, CancellationToken cancellationToken)
     {
-        using var context = _dbContextFactory.CreateDbContext();
+        await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
         var pronouns = context.Pronouns.OrderBy(p => p.Id);
 
-        return pronouns.ToListAsync(cancellationToken);
+        return await pronouns.ToListAsync(cancellationToken);
     }
 }

@@ -68,6 +68,22 @@
       {
          "Name": "[dbo].[WatchList]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[p_AddPronouns]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[p_AddStaffRoles]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[p_AddStaffTypes]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[p_AddStartingLocations]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "DESKTOP-8U2LRVO.YoumaconSecurityOps",
@@ -75,14 +91,14 @@
    "UseDatabaseNames": true,
    "UseDbContextSplitting": true,
    "UseFluentApiOnly": true,
-   "UseHandleBars": false,
+   "UseHandleBars": true,
    "UseHierarchyId": false,
    "UseInflector": true,
-   "UseLegacyPluralizer": true,
+   "UseLegacyPluralizer": false,
    "UseManyToManyEntity": true,
    "UseNoConstructor": true,
    "UseNoDefaultConstructor": true,
-   "UseNoNavigations": true,
+   "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,

@@ -12,8 +12,7 @@ public static class ServiceCollectionExtensions
     });
 #endif
 
-    public static IServiceCollection AddYSecDataServices(this IServiceCollection services,
-        String ysecOpsConnectionString)
+    public static IServiceCollection AddYSecDataServices(this IServiceCollection services, String ysecOpsConnectionString)
     {
         services.AddPooledDbContextFactory<YoumaconSecurityOpsContext>(options =>
         {

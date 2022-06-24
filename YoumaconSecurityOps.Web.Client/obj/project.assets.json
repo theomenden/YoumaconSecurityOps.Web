@@ -15537,11 +15537,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
+      "projectUniqueName": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
       "projectName": "YoumaconSecurityOps.Web.Client",
-      "projectPath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
+      "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
       "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\obj\\",
+      "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -15559,17 +15559,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
-              "projectPath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj"
+            "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj": {
+              "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\YoumaconSecurityOps.Core.Shared.csproj"
             },
-            "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecOps.Core.Mediator\\YsecOps.Core.Mediator.csproj": {
-              "projectPath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecOps.Core.Mediator\\YsecOps.Core.Mediator.csproj"
+            "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecOps.Core.Mediator\\YsecOps.Core.Mediator.csproj": {
+              "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecOps.Core.Mediator\\YsecOps.Core.Mediator.csproj"
             },
-            "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Data.EfCore\\YSecOps.Data.EfCore.csproj": {
-              "projectPath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Data.EfCore\\YSecOps.Data.EfCore.csproj"
+            "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Data.EfCore\\YSecOps.Data.EfCore.csproj": {
+              "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Data.EfCore\\YSecOps.Data.EfCore.csproj"
             },
-            "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Events.EfCore\\YSecOps.Events.EfCore.csproj": {
-              "projectPath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Events.EfCore\\YSecOps.Events.EfCore.csproj"
+            "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Events.EfCore\\YSecOps.Events.EfCore.csproj": {
+              "projectPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Events.EfCore\\YSecOps.Events.EfCore.csproj"
             }
           }
         }

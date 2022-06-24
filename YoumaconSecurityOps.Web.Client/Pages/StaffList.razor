@@ -1,0 +1,47 @@
+﻿@page "/staffList"
+<PageTitle>Security Staff</PageTitle>
+
+<Jumbotron Background="Background.Dark" 
+           Border="Border.Is2.OnAll.Rounded.Light" 
+           TextColor="TextColor.Light"
+           Margin="Margin.Is2.OnY.Is3.OnX"
+           Shadow="Shadow.Default">
+    <JumbotronTitle>
+        A list of our staff
+    </JumbotronTitle>
+    <JumbotronSubtitle>
+        Members that are striked-through are currently on break.
+    </JumbotronSubtitle>
+</Jumbotron>
+
+<DataGrid
+    TItem="Staff"
+    TotalItems="_totalMembers"
+    Striped
+    Narrow
+    Responsive
+    Resizable
+    ResizeMode="TableResizeMode.Columns"
+    UseInternalEditing="false"
+    ReadData="OnReadData"
+    RowStyling="OnRowStyling"
+    Sortable
+    Filterable
+    Hoverable
+    Bordered
+    Class="table-dark border-2 border-light rounded-2 my-2 shadow"
+    HeaderThemeContrast="ThemeContrast.Dark">
+    <EmptyTemplate>
+        <Paragraph Italic TextColor="TextColor.Danger" TextWeight="TextWeight.Bold">
+            No Staff Members Found in Database...
+        </Paragraph>
+    </EmptyTemplate>
+    <LoadingTemplate>
+        <Span>
+            <SpinKit Centered Color="#ff007f" Type="SpinKitType.Plane" />
+            Loading Staff...
+        </Span>
+    </LoadingTemplate>
+    <DataGridColumns>
+    </DataGridColumns>
+</DataGrid>

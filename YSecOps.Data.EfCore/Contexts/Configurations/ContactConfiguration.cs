@@ -33,6 +33,18 @@ public partial class ContactConfiguration : IEntityTypeConfiguration<Contact>
 
         entity.Property(e => e.Pronoun_Id).HasDefaultValueSql("((14))");
 
+        entity.HasOne(d => d.Pronoun)
+            .WithMany(p => p.Contacts)
+            .HasForeignKey(d => d.Pronoun_Id)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Contacts_Pronouns_Id");
+
+        entity.HasOne(d => d.Staff)
+            .WithMany(p => p.Contacts)
+            .HasForeignKey(d => d.Staff_Id)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Contacts_Staff_Id");
+
         OnConfigurePartial(entity);
     }
 

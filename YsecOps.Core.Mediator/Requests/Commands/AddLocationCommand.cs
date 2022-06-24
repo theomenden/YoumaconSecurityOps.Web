@@ -1,7 +1,5 @@
-﻿using YSecOps.Events.EfCore.Models;
+﻿namespace YsecOps.Core.Mediator.Requests.Commands;
 
-namespace YsecOps.Core.Mediator.Requests.Commands
-{
     public record AddLocationCommand(String LocationName, Boolean IsHotel = false): BaseCommand
     {
         public override Event RaiseCommandEvent()
@@ -17,4 +15,3 @@ namespace YsecOps.Core.Mediator.Requests.Commands
             };
         }
     }
-}

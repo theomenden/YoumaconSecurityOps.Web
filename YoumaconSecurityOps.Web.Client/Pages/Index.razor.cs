@@ -10,7 +10,6 @@ public partial class Index : ComponentBase
 
     [Inject] public IMediator Mediator { get; init; }
 
-
     private string _selectedSlide = "1";
 
     private bool _isLoading;

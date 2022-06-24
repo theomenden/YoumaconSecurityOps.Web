@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\YoumaconSecurityOps.Core.Shared\YoumaconSecurityOps.Core.Shared.csproj" />
+    <ProjectReference Include="..\YSecOps.Events.EfCore\YSecOps.Events.EfCore.csproj" />
+  </ItemGroup>
+
 </Project>

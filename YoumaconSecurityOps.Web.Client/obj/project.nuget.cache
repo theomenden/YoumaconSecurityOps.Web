@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9u+H4Lbp9kinK18WNpwp09FXDaFX00zf/9DrIWsNoUSd3k0wEnXT1f8tPIc74dEZBx2FpYLk1WSi4rxYovycXw==",
+  "dgSpecHash": "TqbZnznmPfmtauJhKga7wAKdDFlzZxjhHkoAQOkURHGy5wFCk+8OWYz62GNkZags0sJTP3dJSI/I40+x6TCQ+Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\andre\\Source\\Repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
+  "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\andre\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\azure.extensions.aspnetcore.configuration.secrets\\1.2.2\\azure.extensions.aspnetcore.configuration.secrets.1.2.2.nupkg.sha512",

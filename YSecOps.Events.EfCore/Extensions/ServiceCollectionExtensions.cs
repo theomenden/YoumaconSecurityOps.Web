@@ -24,8 +24,7 @@ public static class ServiceCollectionExtensions
                 .EnableDetailedErrors()
                 .UseLoggerFactory(LoggerFactory)
 #endif
-                .UseSqlServer(ysecEventStoreConnection)
-        );
+                .UseSqlServer(ysecEventStoreConnection));
 
         return services;
     }

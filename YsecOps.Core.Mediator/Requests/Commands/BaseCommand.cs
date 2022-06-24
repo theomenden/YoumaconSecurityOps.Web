@@ -1,6 +1,5 @@
-﻿using YSecOps.Events.EfCore.Models;
+﻿namespace YsecOps.Core.Mediator.Requests.Commands;
 
-namespace YsecOps.Core.Mediator.Requests.Commands;
 public abstract record BaseCommand : ICommand
 {
     public Guid Id { get; } = Guid.NewGuid();

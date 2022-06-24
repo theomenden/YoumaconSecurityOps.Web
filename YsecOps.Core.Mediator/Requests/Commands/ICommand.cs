@@ -1,6 +1,4 @@
-﻿using YSecOps.Events.EfCore.Models;
-
-namespace YsecOps.Core.Mediator.Requests.Commands;
+﻿namespace YsecOps.Core.Mediator.Requests.Commands;
 
 public interface ICommand: IRequest
 {
