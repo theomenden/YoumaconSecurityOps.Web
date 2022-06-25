@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
 using YoumaconSecurityOps.Core.Shared.Extensions;
-using YoumaconSecurityOps.Core.Shared.Logging;
 
 namespace YoumaconSecurityOps.Web.Client.Middleware;
 
@@ -66,6 +65,5 @@ public class ExceptionLogger
         context.Response.ContentType = MediaTypeNames.Application.Json;
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         await context.Response.WriteAsync(result);
-        context.Response.Redirect("/appError");
     }
 }

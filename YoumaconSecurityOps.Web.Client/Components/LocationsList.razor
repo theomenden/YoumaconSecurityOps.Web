@@ -1,0 +1,13 @@
+﻿<Autocomplete TItem="Location"
+              TValue="Guid"
+              Data="@_locations"
+              TextField="@(item => item.Name)"
+              ValueField="@(item => item.Id)"
+              @bind-SelectedValue="@_selectedSearchedLocation"
+              @bind-SelectedText="_selectedAutoCompleteText"
+              Placeholder="Search For a location..."
+              Filter="AutocompleteFilter.StartsWith"
+              FreeTyping
+              CustomFilter="@(( item, searchValue ) => item.Name.IndexOf( searchValue, 0, StringComparison.CurrentCultureIgnoreCase ) >= 0 )">
+    <NotFoundContent> Sorry... @context was not found! :( </NotFoundContent>
+</Autocomplete>

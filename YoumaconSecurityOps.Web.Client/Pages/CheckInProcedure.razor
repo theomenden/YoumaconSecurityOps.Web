@@ -1,17 +1,40 @@
 ﻿@page "/checkInProcedure"
 <Jumbotron Background="Background.Dark"
-           Border="Border.Rounded"
+           Border="Border.Is3.Light.OnAll.Rounded"
            TextColor="TextColor.Light"
            Margin="Margin.Is2.FromTop.OnDesktop.Is1.FromTop.OnMobile">
     <JumbotronTitle Size="JumbotronTitleSize.Is2">Floor Staff Member Check-In Procedure</JumbotronTitle>
     <JumbotronSubtitle>Procedure to get ready for a shift</JumbotronSubtitle>
 </Jumbotron>
-<Container Fluid Background="Background.Dark" TextColor="TextColor.Light" Border="Border.Dark.OnAll.Rounded.Is1" Shadow="Shadow.Default">
-    <Form>
-        <Check TValue="bool" Checked="false" Disabled ReadOnly>Locate floor staff member on the appropriate schedule, often by location</Check>
-        <Check TValue="bool" Checked="false" Disabled ReadOnly>Check Photo ID</Check>
-        <Check TValue="bool" Checked="false" Disabled ReadOnly>Press "Check In" button on their shift - their shift's row will highlight in yellow if they're late</Check>
-        <Check TValue="bool" Checked="false" Disabled ReadOnly>Have them write their name on their badge</Check>
-        <Check TValue="bool" Checked="false" Disabled ReadOnly>Get them an appropriately sized T-Shirt</Check>
-    </Form>
+<Container Fluid
+           Width="Width.Is50"
+           Background="Background.Dark"
+           TextColor="TextColor.Light"
+           Border="Border.Is3.Light.OnAll.Rounded"
+           Shadow="Shadow.Default"
+           Flex="Flex.JustifyContent.Center">
+    <Card Background="Background.Transparent" Border="Border.Is0.OnAll">
+        <CardBody>
+            <OrderedList Background="Background.Transparent"
+                         TextColor="TextColor.Light"
+                         TextAlignment="TextAlignment.Start"
+                         ListType="OrderedListType.Default">
+                <OrderedListItem Margin="Margin.Is2.FromBottom" TextWeight="TextWeight.Bold">
+                    Locate floor staff member on the appropriate schedule, often by location
+                </OrderedListItem>
+                <OrderedListItem Margin="Margin.Is2.OnY" TextWeight="TextWeight.Bold">
+                    Check Photo ID
+                </OrderedListItem>
+                <OrderedListItem Margin="Margin.Is2.OnY" TextWeight="TextWeight.Bold">
+                    Press "Check In" button on their shift - their shift's row will highlight in yellow if they're late
+                </OrderedListItem>
+                <OrderedListItem Margin="Margin.Is2.OnY" TextWeight="TextWeight.Bold">
+                    Have them write their name on their badge
+                </OrderedListItem>
+                <OrderedListItem Margin="Margin.Is2.FromTop" TextWeight="TextWeight.Bold">
+                    Get them an appropriately sized T-Shirt
+                </OrderedListItem>
+            </OrderedList>
+        </CardBody>
+    </Card>
 </Container>

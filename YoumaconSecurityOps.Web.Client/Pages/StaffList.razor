@@ -1,8 +1,8 @@
 ﻿@page "/staffList"
 <PageTitle>Security Staff</PageTitle>
 
-<Jumbotron Background="Background.Dark" 
-           Border="Border.Is2.OnAll.Rounded.Light" 
+<Jumbotron Background="Background.Dark"
+           Border="Border.Is2.OnAll.Rounded.Light"
            TextColor="TextColor.Light"
            Margin="Margin.Is2.OnY.Is3.OnX"
            Shadow="Shadow.Default">
@@ -14,24 +14,28 @@
     </JumbotronSubtitle>
 </Jumbotron>
 
-<DataGrid
-    TItem="Staff"
-    TotalItems="_totalMembers"
-    Striped
-    Narrow
-    Responsive
-    Resizable
-    ResizeMode="TableResizeMode.Columns"
-    UseInternalEditing="false"
-    ReadData="OnReadData"
-    RowStyling="OnRowStyling"
-    Sortable
-    Filterable
-    Hoverable
-    Bordered
-    Class="table-dark border-2 border-light rounded-2 my-2 shadow"
-    HeaderThemeContrast="ThemeContrast.Dark">
+<DataGrid TItem="Staff"
+          TotalItems="_totalMembers"
+          Data="_members"
+          Editable
+          Striped
+          ShowPager
+          Narrow
+          Responsive
+          Resizable
+          ResizeMode="TableResizeMode.Columns"
+          UseInternalEditing="false"
+          ReadData="OnReadData"
+          RowStyling="OnRowStyling"
+          Sortable
+          Filterable
+          Hoverable
+          Bordered
+          Class="table-dark border-2 border-light rounded-2 my-2 shadow"
+          CommandMode="DataGridCommandMode.Commands"
+          HeaderThemeContrast="ThemeContrast.Dark">
     <EmptyTemplate>
+        <Icon Name="IconName.InfoCircle" TextColor="TextColor.Info" Margin="Margin.Is2.FromEnd" />
         <Paragraph Italic TextColor="TextColor.Danger" TextWeight="TextWeight.Bold">
             No Staff Members Found in Database...
         </Paragraph>
@@ -43,5 +47,15 @@
         </Span>
     </LoadingTemplate>
     <DataGridColumns>
+        <DataGridCommandColumn Width="170px" Caption="Actions">
+            <NewCommandTemplate>
+                <Button Color="Color.Success" Border="Border.Is2.Light.OnAll.Rounded" Type="ButtonType.Link" To="/newStaff">Add Staff</Button>
+            </NewCommandTemplate>
+        </DataGridCommandColumn>
+        <DataGridColumn Field="@nameof(Staff.Id)" Caption="Member Name" HeaderCellClass="bg-dark text-light">
+            <DisplayTemplate>
+                <Text>@context.Contacts.First().PreferredName</Text>
+            </DisplayTemplate>
+        </DataGridColumn>
     </DataGridColumns>
 </DataGrid>

@@ -31,7 +31,7 @@ public partial class StaffList : ComponentBase
         }
     }
 
-    private void OnRowStyling(Staff member, DataGridRowStyling dataGridRowStyling)
+    private static void OnRowStyling(Staff member, DataGridRowStyling dataGridRowStyling)
     {
         if (!member.IsOnBreak)
         {

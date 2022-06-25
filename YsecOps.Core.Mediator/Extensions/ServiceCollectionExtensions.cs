@@ -17,11 +17,11 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped(typeof(IRequestPreProcessor<>), typeof(EmptyRequestPreProcessor<>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-        //   services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamingLoggingBehavior<,>));
-        //#if DEBUG
-        //     services.AddScoped(typeof(IPipelineBehavior<,>), typeof(OperationProfilingBehaviour<,>));
-        //    services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamingOperationProfilingBehaviour<,>));
-        //#endif
+        services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamLoggingBehavior<,>));
+#if DEBUG
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(OperationProfilingBehavior<,>));
+        services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamProfilingBehavior<,>));
+#endif
 
         //      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCacheInvalidationBehavior<,>));
         //      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCachingBehavior<,>));
