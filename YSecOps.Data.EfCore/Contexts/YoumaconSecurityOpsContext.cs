@@ -18,7 +18,8 @@ namespace YSecOps.Data.EfCore.Contexts
         public virtual DbSet<StaffTypesRole> StaffTypesRoles { get; set; }
         public virtual DbSet<WatchList> WatchLists { get; set; }
 
-        public YoumaconSecurityOpsContext(DbContextOptions<YoumaconSecurityOpsContext> options) : base(options)
+        public YoumaconSecurityOpsContext(DbContextOptions<YoumaconSecurityOpsContext> options) 
+            : base(options)
         {
         }
 

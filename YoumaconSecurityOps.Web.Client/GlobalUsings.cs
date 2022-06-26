@@ -15,6 +15,7 @@ global using Microsoft.AspNetCore.ResponseCompression;
 global using Microsoft.Identity.Web;
 global using Microsoft.Identity.Web.UI;
 #endregion
+global using MediatR;
 global using Nosthy.Blazor.DexieWrapper.JsModule;
 #region Serilog Usings
 global using Serilog;
@@ -42,4 +43,6 @@ global using YoumaconSecurityOps.Web.Client.Invariants;
 global using YoumaconSecurityOps.Web.Client.Middleware;
 global using YoumaconSecurityOps.Web.Client.Models;
 global using YoumaconSecurityOps.Web.Client.UrlHashing;
+global using YsecOps.Core.Mediator.Requests.Queries;
+global using YSecOps.Data.EfCore.Models;
 #endregion

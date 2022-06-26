@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace YsecOps.Core.Mediator.Pipelines.Processors;
+﻿namespace YsecOps.Core.Mediator.Pipelines.Processors;
 
 internal class EmptyRequestPostProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
 where TRequest : IRequest<TResponse>
@@ -14,7 +12,7 @@ where TRequest : IRequest<TResponse>
 
     public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("{request} finished, returning {response}", nameof(request), nameof(response));
+        _logger.LogInformation("{request} finished, returning {response}", nameof(TRequest), nameof(TResponse));
 
         return Task.CompletedTask;
     }

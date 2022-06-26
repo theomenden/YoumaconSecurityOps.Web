@@ -1,6 +1,10 @@
 ﻿@page "/"
 <PageTitle>Ops Home</PageTitle>
-<Jumbotron Background="Background.Dark" Border="Border.Is2.Rounded.Light.OnAll" TextColor="TextColor.Light" Margin="Margin.Is2.FromTop.OnWidescreen.Is1.FromTop.OnMobile">
+<Jumbotron Background="Background.Dark"
+           Border="Border.Is3.Light.OnAll.Rounded"
+           TextColor="TextColor.Light" 
+           Margin="Margin.Is2.FromTop.OnWidescreen.Is1.FromTop.OnMobile"
+           Shadow="Shadow.Large">
     <JumbotronTitle Size="JumbotronTitleSize.Is4">Hello, Security Staff!</JumbotronTitle>
     <JumbotronSubtitle>
         Welcome to Sec Ops!
@@ -17,9 +21,38 @@
            Shadow="Shadow.Default"
            Margin="Margin.Is2.OnAll.OnWidescreen.Is1.OnAll.OnMobile"
            TextColor="TextColor.Light">
-    <Heading Size="HeadingSize.Is6"
-             TextColor="TextColor.White50"
-             Italic>
-        Your upcoming shifts are
-    </Heading>
+    <Row>
+        <Column ColumnSize="ColumnSize.IsThird">
+            <Card Background="Background.Transparent"
+                  Border="Border.Is2.Light.OnAll.Rounded"
+                  Shadow="Shadow.Default">
+                <CardTitle Size="5" TextColor="TextColor.Light">
+                Estimated Hours Volunteered
+                </CardTitle>
+            </Card>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is5">
+            <Card Background="Background.Transparent"
+                  Border="Border.Is2.Light.OnAll.Rounded"
+                  Shadow="Shadow.Default">
+                <CardTitle Size="3" TextColor="TextColor.Light">
+                    Unresolved Incidents you're associated with
+                </CardTitle>
+            </Card>
+        </Column>
+        <Column ColumnSize="ColumnSize.IsQuarter">
+            <Card Background="Background.Transparent"
+                  Border="Border.Is2.Light.OnAll.Rounded"
+                  Shadow="Shadow.Default">
+                <CardBody>
+                    <Heading Size="HeadingSize.Is6"
+                             TextColor="TextColor.White50"
+                             Italic>
+                        Your upcoming shifts are
+                    </Heading>
+                </CardBody>
+            </Card>
+        </Column>
+    </Row>
+    
 </Container>

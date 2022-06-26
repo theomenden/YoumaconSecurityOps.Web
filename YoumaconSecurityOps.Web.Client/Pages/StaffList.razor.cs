@@ -10,11 +10,19 @@ public partial class StaffList : ComponentBase
     [Inject] IMediator Mediator { get; init; }
 
     private List<Staff> _members = new(200);
-
+    
     private Int32 _totalMembers;
+
+    private Int32 _membersOnBreakCount;
+
+    private Staff? _selectedStaffMember;
 
     private Task<Int32> GetTotalStaffMembersAsync(CancellationToken cancellationToken) =>
         Mediator.Send(new GetCountOfStaffMembersQuery(), cancellationToken);
+
+    private Task<Int32> GetStaffMembersOnBreakAsync(CancellationToken cancellationToken) =>
+        Mediator.Send(new GetStaffMembersOnBreakCountQuery(), cancellationToken);
+
 
     private async Task LoadStaffMemberData(CancellationToken cancellationToken = default)
     {
@@ -26,6 +34,8 @@ public partial class StaffList : ComponentBase
         if (!eventArgs.CancellationToken.IsCancellationRequested)
         {
             _totalMembers = await GetTotalStaffMembersAsync(eventArgs.CancellationToken);
+
+            _membersOnBreakCount = await GetStaffMembersOnBreakAsync(eventArgs.CancellationToken);
 
             await LoadStaffMemberData(eventArgs.CancellationToken);
         }

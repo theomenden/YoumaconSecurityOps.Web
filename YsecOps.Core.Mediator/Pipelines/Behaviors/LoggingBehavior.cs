@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace YsecOps.Core.Mediator.Pipelines.Behaviors;
-internal class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+﻿namespace YsecOps.Core.Mediator.Pipelines.Behaviors;
+internal sealed class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
 
     public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)

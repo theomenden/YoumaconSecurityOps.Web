@@ -10,7 +10,14 @@
         A list of our staff
     </JumbotronTitle>
     <JumbotronSubtitle>
-        Members that are striked-through are currently on break.
+        <Paragraph TextWeight="TextWeight.Normal">
+            Members that are struck-through are currently on break.
+        </Paragraph>
+        <Paragraph TextColor="TextColor.Danger" 
+                   TextWeight="TextWeight.Light" 
+                   TextTransform="TextTransform.Uppercase">
+            Members On Break Currently: @_membersOnBreakCount
+        </Paragraph>
     </JumbotronSubtitle>
 </Jumbotron>
 
@@ -33,7 +40,9 @@
           Bordered
           Class="table-dark border-2 border-light rounded-2 my-2 shadow"
           CommandMode="DataGridCommandMode.Commands"
-          HeaderThemeContrast="ThemeContrast.Dark">
+          HeaderThemeContrast="ThemeContrast.Dark"
+          @bind-SelectedRow="@_selectedStaffMember"
+          DetailRowTrigger="@(member => member.Item.Id == _selectedStaffMember?.Id)">
     <EmptyTemplate>
         <Icon Name="IconName.InfoCircle" TextColor="TextColor.Info" Margin="Margin.Is2.FromEnd" />
         <Paragraph Italic TextColor="TextColor.Danger" TextWeight="TextWeight.Bold">
@@ -58,4 +67,64 @@
             </DisplayTemplate>
         </DataGridColumn>
     </DataGridColumns>
+    <DetailRowTemplate>
+        @{
+            var memberInformation = context as Staff;
+            <Table Narrow
+                   Borderless
+                   Striped
+               Shadow="Shadow.Default">
+                <TableHeader>
+                    <TableRow TextWeight="TextWeight.Bold" TextAlignment="TextAlignment.Start" TextColor="TextColor.Light">
+                        <TableHeaderCell>
+                            Black Shirt?
+                        </TableHeaderCell>
+                        <TableHeaderCell>
+                            Is Approved for Rave?
+                        </TableHeaderCell>
+                        <TableHeaderCell>
+                            Needs Crash Space?
+                        </TableHeaderCell>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow>
+                        <TableRowCell>
+                            <Card Background="Background.Transparent"
+                              Shadow="Shadow.None"
+                              Margin="Margin.Is3.OnY"
+                              Border="Border.Is0.OnAll.RoundedZero">
+                                <CardBody TextColor="TextColor.Light" Flex="Flex.Row.JustifyContent.Start">
+                                    <Switch Checked="@memberInformation.IsBlackShirt" Color="Color.Success" ReadOnly />
+                                    @(memberInformation.IsBlackShirt ? "Yes" : "No")
+                                </CardBody>
+                            </Card>
+                        </TableRowCell>
+                        <TableRowCell>
+                            <Card Background="Background.Transparent"
+                              Shadow="Shadow.None"
+                              Margin="Margin.Is3.OnY"
+                              Border="Border.Is0.OnAll.RoundedZero">
+                                <CardBody TextColor="TextColor.Light" Flex="Flex.Row.JustifyContent.Start">
+                                    <Switch Checked="@memberInformation.IsRaveApproved" Color="Color.Success" ReadOnly />
+                                    @(memberInformation.IsRaveApproved ? "Yes" : "No")
+                                </CardBody>
+                            </Card>
+                        </TableRowCell>
+                        <TableRowCell>
+                            <Card Background="Background.Transparent"
+                              Shadow="Shadow.None"
+                              Margin="Margin.Is3.OnY"
+                              Border="Border.Is0.OnAll.RoundedZero">
+                                <CardBody TextColor="TextColor.Light" Flex="Flex.Row.JustifyContent.Start">
+                                    <Switch Checked="@memberInformation.NeedsCrashSpace" Color="Color.Success" ReadOnly />
+                                    @(memberInformation.NeedsCrashSpace ? "Yes" : "No")
+                                </CardBody>
+                            </Card>
+                        </TableRowCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        }
+    </DetailRowTemplate>
 </DataGrid>

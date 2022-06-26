@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace YsecOps.Core.Mediator.Pipelines.Processors;
+﻿namespace YsecOps.Core.Mediator.Pipelines.Processors;
 internal class EmptyRequestPreProcessor<TRequest> : IRequestPreProcessor<TRequest>
+where TRequest : class
 {
     private readonly ILogger<EmptyRequestPreProcessor<TRequest>> _logger;
 
@@ -12,7 +11,7 @@ internal class EmptyRequestPreProcessor<TRequest> : IRequestPreProcessor<TReques
 
     public Task Process(TRequest request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Starting Processing for {request}", nameof(request));
+        _logger.LogInformation("Starting Processing for {request}", nameof(TRequest));
 
         return Task.CompletedTask;
     }
