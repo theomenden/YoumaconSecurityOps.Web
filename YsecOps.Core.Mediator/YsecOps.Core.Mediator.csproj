@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework.DynamicLinq" Version="1.2.18" />
+    <PackageReference Include="EntityFramework.DynamicLinq" Version="1.2.19" />
     <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.2.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.2.19" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
