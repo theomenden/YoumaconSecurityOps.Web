@@ -25,7 +25,6 @@ namespace YSecOps.Data.EfCore.Models
         public string ShirtSize { get; set; }
         public Guid? IncidentId { get; set; }
         public Guid? RoomId { get; set; }
-
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<Incident> IncidentOpsManagers { get; set; }
         public virtual ICollection<Incident> IncidentRecordedBies { get; set; }

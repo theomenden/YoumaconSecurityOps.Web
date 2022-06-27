@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace YsecOps.Core.Mediator.Handlers.QueryHandlers
+﻿namespace YsecOps.Core.Mediator.Handlers.QueryHandlers
 {
     internal sealed class GetCountOfStaffMembersQueryHandler : IRequestHandler<GetCountOfStaffMembersQuery, int>,
         IRequestHandler<GetStaffMembersOnBreakCountQuery, int>

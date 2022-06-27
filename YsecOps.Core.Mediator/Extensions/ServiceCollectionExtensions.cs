@@ -1,7 +1,4 @@
-﻿using YsecOps.Core.Mediator.Pipelines.Behaviors;
-using YsecOps.Core.Mediator.Pipelines.Processors;
-
-namespace YsecOps.Core.Mediator.Extensions;
+﻿namespace YsecOps.Core.Mediator.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -22,11 +19,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(OperationProfilingBehavior<,>));
         services.AddScoped(typeof(IStreamPipelineBehavior<,>), typeof(StreamProfilingBehavior<,>));
 #endif
-
         //      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCacheInvalidationBehavior<,>));
         //      services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DistributedCachingBehavior<,>));
 
-        //services.RegisterBuiltCaches(containingType);
+        services.RegisterBuiltCaches<T>();
 
         services.Scan(scan => scan
             .FromAssembliesOf(typeof(IMediator), containingType)

@@ -13,7 +13,7 @@ internal sealed class GetLocationsQueryHandler : IRequestHandler<GetLocationsQue
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-        var pronouns = context.Locations.OrderBy(l => l.Name);
+        var pronouns = context.Locations.AsQueryable().OrderBy(l => l.Name);
 
         return await pronouns.ToListAsync(cancellationToken);
     }

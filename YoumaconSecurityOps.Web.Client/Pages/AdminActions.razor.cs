@@ -18,8 +18,10 @@ public partial class AdminActions : ComponentBase
         _members = await Mediator.CreateStream(new GetStaffMembersQuery()).ToListAsync();
     }
 
-    private Int32 GetTotalStaffAtLocation(Guid locationId)
-    {
-        return _shifts.Count(shift => shift.CurrentLocationId == locationId);
-    }
+
+
+    private Int32 GetTotalStaffAtLocation(Guid locationId) => _shifts.Count(shift => shift.CurrentLocationId == locationId);
+    
+
+
 }
