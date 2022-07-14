@@ -94,7 +94,7 @@
 		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
 		<PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.25.1" />
 		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
 		<PackageReference Include="Nosthy.Blazor.DexieWrapper" Version="0.4.5" />
 		<PackageReference Include="NuGet.Versioning" Version="6.2.1" />
 		<PackageReference Include="Serilog" Version="2.11.0" />
