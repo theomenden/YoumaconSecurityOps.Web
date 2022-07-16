@@ -98,7 +98,7 @@
 		<PackageReference Include="Nosthy.Blazor.DexieWrapper" Version="0.4.5" />
 		<PackageReference Include="NuGet.Versioning" Version="6.2.1" />
 		<PackageReference Include="Serilog" Version="2.11.0" />
-		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="6.0.0" />
 		<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
 		<PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
