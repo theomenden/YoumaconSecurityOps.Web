@@ -67,7 +67,7 @@
 		<PackageReference Include="Blazorise.Sidebar" Version="1.0.5" />
 		<PackageReference Include="Blazorise.Snackbar" Version="1.0.5" />
 		<PackageReference Include="Blazorise.SpinKit" Version="1.0.5" />
-		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
