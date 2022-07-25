@@ -65,7 +65,7 @@
 		<PackageReference Include="Blazorise.DataGrid" Version="1.0.6" />
 		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.6" />
 		<PackageReference Include="Blazorise.Sidebar" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Snackbar" Version="1.0.5" />
+		<PackageReference Include="Blazorise.Snackbar" Version="1.0.6" />
 		<PackageReference Include="Blazorise.SpinKit" Version="1.0.6" />
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
