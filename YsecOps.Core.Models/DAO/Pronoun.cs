@@ -1,4 +1,7 @@
-﻿namespace YSecOps.Data.EfCore.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace YsecOps.Core.Models.DAO;
 
 public partial class Pronoun
 {

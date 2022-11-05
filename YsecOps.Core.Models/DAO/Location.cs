@@ -1,4 +1,4 @@
-﻿namespace YSecOps.Data.EfCore.Models;
+﻿namespace YsecOps.Core.Models.DAO;
 
 public partial class Location
 {

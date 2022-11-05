@@ -1,6 +1,4 @@
-﻿using YsecOps.Core.Mediator.Pipelines.Caching;
-
-namespace YsecOps.Core.Mediator.Pipelines.Processors;
+﻿namespace YsecOps.Core.Mediator.Pipelines.Processors;
 public class MediatorCacheInvalidationPreProcessor<TRequest, TCache, TCacheResult> : IRequestPreProcessor<TRequest>
     where TCache : ICacheableQuery<TCacheResult>
     where TRequest : IRequest

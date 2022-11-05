@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Le8dVAf701aBqGfASpjglg8AtDh5ZZtyR3N5E+9EtCQjo6GLGjgItgbLvqYkEceLeAx8rQAMWKyZzTW469Mmcw==",
+  "dgSpecHash": "ov8/K/3HAar+uPNrsWOXbUV0OxHLBYcAtSS1CTjXXNNJM6rmh4leUgkoEmMMnFINtorKoxmf3ckTnFP+yBbjVg==",
   "success": true,
   "projectFilePath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\YoumaconSecurityOps.Web.Client.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,10 @@
     "C:\\Users\\andre\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\azure.security.keyvault.certificates\\4.1.0\\azure.security.keyvault.certificates.4.1.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\azure.security.keyvault.secrets\\4.2.0\\azure.security.keyvault.secrets.4.2.0.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\azure.storage.blobs\\12.3.0\\azure.storage.blobs.12.3.0.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\azure.storage.common\\12.2.0\\azure.storage.common.12.2.0.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\azure.storage.files.shares\\12.1.0\\azure.storage.files.shares.12.1.0.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\azure.storage.queues\\12.2.0\\azure.storage.queues.12.2.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\blazored.localstorage\\4.2.0\\blazored.localstorage.4.2.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\blazorise\\1.1.2\\blazorise.1.1.2.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\blazorise.animate\\1.1.2\\blazorise.animate.1.1.2.nupkg.sha512",
@@ -110,6 +114,7 @@
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\6.0.10\\microsoft.entityframeworkcore.sqlserver.6.0.10.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.10\\microsoft.entityframeworkcore.tools.6.0.10.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.azure\\1.0.0\\microsoft.extensions.azure.1.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
     "C:\\Users\\andre\\.nuget\\packages\\microsoft.extensions.caching.redis\\2.2.0\\microsoft.extensions.caching.redis.2.2.0.nupkg.sha512",

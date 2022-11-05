@@ -1,5 +1,6 @@
 using Ganss.Xss;
 using Microsoft.Extensions.Logging.ApplicationInsights;
+using Microsoft.Extensions.Azure;
 
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Error)

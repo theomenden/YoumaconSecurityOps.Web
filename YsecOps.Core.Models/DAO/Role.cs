@@ -1,15 +1,17 @@
-﻿namespace YSecOps.Data.EfCore.Models;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class StaffType
+namespace YsecOps.Core.Models.DAO;
+
+public partial class Role
 {
-    public StaffType()
+    public Role()
     {
         StaffTypesRoles = new HashSet<StaffTypesRole>();
     }
 
     public int Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
+    public string Role1 { get; set; }
 
     public virtual ICollection<StaffTypesRole> StaffTypesRoles { get; set; }
 }
