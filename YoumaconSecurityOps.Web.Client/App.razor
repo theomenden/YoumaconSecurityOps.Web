@@ -10,31 +10,31 @@
                 </LayoutView>
             </NotFound>
         </Router>
-        <MessageAlert />
-        <NotificationAlert />
-        <PageProgressAlert />
+        <MessageProvider />
+        <NotificationProvider />
+        <PageProgressProvider />
     </Blazorise.ThemeProvider>
 </CascadingAuthenticationState>
 
 @code
 {
     private readonly Theme _theme = new()
-    {
-        BarOptions = new()
         {
-            HorizontalHeight = "72px"
-        },
-        BreakpointOptions = new()
-        {
-        },
-        ColorOptions = new()
-        {
-            Primary = "#0288D1",
+            BarOptions = new()
+            {
+                HorizontalHeight = "72px"
+            },
+            BreakpointOptions = new()
+            {
+            },
+            ColorOptions = new()
+            {
+                Primary = "#0288D1",
 
-        },
-        InputOptions = new()
-        {
-            CheckColor = "#0288D1",
-        }
-    };
+            },
+            InputOptions = new()
+            {
+                CheckColor = "#0288D1",
+            }
+        };
 }

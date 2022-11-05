@@ -1,3 +1,6 @@
+using Ganss.Xss;
+using Microsoft.Extensions.Logging.ApplicationInsights;
+
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
             .Enrich.FromLogContext()
@@ -6,7 +9,7 @@ Log.Logger = new LoggerConfiguration()
             .Enrich.WithProcessName()
             .Enrich.WithMemoryUsage()
             .Enrich.WithEnvironmentUserName()
-            .Enrich.WithEventType()
+            .Enrich.WithCorrelationId()
             .WriteTo.Async(a =>
             {
                 a.File("./logs/log-.txt", rollingInterval: RollingInterval.Day);
@@ -23,17 +26,31 @@ try
         {
             config.AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables()
+                .AddAzureKeyVault(
+                    new Uri(builder.Configuration["VaultUri"]),
+                    new DefaultAzureCredential());
         })
         .UseDefaultServiceProvider(options => options.ValidateScopes = false)
         .UseSerilog((context, services, configuration) => configuration
             .ReadFrom.Configuration(context.Configuration)
             .ReadFrom.Services(services)
-            .Enrich.FromLogContext()
-            .Enrich.WithEventType());
+            .Enrich.FromLogContext());
+
+    var appInsightsConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"];
 
     builder.Logging
-        .ClearProviders()
+        .ClearProviders().
+        AddApplicationInsights(
+            config => config.ConnectionString = appInsightsConnectionString,
+            options =>
+            {
+                options.FlushOnDispose = true;
+                options.IncludeScopes = true;
+                options.TrackExceptionsAsExceptionTelemetry = true;
+            }
+            )
+        .AddFilter<ApplicationInsightsLoggerProvider>(typeof(Program).FullName, LogLevel.Trace)
         .AddSerilog(dispose: true);
 
     #region Configure Application Services
@@ -61,14 +78,23 @@ try
         .AddFontAwesomeIcons();
 
     services.AddApplicationRegistrations(appSettings);
-
-    services.AddTransient<IUrlHasher, UrlHasher>();
+    builder.Services.AddApplicationInsightsTelemetry(options => options.ConnectionString = appInsightsConnectionString);
     services.AddSingleton<SessionDetails>();
     services.AddScoped<CircuitHandler>(sp => new TrackingCircuitHandler(sp.GetRequiredService<SessionDetails>()));
 
     services.RegisterAzureDataServices(configurationManager);
 
     services.AddRazorPages();
+
+    services.AddScoped<IHtmlSanitizer, HtmlSanitizer>(x =>
+    {
+        // Configure sanitizer rules as needed here.
+        // For now, just use default rules + allow class attributes
+        var sanitizer = new HtmlSanitizer();
+        sanitizer.AllowedAttributes.Add("class");
+        return sanitizer;
+    });
+
     #endregion
     #region Application Configuration
     await using var app = builder.Build();

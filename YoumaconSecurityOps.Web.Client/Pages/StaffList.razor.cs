@@ -26,7 +26,8 @@ public partial class StaffList : ComponentBase
 
     private async Task LoadStaffMemberData(CancellationToken cancellationToken = default)
     {
-        _members = await Mediator.CreateStream(new GetStaffMembersQuery(), cancellationToken).ToListAsync(cancellationToken);
+        _members = await Mediator.CreateStream(new GetStaffMembersQuery(), cancellationToken)
+            .ToListAsync(cancellationToken);
     }
 
     private async Task OnReadData(DataGridReadDataEventArgs<Staff> eventArgs)

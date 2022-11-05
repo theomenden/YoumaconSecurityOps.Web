@@ -1,8 +1,8 @@
-﻿using YoumaconSecurityOps.Core.Shared.Enumerations;
+﻿using TheOmenDen.Shared.Enumerations;
 
 namespace YoumaconSecurityOps.Core.Shared.Tests.Enumerations
 {
-    internal sealed class DummyEnumerationClass: EnumerationBase
+    internal sealed record DummyEnumerationClass: EnumerationBase<DummyEnumerationClass>
     {
         private static int _count;
 

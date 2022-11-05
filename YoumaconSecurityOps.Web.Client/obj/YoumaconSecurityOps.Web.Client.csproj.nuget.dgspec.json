@@ -13,8 +13,12 @@
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Core.Shared\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,8 +26,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\andre\\source\\repos\\TheOmenDen.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -43,35 +48,35 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
@@ -79,7 +84,7 @@
             },
             "Serilog": {
               "target": "Package",
-              "version": "[2.11.0, )"
+              "version": "[2.12.0, )"
             },
             "System.Linq.Async": {
               "target": "Package",
@@ -88,6 +93,18 @@
             "System.Linq.Async.Queryable": {
               "target": "Package",
               "version": "[6.0.1, )"
+            },
+            "TheOmenDen.Shared": {
+              "target": "Package",
+              "version": "[2022.10.8.41, )"
+            },
+            "TheOmenDen.Shared.Interfaces": {
+              "target": "Package",
+              "version": "[1.10.8.106, )"
+            },
+            "TheOmenDen.Shared.Logging": {
+              "target": "Package",
+              "version": "[1.10.8.134, )"
             },
             "murmurhash": {
               "target": "Package",
@@ -100,7 +117,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -109,7 +127,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -122,8 +140,12 @@
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YoumaconSecurityOps.Web.Client\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -131,8 +153,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\andre\\source\\repos\\TheOmenDen.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -165,7 +188,7 @@
           "dependencies": {
             "Azure.Core": {
               "target": "Package",
-              "version": "[1.24.0, )"
+              "version": "[1.25.0, )"
             },
             "Azure.Extensions.AspNetCore.Configuration.Secrets": {
               "target": "Package",
@@ -173,7 +196,7 @@
             },
             "Azure.Identity": {
               "target": "Package",
-              "version": "[1.6.0, )"
+              "version": "[1.7.0, )"
             },
             "Blazored.LocalStorage": {
               "target": "Package",
@@ -181,67 +204,71 @@
             },
             "Blazorise": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Animate": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Bootstrap5": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Charts": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Charts.Streaming": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Components": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.DataGrid": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
-            "Blazorise.Sidebar": {
+            "Blazorise.LoadingIndicator": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.Snackbar": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
             },
             "Blazorise.SpinKit": {
               "target": "Package",
-              "version": "[1.0.5, )"
+              "version": "[1.1.2, )"
+            },
+            "HtmlSanitizer": {
+              "target": "Package",
+              "version": "[8.0.601, )"
             },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
-              "version": "[2.20.0, )"
+              "version": "[2.21.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.AspNetCore.Localization": {
               "target": "Package",
@@ -249,27 +276,27 @@
             },
             "Microsoft.Azure.SignalR": {
               "target": "Package",
-              "version": "[1.18.0, )"
+              "version": "[1.18.3, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.Extensions.Caching.Abstractions": {
               "target": "Package",
@@ -285,7 +312,7 @@
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
@@ -293,43 +320,43 @@
             },
             "Microsoft.Extensions.Localization": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.Extensions.Localization.Abstractions": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[1.25.1, )"
+              "version": "[1.25.5, )"
             },
             "Microsoft.Identity.Web.MicrosoftGraph": {
               "target": "Package",
-              "version": "[1.25.1, )"
+              "version": "[1.25.5, )"
             },
             "Microsoft.Identity.Web.UI": {
               "target": "Package",
-              "version": "[1.25.1, )"
+              "version": "[1.25.5, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Nosthy.Blazor.DexieWrapper": {
               "target": "Package",
-              "version": "[0.4.5, )"
+              "version": "[0.5.2, )"
             },
             "NuGet.Versioning": {
               "target": "Package",
-              "version": "[6.2.1, )"
+              "version": "[6.3.1, )"
             },
             "Serilog": {
               "target": "Package",
-              "version": "[2.11.0, )"
+              "version": "[2.12.0, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Serilog.Enrichers.CorrelationId": {
               "target": "Package",
@@ -357,7 +384,7 @@
             },
             "Serilog.Settings.Configuration": {
               "target": "Package",
-              "version": "[3.3.0, )"
+              "version": "[3.4.0, )"
             },
             "Serilog.Sinks.ApplicationInsights": {
               "target": "Package",
@@ -369,7 +396,7 @@
             },
             "Serilog.Sinks.Console": {
               "target": "Package",
-              "version": "[4.0.1, )"
+              "version": "[4.1.0, )"
             },
             "Serilog.Sinks.Debug": {
               "target": "Package",
@@ -377,11 +404,11 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.3.1, )"
+              "version": "[6.4.0, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[6.20.0, )"
+              "version": "[6.25.0, )"
             },
             "System.Linq.Async": {
               "target": "Package",
@@ -389,7 +416,19 @@
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.2.18, )"
+              "version": "[1.2.21, )"
+            },
+            "TheOmenDen.Shared": {
+              "target": "Package",
+              "version": "[2022.10.8.41, )"
+            },
+            "TheOmenDen.Shared.Interfaces": {
+              "target": "Package",
+              "version": "[1.10.8.106, )"
+            },
+            "TheOmenDen.Shared.Logging": {
+              "target": "Package",
+              "version": "[1.10.8.134, )"
             }
           },
           "imports": [
@@ -398,7 +437,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -410,7 +450,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -423,8 +463,12 @@
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YsecOps.Core.Mediator\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -432,8 +476,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\andre\\source\\repos\\TheOmenDen.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -463,7 +508,7 @@
           "dependencies": {
             "EntityFramework.DynamicLinq": {
               "target": "Package",
-              "version": "[1.2.18, )"
+              "version": "[1.2.21, )"
             },
             "LazyCache": {
               "target": "Package",
@@ -475,19 +520,19 @@
             },
             "MediatR": {
               "target": "Package",
-              "version": "[10.0.1, )"
+              "version": "[11.0.0, )"
             },
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[10.0.1, )"
+              "version": "[11.0.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.DynamicLinq": {
               "target": "Package",
-              "version": "[6.2.18, )"
+              "version": "[6.2.21, )"
             },
             "Microsoft.Extensions.Caching.Abstractions": {
               "target": "Package",
@@ -503,7 +548,7 @@
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
@@ -519,7 +564,7 @@
             },
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
-              "version": "[6.0.1, )"
+              "version": "[6.0.2, )"
             },
             "Microsoft.Extensions.Logging.Console": {
               "target": "Package",
@@ -544,7 +589,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -553,7 +599,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -566,8 +612,12 @@
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Data.EfCore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -575,8 +625,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\andre\\source\\repos\\TheOmenDen.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -600,39 +651,35 @@
           "dependencies": {
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[4.1.0, )"
+              "version": "[5.0.1, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer.Design": {
-              "target": "Package",
-              "version": "[1.1.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -644,7 +691,7 @@
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
@@ -669,7 +716,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -678,7 +726,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -691,8 +739,12 @@
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\andre\\source\\repos\\YoumaconSecurityOps.Web.BlazorServer\\YSecOps.Events.EfCore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -700,8 +752,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/blazorise/api/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\andre\\source\\repos\\TheOmenDen.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -725,39 +778,35 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Abstractions": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Analyzers": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[6.0.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational.Design": {
-              "target": "Package",
-              "version": "[1.1.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -769,7 +818,7 @@
             },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
@@ -781,7 +830,7 @@
             },
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
-              "version": "[6.0.1, )"
+              "version": "[6.0.2, )"
             },
             "Microsoft.Extensions.Logging.Console": {
               "target": "Package",
@@ -793,7 +842,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.6, )"
+              "version": "[6.0.10, )"
             },
             "System.Linq.Async": {
               "target": "Package",
@@ -810,7 +859,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -819,7 +869,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

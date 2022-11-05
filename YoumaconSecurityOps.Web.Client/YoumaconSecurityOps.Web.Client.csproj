@@ -8,7 +8,7 @@
 		<Description>An application developed to further support the efforts of the Youmacon Security Operations Team, and each member.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<SignAssembly>False</SignAssembly>
-		<ApplicationInsightsResourceId>/subscriptions/4fe94f7e-f6a2-43e0-a248-c28c347bd410/resourceGroups/YSecIt-rg/providers/microsoft.insights/components/YSecIt</ApplicationInsightsResourceId>
+		<ApplicationInsightsResourceId>/subscriptions/77a2a3a3-6de8-479e-8074-eb6049ebe84e/resourceGroups/YoumaconSecurityOpsWebClientResourceGroup/providers/microsoft.insights/components/ysec-app-insights</ApplicationInsightsResourceId>
 		<StartupObject></StartupObject>
 		<GenerateDocumentationFile>False</GenerateDocumentationFile>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -54,50 +54,51 @@
 	<ItemGroup>
 		<PackageReference Include="Azure.Core" Version="1.25.0" />
 		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
-		<PackageReference Include="Azure.Identity" Version="1.6.0" />
+		<PackageReference Include="Azure.Identity" Version="1.7.0" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
-		<PackageReference Include="Blazorise" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Animate" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Bootstrap5" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Charts" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Charts.Streaming" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Components" Version="1.0.6" />
-		<PackageReference Include="Blazorise.DataGrid" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Sidebar" Version="1.0.6" />
-		<PackageReference Include="Blazorise.Snackbar" Version="1.0.6" />
-		<PackageReference Include="Blazorise.SpinKit" Version="1.0.6" />
+		<PackageReference Include="Blazorise" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Animate" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Bootstrap5" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Charts" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Charts.Streaming" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Components" Version="1.1.2" />
+		<PackageReference Include="Blazorise.DataGrid" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.1.2" />
+		<PackageReference Include="Blazorise.LoadingIndicator" Version="1.1.2" />
+		<PackageReference Include="Blazorise.Snackbar" Version="1.1.2" />
+		<PackageReference Include="Blazorise.SpinKit" Version="1.1.2" />
+		<PackageReference Include="HtmlSanitizer" Version="8.0.601" />
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
 		<PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Azure.SignalR" Version="1.18.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
+		<PackageReference Include="Microsoft.Azure.SignalR" Version="1.18.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.7" />
-		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.7" />
-		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
-		<PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.25.1" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.1" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
-		<PackageReference Include="Nosthy.Blazor.DexieWrapper" Version="0.4.5" />
-		<PackageReference Include="NuGet.Versioning" Version="6.2.1" />
-		<PackageReference Include="Serilog" Version="2.11.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.10" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="1.25.5" />
+		<PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="1.25.5" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.5" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+		<PackageReference Include="Nosthy.Blazor.DexieWrapper" Version="0.5.2" />
+		<PackageReference Include="NuGet.Versioning" Version="6.3.1" />
+		<PackageReference Include="Serilog" Version="2.12.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
 		<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
@@ -105,15 +106,18 @@
 		<PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
 		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
 		<PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
-		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
 		<PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
-		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.19" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.21" />
+		<PackageReference Include="TheOmenDen.Shared" Version="2022.10.8.41" />
+		<PackageReference Include="TheOmenDen.Shared.Interfaces" Version="1.10.8.106" />
+		<PackageReference Include="TheOmenDen.Shared.Logging" Version="1.10.8.134" />
 	</ItemGroup>
 
 	<ItemGroup>

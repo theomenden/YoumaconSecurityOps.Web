@@ -1,0 +1,122 @@
+﻿@using YoumaconSecurityOps.Core.Shared.Constants
+@inherits LayoutComponentBase
+<AuthorizeView Roles="@RoleNames.Administrator">
+    <Authorized>
+        <Layout Sider>
+            <LayoutSider>
+                <LayoutSiderContent>
+                    <Bar Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
+                         Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small">
+                        <BarBrand>
+                            <BarItem>
+                                <BarLink To="admin/manage">
+                                    <BarIcon IconName="IconName.Dashboard" />
+                                    Admin dashboard
+                                </BarLink>
+                            </BarItem>
+                        </BarBrand>
+                        <BarMenu>
+                            <BarStart>
+                                <BarItem>
+                                    <BarLink To="admin/manage/companies">
+                                        <BarIcon IconName="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Warehouse" />
+                                        Companies
+                                    </BarLink>
+                                </BarItem>
+                                <BarItem>
+                                    <BarLink To="admin/manage/users">
+                                        <BarIcon IconName="IconName.Users" />
+                                        Users
+                                    </BarLink>
+                                </BarItem>
+                                <BarItem>
+                                    <BarLink To="admin/manage/licenses">
+                                        <BarIcon IconName="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Key" />
+                                        Licenses
+                                    </BarLink>
+                                </BarItem>
+                                <BarItem>
+                                    <BarLink To="admin/manage/products">
+                                        <BarIcon IconName="Blazorise.Icons.FontAwesome.FontAwesomeIcons.Archive" />
+                                        Products
+                                    </BarLink>
+                                </BarItem>
+                                <BarItem>
+                                    <BarLink To="admin/manage/sellers">
+                                        <BarIcon IconName="Blazorise.Icons.FontAwesome.FontAwesomeIcons.ShoppingCart" />
+                                        Sellers
+                                    </BarLink>
+                                </BarItem>
+                            </BarStart>
+                        </BarMenu>
+                    </Bar>
+                </LayoutSiderContent>
+            </LayoutSider>
+            <Layout>
+                <LayoutHeader Fixed="true">
+                    <Bar @bind-Visible="@topbarVisible" Breakpoint="Breakpoint.Desktop" Background="Background.Dark" ThemeContrast="ThemeContrast.Dark">
+                        <BarBrand>
+                            <BarItem>
+                                <BarLink To="">
+                                    <Image Display="Display.InlineBlock" Border="Border.RoundedCircle" Padding="Padding.Is1" Background="Background.White" Source="/img/logos/blazorise-small.png" Text="Blazorise logo" Style="width: 32px; height: 32px;" />
+                                    Blazorise Support
+                                </BarLink>
+                            </BarItem>
+                        </BarBrand>
+                        <BarToggler />
+                        <BarMenu>
+                            <BarStart>
+
+                            </BarStart>
+                            <BarEnd>
+                                <BarItem>
+                                    <BarDropdown RightAligned>
+                                        <BarDropdownToggle>Menu</BarDropdownToggle>
+                                        <BarDropdownMenu>
+                                            <BarDropdownItem To="user/manage">
+                                                Account
+                                            </BarDropdownItem>
+                                            <BarDropdownDivider />
+                                            <form method="post" action="Account/LogoutInternal">
+                                                <button type="submit" class="dropdown-item">Log out</button>
+                                            </form>
+                                        </BarDropdownMenu>
+                                    </BarDropdown>
+                                </BarItem>
+                            </BarEnd>
+                        </BarMenu>
+                    </Bar>
+                </LayoutHeader>
+                <LayoutContent>
+                    <Div Height="Height.Is100" Padding="Padding.Is4">
+                        @Body
+                    </Div>
+                </LayoutContent>
+            </Layout>
+        </Layout>
+    </Authorized>
+    <NotAuthorized>
+        <Div Flex="Flex.JustifyContent.Center.AlignItems.Center" Width="Width.Is100" Height="Height.Is100.Min.Viewport">
+            <Container Display="Display.Flex.Column" Padding="Padding.Is0">
+                <Alert Color="Color.Warning" TextAlignment="TextAlignment.Center" Visible>
+                    <Image Source="img/illustrations/403.jpg" Text="403 forbidden" Fluid Width="Width.Is75" />
+                    <Heading Size="HeadingSize.Is1">
+                        <Icon Name="IconName.ExclamationCircle" />
+                    </Heading>
+                    <Paragraph>
+                        <AlertMessage>
+                            You are not authorized to view this page.
+
+                            @if ( context.User.Identity.Name == null )
+                            {
+                                <Button Type="ButtonType.Link" To="login" Color="Color.Warning" Size="Size.Small">
+                                    Login
+                                </Button>
+                            }
+                        </AlertMessage>
+                    </Paragraph>
+                </Alert>
+            </Container>
+        </Div>
+    </NotAuthorized>
+</AuthorizeView>

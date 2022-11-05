@@ -74,6 +74,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/luxon@1.27.0" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0" defer></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0" defer></script>
+    <script src="_content/Blazorise.Animate/blazorise.animate.js?v=1.1.2.0"></script>
     <script type="text/javascript" src="js/gsap/gsap.min.js" defer></script>
     <script type="text/javascript" src="js/gsap/CSSRulePlugin.min.js" defer></script>
     <script type="text/javascript" src="js/gsap/CustomEase.min.js" defer></script>
@@ -85,8 +86,29 @@
         Blazor.start({
             configureSignalR: function (builder) {
                 builder.configureLogging("information");
+            },
+            reconnectionHandler: {
+                onConnectionDown: (options, error) => console.error(error),
+                onConnectionUp: () => console.log("Up, up, and away!")
+            },
+            reconnectionOptions: {
+                maxRetries: 3,
+                retryIntervalMilliseconds: 2000
             }
         });
+        window.addEventListener('pagehide', () => {
+            Blazor.disconnect();
+        });
+    </script>
+    <script type="text/javascript">
+        let homeUrl = '';
+        setInterval(function () {
+            const elem = document.getElementById("blazor-error-ui");
+            if (elem !== null && elem.style.display === 'block') {
+                window.location.assign(homeUrl);
+            }
+        }, 1000);
+        window.registerBlazorApp = (url) => homeUrl = url;
     </script>
 </body>
 </html>

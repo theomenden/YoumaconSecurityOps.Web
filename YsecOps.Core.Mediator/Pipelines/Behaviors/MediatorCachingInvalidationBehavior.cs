@@ -19,7 +19,7 @@ public class MediatorCachingInvalidationBehavior<TCache, TCacheResult, TTrigger,
         _keyPrefix = cachePrefix ?? typeof(TCache).GetTypeInfo().FullName ?? String.Empty;
     }
 
-    public async Task<TTriggerResult> Handle(TTrigger request, CancellationToken cancellationToken, RequestHandlerDelegate<TTriggerResult> next)
+    public async Task<TTriggerResult> Handle(TTrigger request, RequestHandlerDelegate<TTriggerResult> next, CancellationToken cancellationToken)
     {
         try
         {

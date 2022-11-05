@@ -10,7 +10,7 @@ where TRequest : IRequest<TResponse>
         _logger = logger;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         var timer = new System.Diagnostics.Stopwatch();
 

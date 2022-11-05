@@ -11,7 +11,7 @@ where TRequest : IStreamRequest<TResponse>
     }
 
 
-    public IAsyncEnumerable<TResponse> Handle(TRequest request, CancellationToken cancellationToken, StreamHandlerDelegate<TResponse> next)
+    public IAsyncEnumerable<TResponse> Handle(TRequest request, StreamHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         var timer = new System.Diagnostics.Stopwatch();
 

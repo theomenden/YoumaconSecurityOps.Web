@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using Shouldly;
+﻿using Shouldly;
 using Xunit;
-using YoumaconSecurityOps.Core.Shared.Enumerations;
 
 namespace YoumaconSecurityOps.Core.Shared.Tests.Enumerations
 {
@@ -14,7 +12,7 @@ namespace YoumaconSecurityOps.Core.Shared.Tests.Enumerations
             var expectedCount = DummyEnumerationClass.CountOf();
             
             //ACT
-            var results = EnumerationBase.GetAll<DummyEnumerationClass>().Count();
+            var results = DummyEnumerationClass.ReadOnlyEnumerationList.Count;
             
             //ASSERT
             results.ShouldBe(expectedCount);

@@ -10,7 +10,7 @@ internal sealed class StreamLoggingBehavior<TRequest, TResponse>: IStreamPipelin
         _logger = logger;
     }
 
-    public IAsyncEnumerable<TResponse> Handle(TRequest request, CancellationToken cancellationToken, StreamHandlerDelegate<TResponse> next)
+    public IAsyncEnumerable<TResponse> Handle(TRequest request, StreamHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting Request processing for {trequest}", nameof(TRequest));
 

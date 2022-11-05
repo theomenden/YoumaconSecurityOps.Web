@@ -1,28 +1,40 @@
 {
   "dependencies": {
-    "mssql4": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:YSecITSecurity"
-    },
     "secrets2": {
       "type": "secrets",
       "connectionId": "VaultUri"
     },
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:TestAuthAppContextConnection",
-      "dynamicId": null
-    },
     "secrets1": {
       "type": "secrets"
     },
-    "mssql3": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:YoumaEventStore"
+    "secrets3": {
+      "type": "secrets",
+      "connectionId": "VaultUri",
+      "dynamicId": null
     },
-    "mssql2": {
+    "redis1": {
+      "type": "redis",
+      "connectionId": "CacheConnection",
+      "dynamicId": null
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+      "dynamicId": null
+    },
+    "identityapp1": {
+      "type": "identityapp",
+      "dynamicId": null
+    },
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "Azure:SignalR:ConnectionString",
+      "dynamicId": null
+    },
+    "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:YSecOpsDb"
+      "connectionId": "ConnectionStrings:YsecOpsDb",
+      "dynamicId": null
     }
   }
 }

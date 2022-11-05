@@ -22,7 +22,8 @@
            Margin="Margin.Is2.OnAll.OnWidescreen.Is1.OnAll.OnMobile"
            TextColor="TextColor.Light">
     <Row>
-        <Column ColumnSize="ColumnSize.IsThird">
+        <Column ElementId="#col-animate-1"  ColumnSize="ColumnSize.IsThird">
+            <Animate Anchor="col-animate-1" Animation="Animations.FlipUp" DelayMilliseconds="500">
             <Card Background="Background.Transparent"
                   Border="Border.Is2.Light.OnAll.Rounded"
                   Shadow="Shadow.Default">
@@ -30,8 +31,10 @@
                 Estimated Hours Volunteered
                 </CardTitle>
             </Card>
+            </Animate>
         </Column>
-        <Column ColumnSize="ColumnSize.Is5">
+        <Column ElementId="#col-animate-2" ColumnSize="ColumnSize.Is5">
+            <Animate Anchor="#col-animate-2" Animation="Animations.FlipUp" DelayMilliseconds="500">
             <Card Background="Background.Transparent"
                   Border="Border.Is2.Light.OnAll.Rounded"
                   Shadow="Shadow.Default">
@@ -39,8 +42,10 @@
                     Unresolved Incidents you're associated with
                 </CardTitle>
             </Card>
+            </Animate>
         </Column>
-        <Column ColumnSize="ColumnSize.IsQuarter">
+        <Column ElementId="#col-animate-3" ColumnSize="ColumnSize.IsQuarter">
+            <Animate Anchor="#col-animate-3" Auto Animation="Animations.FlipUp" DelayMilliseconds="500">
             <Card Background="Background.Transparent"
                   Border="Border.Is2.Light.OnAll.Rounded"
                   Shadow="Shadow.Default">
@@ -52,6 +57,7 @@
                     </Heading>
                 </CardBody>
             </Card>
+            </Animate>
         </Column>
     </Row>
     

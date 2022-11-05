@@ -1,30 +1,46 @@
 {
   "dependencies": {
-    "mssql4": {
-      "secretStore": "AzureKeyVault",
-      "type": "mssql.onprem",
-      "connectionId": "ConnectionStrings:YSecITSecurity"
-    },
-    "mssql1": {
-      "secretStore": "LocalSecretsFile",
-      "type": "mssql.local",
-      "connectionId": "ConnectionStrings:TestAuthAppContextConnection",
-      "dynamicId": null
-    },
     "secrets1": {
       "type": "secrets.user"
     },
-    "mssql3": {
-      "secretStore": "LocalSecretsFile",
-      "resourceId": null,
-      "type": "mssql.onprem",
-      "connectionId": "ConnectionStrings:YoumaEventStore"
+    "secrets3": {
+      "secretStore": null,
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/YoumaconSecurityOpsKV",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri",
+      "dynamicId": null
     },
-    "mssql2": {
+    "redis1": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Cache/Redis/YoumaconSecurityOpsWebClientcache",
+      "type": "redis.azure",
+      "connectionId": "CacheConnection",
+      "dynamicId": null
+    },
+    "appInsights1": {
       "secretStore": "LocalSecretsFile",
-      "resourceId": null,
-      "type": "mssql.onprem",
-      "connectionId": "ConnectionStrings:YSecOpsDb"
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/microsoft.insights/components/ysec-app-insights",
+      "type": "appInsights.azure",
+      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+      "dynamicId": null
+    },
+    "identityapp1": {
+      "type": "identityapp.default",
+      "dynamicId": null
+    },
+    "signalr1": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.SignalRService/SignalR/YoumaconSecurityOpsSignalR",
+      "type": "signalr.azure",
+      "connectionId": "Azure:SignalR:ConnectionString",
+      "dynamicId": null
+    },
+    "mssql1": {
+      "secretStore": "AzureKeyVault",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/ysecops/databases/YsecOpsDb",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:YsecOpsDb",
+      "dynamicId": null
     }
   }
 }

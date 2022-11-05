@@ -29,20 +29,23 @@ global using System.Net.Mime;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
 #endregion
+#region The Omen Den Usings
+global using TheOmenDen.Shared.Logging;
+global using TheOmenDen.Shared.Logging.Serilog;
+global using TheOmenDen.Shared.Logging.Extensions;
+global using TheOmenDen.Shared.Logging.Templates;
+global using TheOmenDen.Shared.Enumerations;
+#endregion
 #region Youmacon Library Usings
 global using YoumaconSecurityOps.Core.Shared.Configuration;
 global using YoumaconSecurityOps.Core.Shared.Enumerations;
-global using YoumaconSecurityOps.Core.Shared.Logging;
 global using YoumaconSecurityOps.Core.Shared.Responses;
 global using YoumaconSecurityOps.Web.Client.Bootstrapping;
 global using YoumaconSecurityOps.Web.Client.Extensions;
-global using YoumaconSecurityOps.Web.Client.Helpers;
 global using YoumaconSecurityOps.Web.Client.IndexedDb.Context;
-global using YoumaconSecurityOps.Web.Client.IndexedDb.Repositories;
 global using YoumaconSecurityOps.Web.Client.Invariants;
 global using YoumaconSecurityOps.Web.Client.Middleware;
 global using YoumaconSecurityOps.Web.Client.Models;
-global using YoumaconSecurityOps.Web.Client.UrlHashing;
 global using YsecOps.Core.Mediator.Requests.Queries;
 global using YSecOps.Data.EfCore.Models;
 #endregion

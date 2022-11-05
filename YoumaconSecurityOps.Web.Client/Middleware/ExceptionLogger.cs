@@ -1,5 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
+using TheOmenDen.Shared.Logging.Templates;
+using TheOmenDen.Shared.Responses.Templates;
 using YoumaconSecurityOps.Core.Shared.Extensions;
 
 namespace YoumaconSecurityOps.Web.Client.Middleware;

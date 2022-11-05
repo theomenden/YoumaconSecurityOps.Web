@@ -22,9 +22,7 @@ public class MediatorCachingBehavior<TCache, TResult> : IPipelineBehavior<TCache
         _cacheAccessor = cacheAccessor;
     }
 
-    public Task<TResult> Handle(TCache request, CancellationToken cancellationToken, RequestHandlerDelegate<TResult> next)
-    {
-        return _cacheAccessor.GetOrCacheItem(request, () => next(), _absoluteExpiration, _slidingExpiration, _keyPrefix,
+    public Task<TResult> Handle(TCache request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken) =>
+        _cacheAccessor.GetOrCacheItem(request, () => next(), _absoluteExpiration, _slidingExpiration, _keyPrefix,
             _keyGenerator);
-    }
 }
