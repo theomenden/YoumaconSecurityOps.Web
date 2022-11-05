@@ -55,7 +55,7 @@
 		<PackageReference Include="Azure.Core" Version="1.25.0" />
 		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
 		<PackageReference Include="Azure.Identity" Version="1.7.0" />
-		<PackageReference Include="Azure.Storage.Blobs" Version="12.3.0" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
 		<PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
 		<PackageReference Include="Azure.Storage.Queues" Version="12.2.0" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
