@@ -57,7 +57,7 @@
 		<PackageReference Include="Azure.Identity" Version="1.7.0" />
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.3.0" />
 		<PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
-		<PackageReference Include="Azure.Storage.Queues" Version="12.2.0" />
+		<PackageReference Include="Azure.Storage.Queues" Version="12.11.0" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
 		<PackageReference Include="Blazorise" Version="1.1.2" />
 		<PackageReference Include="Blazorise.Animate" Version="1.1.2" />
