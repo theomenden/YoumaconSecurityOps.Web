@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework.DynamicLinq" Version="1.2.21" />
+    <PackageReference Include="EntityFramework.DynamicLinq" Version="1.2.22" />
     <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="LazyCache.AspNetCore" Version="2.4.0" />
     <PackageReference Include="MediatR" Version="11.0.0" />
