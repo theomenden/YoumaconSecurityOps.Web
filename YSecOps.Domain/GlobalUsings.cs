@@ -1,0 +1,15 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using System;
+global using System.Collections.Generic;
+global using System.Data;
+global using System.Data.Common;
+global using System.Linq;
+global using System.Reflection;
+global using System.Threading;
+global using System.Threading.Tasks;
+global using TheOmenDen.Shared;
+global using TheOmenDen.Shared.Enumerations;
+global using TheOmenDen.Shared.Guards;
+global using TheOmenDen.Shared.Logging;

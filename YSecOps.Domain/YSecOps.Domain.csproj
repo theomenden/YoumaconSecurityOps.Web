@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Email\**" />
+		<EmbeddedResource Remove="Email\**" />
+		<Folder Include="Mediator\Handlers\NotificationHandlers\" />
+		<Folder Include="Email\" />
+		<Folder Include="Services\" />
+	</ItemGroup>
+
+</Project>

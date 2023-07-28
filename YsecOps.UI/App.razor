@@ -1,0 +1,25 @@
+﻿<CascadingAuthenticationState>
+        <CascadingAuthenticationState>
+            <Router AppAssembly="@typeof(App).Assembly">
+                <Found Context="routeData">
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                        <NotAuthorized>
+                            <RedirectToLogin />
+                        </NotAuthorized>
+                    </AuthorizeRouteView>
+                    <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                </Found>
+                <NotFound>
+                    <NotFound404 />
+                </NotFound>
+            </Router>
+        </CascadingAuthenticationState>
+        <ModalProvider UseModalStructure 
+                       Animated
+                       Size="ModalSize.Default"
+                       Shadow="Shadow.Default" />
+        <ApplicationLoadingIndicator />
+        <MessageProvider />
+        <PageProgressProvider />
+        <NotificationProvider />
+</CascadingAuthenticationState>

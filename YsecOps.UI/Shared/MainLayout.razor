@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Ysec</PageTitle>
+
+<Layout Sider>
+    <LayoutSider>
+        <LayoutSiderContent>
+            <YsecSider />
+        </LayoutSiderContent>
+    </LayoutSider>
+    <Layout>
+        <LayoutHeader Fixed>
+            <YsecHeader />
+        </LayoutHeader>
+        <LayoutContent Background="Background.Body"
+                       Padding="Padding.Is4.OnX" 
+                       Margin="Margin.Is2.OnY">
+            <LoadingIndicator FullScreen>
+                @Body
+            </LoadingIndicator>
+        </LayoutContent>
+    </Layout>
+</Layout>
