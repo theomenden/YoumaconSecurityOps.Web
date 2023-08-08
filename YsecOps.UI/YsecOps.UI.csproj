@@ -10,7 +10,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AspNet.Security.OAuth.Discord" Version="7.0.2" />
-		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Core" Version="6.0.5" />
 		<PackageReference Include="Azure.Core" Version="1.34.0" />
 		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
