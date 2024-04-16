@@ -48,7 +48,7 @@
 		<PackageReference Include="Discord.Net.Webhook" Version="3.11.0" />
 		<PackageReference Include="FluentValidation" Version="11.6.0" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
-		<PackageReference Include="HtmlSanitizer" Version="8.0.645" />
+		<PackageReference Include="HtmlSanitizer" Version="8.0.865" />
 		<PackageReference Include="JetBrains.Annotations" Version="2023.2.0" />
 		<PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" NoWarn="NU1605" />
