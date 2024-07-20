@@ -73,9 +73,9 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.ApplicationInsights" Version="2.21.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
 		<PackageReference Include="Microsoft.Identity.Abstractions" Version="4.0.0" />
-		<PackageReference Include="Microsoft.Identity.Web" Version="2.13.1" />
-		<PackageReference Include="Microsoft.Identity.Web.TokenCache" Version="2.13.1" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="2.13.1" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="2.21.1" />
+		<PackageReference Include="Microsoft.Identity.Web.TokenCache" Version="2.21.1" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="2.21.1" />
 		<PackageReference Include="Microsoft.IdentityModel.KeyVaultExtensions" Version="6.32.1" />
 		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="3.1.5">
 			<PrivateAssets>all</PrivateAssets>
